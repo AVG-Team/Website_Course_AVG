@@ -34,7 +34,7 @@ namespace Website_Course_AVG
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -58,11 +58,14 @@ namespace Website_Course_AVG
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            string clientIdGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientId"];
+            string clientSecretGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecret"];
+
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = clientIdGG,
+                ClientSecret = clientSecretGG
+            });
         }
     }
 }
