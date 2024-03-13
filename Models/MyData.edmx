@@ -1,0 +1,1124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AVG_Website_CourseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="accounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="varchar(max)" Nullable="false" />
+          <Property Name="provide" Type="varchar" MaxLength="50" />
+          <Property Name="provide_id" Type="int" />
+          <Property Name="token" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="blogs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" />
+          <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="comments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="lesson_id" Type="int" />
+          <Property Name="user_id" Type="int" />
+        </EntityType>
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="13" />
+          <Property Name="link_facebook" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="courses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="200" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="price" Type="bigint" />
+          <Property Name="author" Type="nvarchar" MaxLength="200" />
+          <Property Name="category_id" Type="int" />
+        </EntityType>
+        <EntityType Name="detail_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="int" />
+          <Property Name="course_id" Type="int" />
+          <Property Name="user_id" Type="int" />
+        </EntityType>
+        <EntityType Name="detail_order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="price" Type="bigint" />
+          <Property Name="order_id" Type="int" />
+          <Property Name="course_id" Type="int" />
+        </EntityType>
+        <EntityType Name="exercises">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="200" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="source_excercise" Type="nvarchar(max)" />
+          <Property Name="lesson_id" Type="int" />
+        </EntityType>
+        <EntityType Name="lessons">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="200" />
+          <Property Name="link_embedded" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="views" Type="int" />
+          <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="course_id" Type="int" />
+        </EntityType>
+        <EntityType Name="notes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="lesson_id" Type="int" />
+          <Property Name="user_id" Type="int" />
+        </EntityType>
+        <EntityType Name="notifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="date_time" Type="datetime" />
+          <Property Name="user_id" Type="int" />
+        </EntityType>
+        <EntityType Name="options">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="value" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status" Type="int" />
+          <Property Name="total" Type="bigint" />
+          <Property Name="type_payment" Type="nvarchar" MaxLength="100" />
+          <Property Name="code_order" Type="nvarchar" MaxLength="20" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="promotion_id" Type="int" />
+        </EntityType>
+        <EntityType Name="promotions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" />
+          <Property Name="code_promotion" Type="varchar" MaxLength="20" />
+          <Property Name="percent" Type="int" />
+          <Property Name="active" Type="bit" />
+          <Property Name="out_of_date" Type="datetime" />
+          <Property Name="user_id" Type="int" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fullname" Type="nvarchar" MaxLength="500" />
+          <Property Name="email" Type="varchar" MaxLength="200" />
+          <Property Name="birthday" Type="date" />
+          <Property Name="gender" Type="bit" />
+          <Property Name="account_id" Type="int" />
+        </EntityType>
+        <Association Name="FK_blogs_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="blogs" Type="Self.blogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blogs">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comments_lesson">
+          <End Role="lessons" Type="Self.lessons" Multiplicity="0..1" />
+          <End Role="comments" Type="Self.comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lessons">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="lesson_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comments_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="comments" Type="Self.comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_course_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+          <End Role="courses" Type="Self.courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="courses">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_course_courses">
+          <End Role="courses" Type="Self.courses" Multiplicity="0..1" />
+          <End Role="detail_course" Type="Self.detail_course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detail_course">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_course_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="detail_course" Type="Self.detail_course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detail_course">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_order_courses">
+          <End Role="courses" Type="Self.courses" Multiplicity="0..1" />
+          <End Role="detail_order" Type="Self.detail_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detail_order">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_order_orders">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="detail_order" Type="Self.detail_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detail_order">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_exercises_lesson">
+          <End Role="lessons" Type="Self.lessons" Multiplicity="0..1" />
+          <End Role="exercises" Type="Self.exercises" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lessons">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="exercises">
+              <PropertyRef Name="lesson_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notes_lesson">
+          <End Role="lessons" Type="Self.lessons" Multiplicity="0..1" />
+          <End Role="notes" Type="Self.notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lessons">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="notes">
+              <PropertyRef Name="lesson_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notes_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="notes" Type="Self.notes" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="notes">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Notifications">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="notifications" Type="Self.notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="notifications">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_promotions">
+          <End Role="promotions" Type="Self.promotions" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="promotions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="promotion_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Promotion_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="promotions" Type="Self.promotions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="promotions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_user_account">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AVG_Website_CourseModelStoreContainer">
+          <EntitySet Name="accounts" EntityType="Self.accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="blogs" EntityType="Self.blogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comments" EntityType="Self.comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contact" EntityType="Self.contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="courses" EntityType="Self.courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detail_course" EntityType="Self.detail_course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detail_order" EntityType="Self.detail_order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="exercises" EntityType="Self.exercises" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lessons" EntityType="Self.lessons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notes" EntityType="Self.notes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notifications" EntityType="Self.notifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="options" EntityType="Self.options" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="promotions" EntityType="Self.promotions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_blogs_users" Association="Self.FK_blogs_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="blogs" EntitySet="blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comments_lesson" Association="Self.FK_comments_lesson">
+            <End Role="lessons" EntitySet="lessons" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comments_users" Association="Self.FK_comments_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_course_categories" Association="Self.FK_course_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="courses" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_course_courses" Association="Self.FK_detail_course_courses">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="detail_course" EntitySet="detail_course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_course_users" Association="Self.FK_detail_course_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="detail_course" EntitySet="detail_course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_order_courses" Association="Self.FK_detail_order_courses">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="detail_order" EntitySet="detail_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_order_orders" Association="Self.FK_detail_order_orders">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="detail_order" EntitySet="detail_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_exercises_lesson" Association="Self.FK_exercises_lesson">
+            <End Role="lessons" EntitySet="lessons" />
+            <End Role="exercises" EntitySet="exercises" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notes_lesson" Association="Self.FK_notes_lesson">
+            <End Role="lessons" EntitySet="lessons" />
+            <End Role="notes" EntitySet="notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notes_users" Association="Self.FK_notes_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="notes" EntitySet="notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Notifications" Association="Self.FK_Notifications_Notifications">
+            <End Role="users" EntitySet="users" />
+            <End Role="notifications" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_promotions" Association="Self.FK_orders_promotions">
+            <End Role="promotions" EntitySet="promotions" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_users" Association="Self.FK_orders_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Promotion_users" Association="Self.FK_Promotion_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="promotions" EntitySet="promotions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_user_account" Association="Self.fk_user_account">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AVG_Website_CourseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="provide" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="provide_id" Type="Int32" />
+          <Property Name="token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="users" Relationship="Self.fk_user_account" FromRole="accounts" ToRole="users" />
+        </EntityType>
+        <EntityType Name="blog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_blogs_users" FromRole="blogs" ToRole="users" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="courses" Relationship="Self.FK_course_categories" FromRole="categories" ToRole="courses" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lesson_id" Type="Int32" />
+          <Property Name="user_id" Type="Int32" />
+          <NavigationProperty Name="lesson" Relationship="Self.FK_comments_lesson" FromRole="comments" ToRole="lessons" />
+          <NavigationProperty Name="user" Relationship="Self.FK_comments_users" FromRole="comments" ToRole="users" />
+        </EntityType>
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="link_facebook" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="cours">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Int64" />
+          <Property Name="author" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="category_id" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="Self.FK_course_categories" FromRole="courses" ToRole="categories" />
+          <NavigationProperty Name="detail_course" Relationship="Self.FK_detail_course_courses" FromRole="courses" ToRole="detail_course" />
+          <NavigationProperty Name="detail_order" Relationship="Self.FK_detail_order_courses" FromRole="courses" ToRole="detail_order" />
+        </EntityType>
+        <EntityType Name="detail_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="course_id" Type="Int32" />
+          <Property Name="user_id" Type="Int32" />
+          <NavigationProperty Name="cours" Relationship="Self.FK_detail_course_courses" FromRole="detail_course" ToRole="courses" />
+          <NavigationProperty Name="user" Relationship="Self.FK_detail_course_users" FromRole="detail_course" ToRole="users" />
+        </EntityType>
+        <EntityType Name="detail_order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="price" Type="Int64" />
+          <Property Name="order_id" Type="Int32" />
+          <Property Name="course_id" Type="Int32" />
+          <NavigationProperty Name="cours" Relationship="Self.FK_detail_order_courses" FromRole="detail_order" ToRole="courses" />
+          <NavigationProperty Name="order" Relationship="Self.FK_detail_order_orders" FromRole="detail_order" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="exercis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="source_excercise" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lesson_id" Type="Int32" />
+          <NavigationProperty Name="lesson" Relationship="Self.FK_exercises_lesson" FromRole="exercises" ToRole="lessons" />
+        </EntityType>
+        <EntityType Name="lesson">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="link_embedded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="views" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="course_id" Type="Int32" />
+          <NavigationProperty Name="comments" Relationship="Self.FK_comments_lesson" FromRole="lessons" ToRole="comments" />
+          <NavigationProperty Name="exercises" Relationship="Self.FK_exercises_lesson" FromRole="lessons" ToRole="exercises" />
+          <NavigationProperty Name="notes" Relationship="Self.FK_notes_lesson" FromRole="lessons" ToRole="notes" />
+        </EntityType>
+        <EntityType Name="note">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lesson_id" Type="Int32" />
+          <Property Name="user_id" Type="Int32" />
+          <NavigationProperty Name="lesson" Relationship="Self.FK_notes_lesson" FromRole="notes" ToRole="lessons" />
+          <NavigationProperty Name="user" Relationship="Self.FK_notes_users" FromRole="notes" ToRole="users" />
+        </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date_time" Type="DateTime" Precision="3" />
+          <Property Name="user_id" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="Self.FK_Notifications_Notifications" FromRole="notifications" ToRole="users" />
+        </EntityType>
+        <EntityType Name="option">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="value" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="total" Type="Int64" />
+          <Property Name="type_payment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="code_order" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="promotion_id" Type="Int32" />
+          <NavigationProperty Name="detail_order" Relationship="Self.FK_detail_order_orders" FromRole="orders" ToRole="detail_order" />
+          <NavigationProperty Name="promotion" Relationship="Self.FK_orders_promotions" FromRole="orders" ToRole="promotions" />
+          <NavigationProperty Name="user" Relationship="Self.FK_orders_users" FromRole="orders" ToRole="users" />
+        </EntityType>
+        <EntityType Name="promotion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="code_promotion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="percent" Type="Int32" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="out_of_date" Type="DateTime" Precision="3" />
+          <Property Name="user_id" Type="Int32" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_promotions" FromRole="promotions" ToRole="orders" />
+          <NavigationProperty Name="user" Relationship="Self.FK_Promotion_users" FromRole="promotions" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fullname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="birthday" Type="DateTime" Precision="0" />
+          <Property Name="gender" Type="Boolean" />
+          <Property Name="account_id" Type="Int32" />
+          <NavigationProperty Name="account" Relationship="Self.fk_user_account" FromRole="users" ToRole="accounts" />
+          <NavigationProperty Name="blogs" Relationship="Self.FK_blogs_users" FromRole="users" ToRole="blogs" />
+          <NavigationProperty Name="comments" Relationship="Self.FK_comments_users" FromRole="users" ToRole="comments" />
+          <NavigationProperty Name="detail_course" Relationship="Self.FK_detail_course_users" FromRole="users" ToRole="detail_course" />
+          <NavigationProperty Name="note" Relationship="Self.FK_notes_users" FromRole="users" ToRole="notes" />
+          <NavigationProperty Name="notifications" Relationship="Self.FK_Notifications_Notifications" FromRole="users" ToRole="notifications" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_users" FromRole="users" ToRole="orders" />
+          <NavigationProperty Name="promotions" Relationship="Self.FK_Promotion_users" FromRole="users" ToRole="promotions" />
+        </EntityType>
+        <Association Name="fk_user_account">
+          <End Role="accounts" Type="Self.account" Multiplicity="0..1" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blogs_users">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="blogs" Type="Self.blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blogs">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_course_categories">
+          <End Role="categories" Type="Self.category" Multiplicity="0..1" />
+          <End Role="courses" Type="Self.cours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="courses">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comments_lesson">
+          <End Role="lessons" Type="Self.lesson" Multiplicity="0..1" />
+          <End Role="comments" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lessons">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="lesson_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comments_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="comments" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_course_courses">
+          <End Role="courses" Type="Self.cours" Multiplicity="0..1" />
+          <End Role="detail_course" Type="Self.detail_course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detail_course">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_order_courses">
+          <End Role="courses" Type="Self.cours" Multiplicity="0..1" />
+          <End Role="detail_order" Type="Self.detail_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detail_order">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_course_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="detail_course" Type="Self.detail_course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detail_course">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_order_orders">
+          <End Role="orders" Type="Self.order" Multiplicity="0..1" />
+          <End Role="detail_order" Type="Self.detail_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detail_order">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_exercises_lesson">
+          <End Role="lessons" Type="Self.lesson" Multiplicity="0..1" />
+          <End Role="exercises" Type="Self.exercis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lessons">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="exercises">
+              <PropertyRef Name="lesson_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notes_lesson">
+          <End Role="lessons" Type="Self.lesson" Multiplicity="0..1" />
+          <End Role="notes" Type="Self.note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lessons">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="notes">
+              <PropertyRef Name="lesson_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notes_users">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="notes" Type="Self.note" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="notes">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Notifications">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="notifications" Type="Self.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="notifications">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_promotions">
+          <End Role="promotions" Type="Self.promotion" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="promotions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="promotion_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Promotion_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="promotions" Type="Self.promotion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="promotions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AVG_Website_CourseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="Self.account" />
+          <EntitySet Name="blogs" EntityType="Self.blog" />
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="comments" EntityType="Self.comment" />
+          <EntitySet Name="contacts" EntityType="Self.contact" />
+          <EntitySet Name="courses" EntityType="Self.cours" />
+          <EntitySet Name="detail_course" EntityType="Self.detail_course" />
+          <EntitySet Name="detail_order" EntityType="Self.detail_order" />
+          <EntitySet Name="exercises" EntityType="Self.exercis" />
+          <EntitySet Name="lessons" EntityType="Self.lesson" />
+          <EntitySet Name="notes" EntityType="Self.note" />
+          <EntitySet Name="notifications" EntityType="Self.notification" />
+          <EntitySet Name="options" EntityType="Self.option" />
+          <EntitySet Name="orders" EntityType="Self.order" />
+          <EntitySet Name="promotions" EntityType="Self.promotion" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="fk_user_account" Association="Self.fk_user_account">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blogs_users" Association="Self.FK_blogs_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="blogs" EntitySet="blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_course_categories" Association="Self.FK_course_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="courses" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comments_lesson" Association="Self.FK_comments_lesson">
+            <End Role="lessons" EntitySet="lessons" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comments_users" Association="Self.FK_comments_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_course_courses" Association="Self.FK_detail_course_courses">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="detail_course" EntitySet="detail_course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_order_courses" Association="Self.FK_detail_order_courses">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="detail_order" EntitySet="detail_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_course_users" Association="Self.FK_detail_course_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="detail_course" EntitySet="detail_course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_order_orders" Association="Self.FK_detail_order_orders">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="detail_order" EntitySet="detail_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_exercises_lesson" Association="Self.FK_exercises_lesson">
+            <End Role="lessons" EntitySet="lessons" />
+            <End Role="exercises" EntitySet="exercises" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notes_lesson" Association="Self.FK_notes_lesson">
+            <End Role="lessons" EntitySet="lessons" />
+            <End Role="notes" EntitySet="notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notes_users" Association="Self.FK_notes_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="notes" EntitySet="notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Notifications" Association="Self.FK_Notifications_Notifications">
+            <End Role="users" EntitySet="users" />
+            <End Role="notifications" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_promotions" Association="Self.FK_orders_promotions">
+            <End Role="promotions" EntitySet="promotions" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_users" Association="Self.FK_orders_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Promotion_users" Association="Self.FK_Promotion_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="promotions" EntitySet="promotions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AVG_Website_CourseModelStoreContainer" CdmEntityContainer="AVG_Website_CourseEntities">
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.account">
+              <MappingFragment StoreEntitySet="accounts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="provide" ColumnName="provide" />
+                <ScalarProperty Name="provide_id" ColumnName="provide_id" />
+                <ScalarProperty Name="token" ColumnName="token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blogs">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.blog">
+              <MappingFragment StoreEntitySet="blogs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.category">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comments">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.comment">
+              <MappingFragment StoreEntitySet="comments">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contacts">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.contact">
+              <MappingFragment StoreEntitySet="contact">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="link_facebook" ColumnName="link_facebook" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="courses">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.cours">
+              <MappingFragment StoreEntitySet="courses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detail_course">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.detail_course">
+              <MappingFragment StoreEntitySet="detail_course">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detail_order">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.detail_order">
+              <MappingFragment StoreEntitySet="detail_order">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="exercises">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.exercis">
+              <MappingFragment StoreEntitySet="exercises">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="source_excercise" ColumnName="source_excercise" />
+                <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lessons">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.lesson">
+              <MappingFragment StoreEntitySet="lessons">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="link_embedded" ColumnName="link_embedded" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="views" ColumnName="views" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notes">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.note">
+              <MappingFragment StoreEntitySet="notes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notifications">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.notification">
+              <MappingFragment StoreEntitySet="notifications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="date_time" ColumnName="date_time" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="options">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.option">
+              <MappingFragment StoreEntitySet="options">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.order">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="type_payment" ColumnName="type_payment" />
+                <ScalarProperty Name="code_order" ColumnName="code_order" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="promotion_id" ColumnName="promotion_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="promotions">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.promotion">
+              <MappingFragment StoreEntitySet="promotions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code_promotion" ColumnName="code_promotion" />
+                <ScalarProperty Name="percent" ColumnName="percent" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="out_of_date" ColumnName="out_of_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="AVG_Website_CourseModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
