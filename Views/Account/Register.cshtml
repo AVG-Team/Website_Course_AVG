@@ -2,42 +2,84 @@
 @{
     ViewBag.Title = "Register";
 }
-
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="row">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            <div class="offset-md-2 col-md-10">
-                <input type="submit" value="Register" class="btn btn-outline-dark" />
-            </div>
-        </div>
+<style>
+    input {
+        max-width: none;
+        max-height: none;
     }
+</style>
+<main aria-labelledby="title">
+    <div class="  container  justify-content-center align-items-center min-vh-100">
+        <div class="row">
+            <div class="rounded d-flex justify-content-center">
+                <div class="col-md-6 col-sm-12 shadow-lg p-5 bg-light">
+                    <div>
+                        <div class="text-center">
+                            <h3 class="text-primary">Create Account</h3>    
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <form action="">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary rounded"><i class="fa-solid fa-user " style="width: 15px; color:white; "></i></span>
+                                <input type="text" class="form-control form-control form-control-lg bg-light fs-6" placeholder="Username">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary rounded">
+                                    <i class="fa-solid fa-envelope" style="width: 15px; color:white; "></i>
+                                </span>
+                                <input type="email" class="form-control form-control form-control-lg bg-light fs-6" placeholder="Email">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary rounded">
+                                    <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
+                                </span>
+                                <input type="password" class="form-control form-control form-control-lg bg-light fs-6" placeholder="password">
+                                <button type="button" class="btn btn-outline-ligh rounded position-absolute end-0 h-100">
+                                    <i id="eyeicon" class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="input-group mb-3 position-relative">
+                                <span class="input-group-text bg-primary rounded">
+                                    <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
+                                </span>
+                                <input id="password" type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Repassword">
+                                <button type="button" class="btn btn-outline-ligh rounded position-absolute end-0 h-100">
+                                    <i id="eyeicon" class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+
+                            <div class="d-grid col-12 mx-auto">
+                                <button class="btn btn-primary" type="button" style="border-radius: 10px"><span></span> Sign up</button>
+                            </div>
+                            <p class="text-center mt-3">
+                                Already have an account?
+                                <span class="text-primary">Sign in</span>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    let passwordField = document.getElementById("password");
+    let eyeIcon = document.getElementById("eyeicon");
+
+    eyeIcon.onclick = function () {
+        if (passwordField.type == "password") {
+            passwordField.type = "text";
+            eyeIcon.className = "fa-solid fa-eye";
+
+        } else {
+            passwordField.type = "password";
+            eyeIcon.className = "fa-solid fa-eye-slash";
+        }
+    }
+</script>
