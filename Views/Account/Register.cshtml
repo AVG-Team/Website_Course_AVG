@@ -9,7 +9,7 @@
     }
 </style>
 <main aria-labelledby="title">
-    <div class="  container  justify-content-center align-items-center min-vh-100">
+    <div class="  container d-inline min-vh-100">
         <div class="row">
             <div class="rounded d-flex justify-content-center">
                 <div class="col-md-6 col-sm-12 shadow-lg p-5 bg-light">
@@ -21,36 +21,36 @@
                     <div class="p-4">
                         <form action="">
                             <div class="input-group mb-3">
-                                <span class="input-group-text bg-primary rounded"><i class="fa-solid fa-user " style="width: 15px; color:white; "></i></span>
+                                <span class="input-group-text bg-primary rounded-start"><i class="fa-solid fa-user " style="width: 15px; color:white; "></i></span>
                                 <input type="text" class="form-control form-control form-control-lg bg-light fs-6" placeholder="Username">
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text bg-primary rounded">
+                                <span class="input-group-text bg-primary rounded-start">
                                     <i class="fa-solid fa-envelope" style="width: 15px; color:white; "></i>
                                 </span>
                                 <input type="email" class="form-control form-control form-control-lg bg-light fs-6" placeholder="Email">
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text bg-primary rounded">
+                                <span class="input-group-text bg-primary rounded-start">
                                     <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
                                 </span>
-                                <input type="password" class="form-control form-control form-control-lg bg-light fs-6" placeholder="password">
+                                <input id="password" type="password" class="form-control form-control form-control-lg bg-light fs-6" placeholder="Password">
                                 <button type="button" class="btn btn-outline-ligh rounded position-absolute end-0 h-100">
-                                    <i id="eyeicon" class="fa-solid fa-eye"></i>
+                                    <i id="eyeicon_password" class="fa-solid fa-eye"></i>
                                 </button>
                             </div>
                             <div class="input-group mb-3 position-relative">
-                                <span class="input-group-text bg-primary rounded">
+                                <span class="input-group-text bg-primary rounded-start">
                                     <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
                                 </span>
-                                <input id="password" type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Repassword">
+                                <input id="re-password" type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Re-password">
                                 <button type="button" class="btn btn-outline-ligh rounded position-absolute end-0 h-100">
-                                    <i id="eyeicon" class="fa-solid fa-eye"></i>
+                                    <i id="eyeicon_repassword" class="fa-solid fa-eye" style="color:gray"></i>
                                 </button>
                             </div>
 
                             <div class="d-grid col-12 mx-auto">
-                                <button class="btn btn-primary" type="button" style="border-radius: 10px"><span></span> Sign up</button>
+                                <button class="btn btn-primary rounded-2" type="button"><span></span> Sign up</button>
                             </div>
                             <p class="text-center mt-3">
                                 Already have an account?
@@ -70,7 +70,9 @@
 
 <script>
     let passwordField = document.getElementById("password");
-    let eyeIcon = document.getElementById("eyeicon");
+    let eyeIcon = document.getElementById("eyeicon_password");
+    let re_passwordField = document.getElementById("re-password");
+    let eyeIcon_repassword = document.getElementById("eyeicon_repassword");
 
     eyeIcon.onclick = function () {
         if (passwordField.type == "password") {
@@ -82,4 +84,16 @@
             eyeIcon.className = "fa-solid fa-eye-slash";
         }
     }
+
+    eyeIcon_repassword.onclick = function () {
+        if (re_passwordField.type == "password") {
+            re_passwordField.type = "text";
+            eyeIcon_repassword.className = "fa-solid fa-eye";
+
+        } else {
+            re_passwordField.type = "password";
+            eyeIcon_repassword.className = "fa-solid fa-eye-slash";
+        }
+    }
+
 </script>
