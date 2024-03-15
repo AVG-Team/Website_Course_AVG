@@ -5,7 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using Website_Course_AVG.Middleware;
 using Website_Course_AVG.Models;
+using Microsoft.Owin.Host.SystemWeb;
 
 namespace Website_Course_AVG
 {
@@ -51,15 +53,19 @@ namespace Website_Course_AVG
             //    clientSecret: "");
 
             //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            //   consumerKey: "ndnrokObeNhBfgyzsb2hnFYyc",
+            //   consumerSecret: "Tfq1qMQIWUfHcO1P257QLtOg9vu7ruaCy1t4yWwz52Qxb4IABZ");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            string clientIdFB = global::System.Configuration.ConfigurationManager.AppSettings["ClientIdFB"];
+            string clientSecretFB = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecretFB"];
 
-            string clientIdGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientId"];
-            string clientSecretGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecret"];
+            app.UseFacebookAuthentication(
+               appId: clientIdFB,
+               appSecret: clientSecretFB
+            );
+
+            string clientIdGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientIdGG"];
+            string clientSecretGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecretGG"];
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
