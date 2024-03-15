@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/toastr.css")
 
 </head>
 <body>
@@ -22,7 +23,7 @@
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
-                 @Html.Partial("_LoginPartial")
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>
@@ -36,6 +37,67 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/toastr.js")
     @RenderSection("scripts", required: false)
+
+    <script>
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cookieName, cookieValue, secondsToExpire, type = 1) {
+            if (type == 0) {
+                var expires = secondsToExpire;
+            } else if (type == 1) {
+                var date = new Date();
+                date.setTime(date.getTime() + (secondsToExpire * 1000));
+                var expires = "expires=" + date.toUTCString();
+            }
+            
+            var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+
+            var existingCookies = document.cookie.split(';');
+
+            var found = false;
+            for (var i = 0; i < existingCookies.length; i++) {
+                var cookie = existingCookies[i].trim();
+                if (cookie.indexOf(cookieName + "=") === 0) {
+                    existingCookies[i] = updatedCookie;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                existingCookies.push(updatedCookie);
+            }
+
+            document.cookie = existingCookies.join(';');
+        }
+
+        function deleteCookie(cookieName) {
+            setCookie(cookieName, "", 'expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;', 0)
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let cookies = document.cookie;
+
+            var cookieValue = getCookie('Message');
+            if(cookieValue !== "")
+                toastr.success('Message', cookieValue)
+        })
+    </script>
 </body>
 </html>
