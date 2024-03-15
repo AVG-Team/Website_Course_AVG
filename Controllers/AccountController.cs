@@ -56,6 +56,7 @@ namespace Website_Course_AVG.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymousAttribute]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
