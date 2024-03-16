@@ -265,6 +265,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\img\banner\banner_bg01.jpg" />
+    <Content Include="Content\img\banner\layout_main_section.jpg" />
     <Content Include="Content\img\banner\slider_img01.jpg" />
     <Content Include="Content\img\banner\slider_img02.jpg" />
     <Content Include="Content\img\banner\slider_img03.jpg" />
@@ -284,6 +285,7 @@
     <Content Include="Content\img\bg\movie_bg.jpg" />
     <Content Include="Content\img\bg\movie_details_bg.jpg" />
     <Content Include="Content\img\bg\newsletter_bg.jpg" />
+    <Content Include="Content\img\bg\newsletter_footer_bg.jpg" />
     <Content Include="Content\img\bg\pricing_bg.jpg" />
     <Content Include="Content\img\bg\services_bg.jpg" />
     <Content Include="Content\img\bg\services_bg02.jpg" />
@@ -315,11 +317,15 @@
     <Content Include="Content\img\images\gallery_03.jpg" />
     <Content Include="Content\img\images\gallery_04.jpg" />
     <Content Include="Content\img\images\live_img.png" />
+    <Content Include="Content\img\images\momo_footer.png" />
     <Content Include="Content\img\images\nw_selarw.png" />
     <Content Include="Content\img\images\play_icon.png" />
     <Content Include="Content\img\images\services_img.jpg" />
     <Content Include="Content\img\images\services_img02.jpg" />
     <Content Include="Content\img\images\title_shape.png" />
+    <Content Include="Content\img\images\vnpay_footer.png" />
+    <Content Include="Content\img\logo\avg_team.png" />
+    <Content Include="Content\img\logo\favicon.png" />
     <Content Include="Content\img\logo\logo.png" />
     <Content Include="Content\img\poster\movie_details_img.jpg" />
     <Content Include="Content\img\poster\s_ucm_poster01.jpg" />
