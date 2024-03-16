@@ -5,7 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using Website_Course_AVG.Middleware;
+using Website_Course_AVG.Attributes;
 using Website_Course_AVG.Models;
 using Microsoft.Owin.Host.SystemWeb;
 

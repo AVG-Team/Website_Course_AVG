@@ -79,8 +79,9 @@ namespace Website_Course_AVG.Models
         partial void Updatepromotion(promotion instance);
         partial void Deletepromotion(promotion instance);
         #endregion
+
         public MyDataDataContext() :
-        base(global::System.Configuration.ConfigurationManager.ConnectionStrings["AVG_Website_CourseConnectionString"].ConnectionString, mappingSource)
+                base(global::System.Configuration.ConfigurationManager.ConnectionStrings["AVG_Website_CourseConnectionString"].ConnectionString, mappingSource)
         {
             OnCreated();
         }
@@ -466,6 +467,8 @@ namespace Website_Course_AVG.Models
 
         private System.Nullable<int> _account_id;
 
+        private System.Nullable<int> _role;
+
         private EntitySet<blog> _blogs;
 
         private EntitySet<comment> _comments;
@@ -498,6 +501,8 @@ namespace Website_Course_AVG.Models
         partial void OngenderChanged();
         partial void Onaccount_idChanging(System.Nullable<int> value);
         partial void Onaccount_idChanged();
+        partial void OnroleChanging(System.Nullable<int> value);
+        partial void OnroleChanged();
         #endregion
 
         public user()
@@ -633,6 +638,26 @@ namespace Website_Course_AVG.Models
                     this._account_id = value;
                     this.SendPropertyChanged("account_id");
                     this.Onaccount_idChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_role", DbType = "Int")]
+        public System.Nullable<int> role
+        {
+            get
+            {
+                return this._role;
+            }
+            set
+            {
+                if ((this._role != value))
+                {
+                    this.OnroleChanging(value);
+                    this.SendPropertyChanging();
+                    this._role = value;
+                    this.SendPropertyChanged("role");
+                    this.OnroleChanged();
                 }
             }
         }
