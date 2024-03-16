@@ -17,7 +17,7 @@ namespace Website_Course_AVG.Attributes
         UserManager UserManager = new UserManager();
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!UserManager.IsAuthenticated())
+            if (UserManager.IsAuthenticated())
             {
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new { controller = "Home", action = "Index" }));

@@ -28,12 +28,18 @@ namespace Website_Course_AVG.Attributes
             base.OnActionExecuting(filterContext);
         }
 
-        public void DistinguishUser(user user)
+        public String DistinguishUser(user user)
         {
-			MyDataDataContext _data1 = new MyDataDataContext();
-			string token = HttpContext.Current.Request.Cookies["AuthToken"]?.Value;
-			string username = TokenHelper.GetUsernameFromToken(token);
-			user user = _data1.users.Where(x => x.email == username).FirstOrDefault();
+		   user user = UserManager.GetUserFromToken(user);
+           if (user.role == 0)
+            {
+                return "User";
+            }
+            else
+            {
+                return "Admin";
+            }
+
 			
 		}
     }
