@@ -8,6 +8,7 @@ using Owin;
 using Website_Course_AVG.Attributes;
 using Website_Course_AVG.Models;
 using Microsoft.Owin.Host.SystemWeb;
+using Microsoft.Owin.Security.Twitter;
 
 namespace Website_Course_AVG
 {
@@ -51,6 +52,14 @@ namespace Website_Course_AVG
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
             //    clientSecret: "");
+
+            string clientIdTW = global::System.Configuration.ConfigurationManager.AppSettings["ClientIdTW"];
+            string clientSecretTW = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecretTW"];
+            app.UseTwitterAuthentication(new TwitterAuthenticationOptions()
+            {
+                ConsumerKey = clientIdTW,
+                ConsumerSecret = clientSecretTW
+            });
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "ndnrokObeNhBfgyzsb2hnFYyc",

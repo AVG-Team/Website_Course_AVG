@@ -255,7 +255,11 @@ namespace Website_Course_AVG.Controllers
 
             var UserManager = new Website_Course_AVG.Managers.UserManager();
 
-            if (UserManager.CheckUsername(loginInfo.Email))
+            if (UserManager.CheckUsername(loginInfo.DefaultUserName))
+            {
+                UserManager.login(loginInfo.DefaultUserName);
+                return RedirectToAction("Index", "Home");
+            }else if(UserManager.CheckUsername(loginInfo.Email))
             {
                 UserManager.login(loginInfo.Email);
                 return RedirectToAction("Index", "Home");
@@ -263,6 +267,7 @@ namespace Website_Course_AVG.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+            ViewBag.Email = loginInfo.Email;
             return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
         }
 
@@ -271,7 +276,7 @@ namespace Website_Course_AVG.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl, string Email)
         {
             var UserManager = new Website_Course_AVG.Managers.UserManager();
 
@@ -294,11 +299,17 @@ namespace Website_Course_AVG.Controllers
                 if (!UserManager.CheckUsername(info.Email))
                 {
                     var userAccount = new account();
-                    userAccount.username = info.Email;
+                    if (info.Email == null && info.Login.LoginProvider == "Twitter")
+                    {
+                        info.Email = Email;
+                        userAccount.username = info.DefaultUserName;
+                    }
+                    else
+                        userAccount.username = info.Email;
                     userAccount.provide = info.Login.LoginProvider;
                     userAccount.provide_id = info.Login.ProviderKey;
 
-                    var result = await UserManager.CreateAccountUserAsync(info.DefaultUserName, userAccount);
+                    var result = await UserManager.CreateAccountUserAsync(info.DefaultUserName, userAccount, info.Email);
 
                     if (result.Succeeded)
                     {

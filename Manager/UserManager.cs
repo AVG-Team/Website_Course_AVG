@@ -16,7 +16,7 @@ namespace Website_Course_AVG.Managers
         {
         }
 
-        public async Task<IdentityResult> CreateAccountUserAsync(string fullname, account account)
+        public async Task<IdentityResult> CreateAccountUserAsync(string fullname, account account, string email)
         {
             if (account.username == null)
                 return IdentityResult.Failed();
@@ -34,7 +34,7 @@ namespace Website_Course_AVG.Managers
 
                 user user = new user();
                 user.fullname = fullname;
-                user.email = account.username;
+                user.email = email;
                 user.account_id = accountTmp.id;
                 _data.users.InsertOnSubmit(user);
                 _data.SubmitChanges();
@@ -49,14 +49,15 @@ namespace Website_Course_AVG.Managers
         //true : exist ; false : no exist
         public bool CheckUsername(string username)
         {
-            user user = _data.users.Where(x => x.email == username).FirstOrDefault();
-            if (user == null)
-                return false;
+            bool flag = false;
             account account = _data.accounts.Where(x => x.username == username).FirstOrDefault();
-            if (account == null)
-                return false;
+            if (account != null)
+                flag = true;
+            user user = _data.users.Where(x => x.email == username).FirstOrDefault();
+            if (user != null)
+                flag = true;
 
-            return true;
+            return flag;
         }
 
         public user GetUserFromToken()
