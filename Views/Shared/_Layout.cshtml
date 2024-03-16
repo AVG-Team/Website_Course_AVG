@@ -4,38 +4,312 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/images/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Place favicon.ico in the root directory -->
+    <!-- CSS here -->
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/animate.min.css">
+    <link rel="stylesheet" href="~/Content/magnific-popup.css">
+    <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/flaticon.css">
+    <link rel="stylesheet" href="~/Content/odometer.css">
+    <link rel="stylesheet" href="~/Content/aos.css">
+    <link rel="stylesheet" href="~/Content/slick.css">
+    <link rel="stylesheet" href="~/Content/default.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/Content/responsive.css">
+    @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
 </head>
+</html>
+
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
-                 @Html.Partial("_LoginPartial")
+    <!-- Scroll-top -->
+    <button class="scroll-top scroll-to-target" data-target="html">
+        <i class="fas fa-angle-up"></i>
+    </button>
+    <!-- Scroll-top-end-->
+    <!-- header-area -->
+    <header>
+        <div id="sticky-header" class="menu-area transparent-header">
+            <div class="container custom-container container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mobile-nav-toggler"><i class="fas fa-bars"></i></div>
+                        <div class="menu-wrap">
+                            <nav class="menu-nav show">
+                                <div class="logo me-5">
+                                    <a href="index.html">
+                                        <img src="~/Content/img/logo/logo.png" alt="Logo">
+                                    </a>
+                                </div>
+                                <div class="navbar-wrap main-menu d-none d-lg-flex">
+                                    <ul class="navigation">
+                                        <li class="active menu-item-has-children">
+                                            <a href="#">Home</a>
+                                            <ul class="submenu">
+                                                <li class="active"><a href="index.html">Home One</a></li>
+                                                <li><a href="index-2.html">Home Two</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children">
+                                            <a href="#">Movie</a>
+                                            <ul class="submenu">
+                                                <li><a href="movie.html">Movie</a></li>
+                                                <li><a href="movie-details.html">Movie Details</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="tv-show.html">tv show</a></li>
+                                        <li><a href="pricing.html">Pricing</a></li>
+                                        <li class="menu-item-has-children">
+                                            <a href="#">blog</a>
+                                            <ul class="submenu">
+                                                <li><a href="blog.html">Our Blog</a></li>
+                                                <li><a href="blog-details.html">Blog Details</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="contact.html">contacts</a></li>
+                                    </ul>
+                                </div>
+                                <div class="header-action d-none d-md-block">
+                                    <ul>
+                                        <li class="header-search"><a href="#" data-toggle="modal" data-target="#search-modal"><i class="fas fa-search"></i></a></li>
+                                        <li class="header-lang">
+                                            <form action="#">
+                                                <select id="lang-dropdown">
+                                                    <option value="">En</option>
+                                                    <option value="">Au</option>
+                                                    <option value="">AR</option>
+                                                    <option value="">TU</option>
+                                                </select>
+                                            </form>
+                                        </li>
+                                        <li class="header-btn d-flex align-items-center"><a href="#" class="btn">Sign In</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+
+                        <!-- Mobile Menu  -->
+                        <div class="mobile-menu">
+                            <div class="close-btn"><i class="fas fa-times"></i></div>
+
+                            <nav class="menu-box">
+                                <div class="nav-logo">
+                                    <a href="index.html"><img src="~/Content/img/logo/logo.png" alt="" title=""></a>
+                                </div>
+                                <div class="menu-outer">
+                                    Here Menu Will Come Automatically Via Javascript / Same Menu as in Header
+                                </div>
+                                <div class="social-links">
+                                    <ul class="clearfix">
+                                        <li><a href="#"><span class="fab fa-twitter"></span></a></li>
+                                        <li><a href="#"><span class="fab fa-facebook-square"></span></a></li>
+                                        <li><a href="#"><span class="fab fa-pinterest-p"></span></a></li>
+                                        <li><a href="#"><span class="fab fa-instagram"></span></a></li>
+                                        <li><a href="#"><span class="fab fa-youtube"></span></a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                        <nav class="mobile-menu bg-light">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="#">Navbar</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Features</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Pricing</a>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Dropdown link
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="menu-backdrop"></div>
+                        <!-- End Mobile Menu -->
+                        <!-- Modal Search -->
+                        <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form>
+                                        <input type="text" placeholder="Search here...">
+                                        <button><i class="fas fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Search-end -->
+
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    </header>
+    <!-- main-area -->
+    <main>
+        <!-- banner-area -->
+        <section class="banner-area banner-bg" data-background="~/Content/img/banner/banner_bg01.jpg">
+            <div class="container custom-container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="banner-content">
+                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
+                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
+                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                                <ul>
+                                    <li class="quality">
+                                        <span>Pg 18</span>
+                                        <span>hd</span>
+                                    </li>
+                                    <li class="category">
+                                        <a href="#">Romance,</a>
+                                        <a href="#">Drama</a>
+                                    </li>
+                                    <li class="release-time">
+                                        <span><i class="far fa-calendar-alt"></i> 2021</span>
+                                        <span><i class="far fa-clock"></i> 128 min</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://www.youtube.com/watch?v=R2gbPxeNk2E" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container custom-">
+            <div class="row">
+                <div class="col-12 mt-5">
+                    @RenderBody()
+                    <hr/>
+                </div>
+            </div>
+        </div>
+        <!-- newsletter-area -->
+        <section class="newsletter-area newsletter-bg" data-background="~/Content/img/bg/newsletter_bg.jpg">
+            <div class="container">
+                <div class="newsletter-inner-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="newsletter-content">
+                                <h4>Trial Start First 30 Days.</h4>
+                                <p>Enter your email to create or restart your membership.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <form action="#" class="newsletter-form">
+                                <input type="email" required placeholder="Enter your email">
+                                <button class="btn">get started</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-top-wrap">
+            <div class="container">
+                <div class="footer-menu-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3">
+                            <div class="footer-logo">
+                                <a href="index.html"><img src="~/Content/img/logo/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="footer-menu">
+                                <nav>
+                                    <ul class="navigation">
+                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="index.html">Movie</a></li>
+                                        <li><a href="index.html">Tv show</a></li>
+                                        <li><a href="index.html">Pages</a></li>
+                                        <li><a href="pricing.html">Pricing</a></li>
+                                    </ul>
+                                    <div class="footer-search">
+                                        <form action="#">
+                                            <input type="text" placeholder="Find Favorite Movie">
+                                            <button><i class="fas fa-search"></i></button>
+                                        </form>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-quick-link-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <div class="quick-link-list">
+                                <ul>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">Help Center</a></li>
+                                    <li><a href="#">Terms of Use</a></li>
+                                    <li><a href="#">Privacy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="footer-social">
+                                <ul>
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="copyright-text">
+                            <p>Copyright &copy; @DateTime.Now.Year AVG Team</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="payment-method-img text-center text-md-right">
+                            <img src="~/Content/img/images/card_img.png" alt="img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
-</html>
+
+
