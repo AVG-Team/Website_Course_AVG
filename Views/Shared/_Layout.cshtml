@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="~/Content/responsive.css">
     @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/toastr.css")
+
     <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
 </head>
 </html>
@@ -45,8 +47,8 @@
                         <div class="menu-wrap">
                             <nav class="menu-nav show justify-content-between">
                                 <div class="logo me-5">
-                                    <a href="index.html">
-                                        <img src="~/Content/img/logo/avg_team.png" alt="Logo">
+                                    <a href="@Url.Action("Index", "Home")">
+                                        <img src="~/Content/img/logo/logo.png" alt="Logo">
                                     </a>
                                 </div>
                                 <div class="navbar-wrap main-menu d-none d-lg-flex">
@@ -90,7 +92,14 @@
                                                 </select>
                                             </form>
                                         </li>
-                                        <li class="header-btn d-flex align-items-center"><a href="#" class="btn">Sign In</a></li>
+                                        @if (! Website_Course_AVG.Managers.Helpers.IsAuthenticated())
+                                        {
+                                            <li class="header-btn d-flex align-items-center"><a href="@Url.Action("Login", "Account")" class="btn">Sign In</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="header-btn d-flex align-items-center"><a href="@Url.Action("LogOff", "Account")" class="btn">Sign Out</a></li>
+                                        }
                                     </ul>
                                 </div>
                             </nav>
@@ -312,7 +321,72 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/toastr.js")
     @RenderSection("scripts", required: false)
+
+    <script>
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cookieName, cookieValue, secondsToExpire, type = 1) {
+            if (type == 0) {
+                var expires = secondsToExpire;
+            } else if (type == 1) {
+                var date = new Date();
+                date.setTime(date.getTime() + (secondsToExpire * 1000));
+                var expires = "expires=" + date.toUTCString();
+            }
+            
+            var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+
+            var existingCookies = document.cookie.split(';');
+
+            var found = false;
+            for (var i = 0; i < existingCookies.length; i++) {
+                var cookie = existingCookies[i].trim();
+                if (cookie.indexOf(cookieName + "=") === 0) {
+                    existingCookies[i] = updatedCookie;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                existingCookies.push(updatedCookie);
+            }
+
+            document.cookie = existingCookies.join(';');
+        }
+
+        function deleteCookie(cookieName) {
+            setCookie(cookieName, "", 'expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;', 0)
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let cookies = document.cookie;
+
+            var cookieNotify = getCookie('Notify');
+            if (cookieNotify !== "")
+                toastr.success(cookieNotify, 'Notify')
+
+            var cookieError = getCookie('Error');
+            if (cookieError !== "")
+                toastr.error(cookieError, 'Error')
+        })
+    </script>
 </body>
 
 

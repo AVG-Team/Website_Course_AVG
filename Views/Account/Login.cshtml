@@ -50,26 +50,20 @@
                         </div>
                         <div class="input-group mb-3 justify-content-center">
                             <div class="row">
-                                <div class="col">
-                                    <button class="btn btn-lg btn-light w-100 fs-6 d-flex justify-content-center">
-                                        <i class="fab fa-github me-2 align-self-center"></i>
-                                    </button>
-                                </div>
-                                <div class="col">
-                                    <button class="btn btn-lg btn-light w-100 fs-6 d-flex justify-content-center">
-                                        <i class="fa-brands fa-google me-2 align-self-center"></i>
-                                    </button>
-                                </div>
-                                <div class="col">
-                                    <button class="btn btn-lg btn-light w-100 fs-6 d-flex justify-content-center">
-                                        <i class="fa-brands fa-facebook me-2 align-self-center"></i>
-                                    </button>
-                                </div>
+                                @*<div class="col">
+            <button class="btn btn-lg btn-light w-100 fs-6 d-flex justify-content-center">
+                <i class="fab fa-github me-2 align-self-center"></i>
+            </button>
+        </div>*@
+                                <p><a href="@Website_Course_AVG.Managers.Helpers.UrlGithubLogin()" class="btn btn-primary btn-lg">Github login</a></p>
+                                <section id="socialLoginForm">
+                                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                                </section>
                             </div>
                         </div>
 
                         <div class="row">
-                            <small>Don't have account? <a href="#">Sign Up</a></small>
+                            <small>Don't have account? <a href="@Url.Action("Register")">Sign Up</a></small>
                         </div>
                     </div>
                 </div>

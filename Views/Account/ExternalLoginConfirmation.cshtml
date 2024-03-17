@@ -1,6 +1,7 @@
 ﻿@model Website_Course_AVG.Models.ExternalLoginConfirmationViewModel
 @{
     ViewBag.Title = "Register";
+    bool isReadonlyAttribute = ((ViewBag.LoginProvider != "Twitter") && (ViewBag.LoginProvider != "Github"));
 }
 <main aria-labelledby="title">
     <h2 id="title">@ViewBag.Title.</h2>
@@ -21,8 +22,10 @@
         <div class="row">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                <input type="hidden" value="@ViewBag.LoginProvider" name="loginProvider"/>
+                <input type="hidden" value="@ViewBag.login" name="username"/>
+                <input type ="hidden" value="@ViewBag.provideKey" name="provideKey"/>
+                <input type="text" name="Email" value="@ViewBag.Email" class="form-control" @(isReadonlyAttribute ? "readonly" : "")/>
             </div>
         </div>
         <div class="row">

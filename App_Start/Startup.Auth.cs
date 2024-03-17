@@ -5,7 +5,11 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using Website_Course_AVG.Attributes;
 using Website_Course_AVG.Models;
+using Microsoft.Owin.Host.SystemWeb;
+using Microsoft.Owin.Security.Twitter;
+using Website_Course_AVG.Managers;
 
 namespace Website_Course_AVG
 {
@@ -34,7 +38,7 @@ namespace Website_Course_AVG
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -50,19 +54,34 @@ namespace Website_Course_AVG
             //    clientId: "",
             //    clientSecret: "");
 
+            string clientIdTW = Helpers.GetValueFromAppSetting("ClientIdTW");
+            string clientSecretTW = Helpers.GetValueFromAppSetting("ClientSecretTW");
+            app.UseTwitterAuthentication(new TwitterAuthenticationOptions()
+            {
+                ConsumerKey = clientIdTW,
+                ConsumerSecret = clientSecretTW
+            });
+
             //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            //   consumerKey: "ndnrokObeNhBfgyzsb2hnFYyc",
+            //   consumerSecret: "Tfq1qMQIWUfHcO1P257QLtOg9vu7ruaCy1t4yWwz52Qxb4IABZ");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            string clientIdFB = Helpers.GetValueFromAppSetting("ClientIdFB");
+            string clientSecretFB = Helpers.GetValueFromAppSetting("ClientSecretFB");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseFacebookAuthentication(
+               appId: clientIdFB,
+               appSecret: clientSecretFB
+            );
+
+            string clientIdGG = Helpers.GetValueFromAppSetting("ClientIdGG");
+            string clientSecretGG = Helpers.GetValueFromAppSetting("ClientSecretGG");
+
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = clientIdGG,
+                ClientSecret = clientSecretGG
+            });
         }
     }
 }
