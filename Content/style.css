@@ -1033,7 +1033,7 @@ label {
     padding: 295px 0 273px;
     background-position: center;
     background-size: cover;
-    background-image: url(img/banner/banner_bg01.jpg);
+    background-image: url(img/banner/layout_main_section.jpg);
 }
 
 .banner-content .sub-title {
@@ -2692,7 +2692,7 @@ label {
 .newsletter-bg {
     background-position: center;
     background-size: cover;
-    background-image: url('../Content/img/bg/newsletter_bg.jpg');
+    background-image: url('../Content/img/bg/newsletter_footer_bg.jpg');
 }
 .newsletter-inner-wrap {
     padding: 45px 80px;
