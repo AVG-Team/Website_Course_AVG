@@ -1,16 +1,15 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Octokit;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
-using Website_Course_AVG.Attributes;
 
 namespace Website_Course_AVG.Controllers
 {
@@ -59,6 +58,7 @@ namespace Website_Course_AVG.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+
             return View();
         }
 
@@ -279,7 +279,8 @@ namespace Website_Course_AVG.Controllers
         [HttpPost]
         [Website_Course_AVG.Attributes.AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl, string Email)
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model,
+            string returnUrl, string Email, string loginProvider = "", string username = "", string provideKey = "")
         {
             var UserManager = new Website_Course_AVG.Managers.UserManager();
 
@@ -293,7 +294,16 @@ namespace Website_Course_AVG.Controllers
             {
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
+
+                if (loginProvider == "Github")
+                {
+                    info = new ExternalLoginInfo();
+                    info.Email = username;
+                    info.DefaultUserName = username;
+                    info.Login = new UserLoginInfo(loginProvider, provideKey);
+                }
+
+                if (info == null && loginProvider != "Github")
                 {
                     Helpers.addCookie("Error", "Error Unknow, Please Try Again");
                     return View("ExternalLoginFailure");
@@ -304,7 +314,7 @@ namespace Website_Course_AVG.Controllers
                 if (!UserManager.CheckUsername(info.Email))
                 {
                     var userAccount = new account();
-                    if (info.Email == null && info.Login.LoginProvider == "Twitter")
+                    if (info.Email == null && (info.Login.LoginProvider == "Twitter" || info.Login.LoginProvider == "Github"))
                     {
                         info.Email = Email;
                         userAccount.username = info.DefaultUserName;
@@ -427,6 +437,50 @@ namespace Website_Course_AVG.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+        #endregion
+
+        #region Github
+
+
+        public async Task<ActionResult> GithubLogin(string code)
+        {
+            var client = new HttpClient();
+            var parameters = new Dictionary<string, string>
+            {
+                { "client_id", ConfigurationManager.AppSettings["ClientIdGH"].ToString() },
+                { "client_secret", ConfigurationManager.AppSettings["ClientSecretGH"].ToString() },
+                { "code", code },
+                { "redirect_uri", ConfigurationManager.AppSettings["RedirectUrl"].ToString() }
+            };
+            var content = new FormUrlEncodedContent(parameters);
+            var response = await client.PostAsync("https://github.com/login/oauth/access_token", content);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var values = HttpUtility.ParseQueryString(responseContent);
+            var accessToken = values["access_token"];
+            var client1 = new GitHubClient(new Octokit.ProductHeaderValue("Huynguyenjv"));
+            var tokenAuth = new Credentials(accessToken);
+            client1.Credentials = tokenAuth;
+            var user = await client1.User.Current();
+            var login = user.Login;
+            var provideKey = user.Id.ToString();
+            if (login == null) return RedirectToAction("Login");
+
+            var UserManager = new Website_Course_AVG.Managers.UserManager();
+
+            if (UserManager.CheckUsername(login))
+            {
+                Helpers.addCookie("Notify", "Login Successful");
+                UserManager.login(login);
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.LoginProvider = "Github";
+            ViewBag.Email = user.Email;
+            ViewBag.login = login;
+            ViewBag.provideKey = provideKey;
+            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = user.Email });
+        }
+
         #endregion
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.Helpers;
-using Website_Course_AVG.Managers;
 
 namespace Website_Course_AVG.Managers
 {
@@ -25,6 +21,14 @@ namespace Website_Course_AVG.Managers
         public static string GetValueFromAppSetting(string key)
         {
             return global::System.Configuration.ConfigurationManager.AppSettings[key];
+        }
+
+        public static string UrlGithubLogin()
+        {
+            string clientIdGh = GetValueFromAppSetting("ClientIdGH");
+            string redirectUrl = GetValueFromAppSetting("RedirectUrl");
+            return
+                "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
         }
     }
 }
