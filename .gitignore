@@ -364,3 +364,6 @@ FodyWeavers.xsd
 /Web.config
 /Web.Debug.config
 /Web.Release.config
+/Models/MyData.dbml
+/Models/MyData.dbml.layout
+/Models/MyData.designer.cs
