@@ -307,6 +307,7 @@
     <Content Include="Content\img\blog\rc_post_thumb02.jpg" />
     <Content Include="Content\img\blog\rc_post_thumb03.jpg" />
     <Content Include="Content\img\favicon.png" />
+    <Content Include="Content\img\images\login.png" />
     <Content Include="Content\img\images\card_img.png" />
     <Content Include="Content\img\images\episode_img.jpg" />
     <Content Include="Content\img\images\card_img.png" />

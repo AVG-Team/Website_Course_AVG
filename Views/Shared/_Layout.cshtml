@@ -26,6 +26,7 @@
     @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/toastr.css")
+    @RenderSection("styles", required: false)
 
     <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
 </head>
@@ -81,7 +82,14 @@
                                 </div>
                                 <div class="header-action d-none d-md-block">
                                     <ul>
-                                        <li class="header-search"><a href="#" data-toggle="modal" data-target="#search-modal"><i class="fas fa-search"></i></a></li>
+                                        <li class="header-search">
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#search-modal">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     style="width: 20px; height: 20px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                                </svg>
+                                            </a>
+                                        </li>
                                         <li class="header-lang">
                                             <form action="#">
                                                 <select id="lang-dropdown">
@@ -161,12 +169,17 @@
                         <div class="menu-backdrop"></div>
                         <!-- End Mobile Menu -->
                         <!-- Modal Search -->
-                        <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="searchModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <form>
-                                        <input type="text" placeholder="Search here...">
-                                        <button><i class="fas fa-search"></i></button>
+                                        <input type="text" value="" placeholder="Search here..." name="query" style="max-width:none !important">
+                                        <button onclick="search(controller);">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 style="width: 40px; height: 40px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                                            </svg>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
