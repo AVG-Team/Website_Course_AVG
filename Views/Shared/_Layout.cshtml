@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/images/">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/logo/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- Place favicon.ico in the root directory -->
@@ -45,7 +45,7 @@
                     <div class="col-lg-12">
                         <div class="mobile-nav-toggler"><i class="fas fa-bars"></i></div>
                         <div class="menu-wrap">
-                            <nav class="menu-nav show">
+                            <nav class="menu-nav show justify-content-between">
                                 <div class="logo me-5">
                                     <a href="@Url.Action("Index", "Home")">
                                         <img src="~/Content/img/logo/logo.png" alt="Logo">
@@ -55,14 +55,14 @@
                                     <ul class="navigation">
                                         <li class="active menu-item-has-children">
                                             <a href="#">Home</a>
-                                            <ul class="submenu">
+                                            <ul class="submenu" style="top:70%">
                                                 <li class="active"><a href="index.html">Home One</a></li>
                                                 <li><a href="index-2.html">Home Two</a></li>
                                             </ul>
                                         </li>
                                         <li class="menu-item-has-children">
                                             <a href="#">Movie</a>
-                                            <ul class="submenu">
+                                            <ul class="submenu" style="top:70%">
                                                 <li><a href="movie.html">Movie</a></li>
                                                 <li><a href="movie-details.html">Movie Details</a></li>
                                             </ul>
@@ -71,7 +71,7 @@
                                         <li><a href="pricing.html">Pricing</a></li>
                                         <li class="menu-item-has-children">
                                             <a href="#">blog</a>
-                                            <ul class="submenu">
+                                            <ul class="submenu" style="top:70%">
                                                 <li><a href="blog.html">Our Blog</a></li>
                                                 <li><a href="blog-details.html">Blog Details</a></li>
                                             </ul>
@@ -111,7 +111,7 @@
 
                             <nav class="menu-box">
                                 <div class="nav-logo">
-                                    <a href="index.html"><img src="~/Content/img/logo/logo.png" alt="" title=""></a>
+                                    <a href="index.html"><img src="~/Content/img/logo/avg_team.png" alt="" title=""></a>
                                 </div>
                                 <div class="menu-outer">
                                     Here Menu Will Come Automatically Via Javascript / Same Menu as in Header
@@ -181,7 +181,7 @@
     <!-- main-area -->
     <main>
         <!-- banner-area -->
-        <section class="banner-area banner-bg" data-background="~/Content/img/banner/banner_bg01.jpg">
+        <section class="banner-area banner-bg" data-background="~/Content/img/banner/layout_main_section">
             <div class="container custom-container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-8">
@@ -219,14 +219,14 @@
             </div>
         </div>
         <!-- newsletter-area -->
-        <section class="newsletter-area newsletter-bg" data-background="~/Content/img/bg/newsletter_bg.jpg">
+        <section class="newsletter-area newsletter-bg" data-background="~/Content/img/bg/newsletter_footer_bg">
             <div class="container">
                 <div class="newsletter-inner-wrap">
                     <div class="row align-items-center">
                         <div class="col-lg-6">
                             <div class="newsletter-content">
-                                <h4>Trial Start First 30 Days.</h4>
-                                <p>Enter your email to create or restart your membership.</p>
+                                <h4 class="text-white">Trial Start First 30 Days.</h4>
+                                <p class="text-white">Enter your email to create or restart your membership.</p>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -248,7 +248,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-3">
                             <div class="footer-logo">
-                                <a href="index.html"><img src="~/Content/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img src="~/Content/img/logo/avg_team.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9">
@@ -300,7 +300,7 @@
         </div>
         <div class="copyright-wrap">
             <div class="container">
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6">
                         <div class="copyright-text">
                             <p>Copyright &copy; @DateTime.Now.Year AVG Team</p>
@@ -308,7 +308,10 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="payment-method-img text-center text-md-right">
-                            <img src="~/Content/img/images/card_img.png" alt="img">
+                            <ul class="d-flex justify-content-end">
+                                <li><a href="#"><img src="~/Content/img/images/momo_footer.png" alt="img"></a></li>
+                                <li><a href="#"><img src="~/Content/img/images/vnpay_footer.png" style="border-radius:10px;padding-left: 5px" alt="img"></a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
