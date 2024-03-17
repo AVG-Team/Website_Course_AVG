@@ -342,7 +342,7 @@ namespace Website_Course_AVG.Controllers
         }
 
         //
-        [Website_Course_AVG.Attributes.AllowAnonymous]
+        [Website_Course_AVG.Attributes.Authorize]
         public ActionResult LogOff()
         {
             var UserManager = new Website_Course_AVG.Managers.UserManager();
