@@ -482,5 +482,10 @@ namespace Website_Course_AVG.Controllers
         }
 
         #endregion
+
+        public ActionResult SendCode(string returnurl, bool rememberme)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
