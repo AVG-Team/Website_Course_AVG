@@ -9,13 +9,13 @@
     }
 </style>
 <main aria-labelledby="title">
-    <div class="  container d-inline min-vh-100">
+    <div class="container d-inline min-vh-100">
         <div class="row">
             <div class="rounded d-flex justify-content-center">
                 <div class="col-md-6 col-sm-12 shadow-lg p-5 bg-light">
                     <div>
                         <div class="text-center">
-                            <h3 class="text-primary">Create Account</h3>    
+                            <h3 class="text-primary">Create Account</h3>
                         </div>
                     </div>
                     <div class="p-4">
@@ -34,28 +34,31 @@
                                 <span class="input-group-text bg-primary rounded-start">
                                     <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
                                 </span>
-                                <input id="password" type="password" class="form-control form-control form-control-lg bg-light fs-6" placeholder="Password">
-                                <button type="button" class="btn btn-outline-ligh rounded position-absolute end-0 h-100">
-                                    <i id="eyeicon_password" class="fa-solid fa-eye"></i>
-                                </button>
+
+                                @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end ", placeholder = "Password" })
+                                <span id="enrypassword" class=" visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
+                                    <i class="fa fa-eye" id="togglePassword"></i>
+                                </span>
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
-                            <div class="input-group mb-3 position-relative">
+                            <div class="input-group mb-3 align-content-center">
                                 <span class="input-group-text bg-primary rounded-start">
                                     <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
                                 </span>
-                                <input id="re-password" type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Re-password">
-                                <button type="button" class="btn btn-outline-ligh rounded position-absolute end-0 h-100">
-                                    <i id="eyeicon_repassword" class="fa-solid fa-eye" style="color:gray"></i>
-                                </button>
+                                <input id="RepasswordField" style="z-index:1;" type="password" class="form-control form-control-lg bg-light fs-6 rounded-end" placeholder="Repassword">
+                                @*@Html.PasswordFor(m => m.Password, new { @id = "RepasswordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end", placeholder = "Repassword" })*@
+                                <span id="Reenrypassword" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100" style="z-index:2; background-color: transparent">
+                                    <i class="fa fa-eye" id="RetogglePassword"></i>
+                                </span>
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="d-grid col-12 mx-auto">
+                            <div class="d-grid col-12 mx-auto mb-4">
                                 <button class="btn btn-primary rounded-2" type="button"><span></span> Sign up</button>
                             </div>
-                            <p class="text-center mt-3">
-                                Already have an account?
-                                <span class="text-primary">Sign in</span>
-                            </p>
+                            <div class="row">
+                                <small>Don't have account? <a href="~/Views/Account/Login.cshtml">Sign Up</a></small>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -69,31 +72,53 @@
 }
 
 <script>
-    let passwordField = document.getElementById("password");
-    let eyeIcon = document.getElementById("eyeicon_password");
-    let re_passwordField = document.getElementById("re-password");
-    let eyeIcon_repassword = document.getElementById("eyeicon_repassword");
-
-    eyeIcon.onclick = function () {
-        if (passwordField.type == "password") {
+    var eyeIcon = document.getElementById("togglePassword");
+    document.getElementById("enrypassword").addEventListener("click", function () {
+        var passwordField = document.getElementById("passwordField");
+        if (passwordField.type === "password") {
             passwordField.type = "text";
-            eyeIcon.className = "fa-solid fa-eye";
-
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash");
         } else {
             passwordField.type = "password";
-            eyeIcon.className = "fa-solid fa-eye-slash";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye");
         }
-    }
+    });
 
-    eyeIcon_repassword.onclick = function () {
-        if (re_passwordField.type == "password") {
-            re_passwordField.type = "text";
-            eyeIcon_repassword.className = "fa-solid fa-eye";
-
+    var reeyeIcon = document.getElementById("RetogglePassword");
+    document.getElementById("Reenrypassword").addEventListener("click", function () {
+        var repasswordField = document.getElementById("RepasswordField");
+        if (repasswordField.type === "password") {
+            repasswordField.type = "text";
+            reeyeIcon.classList.remove("fa-eye");
+            reeyeIcon.classList.add("fa-eye-slash");
         } else {
-            re_passwordField.type = "password";
-            eyeIcon_repassword.className = "fa-solid fa-eye-slash";
+            repasswordField.type = "password";
+            reeyeIcon.classList.remove("fa-eye-slash");
+            reeyeIcon.classList.add("fa-eye");
         }
-    }
+    });
 
+    document.getElementById("RepasswordField").addEventListener("click", function () {
+        var span = document.getElementById("Reenrypassword");
+        span.classList.remove("visually-hidden")
+    });
+
+    document.getElementById("passwordField").addEventListener("click", function () {
+        var span = document.getElementById("enrypassword");
+        span.classList.remove("visually-hidden")
+    });
+
+    document.getElementById("RepasswordField").addEventListener("blur", function () {
+        var span = document.getElementById("Reenrypassword");
+        span.classList.add("visually-hidden");
+    });
+
+    document.getElementById("passwordField").addEventListener("blur", function () {
+        var span = document.getElementById("enrypassword");
+        span.classList.add("visually-hidden")
+    });
+
+   
 </script>

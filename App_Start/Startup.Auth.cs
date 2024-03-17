@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.NetworkInformation;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -45,24 +46,41 @@ namespace Website_Course_AVG
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+			// Uncomment the following lines to enable logging in with third party login providers
+			//app.UseMicrosoftAccountAuthentication(
+			//    clientId: "",
+			//    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+			//app.UseTwitterAuthentication(
+			//   consumerKey: "",
+			//   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+			//app.UseFacebookAuthentication(
+			//   appId: "",
+			//   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
-        }
+			//app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+			//{
+			//    ClientId = "",
+			//    ClientSecret = ""
+			//});
+
+			string clientIdFB = global::System.Configuration.ConfigurationManager.AppSettings["ClientIdFB"];
+			string clientSecretFB = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecretFB"];
+
+			app.UseFacebookAuthentication(
+			   appId: clientIdFB,
+			   appSecret: clientSecretFB
+			);
+
+			string clientIdGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientIdGG"];
+			string clientSecretGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecretGG"];
+
+			app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+			{
+				ClientId = clientIdGG,
+				ClientSecret = clientSecretGG
+			});
+		}
     }
 }
