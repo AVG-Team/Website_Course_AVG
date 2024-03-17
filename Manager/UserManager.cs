@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using Website_Course_AVG.Manager;
+using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Managers
@@ -73,6 +73,24 @@ namespace Website_Course_AVG.Managers
         {
             string authToken = HttpContext.Current.Request.Cookies["AuthToken"]?.Value;
             return !string.IsNullOrEmpty(authToken);
+        }
+
+        //role = 1 : user
+        public bool IsUser()
+        {
+            if (!IsAuthenticated())
+                return false;
+            user user = GetUserFromToken();
+            return user != null;
+        }
+
+        // role = 2 : admin
+        public bool IsAdmin()
+        {
+            if (!IsUser())
+                return false;
+            user user = GetUserFromToken();
+            return user.role > 1;
         }
 
         public void login(string email)

@@ -10,11 +10,11 @@ using System.Text;
 using System.Web;
 using Website_Course_AVG.Models;
 
-namespace Website_Course_AVG.Manager
+namespace Website_Course_AVG.Managers
 {
     public partial class TokenHelper
     {
-        private const string Secret = "AVG-COURSES";
+        private static readonly string Secret = Helpers.GetValueFromAppSetting("SecretToken");
 
         public static string GenerateToken(string username, string role = "User")
         {

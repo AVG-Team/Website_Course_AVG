@@ -8,12 +8,12 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Website_Course_AVG.Manager;
+using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
+using Website_Course_AVG.Attributes;
 
 namespace Website_Course_AVG.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -55,8 +55,7 @@ namespace Website_Course_AVG.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
-        [Website_Course_AVG.Attributes.AllowAnonymousAttribute]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -66,7 +65,7 @@ namespace Website_Course_AVG.Controllers
         //
         // POST: /Account/Login
         [HttpPost]
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -95,7 +94,7 @@ namespace Website_Course_AVG.Controllers
 
         //
         // GET: /Account/VerifyCode
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Require that the user has already logged in via username/password or external login
@@ -109,7 +108,7 @@ namespace Website_Course_AVG.Controllers
         //
         // POST: /Account/VerifyCode
         [HttpPost]
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
         {
@@ -138,7 +137,7 @@ namespace Website_Course_AVG.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -147,7 +146,7 @@ namespace Website_Course_AVG.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -176,7 +175,7 @@ namespace Website_Course_AVG.Controllers
 
         //
         // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -189,7 +188,7 @@ namespace Website_Course_AVG.Controllers
 
         //
         // GET: /Account/ForgotPassword
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -198,7 +197,7 @@ namespace Website_Course_AVG.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -225,7 +224,7 @@ namespace Website_Course_AVG.Controllers
 
         //
         // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -234,7 +233,7 @@ namespace Website_Course_AVG.Controllers
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -244,12 +243,13 @@ namespace Website_Course_AVG.Controllers
 
         //
         // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
+                Helpers.addCookie("Error", "Error Unknow, Please Try Again");
                 return RedirectToAction("Login");
             }
 
@@ -257,10 +257,13 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.CheckUsername(loginInfo.DefaultUserName))
             {
+                Helpers.addCookie("Notify", "Login Successful");
                 UserManager.login(loginInfo.DefaultUserName);
                 return RedirectToAction("Index", "Home");
-            }else if(UserManager.CheckUsername(loginInfo.Email))
+            }
+            else if (UserManager.CheckUsername(loginInfo.Email))
             {
+                Helpers.addCookie("Notify", "Login Successful");
                 UserManager.login(loginInfo.Email);
                 return RedirectToAction("Index", "Home");
             }
@@ -274,7 +277,7 @@ namespace Website_Course_AVG.Controllers
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl, string Email)
         {
@@ -282,6 +285,7 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.IsAuthenticated())
             {
+                Helpers.addCookie("Error", "You are logging in.");
                 return RedirectToAction("Index", "Manage");
             }
 
@@ -291,6 +295,7 @@ namespace Website_Course_AVG.Controllers
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
+                    Helpers.addCookie("Error", "Error Unknow, Please Try Again");
                     return View("ExternalLoginFailure");
                 }
 
@@ -314,9 +319,11 @@ namespace Website_Course_AVG.Controllers
                     if (result.Succeeded)
                     {
                         UserManager.login(info.Email);
+                        Helpers.addCookie("Notify", "Login Successful");
                         return RedirectToLocal(returnUrl);
                     }
                     AddErrors(result);
+                    Helpers.addCookie("Error", "Error Unknow, Please Try Again", 30);
                 }
             }
 
@@ -325,20 +332,19 @@ namespace Website_Course_AVG.Controllers
         }
 
         //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult LogOff()
         {
             var UserManager = new Website_Course_AVG.Managers.UserManager();
             UserManager.logout();
+
+            Helpers.addCookie("Notify", "Logout Successful");
             return RedirectToAction("Index", "Home");
         }
 
         //
         // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
             return View();

@@ -9,6 +9,7 @@ using Website_Course_AVG.Attributes;
 using Website_Course_AVG.Models;
 using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Security.Twitter;
+using Website_Course_AVG.Managers;
 
 namespace Website_Course_AVG
 {
@@ -53,8 +54,8 @@ namespace Website_Course_AVG
             //    clientId: "",
             //    clientSecret: "");
 
-            string clientIdTW = global::System.Configuration.ConfigurationManager.AppSettings["ClientIdTW"];
-            string clientSecretTW = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecretTW"];
+            string clientIdTW = Helpers.GetValueFromAppSetting("ClientIdTW");
+            string clientSecretTW = Helpers.GetValueFromAppSetting("ClientSecretTW");
             app.UseTwitterAuthentication(new TwitterAuthenticationOptions()
             {
                 ConsumerKey = clientIdTW,
@@ -65,16 +66,16 @@ namespace Website_Course_AVG
             //   consumerKey: "ndnrokObeNhBfgyzsb2hnFYyc",
             //   consumerSecret: "Tfq1qMQIWUfHcO1P257QLtOg9vu7ruaCy1t4yWwz52Qxb4IABZ");
 
-            string clientIdFB = global::System.Configuration.ConfigurationManager.AppSettings["ClientIdFB"];
-            string clientSecretFB = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecretFB"];
+            string clientIdFB = Helpers.GetValueFromAppSetting("ClientIdFB");
+            string clientSecretFB = Helpers.GetValueFromAppSetting("ClientSecretFB");
 
             app.UseFacebookAuthentication(
                appId: clientIdFB,
                appSecret: clientSecretFB
             );
 
-            string clientIdGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientIdGG"];
-            string clientSecretGG = global::System.Configuration.ConfigurationManager.AppSettings["ClientSecretGG"];
+            string clientIdGG = Helpers.GetValueFromAppSetting("ClientIdGG");
+            string clientSecretGG = Helpers.GetValueFromAppSetting("ClientSecretGG");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {

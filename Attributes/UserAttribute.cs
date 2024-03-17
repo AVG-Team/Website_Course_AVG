@@ -12,14 +12,14 @@ using System.Web.Routing;
 
 namespace Website_Course_AVG.Attributes
 {
-    public class AllowAnonymousAttribute : ActionFilterAttribute
+    public class UserAttribute : ActionFilterAttribute
     {
         UserManager UserManager = new UserManager();
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (UserManager.IsAuthenticated())
+            if (!UserManager.IsUser())
             {
-                Helpers.addCookie("Error", "You are login!!!");
+                Helpers.addCookie("Error", "You are't login!!!");
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new { controller = "Home", action = "Index" }));
                 return;
