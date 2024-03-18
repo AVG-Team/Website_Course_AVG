@@ -100,9 +100,10 @@
                                                 </select>
                                             </form>
                                         </li>
-                                        @if (! Website_Course_AVG.Managers.Helpers.IsAuthenticated())
+                                        @if (!Website_Course_AVG.Managers.Helpers.IsAuthenticated())
                                         {
                                             <li class="header-btn d-flex align-items-center"><a href="@Url.Action("Login", "Account")" class="btn">Sign In</a></li>
+                                            <li class="header-btn d-flex align-items-center" style="margin-left:5px"><a href="@Url.Action("Register", "Account")" class="btn" >Sign Up</a></li>
                                         }
                                         else
                                         {
