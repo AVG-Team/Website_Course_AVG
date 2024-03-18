@@ -1,8 +1,7 @@
 ﻿@model Website_Course_AVG.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
+@using Octokit
 
-<h4>Use another service to log in.</h4>
-<hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
     if (loginProviders.Count() == 0) {
@@ -17,12 +16,34 @@
         using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form" })) {
             @Html.AntiForgeryToken()
             <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" class="btn btn-outline-dark" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                <div class="row row-cols-2">
+                    <div class="col-lg-3 ">
+                        <a href="@Website_Course_AVG.Managers.Helpers.UrlGithubLogin()" class="d-flex justify-content-center text-decoration-none btn btn-sm btn-light fs-6 w-25 d-flex justify-content-center mt-1 mb-1">
+                            <i class="fab fa-github align-self-center text-white" style="margin-right: 0 "></i>
+                         </a>
+                    </div>
+                    
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        <div class="col-lg-3 col-sm-12">
+                            <button type="submit" class="btn btn-sm btn-light fs-6 w-25 d-flex justify-content-center mt-1 mb-1" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
+                                @if (@p.AuthenticationType == "Google")
+                                {
+                                    <i class="fa-brands fa-google align-self-center" style="margin-right : 0;"></i>
+                                }
+                                @if (@p.AuthenticationType == "Facebook")
+                                {
+                                    <i class="fa-brands fa-facebook align-self-center" style="margin-right : 0;"></i>
+                                }
+                                @if (@p.AuthenticationType == "Twitter")
+                                {
+                                    <i class="fa-brands fa-twitter align-self-center" style="margin-right : 0;"></i>
+                                }
+                            </button>
+                        </div>
                     }
-                </p>
+                </div>
             </div>
         }
-    }
+     }
 }

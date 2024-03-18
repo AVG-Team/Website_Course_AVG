@@ -3,10 +3,10 @@
 
 @{
     ViewBag.Title = "LOGIN";
-} 
+}
 <style>
-    input{
-        max-width:none;
+    input {
+        max-width: none;
     }
 </style>
 <main aria-labelledby="title">
@@ -17,7 +17,7 @@
             <!--------------------------- Left Box ----------------------------->
             <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #103cbe;">
                 <div class="featured-image mb-3">
-                    <img src="images/1.png" class="img-fluid" style="width: 250px;">
+                    <img src="/Content/img/images/login.png" class="img-fluid" style="width: 250px;">
                 </div>
                 <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Be Verified</p>
                 <small class="text-white text-wrap text-center" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Join experienced Designers on this platform.</small>
@@ -28,60 +28,54 @@
                 <div class="right-box" style="padding: 40px 30px 40px 40px;">
                     <div class="row align-items-center">
                         <div class="header-text mb-4">
-                            <h2>Hello,Again</h2>
+                            <h2 class="text-info">Hello,Again</h2>
                             <p>We are happy to have you back.</p>
                         </div>
                         <section id="loginForm">
                             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
                             {
                                 @Html.AntiForgeryToken()
-
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="row">
-
                                     <div class="input-group mb-2">
-                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg bg-light fs-6  mb-3", placeholder = "Email Address" })
-                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg bg-light fs-6  rounded", placeholder = "Email Address" })
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger float-start" })
                                 </div>
                                 <div class="row">
                                     <div class="input-group mb-2">
-                                        @Html.PasswordFor(m => m.Password, new { @id = "passwordField", @class = "form-control form-control-lg bg-light fs-6  mb-3", placeholder = "Password" })
-                                        <div class="input-group-append">
-                                            <span id="enrypassword" class="input-group-text border-0 position-absolute  h-75 " style=" background-color: transparent" >
-                                                <i class="fa fa-eye" id="togglePassword"></i>
-                                            </span>
-                                        </div>
+                                        @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end position-relative", placeholder = "Password" })
+                                        <span id="enrypassword" class=" input-group-text border-0 position-absolute h-100 " style="z-index: 10; background-color: transparent; right: 2%; ">
+                                            <i class="fa fa-eye-slash" id="togglePassword" style="z-index: 10;"></i>
+                                        </span>
                                     </div>
                                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                 </div>
-
                                 <div class="row">
-                                    <div class="input-group mb-5 d-flex justify-content-between">
+                                    <div class="input-group mb-4 d-flex justify-content-between">
                                         <div class="checkbox">
                                             @Html.CheckBoxFor(m => m.RememberMe)
                                             @Html.LabelFor(m => m.RememberMe)
                                         </div>
+                                        <div class="forgot">
+                                            <small><a href="#">Forgot Password?</a></small>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="input-group mb-3">
-                                        <input type="submit" value="Log in" class="btn btn-outline-dark" />
+                                    <div class="input-group mb-3 d-flex justify-content-center">
+                                        <input type="submit" value="Log in" class="btn btn-outline-dark w-75" />
                                     </div>
                                 </div>
-
-                            }
+                             }
                         </section>
-
                         <div class="input-group mb-3 justify-content-center">
                             <div class="row">
-                                <p><a href="@Website_Course_AVG.Managers.Helpers.UrlGithubLogin()" class="btn btn-primary btn-lg">Github login</a></p>
                                 <section id="socialLoginForm">
                                     @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
                                 </section>
                             </div>
                         </div>
-
                         <div class="row">
                             <small>Don't have account? <a href="~/Views/Account/Register.cshtml">Sign Up</a></small>
                         </div>
@@ -90,25 +84,34 @@
             </div>
         </div>
     </div>
-            <script>
-                var eyeIcon = document.getElementById("togglePassword");
-                document.getElementById("enrypassword").addEventListener("click", function () {
-                    var passwordField = document.getElementById("passwordField");
-                    if (passwordField.type === "password") {
-                        passwordField.type = "text";
-                        eyeIcon.classList.remove("fa-eye");
-                        eyeIcon.classList.add("fa-eye-slash");
-                    } else {
-                        passwordField.type = "password";
-                        eyeIcon.classList.remove("fa-eye-slash");
-                        eyeIcon.classList.add("fa-eye");
-                    }
-                });
-            </script>
-
-
 </main>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    var eyeIcon = document.getElementById("togglePassword");
+    document.getElementById("enrypassword").addEventListener("click", function () {
+        var passwordField = document.getElementById("passwordField");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash");
+        }
+    });
+
+    document.getElementById("passwordField").addEventListener("click", function () {
+        var span = document.getElementById("enrypassword");
+        span.classList.remove("visually-hidden")
+    });
+
+    document.getElementById("passwordField").addEventListener("blur", function () {
+        var span = document.getElementById("enrypassword");
+        span.classList.add("visually-hidden")
+    });
+</script>
