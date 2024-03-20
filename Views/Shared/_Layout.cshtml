@@ -363,26 +363,16 @@
                 date.setTime(date.getTime() + (secondsToExpire * 1000));
                 var expires = "expires=" + date.toUTCString();
             }
-            
-            var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
 
-            var existingCookies = document.cookie.split(';');
-
-            var found = false;
-            for (var i = 0; i < existingCookies.length; i++) {
-                var cookie = existingCookies[i].trim();
-                if (cookie.indexOf(cookieName + "=") === 0) {
-                    existingCookies[i] = updatedCookie;
-                    found = true;
-                    break;
-                }
+            var valueCookie = getCookie(cookieName);
+            if (valueCookie == "") {
+                var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+            } else {
+                valueCookie += "," + cookieValue;
+                var updatedCookie = cookieName + "=" + valueCookie + ";" + expires + ";path=/";
             }
 
-            if (!found) {
-                existingCookies.push(updatedCookie);
-            }
-
-            document.cookie = existingCookies.join(';');
+            document.cookie = updatedCookie;
         }
 
         function deleteCookie(cookieName) {

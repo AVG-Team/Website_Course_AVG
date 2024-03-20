@@ -1,0 +1,21 @@
+﻿@model List<Website_Course_AVG.Controllers.CartController.Course>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+</head>
+<body>
+    <div>
+        @foreach (var course in Model)
+        {
+            <div>@course.title</div>
+        }
+        @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+        {
+            <input type="hidden" name="courseId" value="1" /> <!-- Thay 1 bằng ID sản phẩm thực tế -->
+            <input type="submit" value="Add to Cart" />
+        }
+    </div>
+</body>
+</html>
