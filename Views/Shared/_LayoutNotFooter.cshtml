@@ -185,7 +185,7 @@
                             </div>
                         </div>
                         <!-- Modal Search-end -->
-
+                        @RenderSection("Modals", required: false)
                     </div>
                 </div>
             </div>
@@ -193,9 +193,7 @@
     </header>
     <!-- main-area -->
     <main>
-        <!-- banner-area -->
-        @RenderSection("BannerArea", required: false)
-        <div class="container custom-">
+        <div class="container custom-" id="container-custom">
             <div class="row">
                 <div class="col-12 mt-5">
                     @RenderBody()
@@ -203,106 +201,7 @@
                 </div>
             </div>
         </div>
-        <!-- newsletter-area -->
-        <section class="newsletter-area newsletter-bg" data-background="~/Content/img/bg/newsletter_footer_bg">
-            <div class="container">
-                <div class="newsletter-inner-wrap">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <div class="newsletter-content">
-                                <h4 class="text-white">Trial Start First 30 Days.</h4>
-                                <p class="text-white">Enter your email to create or restart your membership.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <form action="#" class="newsletter-form">
-                                <input type="email" required placeholder="Enter your email">
-                                <button class="btn">get started</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
-
-    <footer>
-        <div class="footer-top-wrap">
-            <div class="container">
-                <div class="footer-menu-wrap">
-                    <div class="row align-items-center">
-                        <div class="col-lg-3">
-                            <div class="footer-logo">
-                                <a href="index.html"><img src="~/Content/img/logo/avg_team.png" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-9">
-                            <div class="footer-menu">
-                                <nav>
-                                    <ul class="navigation">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="index.html">Movie</a></li>
-                                        <li><a href="index.html">Tv show</a></li>
-                                        <li><a href="index.html">Pages</a></li>
-                                        <li><a href="pricing.html">Pricing</a></li>
-                                    </ul>
-                                    <div class="footer-search">
-                                        <form action="#">
-                                            <input type="text" placeholder="Find Favorite Movie">
-                                            <button><i class="fas fa-search"></i></button>
-                                        </form>
-                                    </div>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-quick-link-wrap">
-                    <div class="row align-items-center">
-                        <div class="col-md-7">
-                            <div class="quick-link-list">
-                                <ul>
-                                    <li><a href="#">FAQ</a></li>
-                                    <li><a href="#">Help Center</a></li>
-                                    <li><a href="#">Terms of Use</a></li>
-                                    <li><a href="#">Privacy</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="footer-social">
-                                <ul>
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-wrap">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="copyright-text">
-                            <p>Copyright &copy; @DateTime.Now.Year AVG Team</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="payment-method-img text-center text-md-right">
-                            <ul class="d-flex justify-content-end">
-                                <li><a href="#"><img src="~/Content/img/images/momo_footer.png" alt="img"></a></li>
-                                <li><a href="#"><img src="~/Content/img/images/vnpay_footer.png" style="border-radius:10px;padding-left: 5px" alt="img"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -386,5 +285,3 @@
     </script>
 </body>
 </html>
-
-

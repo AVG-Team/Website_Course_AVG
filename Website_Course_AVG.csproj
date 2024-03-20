@@ -226,6 +226,7 @@
     <Compile Include="Attributes\AuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -264,6 +265,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\fonts\DesignerVN-Poppins\Readme.txt" />
     <Content Include="Content\img\banner\banner_bg01.jpg" />
     <Content Include="Content\img\banner\layout_main_section.jpg" />
     <Content Include="Content\img\banner\slider_img01.jpg" />
@@ -307,7 +309,6 @@
     <Content Include="Content\img\blog\rc_post_thumb02.jpg" />
     <Content Include="Content\img\blog\rc_post_thumb03.jpg" />
     <Content Include="Content\img\favicon.png" />
-    <Content Include="Content\img\images\login.png" />
     <Content Include="Content\img\images\card_img.png" />
     <Content Include="Content\img\images\episode_img.jpg" />
     <Content Include="Content\img\images\card_img.png" />
@@ -351,6 +352,7 @@
     <Content Include="Content\img\poster\ucm_poster10.jpg" />
     <Content Include="Content\img\preloader.svg" />
     <Content Include="Content\magnific-popup.css" />
+    <Content Include="Content\ModalSide.css" />
     <Content Include="Content\odometer.css" />
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\owl.video.play.html" />
@@ -375,6 +377,8 @@
       <LastGenOutput>MyData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-ExtraBold.ttf" />
+    <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-Regular.ttf" />
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
     </None>
@@ -426,6 +430,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\GithubLogin.cshtml" />
+    <Content Include="Views\Lesson\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutNotFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
