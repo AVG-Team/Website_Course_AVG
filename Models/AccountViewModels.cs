@@ -66,7 +66,11 @@ namespace Website_Course_AVG.Models
 
     public class RegisterViewModel
     {
-        [Required]
+		[Required]
+		[Display(Name = "userName")]
+		public string userName { get; set; }
+
+		[Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

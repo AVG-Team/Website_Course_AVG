@@ -2,12 +2,14 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Octokit;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
@@ -17,12 +19,14 @@ namespace Website_Course_AVG.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+		private readonly MyDataDataContext _context;
 
-        public AccountController()
-        {
-        }
+		public AccountController()
+		{
+			
+		}
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+		public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -69,7 +73,8 @@ namespace Website_Course_AVG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+			var userManager = new Website_Course_AVG.Managers.UserManager();
+			if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -80,6 +85,9 @@ namespace Website_Course_AVG.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    user user = userManager.GetUserFromToken();
+                    userManager.login(user.email);
+                    Helpers.addCookie("Notify", "Login Successful");
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -140,8 +148,8 @@ namespace Website_Course_AVG.Controllers
         [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
-        }
+			return View();
+		}
 
         //
         // POST: /Account/Register
@@ -150,20 +158,28 @@ namespace Website_Course_AVG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+			var UserManager = new Website_Course_AVG.Managers.UserManager();
+			if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+
+				//if user is already log in
+
+
+
+				//if user have not ever register before
+				account account = new account();
+				account.username = model.userName;
+				account.password = model.Password;
+				var result = await UserManager.CreateAccountUserAsync(model.userName, account, model.Email);
+				if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+					// Send an email with this link
+					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+					Helpers.addCookie("Notify", "Register Successful");
+					UserManager.login(model.Email);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -320,7 +336,7 @@ namespace Website_Course_AVG.Controllers
                         userAccount.username = info.DefaultUserName;
                     }
                     else
-                        userAccount.username = info.Email;
+                    userAccount.username = info.Email;
                     userAccount.provide = info.Login.LoginProvider;
                     userAccount.provide_id = info.Login.ProviderKey;
 
