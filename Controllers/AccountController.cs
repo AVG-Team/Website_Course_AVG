@@ -74,30 +74,26 @@ namespace Website_Course_AVG.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
 			var userManager = new Website_Course_AVG.Managers.UserManager();
-			if (!ModelState.IsValid)
+			if (userManager.IsAuthenticated())
+			{
+				Helpers.addCookie("Error", "You are logging in.");
+				return RedirectToAction(returnUrl);
+			}
+			if (ModelState.IsValid)
             {
-                return View(model);
+                user user = userManager.GetUserFromToken();
+                userManager.login(model.Email);
+                Helpers.addCookie("Notify", "Login Successfull");
+                return RedirectToAction(returnUrl);
             }
+   //         else
+   //         {
+			//	Helpers.addCookie("Error", "Error Unknow, Please Try Again", 30);
+			//}
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    user user = userManager.GetUserFromToken();
-                    userManager.login(user.email);
-                    Helpers.addCookie("Notify", "Login Successful");
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
-            }
+            return View(model);
         }
 
         //
