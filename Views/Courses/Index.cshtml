@@ -3,61 +3,50 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<style>
-    .btn-course::after{
-        background-color: rgba(0,0,0,5);
-        border-radius: 16px;
-        content:"";
-        inset: 0;
-        opacity: 0;
-        position: absolute;
-        transition: all .3s ease 0s;
-        visibility: hidden;
-    }
-</style>
-
-<div class="container">
+<main aria-labelledby="title">
     <div class="row">
-        <div class="col-lg-12">
-            <h3 class="text-info">Danh sach khoa hoc</h3>
-        </div>
         <div class="row">
-            <section class="col-lg-3">
-                <div class="mb-3 w-100 h-100">
-                    <a class="text-decoration-none rounded-4 object-fit-cover position-relative d-block mb-3">
-                        <button class="btn-course bg-white opacity-0 border-white black-color position-absolute translate-middle border border-1 rounded-4 p-2 " style="z-index:1; left: 50%; top: 50%; font-size:1rem;">
-                            Xem khoá học
-                        </button>
-                        <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                    </a>
-                    <text class="text-black-75 fs-6 t ">HTML CSS Pro</text>
-                    <p class="">1.200.000</p>
-                </div>
-            </section>
-            <section class="col-lg-3">
-                <div class="mb-3 w-100 h-100">
-                    <a class="text-decoration-none rounded-3 object-fit-cover position-relative d-block">
-                        <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-3 w-100 h-100" />
-                    </a>
-                </div>
-            </section>
-            <section class="col-lg-3">
-                <div class="mb-3 w-100 h-100">
-                    <a class="text-decoration-none rounded-3 object-fit-cover position-relative d-block">
-                        <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-3 w-100 h-100" />
-                    </a>
-                </div>
-            </section>
-            <section class="col-lg-3">
-                <div class="mb-3 w-100 h-100">
-                    <a class="text-decoration-none rounded-3 object-fit-cover position-relative d-block">
-                        <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-3 w-100 h-100" />
-                    </a>
-                </div>
-            </section>
+            <div class="col-lg-12">
+                <span class="text-black fs-3" style="font-weight:600;">Khoá học pro</span>
+            </div>
+            <div class="row">
+                <section class="col-lg-3">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden pt-20  w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            @*<button class="bg-white border-white text-black left-50 opacity-1 position-absolute top-50 translate-middle visually-hidden btn_course" style=" z-index: 1; transition: all .3s ease 0s;">
+                    Xem khoá học
+                </button>*@
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100"/>
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-lg-3">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden pt-20  w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            @*<button class="bg-white border-white text-black left-50 opacity-1 position-absolute top-50 translate-middle visually-hidden btn_course" style=" z-index: 1; transition: all .3s ease 0s;">
+    Xem khoá học
+</button>*@
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/27/64e184ee5d7a2.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100"/>
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-        
     </div>
-</div>
+</main>
+
 
