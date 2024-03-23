@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Managers
 {
@@ -15,7 +16,13 @@ namespace Website_Course_AVG.Managers
         public static bool IsAuthenticated()
         {
             UserManager userManager = new UserManager();
-            return userManager.IsAuthenticated() && userManager.IsUser();
+            return userManager.IsAuthenticated();
+        }
+
+        public static user GetUserFromToken()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.GetUserFromToken();
         }
 
         public static string GetValueFromAppSetting(string key)
