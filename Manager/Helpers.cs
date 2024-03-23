@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Storage.V1;
+using System;
+using System.Net.Http;
+using System.Security.AccessControl;
 using System.Web;
 using Website_Course_AVG.Models;
 
@@ -37,5 +41,22 @@ namespace Website_Course_AVG.Managers
             return
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
         }
+
+        public static string GetVideoLessonUrl(string fileName, string fileJson, int seconds = 300)
+        {
+            GoogleCredential google = GoogleCredential.FromFile(fileJson);
+
+            var bucketName = "video-lesson";
+
+            UrlSigner urlSigner = UrlSigner.FromCredential(google);
+            string url = urlSigner.Sign(
+                bucketName,
+                fileName,
+                TimeSpan.FromSeconds(seconds),
+                HttpMethod.Get);
+
+            return url;
+        }
+
     }
 }
