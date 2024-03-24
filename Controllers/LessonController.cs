@@ -12,7 +12,7 @@ namespace Website_Course_AVG.Controllers
     public class LessonController : Controller
     {
         public LessonController() { }
-        public ActionResult Index(int courseId)
+        public ActionResult Index(int courseId = 1)
         {
             return View();
         }

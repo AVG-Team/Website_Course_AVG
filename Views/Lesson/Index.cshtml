@@ -2,6 +2,7 @@
     ViewBag.Title = "Home Page";
 
     Layout = "~/Views/Shared/_LayoutNotFooter.cshtml";
+    int learned_lesson_id = 5;
 }
 
 @section Styles {
@@ -9,16 +10,243 @@
         .overflowY-scroll {
             overflow-y: scroll !important;
         }
+
+        .justify-space-between {
+            justify-content: space-between;
+        }
+
+        .div-lesson:hover {
+            background: #dcdcdc;
+            cursor: pointer;
+        }
+
+        .div-lesson.active {
+            background: rgba(240,81,35,.2);
+            cursor: pointer;
+        }
+
+        .div-lesson.disable {
+            background: #e7e7e7;
+            opacity: 80%;
+            cursor: default !important;
+        }
+
+        .btn-add-note:hover {
+            background: #e7e7e7;
+        }
+
+        .close-modal-note {
+            color: rgb(33 37 41);
+        }
+
+        .close-modal-note:hover {
+                color: red;
+        }
+
+        .note-item-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .note-time {
+            padding: 5px 20px;
+            background-color: #ff5800;
+            border: 0;
+            border-radius: 17px;
+            color: white;
+        }
+
+        .note-title {
+            margin-left: 1rem;
+            margin-right: 1rem;
+            color: #ff5800;
+        }
+
+        .note-item-icon:hover {
+            color: #ff5800;
+        }
+
+        .note-item-content {
+            background-color: #f7f8fa;
+            padding: 1rem;
+            color: #695757d4;
+        }
+
+        .row .modal-content.col-9 {
+            width: 75% !important;
+        }
+
+        .btn-note-close {
+            background: none;
+            color: black;
+            border: none;
+            opacity: 0.8;
+            padding: 1rem;
+            font-weight: 500;
+        }
+
+        .btn-note-close:hover {
+            opacity: 1;
+            font-weight: bold;
+        }
+
+        .btn-note-save {
+            padding: 0.5rem 1rem;
+            background-color: #ff5800;
+            opacity: 0.9;
+        }
+
+        .btn-note-save:hover {
+                opacity: 1;
+                border: none !important;
+                color: white !important;
+                background-color: #ff5800 !important;
+        }
+
+        .btn-comment {
+            border: 0;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+            border-radius: 3rem;
+            display: flex;
+            padding: 0.5rem 1.5rem;
+            position: absolute;
+            bottom: 0;
+            right: 0px;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-save-comment {
+            border: none;
+            background: #ff5800;
+            color: white;
+            font-size: 1rem;
+            border-radius: 1rem;
+            padding: 0.25rem 1rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+            .btn-save-comment:hover {
+                opacity: 1;
+            }
+
+        .menu-in-lesson {
+            box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
+            background: #171d22;
+            z-index: 99;
+            width:100%;
+            left: 0;
+            top: 0;
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+            .menu-in-lesson .btn-back {
+                background: none;
+                color: white;
+                border: none;
+            }
+
+                .menu-in-lesson .btn-back i {
+                    color: #f5f5f5c2;
+                }
+
+                .menu-in-lesson .btn-back i:hover {
+                    color: white;
+                }
+
+            .menu-in-lesson .title {
+                margin-bottom: 0;
+                text-align: center;
+                line-height: normal;
+                margin-top: 3px;
+            }
+
+            .menu-in-lesson .header-note {
+                align-items: center;
+                cursor: pointer;
+                opacity: 0.9;
+                color: white;
+                background: none;
+                border: none;
+            }
+
+            .menu-in-lesson .header-note:hover {
+                opacity: 1;
+            }
+
+        .footer-in-lesson {
+            position: fixed;
+            bottom: 0;
+            background: #f0f0f0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 -2px 3px rgba(0,0,0,.1);
+            padding: 0.5rem 0;
+        }
+
+        .footer-in-lesson a {
+            text-decoration: none;
+        }
+
+            .footer-in-lesson a.first {
+                margin-right: 1.5rem;
+                color: #4a4a4ac4;
+            }
+
+        .footer-in-lesson a.first:hover {
+            color: black;
+        }
+
+            .footer-in-lesson a.last {
+                margin-left: 1.5rem;
+                border: 1px #2fa0e8 solid;
+                padding: 6px;
+                border-radius: 0.6rem;
+            }
+
+                .footer-in-lesson a.last:hover {
+                    background: #2fa0e8;
+                    color: white;
+                }
+
+                .menu-footer i:hover {
+                    border-radius: 50%;
+                    background: white;
+                }
     </style>
-    @Styles.Render("~/Content/toastr.css")
+    @Styles.Render("~/Content/ModalSide.css")
 }
 
+@section Header {
+    <header>
+        <div class="menu-in-lesson">
+            <div class="d-flex">
+                <button class="btn-back mx-2"><i class="fas fa-chevron-left fs-5"></i></button>
+                <div class="logo me-5">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/img/logo/logo.png" alt="Logo">
+                    </a>
+                </div>
+                <h4 class="title">Tên Khóa Học Nằm Đây ................................</h4>
+            </div>
+            <button class="d-flex header-note" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">Ghi Chú</p></button>
+        </div>
+    </header>
+}
 
 <main id="main-lesson" class="h-100">
     <section class="row h-100">
         <div class="col-9 position-fixed top-0 bottom-0 overflowY-scroll start-0 to-top">
-            <div class="col-12 bg-black text-center h-50">
-                <div id="iframe-player" class="w-100 h-100"></div>
+            <div class="col-12 bg-black text-center h-75">
+                <video id="video_lesson" controls controlsList="nodownload" class="w-100 h-100">
+                    <source src="~/Content/test.mp4" type="video/mp4">
+                </video>
             </div>
             <div class="col-12 mt-2">
                 <div class="title d-flex justify-content-around align-items-center">
@@ -26,10 +254,9 @@
                         <h3 class="text-dark">Title Lesson</h3>
                         <p class="date-update">Cập nhật tháng 2 năm 2022</p>
                     </div>
-                    <button type="button" class="border-0 rounded h-3 pc-1">
+                    <button type="button" class="border-0 rounded h-3 pc-1 btn-add-note" data-bs-toggle="modal" data-bs-target="#modal_add_note">
                         <i class="fas fa-plus"></i>
-                        Thêm
-                        ghi chú tại <span class="time-note">00:00</span>
+                        Thêm ghi chú
                     </button>
                 </div>
                 <div class="description text-body mt-5 text-justify mx-5">
@@ -72,14 +299,53 @@
                     by English versions from the 1914 translation by H. Rackham.
                 </div>
             </div>
-        </div>
-        <div class="col-3 position-fixed end-0 top-0 bottom-0 to-top pt-2">
-            <div>
-                <h4 class="text-dark">Nội Dung Khóa Học</h4>
+            <div class="position-fixed bottom-0 mb-5 row" style="width:100%">
+                <div class="col-9 position-relative">
+                    <button class="btn-comment" data-bs-toggle="modal" data-bs-target="#modal_comment">
+                    <i class="far fa-comments fs-5" style="color: #ff5800; margin-top:3px"></i> 
+                    <p class="ms-3 mb-0 text-dark" style="font-family: 'PoppinsVH'; font-weight: bold; color: #ff5800 !important; font-size: 1rem;">Hỏi Đáp</p>
+                    </button>
+                </div>
             </div>
+        </div>
+        <div class="col-3 position-fixed end-0 top-0 bottom-0 to-top pt-2 px-0 overflowY-scroll">
+            <div class="mt-3">
+                <h4 class="text-dark ms-3">Nội Dung Khóa Học</h4>
+            </div>
+            @for (int i = 0; i <= 25; i++)
+            {
+                <div class="py-2 px-4 div-lesson @(i == 5 ? "active" : "") @(i > 5 ? "disable" : "")">
+                    <h5 class="text-dark font-default" style="font-weight: 500;">1. Bạn sẽ làm được gì sau khóa học?23423432222222222222222</h5>
+                    <div class="d-flex justify-content-between">
+                        <span class="d-flex position-relative">
+                            <i class="fas fa-play-circle"></i>
+                            <p class="time position-absolute" style="top: -0.4rem; left: 1.5rem;">03:15</p>
+                        </span>
+                        @if (i < 5)
+                        {
+                            <span><i class="fas fa-check-circle" style="color:green;"></i></span>
+
+                        }
+                    </div>
+                </div>
+            }
         </div>
     </section>
 </main>
+
+@section Footer {
+    <footer>
+        <div class="footer-in-lesson">
+            <div>
+                <a href="#" class="first fs-5">
+                    <i class="fas fa-chevron-left"></i>Previous Lesson
+                </a>
+                <a href="#" class="last fs-5">Next Lesson <i class="fas fa-chevron-right"></i></a>
+            </div>
+            <div class="menu-footer position-absolute top-0 bottom-0 text-dark d-flex me-3" style="right:0; align-items:center;"><p class="mb-0 text-dark" style="font-size:1rem;">8. Reponsive..................................</p> <i class="fas fa-sliders-h fs-5 p-2 ms-3" style="cursor:pointer"></i></div>
+        </div>
+    </footer>
+}
 
 @section Scripts {
     <script>
@@ -101,7 +367,40 @@
             var divTop = $(".to-top");
             divTop.css('margin-top', header.offsetHeight + "px");
 
+            var btnAddNote = document.querySelector(".btn-add-note");
+            btnAddNote.addEventListener("click", () => {
+                let video = document.getElementById("video_lesson");
+                var noteTime = $(".note-time");
+                noteTime.text(convertTime(video.currentTime));
+
+                setTimeout(() => {
+                    var modalBackdrop = document.querySelector(".modal-backdrop");
+                    modalBackdrop.setAttribute("style", "opacity: 0 !important;")
+                }, 1)
+            })
         });
+
+        function convertTime(decimalTime) {
+            var hours = Math.floor(decimalTime / 3600);
+            var remainingSeconds = decimalTime % 3600;
+            var minutes = Math.floor(remainingSeconds / 60);
+            var seconds = Math.round(remainingSeconds % 60);
+
+            var result = (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes);
+
+            if (seconds < 10) {
+                result += ':0' + seconds;
+            } else {
+                result += ':' + seconds;
+            }
+
+            return result;
+        }
+
+        function setTimeVideo(second) {
+            let video = document.getElementById("video_lesson");
+            video.currentTime = second;
+        }
 
         window.addEventListener('scroll', function () {
             var header = document.getElementById('sticky-header');
@@ -113,70 +412,108 @@
                 header.style.position = "relative";
             }
         });
-
-        var tag = document.createElement('script');
-
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // 3. This function creates an <iframe> (and YouTube player)
-        //    after the API code downloads.
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('iframe-player', {
-                videoId: 'M7lc1UVf-VE',
-                playerVars: {
-                    'playsinline': 1
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        // 4. The API will call this function when the video player is ready.
-        function onPlayerReady(event) {
-            event.target.playVideo();
-
-            console.log(event.target.getDuration());
-        }
-
-        // 5. The API calls this function when the player's state changes.
-        //    The function indicates that when playing a video (state=1),
-        //    the player should play for six seconds and then stop.
-        var done = false;
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING && !done) {
-                setTimeout(stopVideo, 6000);
-                done = true;
-            }
-        }
-        function stopVideo() {
-            player.stopVideo();
-        }
     </script>
 }
 
 @section Modals {
-    <div class="modal modal-right fade" id="ModalNote" tabindex="-1" role="dialog" aria-labelledby="ModalNote">
+    <div class="modal modal-right fade" id="modal_note" tabindex="-1" role="dialog" aria-labelledby="modal_note">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Right Modal Title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <h3 class="modal-title text-dark">Ghi Chú Của Tôi</h3>
+                    <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body px-5">
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        <div class="note-item mt-2">
+                            <div class="note-item-header">
+                                <div class="d-flex">
+                                    <button class="note-time" onclick="setTimeVideo(30)">00:30</button>
+                                    <div class="note-title fs-5" style="font-weight:bold;">Title Lesson</div>
+                                </div>
+                                <div>
+                                    <button class="btn-none text-gray">
+                                        <i class="fa-solid fa-pencil me-3 note-item-icon"></i>
+                                    </button>
+                                    <button class="btn-none text-gray">
+                                        <i class="fa-solid fa-trash me-1 note-item-icon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="note-item-content mt-3">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-bottom fade" id="modal_add_note" tabindex="-1" role="dialog" aria-labelledby="modal_add_note">
+        <div class="modal-dialog row" role="document">
+            <div class="modal-content col-9" style="border-top: 1px #c7b8b8 solid;">
+                <div class="modal-header" style="justify-content: unset;">
+                    <h5 class="modal-title text-dark">Thêm Ghi Chú Tại</h5>
+                    <span class="note-time ms-2">00:00</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Example textarea</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-note-close" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-note-save">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="modal modal-right fade" id="modal_comment" tabindex="-1" role="dialog" aria-labelledby="modal_comment">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h3 class="modal-title text-dark">Hỏi Đáp</h3>
+                        <p>( Please do not comment spam or use vulgar or regionally discriminatory words )</p>
+                    </div>
+                    <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2 top-0 mt-3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
-                </div>
-                <div class="modal-footer modal-footer-fixed">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                        <div class="mb-3 d-flex">
+                            <label for="text_comment" class="form-label me-3">
+                                <i class="fas fa-user fs-5 mt-1"></i>
+                            </label>
+                            <textarea class="form-control" id="text_comment" rows="3" placeholder="Do you have any questions about this lesson?"></textarea>
+                        </div>
+                        <div style="text-align: end;">
+                            <button type="button" class="btn-save-comment">Save Changes</button>
+                        </div>
+                        <div class="mb-3 d-flex">
+                            <label for="text_comment" class="form-label me-3">
+                                <i class="fas fa-user fs-5" style="margin-top: 0.65rem !important"></i>
+                            </label>
+                            <div>
+                                <p class="text-dark">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galle</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 d-flex">
+                            <label for="text_comment" class="form-label me-3">
+                                <i class="fas fa-user-shield fs-5 mt-1 text-success" style="margin-top: 0.65rem !important"></i>
+                            </label>
+                            <div>
+                                <p class="text-dark">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galle</p>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>

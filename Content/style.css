@@ -3471,6 +3471,15 @@ label {
     text-align: justify;
 }
 
+.text-gray {
+    color: gray;
+}
+
+.btn-none {
+    border: 0;
+    background: none;
+}
+
 @media(min-width: 650px) {
     html ::-webkit-scrollbar {
         border-radius: 0;
