@@ -1,4 +1,5 @@
-﻿
+﻿@model PagedList.IPagedList<Website_Course_AVG.Models.course> 
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,47 +7,80 @@
 <main aria-labelledby="title">
     <div class="row">
         <div class="row">
-            <div class="col-lg-12">
-                <span class="text-black fs-3" style="font-weight:600;">Khoá học pro</span>
+            <div class="row">
+                
+
             </div>
             <div class="row">
-                <section class="col-lg-3">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden pt-20  w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            @*<button class="bg-white border-white text-black left-50 opacity-1 position-absolute top-50 translate-middle visually-hidden btn_course" style=" z-index: 1; transition: all .3s ease 0s;">
-                    Xem khoá học
-                </button>*@
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100"/>
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                @foreach (var item in Model)
+                { 
+                    <section class="col-lg-3">
+                        <div class="mb-3 w-100 h-100 overflow-auto">
+                            <a class="rounded-4 d-block object-fit-cover overflow-hidden pt-20  w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                                <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100"/>
+                            </a>
+                            <div class="course_title">
+                                <span class="text-black-75 fs-6">@item.title</span>
+                            </div>
+                            <div class="price-new mt-2">
+                                <span class="courseItem_old_price">@item.price</span>
+                                <span class="courseItem_main_price"></span>
+                            </div>
                         </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-                <section class="col-lg-3">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden pt-20  w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            @*<button class="bg-white border-white text-black left-50 opacity-1 position-absolute top-50 translate-middle visually-hidden btn_course" style=" z-index: 1; transition: all .3s ease 0s;">
-    Xem khoá học
-</button>*@
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/27/64e184ee5d7a2.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100"/>
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                }
             </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) /
+            @Model.PageCount
+        </div>
+
+        <div class="MenuTrang">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
         </div>
     </div>
 </main>
 
+<style>
+    ul .pagination {
+        justify-content: center;
+    }
+
+    .MenuTrang {
+        padding: 20px 0 10px 0;
+    }
+
+        .MenuTrang li {
+            display: inline;
+        }
+</style>
+
+<style type="text/css">
+    .MenuTrang a {
+        clear: both;
+        color: black;
+        padding: 4px 8px;
+        text-decoration: none;
+        background-color: #e8e8e8;
+        border-radius: 5px;
+        margin-left: 5px;
+    }
+
+        .MenuTrang a:hover {
+            background-color: darkcyan;
+            border-radius: 5px;
+        }
+
+    a:not([href]):not([class]) {
+        &, &:hover
+
+        {
+            background-color: dodgerblue;
+            color:white;
+        }
+    }
+</style>
 
