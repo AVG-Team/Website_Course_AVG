@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
+using Octokit;
+using System.Runtime.ConstrainedExecution;
 
 namespace Website_Course_AVG.Managers
 {
@@ -116,6 +120,37 @@ namespace Website_Course_AVG.Managers
             // Thêm code để kiểm tra mật khẩu khớp với mật khẩu được lưu trữ hay không
 
             return false;
+        }
+
+		public Task SendEmailAsync(string toEmail, string subject, string message)
+		{
+            var ourMail = "khai.nguyenanh03@gmail.com";
+            var password = "oadp iffv mefs kbag";
+
+            var client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(ourMail, password)
+            };
+
+            return client.SendMailAsync(new MailMessage(from: ourMail, to: toEmail, subject, message));
+		}
+
+        public void resetPassword(String newPassword, String toEmail)
+        {
+			user user = _data.users.Where(x => x.email == toEmail).FirstOrDefault();
+            if (user != null)
+            {
+				account account = _data.accounts.Where(x => x.username == user.email).FirstOrDefault();
+				if (account != null)
+				{
+					
+					account.password = newPassword;
+					_data.SubmitChanges();
+				}
+				
+			}
+
         }
     }
 }

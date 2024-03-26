@@ -5,7 +5,10 @@ using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -86,10 +89,10 @@ namespace Website_Course_AVG.Controllers
                 Helpers.addCookie("Notify", "Login Successfull");
                 return RedirectToAction(returnUrl);
             }
-   //         else
-   //         {
-			//	Helpers.addCookie("Error", "Error Unknow, Please Try Again", 30);
-			//}
+            else
+            {
+                Helpers.addCookie("Error", "Error Unknow, Please Try Again", 30);
+            }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -99,14 +102,15 @@ namespace Website_Course_AVG.Controllers
         //
         // GET: /Account/VerifyCode
         [Website_Course_AVG.Attributes.AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        public ActionResult VerifyCode()
         {
-            // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            //// Require that the user has already logged in via username/password or external login
+            //if (!await SignInManager.HasBeenVerifiedAsync())
+            //{
+            //    return View("Error");
+            //}
+            //return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return View();
         }
 
         //
@@ -116,27 +120,28 @@ namespace Website_Course_AVG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
 
-            // The following code protects for brute force attacks against the two factor codes. 
-            // If a user enters incorrect codes for a specified amount of time then the user account 
-            // will be locked out for a specified amount of time. 
-            // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
-            }
+            //// The following code protects for brute force attacks against the two factor codes. 
+            //// If a user enters incorrect codes for a specified amount of time then the user account 
+            //// will be locked out for a specified amount of time. 
+            //// You can configure the account lockout settings in IdentityConfig
+            //var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(model.ReturnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("", "Invalid code.");
+            //        return View(model);
+            //}
+            return View(model);
         }
 
         //
@@ -206,37 +211,40 @@ namespace Website_Course_AVG.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/ForgotPassword
-        [HttpPost]
-        [Website_Course_AVG.Attributes.AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
+		//
+		// POST: /Account/ForgotPassword
+		private String code = null;
+		private String toEmail = null;
+
+		[HttpPost]
+		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
+		{
+			var userManager = new UserManager();
+			var subject = "Reset Password";
+
+			Random random = new Random();
+			int length = 6;
+			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			String message = new string(Enumerable.Repeat(chars, length)
+				.Select(s => s[random.Next(s.Length)]).ToArray());
+			code = code;
+			toEmail = forgotPassword.Email;
+			if (!userManager.IsAuthenticated())
+			{
+				await userManager.SendEmailAsync(forgotPassword.Email, subject, message);
+			}
+            else
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
+				Helpers.addCookie("Error", "Code InValid");
+				return RedirectToAction(returnUrl);
+			}
+			return RedirectToAction("ResetPassword", "Account");
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
-            }
+		}
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/ForgotPasswordConfirmation
-        [Website_Course_AVG.Attributes.AllowAnonymous]
+		//
+		// GET: /Account/ForgotPasswordConfirmation
+		[Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -499,5 +507,32 @@ namespace Website_Course_AVG.Controllers
         {
             throw new System.NotImplementedException();
         }
-    }
+
+
+		[Website_Course_AVG.Attributes.AllowAnonymous]
+		public ActionResult ResetPassword()
+		{
+			return View();
+		}
+
+        [HttpPost]
+		[Website_Course_AVG.Attributes.AllowAnonymous]
+		[ValidateAntiForgeryToken]
+		public ActionResult ResetPassword(ResetPasswordViewModel model)
+		{
+            UserManager userManager = new UserManager();
+            if (ModelState.IsValid && code != model.Code)
+            {
+				Helpers.addCookie("Error", "You enter error Code or Re-password");
+                return View();
+            }
+            userManager.resetPassword(model.Password, toEmail);
+			Helpers.addCookie("Notify", "ResetPassword successful");
+			return View();
+		}
+
+     
+
+
+	}
 }
