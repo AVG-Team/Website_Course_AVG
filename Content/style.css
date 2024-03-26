@@ -1,4 +1,4 @@
-/*
+﻿/*
   Theme Name: Movflx - Online Movies & TV Shows Template.
   Author Name: ThemeBeyond.
   Support: ctoofbb@gmail.com.
@@ -38,7 +38,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&amp;display=swap');
 
 body {
-    font-family: 'Poppins', sans-serif;
+    /*font-family: 'Poppins', sans-serif;*/
     font-weight: 500;
     font-style: normal;
     font-size: 14px;
@@ -952,6 +952,7 @@ label {
         -o-transition: all 500ms ease;
         transition: all 500ms ease;
         border: none;
+        text-decoration: none;
     }
 
     .mobile-menu .navigation li ul li > a {
@@ -992,9 +993,9 @@ label {
         background: #2f373e;
         cursor: pointer;
         border-radius: 2px;
-        -webkit-transition: all 500ms ease;
+        /*-webkit-transition: all 500ms ease;
         -o-transition: all 500ms ease;
-        transition: all 500ms ease;
+        transition: all 500ms ease;*/
         z-index: 5;
     }
 
@@ -3448,4 +3449,101 @@ label {
 .text-black-75 {
     --bs-text-opacity: 0.75; /* ?? trong su?t 75% */
     color: rgba(var(--bs-black-rgb), var(--bs-text-opacity)) !important;
+}
+
+/* slide-show */
+.slide-show {
+    position: relative;
+    width: 100%;
+}
+
+.w3-animate-right {
+    position: relative;
+    animation: animateright 5s linear;
+}
+
+@keyframes animateright {
+    from {
+        right: 0px;
+        opacity: 1;
+    }
+
+    to {
+        right: 0;
+        opacity: 1;
+    }
+}
+
+
+
+/* course */
+.a_course {
+    position: relative;
+}
+
+    .a_course::after {
+        background-color: rgba(0,0,0,.5);
+        border-radius: 16px;
+        content: "";
+        inset: 0;
+        opacity: 0;
+        position: absolute;
+        visibility: hidden;
+    }
+
+    .a_course .btn_course {
+        background-color: #fff;
+        border-color: #fff;
+        left: 50%;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%,-50%);
+        transition: all .3s ease 0s;
+        visibility: hidden;
+        z-index: 1;
+    }
+
+
+    .a_course:hover .btn_course, .a_course:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 990px) {
+        .a_course .btn_course {
+            font-size: 10px;
+        }
+    }
+    @media screen and (min-width: 991px) and (max-width: 1199px) {
+        .a_course .btn_course {
+            font-size: 12px;
+        }
+    }
+
+    .title-course{
+        color: #242424;
+        font-size: 2rem;
+        font-weight: 900;
+    }
+
+    /*width 990px - 1200px navbar*/
+    @media screen and (min-width: 990px) and (max-width: 1200px) {
+        .navbar-wrap {
+            display: none !important; /* Ẩn navbar-wrap */
+        }
+
+        .mobile-nav-toggler {
+            display: block !important; /* Hiển thị icon fa-bars */
+            padding-left: 40px;
+        }
+    }
+
+    /* footer payment-method */
+    @media only screen and (max-width: 760px) {
+        .payment-method-img .justify-content-end {
+            justify-content: center !important;
+        }
+    }
 }
