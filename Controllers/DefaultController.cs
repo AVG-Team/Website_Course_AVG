@@ -40,12 +40,12 @@ namespace Website_Course_AVG.Controllers
             return View();
         }
 
-        public ActionResult Success()
-        {
-            string fileJson = Server.MapPath("~/ltweb-avg-b91359369629.json");
-            string url = Helpers.GetVideoLessonUrl("test.mp4", fileJson);
-            ViewBag.Url = url;
-            return View("Index");
-        }
+        //public ActionResult Success()
+        //{
+        //    string fileJson = Server.MapPath("~/ltweb-avg-b91359369629.json");
+        //    string url = Helpers.GetVideoLessonUrl("test.mp4", fileJson);
+        //    ViewBag.Url = url;
+        //    return View("Index");
+        //}
     }
 }

@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.AccessControl;
+using System.Text;
 using System.Web;
+using System.Web.UI.WebControls;
 using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Managers
@@ -44,18 +46,56 @@ namespace Website_Course_AVG.Managers
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
         }
 
-        public static string GetVideoLessonUrl(string fileName, string fileJson, int seconds = 300)
+        public static string GenerateRandomString(int length)
         {
+            const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                int index = random.Next(chars.Length);
+                builder.Append(chars[index]);
+            }
+            return builder.ToString();
+        }
+
+        public static string GetVideoLessonUrl(video video, string fileJson, int seconds = 300)
+        {
+            if (video == null)
+            {
+                throw new ArgumentNullException(nameof(video));
+            }
+
             GoogleCredential google = GoogleCredential.FromFile(fileJson);
 
             var bucketName = "video-lesson";
 
+            if(!string.IsNullOrEmpty(video.link) && video.time < DateTime.Now)
+            {
+                return video.link;
+            }
+
             UrlSigner urlSigner = UrlSigner.FromCredential(google);
             string url = urlSigner.Sign(
                 bucketName,
-                fileName,
+                video.name,
                 TimeSpan.FromSeconds(seconds),
                 HttpMethod.Get);
+
+
+            using (MyDataDataContext dataContext = new MyDataDataContext())
+            {
+                video videoTmp = dataContext.videos.FirstOrDefault(x => x.name == video.name);
+
+                if (videoTmp != null)
+                {
+                    videoTmp.link = url;
+                    videoTmp.updated_at = DateTime.Now;
+                    videoTmp.time = DateTime.Now.AddMonths(1);
+
+                    dataContext.SubmitChanges();
+                }
+            }
 
             return url;
         }
