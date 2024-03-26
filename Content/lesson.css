@@ -1,0 +1,212 @@
+﻿.overflowY-scroll {
+    overflow-y: scroll !important;
+}
+
+.justify-space-between {
+    justify-content: space-between;
+}
+
+.div-lesson:hover {
+    background: #dcdcdc;
+    cursor: pointer;
+}
+
+.div-lesson.active {
+    background: rgba(240, 81, 35, .2);
+    cursor: pointer;
+}
+
+.div-lesson.disable {
+    background: #e7e7e7;
+    opacity: 80%;
+    cursor: default !important;
+}
+
+.btn-add-note:hover {
+    background: #e7e7e7;
+}
+
+.close-modal-note {
+    color: rgb(33 37 41);
+}
+
+.close-modal-note:hover {
+    color: red;
+}
+
+.note-item-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.note-time {
+    padding: 5px 20px;
+    background-color: #ff5800;
+    border: 0;
+    border-radius: 17px;
+    color: white;
+}
+
+.note-title {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    color: #ff5800;
+}
+
+.note-item-icon:hover {
+    color: #ff5800;
+}
+
+.note-item-content {
+    background-color: #f7f8fa;
+    padding: 1rem;
+    color: #695757d4;
+}
+
+.row .modal-content.col-9 {
+    width: 75% !important;
+}
+
+.btn-note-close {
+    background: none;
+    color: black;
+    border: none;
+    opacity: 0.8;
+    padding: 1rem;
+    font-weight: 500;
+}
+
+.btn-note-close:hover {
+    opacity: 1;
+    font-weight: bold;
+}
+
+.btn-note-save {
+    padding: 0.5rem 1rem;
+    background-color: #ff5800;
+    opacity: 0.9;
+}
+
+.btn-note-save:hover {
+    opacity: 1;
+    border: none !important;
+    color: white !important;
+    background-color: #ff5800 !important;
+}
+
+.btn-comment {
+    border: 0;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 3rem;
+    display: flex;
+    padding: 0.5rem 1.5rem;
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn-save-comment {
+    border: none;
+    background: #ff5800;
+    color: white;
+    font-size: 1rem;
+    border-radius: 1rem;
+    padding: 0.25rem 1rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.btn-save-comment:hover {
+    opacity: 1;
+}
+
+.menu-in-lesson {
+    box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
+    background: #171d22;
+    z-index: 99;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.menu-in-lesson .btn-back {
+    background: none;
+    color: white;
+    border: none;
+}
+
+.menu-in-lesson .btn-back i {
+    color: #f5f5f5c2;
+}
+
+.menu-in-lesson .btn-back i:hover {
+    color: white;
+}
+
+.menu-in-lesson .title {
+    margin-bottom: 0;
+    text-align: center;
+    line-height: normal;
+    margin-top: 3px;
+}
+
+.menu-in-lesson .header-note {
+    align-items: center;
+    cursor: pointer;
+    opacity: 0.9;
+    color: white;
+    background: none;
+    border: none;
+}
+
+.menu-in-lesson .header-note:hover {
+    opacity: 1;
+}
+
+.footer-in-lesson {
+    position: fixed;
+    bottom: 0;
+    background: #f0f0f0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 -2px 3px rgba(0, 0, 0, .1);
+    padding: 0.5rem 0;
+}
+
+.footer-in-lesson a {
+    text-decoration: none;
+}
+
+.footer-in-lesson a.first {
+    margin-right: 1.5rem;
+    color: #4a4a4ac4;
+}
+
+.footer-in-lesson a.first:hover {
+    color: black;
+}
+
+.footer-in-lesson a.last {
+    margin-left: 1.5rem;
+    border: 1px #2fa0e8 solid;
+    padding: 6px;
+    border-radius: 0.6rem;
+}
+
+.footer-in-lesson a.last:hover {
+    background: #2fa0e8;
+    color: white;
+}
+
+.menu-footer i:hover {
+    border-radius: 50%;
+    background: white;
+}

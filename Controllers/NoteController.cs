@@ -8,6 +8,7 @@ using Website_Course_AVG.Managers;
 
 namespace Website_Course_AVG.Controllers
 {
+    [Website_Course_AVG.Attributes.User]
     public class NoteController : Controller
     {
         MyDataDataContext _data = new MyDataDataContext();
@@ -17,18 +18,30 @@ namespace Website_Course_AVG.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public JsonResult Create(int lessonId, string content, string time)
+        public JsonResult Create(int lessonId, string content, int time)
         {
             try
             {
-                note note = new note();
                 user user = Helpers.GetUserFromToken();
-                note.lesson_id = lessonId;
-                note.content = content;
-                note.user_id = user.id;
+                note note = new note();
+                note noteTmp = _data.notes.Where(x => x.lesson_id == lessonId && x.user_id == user.id && x.time == time).FirstOrDefault();
+                if (noteTmp != null)
+                {
+                    note = noteTmp;
+                    note.content = content;
+                    note.time = time;
+                } else
+                {
+                    note.lesson_id = lessonId;
+                    note.user_id = user.id;
+                    note.content = content;
+                    note.time = time;
 
-                _data.notes.InsertOnSubmit(note);
+                    _data.notes.InsertOnSubmit(note);
+                }
+
                 _data.SubmitChanges();
 
                 return ResponseHelper.SuccessResponse("Add Note Successful");

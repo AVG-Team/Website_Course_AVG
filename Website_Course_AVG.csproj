@@ -267,6 +267,7 @@
     <Compile Include="Attributes\AllowAnonymousAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Identity.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\MyData.designer.cs">
@@ -382,6 +383,7 @@
     <Content Include="Content\img\poster\ucm_poster09.jpg" />
     <Content Include="Content\img\poster\ucm_poster10.jpg" />
     <Content Include="Content\img\preloader.svg" />
+    <Content Include="Content\lesson.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\ModalSide.css" />
     <Content Include="Content\odometer.css" />
@@ -404,14 +406,14 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-ExtraBold.ttf" />
+    <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-Regular.ttf" />
+    <Content Include="ltweb-avg-b91359369629.json" />
     <Content Include="Models\MyData.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>MyData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-ExtraBold.ttf" />
-    <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-Regular.ttf" />
-    <Content Include="ltweb-avg-b91359369629.json" />
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
     </None>
@@ -425,6 +427,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lesson.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />

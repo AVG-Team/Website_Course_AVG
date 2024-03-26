@@ -7,7 +7,7 @@ namespace Website_Course_AVG
 {
     public static class ResponseHelper
     {
-        public static JsonResult SuccessResponse(object data = null, string message = "")
+        public static JsonResult SuccessResponse(string message = "", object data = null)
         {
             var responseObject = new
             {

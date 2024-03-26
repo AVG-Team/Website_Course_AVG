@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -122,17 +122,6 @@
                 toastr.error(cookieError, 'Error')
         })
 
-        //scroll navbar
-        window.addEventListener('scroll', function () {
-            var header = document.getElementById('sticky-header');
-            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-            if (scrollTop > 100) { // Thay đổi 100 thành giá trị mong muốn để kích hoạt sticky-header
-                header.classList.add('sticky-menu');
-            } else {
-                header.classList.remove('sticky-menu');
-            }
-        });
     </script>
 </body>
 </html>
