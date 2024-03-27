@@ -100,10 +100,10 @@ namespace Website_Course_AVG.Managers
             return url;
         }
 
-        public static string ConvertTime(double decimalTime)
+        public static string ConvertTime(int time)
         {
-            int hours = (int)(decimalTime / 3600);
-            double remainingSeconds = decimalTime % 3600;
+            int hours = (int)(time / 3600);
+            double remainingSeconds = time % 3600;
             int minutes = (int)(remainingSeconds / 60);
             int seconds = (int)(remainingSeconds % 60);
 

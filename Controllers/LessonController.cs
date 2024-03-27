@@ -13,7 +13,6 @@ namespace Website_Course_AVG.Controllers
     {
         MyDataDataContext _data = new MyDataDataContext();
 
-        [Website_Course_AVG.Attributes.User]
         public ActionResult Index(int courseId, int lessonId = 1)
         {
             var lessonsCourse = from ff in _data.lessons.Where(x => x.course_id == courseId) select ff;

@@ -1,0 +1,27 @@
+﻿@model List<Website_Course_AVG.Models.note>
+
+@{ 
+    Layout = "";
+}
+@foreach(var item in Model)
+{
+    <div class="note-item mt-2">
+        <div class="note-item-header">
+            <div class="d-flex">
+                <button class="note-time" onclick="setTimeVideo(@Website_Course_AVG.Managers.Helpers.ConvertTime(item.time ?? 0))">@Website_Course_AVG.Managers.Helpers.ConvertTime(item.time ?? 0)</button>
+            </div>
+            <div>
+                <button class="btn-none text-gray">
+                    <i class="fa-solid fa-pencil me-3 note-item-icon"></i>
+                </button>
+                <button class="btn-none text-gray">
+                    <i class="fa-solid fa-trash me-1 note-item-icon"></i>
+                </button>
+            </div>
+        </div>
+        <div class="note-item-content mt-3">
+            @item.content
+        </div>
+    </div>
+
+}

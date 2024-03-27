@@ -24,7 +24,7 @@
                 </div>
                 <h4 class="title">@ViewBag.CourseTitle</h4>
             </div>
-            <button class="d-flex header-note" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">Notes</p></button>
+            <button class="d-flex header-note" id="btn_open_notes" data-ajax="@Url.Action("Index", "Note")" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">Notes</p></button>
         </div>
     </header>
 }
@@ -122,30 +122,7 @@
                         <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
                     </button>
                 </div>
-                <div class="modal-body px-5">
-                    @for (int i = 0; i < 10; i++)
-                    {
-                        <div class="note-item mt-2">
-                            <div class="note-item-header">
-                                <div class="d-flex">
-                                    <button class="note-time" onclick="setTimeVideo(30)">00:30</button>
-                                    <div class="note-title fs-5" style="font-weight:bold;">Title Lesson</div>
-                                </div>
-                                <div>
-                                    <button class="btn-none text-gray">
-                                        <i class="fa-solid fa-pencil me-3 note-item-icon"></i>
-                                    </button>
-                                    <button class="btn-none text-gray">
-                                        <i class="fa-solid fa-trash me-1 note-item-icon"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="note-item-content mt-3">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                            </div>
-                        </div>
-
-                    }
+                <div class="modal-body px-5" id="body_notes">
                 </div>
             </div>
         </div>

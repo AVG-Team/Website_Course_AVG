@@ -19,14 +19,17 @@
         }, 1);
     });
 
-    //ajax
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var lessonId = urlParams.get('lessonId');
+
+    //note
     $("#btn_submit_add_note").click(function () {
-        // Thêm giá trị second vào FormData
         var video = document.getElementById("video_lesson");
         var formData = new FormData($("#form_add_note")[0]);
         let time = Math.floor(video.currentTime);
         formData.append("time", time);
-        formData.append("lessonId", 1);
+        formData.append("lessonId", lessonId);
 
         if ($("#inp_note").val() != "") {
             $.ajax({
@@ -51,6 +54,22 @@
             toastr.error("Không được để trống nội dung", "Error");
         }
     });
+
+    $("#btn_open_notes").click(() => {
+        $.ajax({
+            url: $('#btn_open_notes').data("ajax") + "?lessonId=" + lessonId,
+            type: "GET",
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                $("#body_notes").html(result.data);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+                toastr.error("Error Unknow, Please try again", "Error");
+            },
+        });
+    })
 });
 
 function convertTime(decimalTime) {

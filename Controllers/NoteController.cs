@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Website_Course_AVG.Models;
 using Website_Course_AVG.Managers;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Web.Routing;
 
 namespace Website_Course_AVG.Controllers
 {
@@ -13,9 +16,21 @@ namespace Website_Course_AVG.Controllers
     {
         MyDataDataContext _data = new MyDataDataContext();
         // GET: Note
-        public ActionResult Index()
+        public JsonResult Index(int lessonId)
         {
-            return View();
+            try
+            {
+                user user = Helpers.GetUserFromToken();
+                List<note> notes = _data.notes.Where(x => x.lesson_id == lessonId && x.user_id == user.id).ToList();
+
+                string view = RenderViewToString("Note","notes", notes);
+                return ResponseHelper.SuccessResponse("", view);
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message;
+                return ResponseHelper.ErrorResponse(errorMessage);
+            }
         }
 
         [ValidateAntiForgeryToken]
@@ -50,6 +65,45 @@ namespace Website_Course_AVG.Controllers
             {
                 string errorMessage = ex.Message;
                 return ResponseHelper.ErrorResponse(errorMessage);
+            }
+        }
+
+
+
+        [HttpDelete]
+        public JsonResult Delete(int id)
+        {
+            using (MyDataDataContext _data = new MyDataDataContext())
+            {
+                user user = Helpers.GetUserFromToken();
+                note note = _data.notes.Where(x => x.id == id && x.user_id == user.id).FirstOrDefault();
+                if (note != null)
+                {
+                    _data.notes.DeleteOnSubmit(note);
+                    _data.SubmitChanges();
+
+                    return ResponseHelper.SuccessResponse("Delete successful");
+                }
+
+                return ResponseHelper.ErrorResponse("Error Unknown, Please Try Again");
+            }
+        }
+
+        //Helper
+        protected string RenderViewToString(string controllerName, string viewName, object viewData)
+        {
+            using (var writer = new StringWriter())
+            {
+                var routeData = new RouteData();
+                routeData.Values.Add("controller", controllerName);
+                var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://google.com", null), new HttpResponse(null))), routeData, new NoteController());
+                var razorViewEngine = new RazorViewEngine();
+                var razorViewResult = razorViewEngine.FindView(fakeControllerContext, viewName, "", false);
+
+                var viewContext = new ViewContext(fakeControllerContext, razorViewResult.View, new ViewDataDictionary(viewData), new TempDataDictionary(), writer);
+                razorViewResult.View.Render(viewContext, writer);
+                return writer.ToString();
+
             }
         }
     }
