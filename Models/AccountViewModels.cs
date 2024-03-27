@@ -66,7 +66,8 @@ namespace Website_Course_AVG.Models
 
     public class RegisterViewModel
     {
-		[Required]
+		[Required(ErrorMessage = "Required")]
+		[StringLength(100, ErrorMessage = "The {0} must be have", MinimumLength = 1)]
 		[Display(Name = "userName")]
 		public string userName { get; set; }
 

@@ -37,22 +37,24 @@
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="row">
-                                    <div class="input-group mb-2">
+                                    <div class="form-group mb-3">
                                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg bg-light fs-6  rounded", placeholder = "Email Address" })
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                                     </div>
-                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger float-start" })
+                                    
                                 </div>
                                 <div class="row">
-                                    <div class="input-group mb-2">
+                                    <div class="form-group mb-3">
                                         @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end position-relative", placeholder = "Password" })
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                         <span id="enrypassword" class=" input-group-text border-0 position-absolute h-100 " style="z-index: 10; background-color: transparent; right: 2%; ">
                                             <i class="fa fa-eye-slash" id="togglePassword" style="z-index: 10;"></i>
                                         </span>
                                     </div>
-                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    
                                 </div>
                                 <div class="row">
-                                    <div class="input-group mb-4 d-flex justify-content-between">
+                                    <div class="input-group mb-3 d-flex justify-content-between">
                                         <div class="checkbox">
                                             @*@Html.CheckBoxFor(m => m.RememberMe)
                                             @Html.LabelFor(m => m.RememberMe)*@

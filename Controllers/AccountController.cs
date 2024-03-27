@@ -163,10 +163,6 @@ namespace Website_Course_AVG.Controllers
 			if (ModelState.IsValid)
             {
 
-				//if user is already log in
-
-
-
 				//if user have not ever register before
 				account account = new account();
 				account.username = model.userName;
@@ -213,32 +209,33 @@ namespace Website_Course_AVG.Controllers
 
 		//
 		// POST: /Account/ForgotPassword
-		private String code = null;
-		private String toEmail = null;
 
 		[HttpPost]
 		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
 		{
 			var userManager = new UserManager();
-			var subject = "Reset Password";
+			var subject = "AVG Courses- Reset Password";
 
 			Random random = new Random();
-			int length = 6;
+			int length = 10;
 			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-			String message = new string(Enumerable.Repeat(chars, length)
-				.Select(s => s[random.Next(s.Length)]).ToArray());
-			code = code;
-			toEmail = forgotPassword.Email;
+            String messageHead = "Mã khôi phục pass của bạn là ";
+			String messageLast = new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
 			if (!userManager.IsAuthenticated())
 			{
-				await userManager.SendEmailAsync(forgotPassword.Email, subject, message);
+                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
+                {
+					return View();
+				}
+				return RedirectToAction("ForgotPasswordConfirmation", "Account");
 			}
             else
             {
-				Helpers.addCookie("Error", "Code InValid");
+				Helpers.addCookie("Error", "Has Error");
 				return RedirectToAction(returnUrl);
 			}
-			return RedirectToAction("ResetPassword", "Account");
+
+			return View();
 
 		}
 
@@ -521,14 +518,14 @@ namespace Website_Course_AVG.Controllers
 		public ActionResult ResetPassword(ResetPasswordViewModel model)
 		{
             UserManager userManager = new UserManager();
-            if (ModelState.IsValid && code != model.Code)
+            if (ModelState.IsValid)
             {
 				Helpers.addCookie("Error", "You enter error Code or Re-password");
                 return View();
             }
-            userManager.resetPassword(model.Password, toEmail);
+            if(!userManager.resetPassword(model.Password, model.Email, model.Code)) return View(model);
 			Helpers.addCookie("Notify", "ResetPassword successful");
-			return View();
+			return RedirectToAction("Index", "Home");
 		}
 
      
