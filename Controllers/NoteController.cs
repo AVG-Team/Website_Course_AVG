@@ -68,7 +68,33 @@ namespace Website_Course_AVG.Controllers
             }
         }
 
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public JsonResult Edit(int id, string content)
+        {
+            try
+            {
+                user user = Helpers.GetUserFromToken();
+                note noteTmp = _data.notes.Where(x => x.id == id && x.user_id == user.id).FirstOrDefault();
+                if (noteTmp != null)
+                {
+                    noteTmp.content = content;
+                }
+                else
+                {
+                    return ResponseHelper.ErrorResponse("Not find note");
+                }
 
+                _data.SubmitChanges();
+
+                return ResponseHelper.SuccessResponse("Edit Note Successful");
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message;
+                return ResponseHelper.ErrorResponse(errorMessage);
+            }
+        }
 
         [HttpDelete]
         public JsonResult Delete(int id)

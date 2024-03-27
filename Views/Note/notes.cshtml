@@ -5,23 +5,31 @@
 }
 @foreach(var item in Model)
 {
-    <div class="note-item mt-2">
+    <div class="note-item mt-2" data-note="@item.id"
+         data-ajax-delete="@Url.Action("Delete", "Note")">
         <div class="note-item-header">
             <div class="d-flex">
-                <button class="note-time" onclick="setTimeVideo(@Website_Course_AVG.Managers.Helpers.ConvertTime(item.time ?? 0))">@Website_Course_AVG.Managers.Helpers.ConvertTime(item.time ?? 0)</button>
+                <button class="note-time" onclick="setTimeVideo(@item.time)">@Website_Course_AVG.Managers.Helpers.ConvertTime(item.time ?? 0)</button>
             </div>
             <div>
-                <button class="btn-none text-gray">
+                <button class="btn-none text-gray btn-edit-note">
                     <i class="fa-solid fa-pencil me-3 note-item-icon"></i>
                 </button>
-                <button class="btn-none text-gray">
+                <button class="btn-none text-gray btn-delete-note">
                     <i class="fa-solid fa-trash me-1 note-item-icon"></i>
                 </button>
             </div>
         </div>
-        <div class="note-item-content mt-3">
-            @item.content
-        </div>
+        @using (Html.BeginForm("Edit", "Note", FormMethod.Post, new { @class = "form", onsubmit = "return false;" } ))
+        {
+
+            @Html.AntiForgeryToken()
+            <input type="text" name="content" class="form-control input-content-note hidden"/>
+            <div class="note-item-content mt-3">
+                @item.content
+            </div>
+            <p class="text-danger hidden">Nhấp Enter Để Lưu Thay Đổi</p>
+        }
     </div>
 
 }

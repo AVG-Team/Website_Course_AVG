@@ -10,6 +10,11 @@
 @section Styles {
     @Styles.Render("~/Content/lesson.css")
     @Styles.Render("~/Content/ModalSide.css")
+    <style>
+        .hidden {
+            display: none !important;
+        }
+    </style>
 }
 
 @section Header {
@@ -140,10 +145,8 @@
                         @using (Html.BeginForm("Create", "Note", FormMethod.Post, new { id = "form_add_note" }))
                         {
                             @Html.AntiForgeryToken()
-                            @Html.LabelFor(model => note.content, htmlAttributes: new { @class = "control-label" })
-                            @Html.TextAreaFor(model => note.content, new { @class = "form-control", id = "inp_note", rows = "3" })
-                            <button type="submit" class="btn btn-primary btn-note-save">Save changes</button>
-
+                            <label for="inp_note" class="control-label">Content</label>
+                            <textarea class="form-control" cols="20" id="inp_note" name="content" rows="3"></textarea>
                         }
                     </div>
                 </div>

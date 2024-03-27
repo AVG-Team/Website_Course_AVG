@@ -30,6 +30,7 @@
         let time = Math.floor(video.currentTime);
         formData.append("time", time);
         formData.append("lessonId", lessonId);
+        console.log(formData.get("content"))
 
         if ($("#inp_note").val() != "") {
             $.ajax({
@@ -39,7 +40,7 @@
                 processData: false,
                 contentType: false,
                 headers: {
-                    RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val(),
+                    RequestVerificationToken: $('#form_add_note input:hidden[name="__RequestVerificationToken"]').val(),
                 },
                 success: function (result) {
                     $("#inp_note").val("");
@@ -63,6 +64,81 @@
             contentType: false,
             success: function (result) {
                 $("#body_notes").html(result.data);
+
+                //Delete note
+                $('.btn-delete-note').click((e) => {
+                    let eTmp = e.target;
+                    let divParent = eTmp.closest(".note-item");
+
+                    let idNote = divParent.getAttribute("data-note");
+                    let url = divParent.getAttribute("data-ajax-delete");
+                    $.ajax({
+                        url: url + "/" + idNote,
+                        type: "POST",
+                        headers: {
+                            "X-HTTP-Method-Override": "DELETE" // Gửi header để chỉ định yêu cầu là DELETE
+                        },
+                        success: function (result) {
+                            divParent.remove();
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Error Unknow, Please try again", "Error");
+                        }
+                    });
+                })
+
+                //Edit Note
+
+                $('.btn-edit-note').click((e) => {
+                    let eTmp = e.target;
+                    let divParent = eTmp.closest(".note-item");
+                    let idNote = divParent.getAttribute("data-note");
+
+                    let eTextContent = divParent.querySelector(".note-item-content");
+                    eTextContent.classList.add("hidden");
+
+                    let form = divParent.querySelector(".form");
+                    let input = form.querySelector(".input-content-note");
+                    input.value = eTextContent.textContent.trim();
+                    input.classList.remove("hidden");
+                    let danger = form.querySelector(".text-danger");
+                    danger.classList.remove("hidden");
+                    let csrf = form.querySelector('input[type="hidden"][name="__RequestVerificationToken"]').value;
+
+                    input.addEventListener("keypress", (e) => {
+                        if (e.keyCode === 13) {
+                            let newText = e.target.value.trim();
+
+                            if (newText !== '') {
+                                let formData = new FormData(form);
+                                formData.append("id", idNote);
+                                $.ajax({
+                                    url: form.getAttribute('action'),
+                                    type: "POST",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    headers: {
+                                        RequestVerificationToken: csrf,
+                                    },
+                                    success: function (result) {
+
+                                        eTextContent.textContent = newText;
+                                        e.target.classList.add("hidden");
+                                        danger.classList.add("hidden");
+
+                                        eTextContent.classList.remove("hidden");
+
+                                        toastr.success(result.message, "Notify");
+                                    },
+                                    error: function (xhr, status, error) {
+                                        toastr.error("Error Unknown, Please Try Again", "Error");
+                                    },
+                                });
+                            }
+                        }
+                    });
+                })
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -102,8 +178,7 @@ window.addEventListener("scroll", function () {
     var scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
-        document.body.scrollTop ||
-        0;
+        document.body.scrollTop || 0;
 
     if (scrollTop > 50) {
         header.style.position = "fixed";
