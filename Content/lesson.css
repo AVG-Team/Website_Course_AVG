@@ -206,7 +206,25 @@
     color: white;
 }
 
+.footer-in-lesson a.disable {
+    border: 1px #4a4a4ac4 solid;
+    color: #4a4a4ac4;
+    cursor: unset;
+}
+
+.footer-in-lesson a.disable:hover {
+    background: none;
+    color: #4a4a4ac4;
+}
+
 .menu-footer i:hover {
     border-radius: 50%;
     background: white;
+}
+
+a.div-lesson {
+    display: block;
+    unicode-bidi: isolate;
+    text-decoration: none;
+    padding-bottom: 1rem !important;
 }

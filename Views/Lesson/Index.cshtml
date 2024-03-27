@@ -36,11 +36,15 @@
 
 <main id="main-lesson" class="h-100">
     <section class="row h-100">
-        <div class="col-9 position-fixed top-0 bottom-0 overflowY-scroll start-0 to-top">
+        <div class="col-9 position-fixed top-0 bottom-0 overflowY-scroll start-0 to-top to-bottom">
             <div class="col-12 bg-black text-center h-75">
                 <video id="video_lesson" controls controlsList="nodownload" class="w-100 h-100">
                     <source src="@ViewBag.Url" type="video/mp4">
                 </video>
+                @using (Html.BeginForm("SetLessonLearnedId", "Lesson", FormMethod.Post, new { @class = "hidden", id = "form_video_lesson" }))
+                {
+                    @Html.AntiForgeryToken();
+                }
             </div>
             <div class="col-12 mt-2">
                 <div class="title d-flex justify-content-around align-items-center">
@@ -66,13 +70,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-3 position-fixed end-0 top-0 bottom-0 to-top pt-2 px-0 overflowY-scroll">
+        <div class="col-3 position-fixed end-0 top-0 bottom-0 to-top to-bottom pt-2 px-0 overflowY-scroll">
             <div class="mt-3">
                 <h4 class="text-dark ms-3">Nội Dung Khóa Học</h4>
             </div>
             @foreach(var item in ViewBag.Lessons)
             {
-                <div class="py-2 px-4 div-lesson @(item.id == learned_lesson_id ? "active" : "") @(item.id > learned_lesson_id ? "disable" : "")">
+                <a href="@Url.Action("Index", "Lesson")?courseId=@Model.course_id&lessonId=@item.id" class="py-2 px-4 div-lesson @(item.id == Model.id ? "active" : "") @(item.id > learned_lesson_id + 1 ? "disable" : "")">
                     <h5 class="text-dark font-default" style="font-weight: 500;">@item.index . @item.title</h5>
                     <div class="d-flex justify-content-between">
                         <span class="d-flex position-relative">
@@ -85,7 +89,7 @@
 
                         }
                     </div>
-                </div>
+                </a>
             }
         </div>
     </section>
@@ -93,7 +97,7 @@
 
 @section Footer {
     <footer>
-        <div class="footer-in-lesson">
+        <div class="footer-in-lesson" id="footer_lesson">
             <div>
                 @if (ViewBag.Identity.IdPrevious != 0)
                 {
@@ -104,7 +108,7 @@
                 }
                 @if (ViewBag.Identity.IdNext != 999999)
                 {
-                    <a href="@Url.Action("Index", "Lesson")?courseId=@Model.course_id&lessonId=@ViewBag.Identity.IdNext" class="last fs-5">Next Lesson <i class="fas fa-chevron-right"></i></a>
+                    <a href="@Url.Action("Index", "Lesson")?courseId=@Model.course_id&lessonId=@ViewBag.Identity.IdNext" class="last fs-5 disable">Next Lesson <i class="fas fa-chevron-right"></i></a>
                 }
             </div>
             <div class="menu-footer position-absolute top-0 bottom-0 text-dark d-flex me-3" style="right:0; align-items:center;"><p class="mb-0 text-dark" style="font-size:1rem;">@Model.title</p> <i class="fas fa-sliders-h fs-5 p-2 ms-3" style="cursor:pointer"></i></div>

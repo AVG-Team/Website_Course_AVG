@@ -1,11 +1,15 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
     var header = document.getElementById("sticky-header-lesson");
+    var footer = document.getElementById("footer_lesson");
 
     var body = document.getElementsByTagName("body");
     body[0].style.overflowY = "Hidden";
 
     var divTop = $(".to-top");
     divTop.css("margin-top", header.offsetHeight + "px");
+
+    var divBottom = $(".to-bottom");
+    divTop.css("margin-bottom", footer.offsetHeight + "px");
 
     var btnAddNote = document.querySelector(".btn-add-note");
     btnAddNote.addEventListener("click", () => {
@@ -186,3 +190,62 @@ window.addEventListener("scroll", function () {
         header.style.position = "relative";
     }
 });
+
+
+//Video
+document.addEventListener("DOMContentLoaded", () => {
+    var lastLink = $('footer').find('a.last')[0];
+    lastLink.addEventListener("click", (e) => {
+        if (e.target.classList.contains("disable")) {
+            e.preventDefault();
+        }
+    })
+
+    var video = document.getElementById('video_lesson');
+    let flag = false;
+    var timeOnPage = 0;
+    countDownTimer = setInterval(function () {
+        timeOnPage++;
+        console.log(timeOnPage);
+        if (timeOnPage >= video.duration * 2 / 3) {
+            clearInterval(countDownTimer);
+            flag = true;
+        }
+    }, 1000);
+    video.addEventListener('timeupdate', function () {
+        var currentTime = video.currentTime;
+        var duration = video.duration;
+        var progress = currentTime / duration;
+        if (progress >= (2 / 3) && flag == true) {
+            var urlParams = new URLSearchParams(window.location.search);
+            var lessonId = urlParams.get('lessonId');
+            var courseId = urlParams.get('courseId');
+
+            let formData = new FormData($("#form_video_lesson")[0]);
+            formData.append("courseId", courseId);
+            formData.append("lessonId", lessonId);
+
+            var lastLink = $('footer').find('a.last')[0];
+            if (lastLink.classList.contains("disable")) {
+                $.ajax({
+                    url: $("#form_video_lesson").attr('action'),
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        RequestVerificationToken: $('#form_video_lesson input:hidden[name="__RequestVerificationToken"]').val(),
+                    },
+                    success: function (result) {
+                        var element = $('.div-lesson.active');
+                        var nextElement = element.next()[0];
+                        nextElement.classList.remove('disable');
+
+                        var lastLink = $('footer').find('a.last')[0];
+                        lastLink.classList.remove("disable");
+                    },
+                });
+            }
+        }
+    });
+})
