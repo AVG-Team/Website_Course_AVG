@@ -233,7 +233,6 @@ label {
 }
 
 /* All-color */
-.navbar-wrap > ul > li.active > a,
 .navbar-wrap > ul > li:hover > a,
 .mobile-menu .navigation li.active > a,
 .header-lang form .icon,
@@ -562,6 +561,7 @@ label {
     padding: 10px 20px;
 }
 
+.sticky-menu-clone,
 .sticky-menu {
     left: 0;
     padding: 0 0;
@@ -1010,6 +1010,12 @@ label {
         display: none;
     }
 
+
+    .mobile-menu .menu-user{
+        position: relative;
+        text-align: center;
+        padding-bottom: 20px;
+    }
 .mobile-menu .social-links {
     position: relative;
     text-align: center;
@@ -3469,7 +3475,7 @@ label {
     }
 
     to {
-        right: 0;
+        right: 0px;
         opacity: 1;
     }
 }
@@ -3503,6 +3509,9 @@ label {
         transition: all .3s ease 0s;
         visibility: hidden;
         z-index: 1;
+        font-weight: bold;
+        padding-right: 10px !important;
+        padding-left: 10px !important;
     }
 
 
@@ -3531,13 +3540,24 @@ label {
     /*width 990px - 1200px navbar*/
     @media screen and (min-width: 990px) and (max-width: 1200px) {
         .navbar-wrap {
-            display: none !important; /* Ẩn navbar-wrap */
+            display: none !important;  /*Ẩn navbar-wrap */
         }
 
-        .mobile-nav-toggler {
+        .mobile-nav-toggler{
             display: block !important; /* Hiển thị icon fa-bars */
             padding-left: 40px;
         }
+
+        .mobile-nav-toggler .svg-menu svg{
+            display: none !important;
+        }
+    }
+
+    @media screen and (min-width: 767px) and (max-width: 991px) {
+        .header-action {
+            display: none !important;  /*Ẩn navbar-wrap */
+        }
+
     }
 
     /* footer payment-method */
@@ -3546,4 +3566,39 @@ label {
             justify-content: center !important;
         }
     }
-}
+
+    @media only screen and (max-width: 768px) {
+        body {
+            overflow-x: hidden;
+        }
+
+        .container, .custom-container {
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 15px;
+            padding-right: 20px;
+        }
+
+        .banner-area {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .desktop-header-module--header--a5wri .desktop-header-module--dropdown-counter-badge--unIZ1{
+        top: 0;
+        left: 50%;
+    }
+
+    .home {
+        position: absolute;
+        left: 0;
+        top: 0px;
+        width: 100%;
+        z-index: 9;
+        height: auto;
+        padding: 20px 0;
+        background: none;
+        box-shadow: none;
+    }
