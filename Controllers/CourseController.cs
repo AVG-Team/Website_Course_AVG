@@ -93,11 +93,13 @@ namespace Website_Course_AVG.Controllers
 
                 var images = _data.images.Where(i => i.code.Equals(imageCode)).ToList();
                 var lessons = _data.lessons.Where(l => l.course_id == CourseId).ToList();
+                var detailCourses = _data.detail_courses.Where(d => d.course_id == CourseId).ToList();
                 var viewModel = new CoursesViewModel()
                 {
                     Courses = course,
                     Images = images,
-                    Lessons = lessons
+                    Lessons = lessons,
+                    DetailCourses = detailCourses
                 };
 
                 return View(viewModel);
