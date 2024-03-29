@@ -251,7 +251,7 @@
     </header>
     <!-- main-area -->
     <main>
-        <div class="pb-5">
+        <div class="pb-5 ">
             @RenderBody()
         </div>
         <!-- newsletter-area -->
@@ -356,6 +356,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/toastr.js")
     @RenderSection("scripts", required: false)
+    @RenderSection("filter", required:false)
 
     <script>
         function getCookie(cookieName) {
