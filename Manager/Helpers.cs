@@ -6,9 +6,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.AccessControl;
 using System.Text;
+using System.Text.Json;
 using System.Web;
 using System.Web.UI.WebControls;
 using Website_Course_AVG.Models;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Website_Course_AVG.Managers
 {
@@ -25,6 +28,18 @@ namespace Website_Course_AVG.Managers
         {
             UserManager userManager = new UserManager();
             return userManager.IsAuthenticated();
+        }
+
+        public static bool IsUser()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.IsUser();
+        }
+
+        public static bool IsAdmin()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.IsAdmin();
         }
 
         public static user GetUserFromToken()
@@ -154,6 +169,49 @@ namespace Website_Course_AVG.Managers
             };
 
             return index;
+        }
+
+        public static List<string> ReadJsonFromFile(string filePath)
+        {
+            List<string> sensitiveWords = new List<string>();
+
+            try
+            {
+                string jsonText = File.ReadAllText(filePath);
+
+                sensitiveWords = JsonSerializer.Deserialize<List<string>>(jsonText);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error reading json file: " + ex.Message);
+            }
+
+            return sensitiveWords;
+        }
+        public static string SanitizeInput(string input)
+        {
+            List<string> sensitiveWords = ReadJsonFromFile("~/sensitive_words.json");
+
+            int sensitiveWordCount = 0;
+            foreach (string word in sensitiveWords)
+            {
+                if (Regex.IsMatch(input, @"\b" + word + @"\b", RegexOptions.IgnoreCase))
+                {
+                    sensitiveWordCount++;
+                }
+            }
+
+            if (sensitiveWordCount > 3)
+            {
+                return "Error: Input contains sensitive words.";
+            }
+
+            foreach (string word in sensitiveWords)
+            {
+                input = Regex.Replace(input, @"\b" + word + @"\b", "*");
+            }
+
+            return input;
         }
     }
 }
