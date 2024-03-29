@@ -30,7 +30,6 @@
 
     <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
 </head>
-</html>
 
 <body>
     <!-- Scroll-top -->
@@ -437,6 +436,29 @@
             var cookieError = getCookie('Error');
             if (cookieError !== "")
                 toastr.error(cookieError, 'Error')
+
+
+            // menu
+            let body = document.getElementsByTagName("body");
+            let iconMenu = document.querySelector(".mobile-nav-toggler");
+            iconMenu.addEventListener("click", () => {
+                console.log(body[0]);
+                body[0].classList.add("mobile-menu-visible");
+            })
+
+            let btnCloseMenuMobile = document.querySelector(".mobile-menu .close-btn");
+            btnCloseMenuMobile.addEventListener("click", () => {
+                body[0].classList.remove("mobile-menu-visible");
+            })
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest(".mobile-menu")
+                    && body[0].classList.contains("mobile-menu-visible")
+                    && !e.target.closest(".mobile-nav-toggler")
+                ) {
+                    body[0].classList.remove("mobile-menu-visible");
+                }
+            });
         })
 
         // sticky-header
@@ -515,5 +537,6 @@
 
     </script>
 </body>
+</html>
 
 
