@@ -1011,11 +1011,12 @@ label {
     }
 
 
-    .mobile-menu .menu-user{
-        position: relative;
-        text-align: center;
-        padding-bottom: 20px;
-    }
+.mobile-menu .menu-user {
+    position: relative;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
 .mobile-menu .social-links {
     position: relative;
     text-align: center;
@@ -3464,9 +3465,14 @@ label {
     transform: translate(-50%, -50%);
 }
 
+
 .text-black-75 {
     --bs-text-opacity: 0.75; /* ?? trong su?t 75% */
     color: rgba(var(--bs-black-rgb), var(--bs-text-opacity)) !important;
+}
+
+.text-red-price {
+    color: red;
 }
 
 /* slide-show */
@@ -3532,57 +3538,70 @@ label {
         visibility: visible;
     }
 
-    @media screen and (min-width: 768px) and (max-width: 990px) {
-        .a_course .btn_course {
-            font-size: 10px;
-        }
+.pt-lg-100 {
+    padding-top: 100px !important;
+}
+
+@media screen and (min-width: 768px) and (max-width: 990px) {
+    .a_course .btn_course {
+        font-size: 10px;
     }
-    @media screen and (min-width: 991px) and (max-width: 1199px) {
-        .a_course .btn_course {
-            font-size: 12px;
-        }
+}
+
+@media screen and (min-width: 991px) and (max-width: 1199px) {
+    .a_course .btn_course {
+        font-size: 12px;
+    }
+}
+
+.title-course {
+    color: #242424;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+/*width 990px - 1200px navbar*/
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+
+    .pt-md-60 {
+        padding-top: 60px !important;
     }
 
-    .title-course{
-        color: #242424;
-        font-size: 2rem;
-        font-weight: 900;
+    .navbar-wrap {
+        display: none !important; /*Ẩn navbar-wrap */
     }
 
-    /*width 990px - 1200px navbar*/
-    @media screen and (min-width: 990px) and (max-width: 1200px) {
-        .navbar-wrap {
-            display: none !important;  /*Ẩn navbar-wrap */
-        }
+    .mobile-nav-toggler {
+        display: block !important; /* Hiển thị icon fa-bars */
+        padding-left: 40px;
+    }
 
-        .mobile-nav-toggler{
-            display: block !important; /* Hiển thị icon fa-bars */
-            padding-left: 40px;
-        }
-
-        .mobile-nav-toggler .svg-menu svg{
+        .mobile-nav-toggler .svg-menu svg {
             display: none !important;
         }
+}
+
+@media screen and (min-width: 767px) and (max-width: 991px) {
+    .pt-sm-110 {
+        padding-top: 110px !important;
     }
 
-    @media screen and (min-width: 767px) and (max-width: 991px) {
-        .header-action {
-            display: none !important;  /*Ẩn navbar-wrap */
-        }
-
+    .header-action {
+        display: none !important; /*Ẩn navbar-wrap */
     }
+}
 
-    /* footer payment-method */
-    @media only screen and (max-width: 760px) {
-        .payment-method-img .justify-content-end {
-            justify-content: center !important;
-        }
+/* footer payment-method */
+@media only screen and (max-width: 760px) {
+    .payment-method-img .justify-content-end {
+        justify-content: center !important;
     }
+}
 
-    @media only screen and (max-width: 768px) {
-        body {
-            overflow-x: hidden;
-        }
+@media only screen and (max-width: 768px) {
+    .pt-sx-110 {
+        padding-top: 110px !important;
+    }
 
         .container, .custom-container {
             max-width: 100%;
@@ -3592,16 +3611,24 @@ label {
             padding-right: 20px;
         }
 
-        .banner-area {
-            padding-left: 0;
-            padding-right: 0;
-        }
+    body {
+        overflow-x: hidden;
     }
 
-    .desktop-header-module--header--a5wri .desktop-header-module--dropdown-counter-badge--unIZ1{
-        top: 0;
-        left: 50%;
+
+    .container, .custom-container {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 15px;
+        padding-right: 20px;
     }
+
+    .banner-area {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
 
     .home {
         position: absolute;
@@ -3691,3 +3718,21 @@ label {
 
 
 .
+=======
+.desktop-header-module--header--a5wri .desktop-header-module--dropdown-counter-badge--unIZ1 {
+    top: 0;
+    left: 50%;
+}
+
+.home {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    z-index: 9;
+    height: auto;
+    padding: 20px 0;
+    background: none;
+    box-shadow: none;
+}
+

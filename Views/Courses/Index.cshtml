@@ -1,0 +1,150 @@
+﻿@model PagedList.IPagedList<Website_Course_AVG.Models.course> 
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="container pt-lg-100 pt-md-60 pt-sm-110 pt-sx-110 " aria-labelledby="title">
+    <div class="row d-flex justify-content-center">
+        <div class="row mb-2">
+            <form asp-action="Index" method="get" class="border rounded-3 p-3">
+                <div class="form-floating">
+                    <div class="row w-auto">
+                        <div class="form-group col-md-3 d-flex align-items-center">
+                            @*@Html.DropDownList("CategoryID", null, "All Category", htmlAttributes: new { @class = "form-control form-select-md" })*@
+                            <label id="filter" class="text-black-75 fw-bold">Filter</label>
+                            @foreach (var item in ViewBag.Categories)
+                            {
+                                <button type="button" onclick="filterCategory(@item.id)" class="btn-filter me-2 ms-1" >@item.name</button>
+                            }
+                        </div>
+                        @*<div class="form-group col-md-3 d-flex align-items-center">
+                            $1$<button type="button" name="filterButton" class="btn-filter filter">
+                                <i class="fa fa-filter"></i>
+                                Filter
+                            </button>#1#
+                            <a asp-action="Index" class="btn-filter align-content-center text-decoration-none ms-3 w-25 text-center">Clear</a>#1#
+                        </div>*@
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="courses" class="row d-flex justify-content-center">
+            <div class="row list-course d-flex justify-content-center">
+                @foreach (var item in Model)
+                {
+                    <section class="col-lg-3 ps-2 pe-2">
+                        <div class="mb-3 w-100 h-100 overflow-auto">
+                            <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                                <button class="btn_course text-dark rounded-5 p-2" onclick="redirectToDetail(@item.id)">
+                                    Watch Course
+                                </button>
+                                <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                            </a>
+                            <div class="course_title">
+                                <span class="text-black-75 fs-6">@item.title</span>
+                            </div>
+                            <div class="price-new mt-2">
+                                <span class="courseItem_old_price">@item.price</span>
+                                <span class="courseItem_main_price"></span>
+                            </div>
+                        </div>
+                    </section>
+                }
+                <div>
+                    <div>
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) /
+                        @Model.PageCount
+                    </div>
+     
+                    <div class="MenuPage">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</main>
+
+<style>
+    ul .pagination {
+        justify-content: center;
+    }
+
+    .MenuPage {
+        padding: 20px 0 10px 0;
+    }
+
+        .MenuPage li {
+            display: inline;
+        }
+</style>
+
+<style type="text/css">
+    .MenuPage a {
+        clear: both;
+        color: black;
+        padding: 4px 8px;
+        text-decoration: none;
+        background-color: #e8e8e8;
+        border-radius: 5px;
+        margin-left: 5px;
+    }
+
+        .MenuPage a:hover {
+            background-color: darkcyan;
+            border-radius: 5px;
+        }
+
+    a:not([href]):not([class]) {
+        &, &:hover
+
+        {
+            background-color: dodgerblue;
+            color:white;
+        }
+    }
+    .btn-filter{    
+       background-color: #007bff;
+        color: white;
+        border-radius: 10px;
+        border-color: transparent;
+        height: 100%;
+    }
+    .btn-filter:hover{
+        background-color: #0056b3;
+        color:darkgray;
+    }
+    .modal {
+        top: 100%;
+        transform: translateY(-100%);
+    }
+</style>
+@section scripts
+{
+    <script>
+         function filterCategory(idCategory) {
+             var categoryID = idCategory;
+             console.log(categoryID);
+             $.ajax({
+                url: '/Courses/GetCourse?Page=@ViewBag.page',
+                type: 'GET',
+                data: { categoryID: categoryID },
+                success: function (response) {
+                     $('.list-course').html(response.data);
+                }
+             });
+        }
+
+        var url = window.location.href;
+        var domain = url.hostname;
+
+        function redirectToDetail(courseId) {
+            // Điều hướng người dùng đến trang chi tiết với ID của khóa học
+            window.location.href = "Details?id=" + courseId; // Thay "DetailPage.aspx" thành đường dẫn thực tế của trang chi tiết
+        }
+    </script>
+}
