@@ -364,15 +364,25 @@
                 var expires = "expires=" + date.toUTCString();
             }
 
-            var valueCookie = getCookie(cookieName);
-            if (valueCookie == "") {
-                var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
-            } else {
-                valueCookie += "," + cookieValue;
-                var updatedCookie = cookieName + "=" + valueCookie + ";" + expires + ";path=/";
+            var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+
+            var existingCookies = document.cookie.split(';');
+
+            var found = false;
+            for (var i = 0; i < existingCookies.length; i++) {
+                var cookie = existingCookies[i].trim();
+                if (cookie.indexOf(cookieName + "=") === 0) {
+                    existingCookies[i] = updatedCookie;
+                    found = true;
+                    break;
+                }
             }
 
-            document.cookie = updatedCookie;
+            if (!found) {
+                existingCookies.push(updatedCookie);
+            }
+
+            document.cookie = existingCookies.join(';');
         }
 
         function deleteCookie(cookieName) {

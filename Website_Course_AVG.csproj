@@ -226,6 +226,7 @@
     <Compile Include="Attributes\AuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -307,6 +308,8 @@
     <Content Include="Content\img\blog\rc_post_thumb01.jpg" />
     <Content Include="Content\img\blog\rc_post_thumb02.jpg" />
     <Content Include="Content\img\blog\rc_post_thumb03.jpg" />
+    <Content Include="Content\img\course_images\aws.jpg" />
+    <Content Include="Content\img\course_images\unreal engine.jpg" />
     <Content Include="Content\img\favicon.png" />
     <Content Include="Content\img\images\login.png" />
     <Content Include="Content\img\images\card_img.png" />
@@ -422,6 +425,8 @@
     <Content Include="Views\Account\GithubLogin.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Web.config" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Cart\Payment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -431,7 +436,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

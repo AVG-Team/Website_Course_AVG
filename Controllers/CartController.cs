@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Numerics;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Website_Course_AVG.Models;
@@ -10,58 +14,65 @@ namespace Website_Course_AVG.Controllers
 {
     public class CartController : Controller
     {
+        MyDataDataContext db = new MyDataDataContext();
         public ActionResult Index()
         {
-            List<Course> courses = GetCartItems();
-            return View(courses);
-        }
-
-        [HttpPost]
-        public ActionResult AddToCart(int courseId)
-        {
-            List<Course> courses = GetCartItems();
-            courses.Add(new Course { id = courseId, title = "Course " + courseId });
-            UpdateCartItems(courses);
-            return RedirectToAction("Index");
-        }
-
-        /*public List<Course> GetCourses()
-        {
-            List<Course> courses = new List<Course>();
-            using (var context = new MyDataDataContext())
+            var selectedCourseIdsCookie = Request.Cookies["selected_course_ids"];
+            if (selectedCourseIdsCookie != null)
             {
-                courses = context.courses.ToList();
-            }
-            return courses;
-        }*/
+                var selectedCourseIds = selectedCourseIdsCookie.Value.Split(',').Select(int.Parse).ToList();
+                int count = selectedCourseIds.Count();
+                ViewBag.count = count;
 
-        private List<Course> GetCartItems()
+                var coursesInCart = db.courses.Where(c => selectedCourseIds.Contains(c.id)).ToList();
+                long? totalAmount = 0;
+                foreach (var course in coursesInCart)
+                {
+                    totalAmount += course.price;
+                }
+                ViewBag.TotalAmount = totalAmount;
+                return View(coursesInCart);
+            }
+            return View(new List<course>());
+        }
+        public ActionResult Payment()
         {
-            List<Course> courses = new List<Course>();
-            if (Request.Cookies["Cart"] != null)
+            var selectedCourseIdsCookie = Request.Cookies["selected_course_ids"];
+            if (selectedCourseIdsCookie != null)
             {
-                HttpCookie cookie = Request.Cookies["Cart"];
-                string json = HttpUtility.UrlDecode(cookie.Value);
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                courses = serializer.Deserialize<List<Course>>(json);
+                var selectedCourseIds = selectedCourseIdsCookie.Value.Split(',').Select(int.Parse).ToList();
+                int count = selectedCourseIds.Count();
+                ViewBag.count = count;
+
+                var coursesInCart = db.courses.Where(c => selectedCourseIds.Contains(c.id)).ToList();
+                long? totalAmount = 0;
+                foreach (var course in coursesInCart)
+                {
+                    totalAmount += course.price;
+                }
+
+                ViewBag.TotalAmount = totalAmount;
+                return View(coursesInCart);
             }
-            return courses;
+            return View(new List<course>());
         }
 
-        private void UpdateCartItems(List<Course> courses)
+        public ActionResult CheckDiscountCode(string discountCode)
         {
-            HttpCookie cookie = new HttpCookie("Cart");
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string json = serializer.Serialize(courses);
-            cookie.Value = HttpUtility.UrlEncode(json);
-            cookie.Expires = DateTime.Now.AddDays(1);
-            Response.Cookies.Add(cookie);
-        }
-
-        public class Course
-        {
-            public int id { get; set; }
-            public string title { get; set; }
+            var promo = db.promotions.Where(c => c.code_promotion.Equals(discountCode)).First();
+            if (promo != null)
+                if (promo.active == false)
+                {
+                    return Json(new { success = false, message = "Promotion code has expired." });
+                }
+                else
+                {
+                    return Json(new { success = true, message = "You get " +  promo.percent + "% off from " + promo.name + "."});
+                }
+            else
+            {
+                return Json(new { success = false, message = "Promotion code does not exist." });
+            }
         }
     }
 }

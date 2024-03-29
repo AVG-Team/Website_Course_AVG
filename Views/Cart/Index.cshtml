@@ -1,21 +1,121 @@
-﻿@model List<Website_Course_AVG.Controllers.CartController.Course>
+﻿@model IEnumerable<Website_Course_AVG.Models.course>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Cart</title>
-</head>
-<body>
-    <div>
-        @foreach (var course in Model)
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="h-100" style="background-color: #eee;">
+    <div class="container h-100 py-5">
+        <a href="@Url.Action("Index", "Course")" class="btn btn-primary btn-payment m-lg-2">Back</a>
+        @if (Model != null && Model.Any())
         {
-            <div>@course.title</div>
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+
+                        <h3 class="mb-0 text-black">Cart</h3>
+                        <div>
+                            @if (@ViewBag.count == 1)
+                            {
+                                <p class="mb-0">You have @ViewBag.count course in your cart</p>
+                            }
+                            else if (@ViewBag.count > 1)
+                            {
+                                <p class="mb-0">You have @ViewBag.count courses in your cart</p>
+                            }
+                        </div>
+                    </div>
+                    @foreach (var course in Model)
+                    {
+                        <div class="card rounded-3 mb-4">
+                            <div class="card-body p-4">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        <img src="@course.image_code" class="card-img card-img-top"
+                                             class="img-fluid rounded-3" alt="img_code">
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <p class="lead text-black fw-normal mb-2">@course.title</p>
+                                        <p><span class="text-muted">By @course.author</span>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <h5 class="mb-0 text-primary">@course.price VND</h5>
+                                    </div>
+                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                        <a href="#!" class="text-danger" onclick="deleteItem(@course.id, this)"><i class="fas fa-trash fa-lg"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="card mb-4">
+                        <div class="card-body p-4 d-flex flex-row">
+                            <div class="form-outline flex-fill">
+                                <input type="text" class="form-control mb-1" placeholder="Discount code">
+                            </div>
+                            <button class="btn btn-outline-warning btn-lg ms-3 apply-btn">Apply</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h4 class="text-black">Total:</h4>
+                            <h3 id="totalAmount" class="text-primary"> @ViewBag.TotalAmount VND</h3>
+                            <a href="@Url.Action("Payment", "Cart")" class="btn btn-primary btn-payment">Proceed to Pay</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         }
-        @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+        else
         {
-            <input type="hidden" name="courseId" value="1" /> <!-- Thay 1 bằng ID sản phẩm thực tế -->
-            <input type="submit" value="Add to Cart" />
+            <h1 class="text-center text-black">No courses in your cart</h1>
         }
     </div>
-</body>
-</html>
+</section>
+
+
+@section scripts {
+    <script>
+        function deleteItem(itemId, element) {
+            removeFromCookie(itemId);
+
+            var card = element.closest('.card');
+            card.remove();
+        }
+
+        function removeFromCookie(itemId) {
+            var cookieValue = getCookie("selected_course_ids");
+            var ids = cookieValue.split(',');
+            var index = ids.indexOf(itemId.toString());
+            if (index !== -1) {
+                ids.splice(index, 1);
+            }
+            var updatedCookieValue = ids.join(',');
+            document.cookie = "selected_course_ids=" + updatedCookieValue + ";path=/";
+        }
+
+        $(document).ready(function() {
+            $('.apply-btn').click(function () {
+            var discountCode = $('.form-outline input[type="text"]').val();
+            $.ajax({
+                url: '@Url.Action("CheckDiscountCode", "Cart")',
+                type: 'POST',
+                data: { discountCode: discountCode },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert('An error occurred while processing your request.');
+                }
+            });
+        });
+    });
+    </script>
+   }

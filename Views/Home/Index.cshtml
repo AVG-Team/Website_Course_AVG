@@ -8,10 +8,10 @@
         <button onclick="buy(@ViewBag.Course.id)">Buy</button>
         <script>
             function buy(id) {
-                let count = 5;
-                let value = "courseId=" + id + "-count=" + count;
-                    setCookie("cart", value, 30*24*60*60)
-                }
+                //let count = 5;
+                let value = "courseId=" + id; // + "-count=" + count
+                setCookie("cart", value, 30 * 24 * 60 * 60)
+            }
         </script>
     </div>
     <section class="row" aria-labelledby="aspnetTitle">

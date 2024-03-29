@@ -1,0 +1,178 @@
+﻿@model IEnumerable<Website_Course_AVG.Models.course>
+
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body p-4">
+
+                        <div class="row">
+
+                            <div class="col-lg-7">
+                                <h5 class="mb-3">
+                                    <a href="#!" class="text-body">
+                                        <i class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping
+                                    </a>
+                                </h5>
+                                <hr>
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <h3 class="mb-1 text-black">Cart</h3>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0">
+                                            @if (@ViewBag.count == 1)
+                                            {
+                                            <p class="mb-0">You have @ViewBag.count course in your cart</p>
+                                            }
+                                            else if (@ViewBag.count > 1)
+                                            {
+                                                <p class="mb-0">You have @ViewBag.count courses in your cart</p>
+                                            }  
+                                            </p>
+                                        </div>
+                                </div>
+
+                                @foreach (var course in Model)
+                                {
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div>
+                                                        <img src="@course.image_code"
+                                                             class="img-fluid rounded-3" alt="course-img" style="width: 65px;">
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <h5 class="text-black fw-normal">@course.title</h5>
+                                                        <p class="small mb-0">By @course.author</p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div style="width: 130px;">
+                                                        <h5 class="mb-0 text-primary">@course.price VND</h5>
+                                                    </div>
+                                                    <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                </div>
+                            <div class="col-lg-5">
+                                <div class="card bg-primary text-white rounded-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <h5 class="mb-0">Card details</h5>
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
+                                                 class="img-fluid rounded-3" style="width: 45px;" alt="Avatar">
+                                        </div>
+
+                                        <p class="small mb-2 text-white">Card type</p>
+                                        <a href="#!" type="submit" class="text-white" onclick="submitForm('mastercard')">
+                                            <i class="fab fa-cc-mastercard fa-2x me-2"></i>
+                                        </a>
+                                        <a href="#!" type="submit" class="text-white">
+                                            <i class="fab fa-cc-visa fa-2x me-2"></i>
+                                        </a>
+                                        <a href="#!" type="submit" class="text-white">
+                                            <i class="fab fa-cc-amex fa-2x me-2"></i>
+                                        </a>
+                                        <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
+
+                                        <form class="mt-4">
+                                            <div class="form-outline form-white mb-4">
+                                                <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
+                                                       placeholder="Cardholder's Name" />
+                                            </div>
+
+                                            <div class="form-outline form-white mb-4">
+                                                <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
+                                                       placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
+                                            </div>
+
+                                            <div class="row mb-4">
+                                                <div class="col-md-6">
+                                                    <div class="form-outline form-white">
+                                                        <input type="text" id="typeExp" class="form-control form-control-lg"
+                                                               placeholder="MM/YYYY" size="7" id="exp" minlength="7" maxlength="7" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-outline form-white">
+                                                        <input type="password" id="typeText" class="form-control form-control-lg"
+                                                               placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+                                        <hr class="my-4">
+
+                                        <div class="d-flex justify-content-between">
+                                            <p class="mb-2 text-white">Subtotal</p>
+                                            <p class="mb-2 text-white">$4798.00</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-4">
+                                            <p class="mb-2 text-white">Discount</p>
+                                            <p class="mb-2 text-white">20%</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-4">
+                                            <p class="mb-2 text-white">Total(Incl. taxes)</p>
+                                            <p class="mb-2 text-white">$4818.00</p>
+                                        </div>
+
+                                        <button type="button" class="btn btn-info btn-block btn-lg">
+                                            <div class="d-flex justify-content-between">
+                                                <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                            </div>
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script>
+        function submitForm(cardType) {
+            // Đảm bảo rằng các thông tin thanh toán đã nhập đúng và đầy đủ
+            if (validatePaymentDetails()) {
+                // Tạo một biến hidden để lưu loại thẻ thanh toán được chọn
+                var cardTypeInput = document.createElement("input");
+                cardTypeInput.setAttribute("type", "hidden");
+                cardTypeInput.setAttribute("name", "cardType");
+                cardTypeInput.setAttribute("value", cardType);
+                document.getElementById("paymentForm").appendChild(cardTypeInput);
+
+                // Submit form
+                document.getElementById("paymentForm").submit();
+            } else {
+                alert("Please fill in all payment details correctly.");
+            }
+        }
+
+        function validatePaymentDetails() {
+            // Thực hiện kiểm tra các thông tin thanh toán, ví dụ: kiểm tra xem tất cả các trường đã được điền đầy đủ không
+            // Trả về true nếu các thông tin hợp lệ, ngược lại trả về false
+            return true; // Thực hiện kiểm tra thông tin thanh toán thật sự ở đây và trả về true hoặc false
+        }
+    </script>
+}
