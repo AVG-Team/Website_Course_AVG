@@ -37,6 +37,13 @@
 /* 1. Theme default css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&amp;display=swap');
 
+@font-face {
+    font-family: 'PoppinsVH';
+    src: url('fonts/DesignerVN-Poppins/DesignerVN-Poppins-Regular.ttf') format('truetype');
+    /* Nếu cần hỗ trợ cho IE9 trở xuống, sử dụng dòng sau */
+    /* src: url('fonts/poppins.ttf') format('truetype'), url('fonts/poppins.woff') format('woff'); */
+}
+
 body {
     /*font-family: 'Poppins', sans-serif;*/
     font-weight: 500;
@@ -110,7 +117,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'PoppinsVH', sans-serif;
     color: #fff;
     margin-top: 0px;
     font-style: normal;
@@ -561,8 +568,7 @@ label {
     padding: 10px 20px;
 }
 
-.sticky-menu-clone,
-.sticky-menu {
+.sticky-menu-clone, .sticky-menu {
     left: 0;
     padding: 0 0;
     margin: auto;
@@ -3457,6 +3463,29 @@ label {
 .text-black-75 {
     --bs-text-opacity: 0.75; /* ?? trong su?t 75% */
     color: rgba(var(--bs-black-rgb), var(--bs-text-opacity)) !important;
+}
+
+/*Custom Css Lesson*/
+
+.h-3 {
+    height: 3rem;
+}
+
+.pc-1 {
+    padding: 1rem;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-gray {
+    color: gray;
+}
+
+.btn-none {
+    border: 0;
+    background: none;
 }
 
 .text-red-price {

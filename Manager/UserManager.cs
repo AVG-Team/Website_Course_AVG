@@ -81,13 +81,13 @@ namespace Website_Course_AVG.Managers
             if (!IsAuthenticated())
                 return false;
             user user = GetUserFromToken();
-            return user != null;
+            return user != null && user.role >= 1;
         }
 
         // role = 2 : admin
         public bool IsAdmin()
         {
-            if (!IsUser())
+            if (!IsAuthenticated())
                 return false;
             user user = GetUserFromToken();
             return user.role > 1;
