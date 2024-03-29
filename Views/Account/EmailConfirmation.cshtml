@@ -1,10 +1,16 @@
-﻿<div class="width:100%; height: 100%">
+﻿@using Website_Course_AVG.Models
+@model EmailConfirmation
+@{
+    Layout = null; // Vô hiệu hóa layout
+}
+
+<div class="width:100%; height: 100%">
     <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"
            style="max-width:650px;background:#fff; border-radius:3px; text-align:left; padding-top: 50px;">
         <tr>
             <td style="text-align:center; ">
                 <a href="https://rakeshmandal.com" title="logo" target="_blank">
-                    <img style="width: 60px; border-radius: 50%; display: block; border: 3px black;" src="https://i.ibb.co/hL4XZp2/android-chrome-192x192.png" title="logo" alt="logo">
+                    <img style="width: 60px; border-radius: 50%; display: block; border: 3px black;" src="~/Content/img/logo/avg_team.png" title="logo" alt="logo">
                 </a>
                 <span style="display:inline-block; vertical-align:middle;margin-top:26px; margin-bottom:16px; border-bottom:1px solid #cecece; width:90%;"></span>
             </td>
@@ -21,13 +27,22 @@
 
                 </p>
                 <div style="background-color: #e7f3ff; border: 2px solid #c4ddfb; border-radius: 5px; padding: 20px; width: 100px; margin-bottom: 26px;">
-                    <p style="color:black; font-size: 16px; line-height: 1.5; margin: 0;"></p>
-                </div>
-                <a href="javascript:void(0);"
-                   style=" width:400px; text-align:center;background:#1878f3;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff; font-size:14px;padding:10px 24px;display:inline-block;border-radius:10px;">Nhấn vào đây để đổi mật khẩu</a>
-                <span style="display:inline-block; vertical-align:middle;margin-top:26px; margin-bottom:26px; border-bottom:1px solid #cecece; width:100%;"></span>
+                    <p style="color:black; font-size: 16px; line-height: 1.5; margin: 0;">@Model.Code</p>
+                  </div>
+                <a href="@Model.RedirectURL" id="redirectUrl"
+                   style="width:400px; text-align:center;background:#1878f3;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff; font-size:14px;padding:10px 24px;display:inline-block;border-radius:10px;">Nhấn vào đây để đổi mật khẩu</a>
 
             </td>
         </tr>
     </table>
 </div>
+
+<script>
+    function redirect() {
+        var currentURL = window.location.href;
+        var myURL = document.getElementById("redirectUrl");
+        myURL.href = currentURL + "/Account/ResetPassword";
+        Request
+    }
+    
+</script>

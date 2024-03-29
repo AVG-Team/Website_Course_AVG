@@ -15,7 +15,6 @@ using System.Web.Mvc;
 using System.Web.Services.Description;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
-
 namespace Website_Course_AVG.Controllers
 {
     public class AccountController : Controller
@@ -71,8 +70,7 @@ namespace Website_Course_AVG.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]
-        [Website_Course_AVG.Attributes.AllowAnonymous]
+        [HttpPost]  
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -528,8 +526,12 @@ namespace Website_Course_AVG.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-     
 
+		[Website_Course_AVG.Attributes.AllowAnonymous]
+		public ActionResult EmailConfirmation()
+		{
+			return View();
+		}
 
 	}
 }

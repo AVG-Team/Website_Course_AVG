@@ -12,6 +12,13 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using Org.BouncyCastle.Math.Field;
 using System.Web.Mvc;
+using System.Security.Policy;
+using System.IO;
+using System.Web.Routing;
+using Website_Course_AVG.Controllers;
+using Microsoft.Ajax.Utilities;
+using System.Configuration;
+using System.Web.UI;
 
 namespace Website_Course_AVG.Managers
 {
@@ -135,14 +142,27 @@ namespace Website_Course_AVG.Managers
             return false;
         }
 
+
+		protected string RenderViewToString(String controllerName, string viewName, object viewData)
+		{
+			using (var writer = new StringWriter())
+			{
+				var routeData = new RouteData();
+				routeData.Values.Add("controller", controllerName);
+				var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://google.com", null), new HttpResponse(null))), routeData, new AccountController());
+				var razorViewEngine = new RazorViewEngine();
+				var razorViewResult = razorViewEngine.FindView(fakeControllerContext, viewName, "", false);
+
+				var viewContext = new ViewContext(fakeControllerContext, razorViewResult.View, new ViewDataDictionary(viewData), new TempDataDictionary(), writer);
+				razorViewResult.View.Render(viewContext, writer);
+				return writer.ToString();
+
+			}
+		}
 		public async Task<bool> SendEmailAsync(string toEmail, string subject, string message, string messageLast)
 		{
-            var ourMail = "khai.nguyenanh03@gmail.com";
-            var password = "oadp iffv mefs kbag";
-
-			string resetPasswordLink = "https://localhost:44331/Account/ResetPassword"; // Đường dẫn tới trang 
-
-			string body = $"<a href=\"{resetPasswordLink}\" style=\"color: blue; text-decoration: underline;\">Click here to reset your password.</a> ";
+			string ourMail = ConfigurationManager.AppSettings["OurMail"];
+			string password = ConfigurationManager.AppSettings["Password"];
 
 			user user = _data.users.Where(x => x.email == toEmail).FirstOrDefault();
             if (user == null)
@@ -166,44 +186,12 @@ namespace Website_Course_AVG.Managers
 			messageBody.Subject = subject;
 			var bodyBuilder = new BodyBuilder();
 
-			bodyBuilder.HtmlBody = @"
-                                    <html>
-                                    <body>
-                                        <div class=""width:100%; height: 100%"">
-                                            <table width=""95%"" border=""0"" align=""center"" cellpadding=""0"" cellspacing=""0""
-                                                style=""max-width:650px;background:#fff; border-radius:3px; text-align:left; padding-top: 50px;"">
-                                                <tr>
-                                                    <td style=""text-align:center; "">
-                                                        <a href=""https://rakeshmandal.com"" title=""logo"" target=""_blank"">
-                                                            <img style=""width: 60px; border-radius: 50%; display: block; border: 3px black;"" src=""Website_Course_AVG/Content/img/logo/avg_team.png"" title=""logo"" alt=""logo"">
-                                                        </a>
-                                                        <span
-                                                            style=""display:inline-block; vertical-align:middle;margin-top:26px; margin-bottom:16px; border-bottom:1px solid #cecece; width:90%;""></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style=""padding:0 35px; justify-content:left;"">
-                                                        <p style=""font-weight:bold; margin-bottom:10;font-family:'Rubik',sans-serif; "">xin chào bug,
-                                                            <br>
-                                                            <br>
-                                                            Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu ở trang web của chúng tôi.
-                                                            <br>
-                                                            Nhập mã đặt lại mật khẩu sau đây:
-                                                        </p>
-                                                        <div style=""background-color: #e7f3ff; border: 2px solid #c4ddfb; border-radius: 5px; padding: 20px; width: 100px; margin-bottom: 26px;"">
-                                                            <p style=""color:black; font-size: 16px; line-height: 1.5; margin: 0;"">" + messageLast + @"</p>
-                                                        </div>
-                                                        <a href=""" + resetPasswordLink + @"""
-                                                        style=""width:400px; text-align:center;background:#1878f3;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff; font-size:14px;padding:10px 24px;display:inline-block;border-radius:10px;"">Nhấn vào đây để đổi mật khẩu</a>
-                                                        <span
-                                                            style=""display:inline-block; vertical-align:middle;margin-top:26px; margin-bottom:26px; border-bottom:1px solid #cecece; width:100%;""></span>
-                                                    </td>
-                                                </tr>
-                                            </table>       
-                                        </div>
-                                    </body>
-                                    </html>";
+			EmailConfirmation emailConfirmation = new EmailConfirmation();
+			emailConfirmation.Code = messageLast;
+			string currentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
+			emailConfirmation.RedirectURL = currentUrl.Replace("ForgotPassword", "ResetPassword");
 
+			bodyBuilder.HtmlBody = RenderViewToString("Account", "EmailConfirmation", emailConfirmation);
 
 
 			messageBody.Body = bodyBuilder.ToMessageBody();

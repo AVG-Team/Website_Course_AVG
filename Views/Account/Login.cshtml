@@ -75,11 +75,9 @@
                              }
                         </section>
                         <div class="input-group mb-3 justify-content-center">
-                            <div class="row">
-                                <section id="socialLoginForm">
-                                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                                </section>
-                            </div>
+                            <section id="socialLoginForm">
+                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                            </section>                            
                         </div>
                         <div class="row">
                             <small>Don't have account? <a href="@Url.Action("Register", "Account")">Sign Up</a></small>

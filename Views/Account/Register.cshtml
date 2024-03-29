@@ -21,18 +21,18 @@
                     @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
                     {
                         @Html.AntiForgeryToken()
-                <div class="p-4">
+                     
                      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                      <div class="form-group mb-3">
-                        <div class="input-group ">
-                            <span class="input-group-text bg-primary rounded-start"><i class="fa-solid fa-user " style="width: 15px; color:white; "></i></span>
+                        <div class="input-group">
+                            <span class="input-group-text bg-primary rounded-start"><i class="fa-solid fa-user" style="width: 15px; color:white; "></i></span>
                             @Html.TextBoxFor(m => m.userName, new { @class = "form-control form-control-lg bg-light fs-6  rounded-end", placeholder = "UserName" })
 
                         </div>
                         @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
                      </div>
                      <div class="form-group mb-3">
-                        <div class="input-group mb-3">
+                        <div class="input-group">
                             <span class="input-group-text bg-primary rounded-start">
                                 <i class="fa-solid fa-envelope" style="width: 15px; color:white; "></i>
                             </span>
@@ -41,7 +41,7 @@
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                      </div>
                      <div class="form-group mb-3">
-                         <div class="input-group mb-3">
+                         <div class="input-group">
                              <span class="input-group-text bg-primary rounded-start">
                                  <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
                              </span>
@@ -76,7 +76,7 @@
                              <small>Do you have account? <a href="@Url.Action("Login", "Account")">Sign In</a></small>
                          </div>
 
-                     </div>
+                     
                     }
                 </div>
             </div>

@@ -119,4 +119,14 @@ namespace Website_Course_AVG.Models
 
 		public string ReturnUrl { get; set; }
 	}
+
+	public class EmailConfirmation
+	{
+		[Required]
+		[EmailAddress]
+		[Display(Name = "Code")]
+		public string Code { get; set; }
+
+		public string RedirectURL { get; set; }
+	}
 }
