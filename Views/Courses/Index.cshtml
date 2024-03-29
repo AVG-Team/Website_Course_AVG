@@ -1,13 +1,13 @@
 ﻿@model PagedList.IPagedList<Website_Course_AVG.Models.course> 
-@using Microsoft.IdentityModel.Logging
 @using PagedList.Mvc
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main aria-labelledby="title">
+
+<main class="container pt-lg-100 pt-md-60 pt-sm-110 pt-sx-110 " aria-labelledby="title">
     <div class="row d-flex justify-content-center">
-        <div class="row">
+        <div class="row mb-2">
             <form asp-action="Index" method="get" class="border rounded-3 p-3">
                 <div class="form-floating">
                     <div class="row w-auto">
@@ -24,7 +24,7 @@
                                 <i class="fa fa-filter"></i>
                                 Filter
                             </button>#1#
-                            $1$<a asp-action="Index" class="btn-filter align-content-center text-decoration-none ms-3 w-25 text-center">Clear</a>#1#
+                            <a asp-action="Index" class="btn-filter align-content-center text-decoration-none ms-3 w-25 text-center">Clear</a>#1#
                         </div>*@
                     </div>
                 </div>
@@ -34,10 +34,13 @@
             <div class="row list-course d-flex justify-content-center">
                 @foreach (var item in Model)
                 {
-                    <section class="col-lg-3 btn-course">
+                    <section class="col-lg-3 ps-2 pe-2">
                         <div class="mb-3 w-100 h-100 overflow-auto">
-                            <a class="rounded-4 d-block object-fit-cover overflow-hidden pt-20  w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                                <img loading="lazy" src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                            <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                                <button class="btn_course text-dark rounded-5 p-2" onclick="redirectToDetail(@item.id)">
+                                    Watch Course
+                                </button>
+                                <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
                             </a>
                             <div class="course_title">
                                 <span class="text-black-75 fs-6">@item.title</span>
@@ -46,9 +49,6 @@
                                 <span class="courseItem_old_price">@item.price</span>
                                 <span class="courseItem_main_price"></span>
                             </div>
-                            <button type="button" onclick="Window.Location." class="btn btn-info">
-                                <a href="@Url.Action("Details","Courses")" value="@item.id"  class="text-decoration-none">detail</a>
-                            </button>
                         </div>
                     </section>
                 }
@@ -141,5 +141,10 @@
 
         var url = window.location.href;
         var domain = url.hostname;
+
+        function redirectToDetail(courseId) {
+            // Điều hướng người dùng đến trang chi tiết với ID của khóa học
+            window.location.href = "Details?id=" + courseId; // Thay "DetailPage.aspx" thành đường dẫn thực tế của trang chi tiết
+        }
     </script>
 }

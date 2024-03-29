@@ -1,33 +1,37 @@
 ﻿@model Website_Course_AVG.Models.CoursesViewModel
+@using Website_Course_AVG.Models
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
-  
-    .lesson-item{
+
+    .lesson-item {
         cursor: pointer;
     }
-    .lesson-item:hover{
-        background-color: rgba(0,0,0,.05)!important;
-    }
-    .item-des{
+
+        .lesson-item:hover {
+            background-color: rgba(0,0,0,.05) !important;
+        }
+
+    .item-des {
         margin-bottom: 5px;
     }
-    .item_description{
+
+    .item_description {
         font-size: 14px;
     }
 </style>
-<main aria-labelledby="title">
+<main class="container pt-lg-100 pt-md-60 pt-sm-110 pt-sx-110" aria-labellesdby="title">
     @foreach (var item in Model.Courses)
     {
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8" id="content">
                 <div class="course_title mb-4">
                     <span class="fs-3 text-info" style="font-weight:600;">@item.title</span>
                     <p class="text-black-75 mt-2" style="font-size:12px">
-                       @item.description
+                        @item.description
                     </p>
                 </div>
                 <div class="course_description mt-1">
@@ -74,21 +78,11 @@
                             {
                                 <li class="border-bottom lesson-item" style="border-bottom-color:rgba(0,0,0,.05)!important;">
                                     <div class="row d-flex align-items-center" style="height:40px">
-                                        <div class="col-lg-10">
-                                            @foreach (var dt in Model.DetailCourses)
-                                            {
-                                                if(@lesson.id != @dt.lesson_learned_id)
-                                                {
-                                                    <i class="fa-solid fa-circle-play text-info "></i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="fa-solid fa-circle-play text-danger"></i>
-                                                }
-                                            }
+                                        <div class="col-10 ">
+                                            <i class="fa-solid fa-circle-play text-info" ></i>
                                             <span class="item_description ms-2 text-black-50">@lesson.title</span>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-2">
                                             <span class="item_description ms-2 text-black-50 time-lesson">@lesson.time</span>
                                         </div>
                                     </div>
@@ -98,9 +92,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4" id="description">
                 <div class="mb-3 w-100 h-100 overflow-auto">
-                    <a class="rounded-4 d-block object-fit-cover overflow-hidden pt-20  w-100 a_course mb-4" title="HTML CSS Pro" target="_self">
+                    <a class="rounded-4 d-block object-fit-cover overflow-hidden mt-20  w-100 a_course mb-4" title="HTML CSS Pro" target="_self">
                         @*<img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />*@
                         <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
                             <div class="carousel-indicators">
@@ -137,8 +131,8 @@
                             }
                             else
                             {
-                                <input value="@item.price" class="d-none" id="priceCourse"/>
-                                <p class="text-red-price fs-3 fw-semibold" id="price" ></p>
+                                <input value="@item.price" class="d-none" id="priceCourse" />
+                                <p class="text-red-price fs-3 fw-semibold" id="price"></p>
                             }
                         </span>
                     </div>
@@ -212,5 +206,26 @@
     // Hiển thị tổng thời gian
     console.log("Tổng thời gian: " + totalTimeInMinutes + " phút");
 
-    
+   
+
+    window.addEventListener('resize', function () {
+        swapDivs();
+    });
+
+    function swapDivs() {
+        var div1 = document.getElementById('content');
+        var div2 = document.getElementById('description');
+
+        // Kiểm tra kích thước màn hình
+        var screenWidth = window.innerWidth;
+        console.log = screenWidth;
+        // Kiểm tra điều kiện hoán đổi
+        if (screenWidth <= 768) {
+            // Thực hiện hoán đổi chỗ
+            var temp = div1.innerHTML;
+            div1.innerHTML = div2.innerHTML;
+            div2.innerHTML = temp;
+        }
+    }
+
 </script>

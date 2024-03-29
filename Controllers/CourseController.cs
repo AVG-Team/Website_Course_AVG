@@ -78,22 +78,27 @@ namespace Website_Course_AVG.Controllers
             ViewData["CategoryID"] = GetCategories(course?.category_id);
         }
 
-        public ActionResult Details(int CourseId = 8)
+        public ActionResult Details()
         {
-            if (CourseId == null)
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            if (id == null)
                 return HttpNotFound();
             else
             {
                 var imageCode = "";
-                var course = _data.courses.Where(c => c.id == CourseId).ToList();
+                var course = _data.courses.Where(c => c.id == id).ToList();
                 foreach (var item in course)
                 {
                     imageCode = item.image_code;
                 }
 
                 var images = _data.images.Where(i => i.code.Equals(imageCode)).ToList();
-                var lessons = _data.lessons.Where(l => l.course_id == CourseId).ToList();
-                var detailCourses = _data.detail_courses.Where(d => d.course_id == CourseId).ToList();
+                var lessons = _data.lessons.Where(l => l.course_id == id).ToList();
+                var detailCourses = _data.detail_courses.Where(d => d.course_id == id).ToList();
                 var viewModel = new CoursesViewModel()
                 {
                     Courses = course,
