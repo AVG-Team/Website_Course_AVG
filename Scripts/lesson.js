@@ -1,12 +1,22 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
-    var header = document.getElementById("sticky-header-lesson");
+﻿function truncateString(input, maxLength) {
+    if (input.length <= maxLength) {
+        return input;
+    } else {
+        return input.substring(0, maxLength) + "...";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    var lessonTitle = truncateString($('.menu-footer .title-lesson').text(), 27);
+    $('.menu-footer .title-lesson').text(lessonTitle);
+
+    var header = $('.sticky-header-lesson');
     var footer = document.getElementById("footer_lesson");
 
-    var body = document.getElementsByTagName("body");
-    body[0].style.overflowY = "Hidden";
+    let heightHeader = header[0].offsetHeight !== 0 ? header[0].offsetHeight  : header[1].offsetHeight;
 
     var divTop = $(".to-top");
-    divTop.css("margin-top", header.offsetHeight + "px");
+    divTop.css("margin-top", heightHeader + "px");
 
     var divBottom = $(".to-bottom");
     divTop.css("margin-bottom", footer.offsetHeight + "px");
@@ -34,7 +44,6 @@
         let time = Math.floor(video.currentTime);
         formData.append("time", time);
         formData.append("lessonId", lessonId);
-        console.log(formData.get("content"))
 
         if ($("#inp_note").val() != "") {
             $.ajax({
@@ -50,9 +59,8 @@
                     $("#inp_note").val("");
                     toastr.success(result.message, "Notify");
                 },
-                error: function (xhr, status, error) {
-                    console.log(error);
-                    toastr.error(error, "Error");
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.message, "Error");
                 },
             });
         } else {
@@ -60,9 +68,9 @@
         }
     });
 
-    $("#btn_open_notes").click(() => {
+    $(".btn_open_notes").click(() => {
         $.ajax({
-            url: $('#btn_open_notes').data("ajax") + "?lessonId=" + lessonId,
+            url: $('.btn_open_notes').data("ajax") + "?lessonId=" + lessonId,
             type: "GET",
             processData: false,
             contentType: false,
@@ -145,10 +153,117 @@
                 })
             },
             error: function (xhr, status, error) {
-                console.log(error);
                 toastr.error("Error Unknow, Please try again", "Error");
             },
         });
+    })
+
+    //comment
+    $(".btn-comment").click((e) => {
+        $.ajax({
+            url: $('.btn-comment').data("ajax") + "?lessonId=" + lessonId,
+            type: "GET",
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                $("#body_comments").html(result.data);
+
+                $('.btn-delete-comment').click((e) => {
+                    let eTmp = e.target;
+                    let divParent = eTmp.closest(".comment-item");
+
+                    let idComment = divParent.getAttribute("data-comment");
+                    let url = divParent.getAttribute("data-ajax-delete");
+                    $.ajax({
+                        url: url + "/" + idComment,
+                        type: "POST",
+                        headers: {
+                            "X-HTTP-Method-Override": "DELETE"
+                        },
+                        success: function (result) {
+                            divParent.remove();
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Error Unknow, Please try again", "Error");
+                        }
+                    });
+                })
+            },
+            error: function (xhr, status, error) {
+                toastr.error("Error Unknow, Please try again", "Error");
+            },
+        });
+    })
+
+    $(".btn-save-comment").click(() => {
+        let content = $("#text_comment").val().trim();
+        if (content != "") {
+            var formData = new FormData($("#form_add_comment")[0]);
+            formData.append("lessonId", lessonId);
+
+                $.ajax({
+                    url: $("#form_add_comment").attr('action'),
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        RequestVerificationToken: $('#form_add_comment input:hidden[name="__RequestVerificationToken"]').val(),
+                    },
+                    success: function (result) {
+                        console.log(result.data);
+                        if (result.data.type == 1) {
+                            let classCommentIcon = result.data.role == 2 ? "fa-user-shield" : "fa-user";
+                            let newCommentHtml = `
+                        <div class="mb-3 d-flex comment-item justify-space-between" data-comment="${result.data.id}" data-ajax-delete="${result.data.ajax_delete}">
+                            <div>
+                                <label for="text_comment" class="form-label me-3">
+                                    <i class="fas ${classCommentIcon} fs-5 text-primary" style="margin-top: 0.2rem !important" aria-hidden="true"></i>
+                                </label>
+                                <div>
+                                    <h5 class="text-dark">${result.data.name}</h5>
+                                    <p class="text-dark" style="font-family: PoppinsVH">${result.data.content}</p>
+                                </div>
+                            </div>
+                            <button class="btn-none text-gray btn-delete-comment d-flex">
+                                <i class="fa-solid fa-trash me-1 note-item-icon"></i>
+                            </button>
+                        </div>`;
+
+                            $("#body_comments").prepend(newCommentHtml);
+                        }
+                        $("#text_comment").val("");
+                        toastr.success(result.message, "Notify");
+
+
+                        $('.btn-delete-comment').click((e) => {
+                            let eTmp = e.target;
+                            let divParent = eTmp.closest(".comment-item");
+
+                            let idComment = divParent.getAttribute("data-comment");
+                            let url = divParent.getAttribute("data-ajax-delete");
+                            $.ajax({
+                                url: url + "/" + idComment,
+                                type: "POST",
+                                headers: {
+                                    "X-HTTP-Method-Override": "DELETE"
+                                },
+                                success: function (result) {
+                                    divParent.remove();
+                                },
+                                error: function (xhr, status, error) {
+                                    toastr.error("Error Unknow, Please try again", "Error");
+                                }
+                            });
+                        })
+                    },
+                    error: function (xhr) {
+                        toastr.error(xhr.responseJSON.message, "Error");
+                    },
+                });
+        } else {
+            toastr.error("Không được để trống nội dung", "Error");
+        }
     })
 });
 
@@ -177,21 +292,6 @@ function setTimeVideo(second) {
     video.currentTime = second;
 }
 
-window.addEventListener("scroll", function () {
-    var header = document.getElementById("sticky-header");
-    var scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop || 0;
-
-    if (scrollTop > 50) {
-        header.style.position = "fixed";
-    } else {
-        header.style.position = "relative";
-    }
-});
-
-
 //Video
 document.addEventListener("DOMContentLoaded", () => {
     var lastLink = $('footer').find('a.last')[0];
@@ -206,7 +306,6 @@ document.addEventListener("DOMContentLoaded", () => {
     var timeOnPage = 0;
     countDownTimer = setInterval(function () {
         timeOnPage++;
-        console.log(timeOnPage);
         if (timeOnPage >= video.duration * 2 / 3) {
             clearInterval(countDownTimer);
             flag = true;
@@ -248,4 +347,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+})
+
+//lesson
+
+document.addEventListener("DOMContentLoaded", () => {
+    const windowWidth = window.innerWidth;
+    $(".open-lesson").click(() => {
+        if (windowWidth < 992) {
+            let modalLesson = new bootstrap.Modal(document.getElementById('modal_lesson'))
+            modalLesson.show()
+        }
+    })
 })

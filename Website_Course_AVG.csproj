@@ -253,6 +253,7 @@
     <Compile Include="Attributes\UserAttribute.cs" />
     <Compile Include="Attributes\AuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LessonController.cs" />
@@ -384,6 +385,7 @@
     <Content Include="Content\img\poster\ucm_poster10.jpg" />
     <Content Include="Content\img\preloader.svg" />
     <Content Include="Content\lesson.css" />
+    <Content Include="Content\loading.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\ModalSide.css" />
     <Content Include="Content\odometer.css" />
@@ -414,6 +416,7 @@
       <LastGenOutput>MyData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="bad_words.json" />
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
     </None>
@@ -468,8 +471,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\GithubLogin.cshtml" />
     <Content Include="Views\Lesson\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutNotFooter.cshtml" />
+    <Content Include="Views\Shared\_LayoutLesson.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Comment\comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

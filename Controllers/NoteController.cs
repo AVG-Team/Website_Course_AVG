@@ -21,7 +21,7 @@ namespace Website_Course_AVG.Controllers
             try
             {
                 user user = Helpers.GetUserFromToken();
-                List<note> notes = _data.notes.Where(x => x.lesson_id == lessonId && x.user_id == user.id).ToList();
+                List<note> notes = _data.notes.Where(x => x.lesson_id == lessonId && x.user_id == user.id).OrderBy(x => x.time).ToList();
 
                 string view = RenderViewToString("Note","notes", notes);
                 return ResponseHelper.SuccessResponse("", view);
@@ -47,12 +47,14 @@ namespace Website_Course_AVG.Controllers
                     note = noteTmp;
                     note.content = content;
                     note.time = time;
+                    note.updated_at = DateTime.Now;
                 } else
                 {
                     note.lesson_id = lessonId;
                     note.user_id = user.id;
                     note.content = content;
                     note.time = time;
+                    note.created_at = DateTime.Now;
 
                     _data.notes.InsertOnSubmit(note);
                 }
@@ -79,6 +81,7 @@ namespace Website_Course_AVG.Controllers
                 if (noteTmp != null)
                 {
                     noteTmp.content = content;
+                    noteTmp.updated_at = DateTime.Now;
                 }
                 else
                 {

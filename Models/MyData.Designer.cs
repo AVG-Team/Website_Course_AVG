@@ -45,9 +45,6 @@ namespace Website_Course_AVG.Models
     partial void Insertcategory(category instance);
     partial void Updatecategory(category instance);
     partial void Deletecategory(category instance);
-    partial void Insertcomment(comment instance);
-    partial void Updatecomment(comment instance);
-    partial void Deletecomment(comment instance);
     partial void Insertcontact(contact instance);
     partial void Updatecontact(contact instance);
     partial void Deletecontact(contact instance);
@@ -90,6 +87,9 @@ namespace Website_Course_AVG.Models
     partial void Insertuser(user instance);
     partial void Updateuser(user instance);
     partial void Deleteuser(user instance);
+    partial void Insertcomment(comment instance);
+    partial void Updatecomment(comment instance);
+    partial void Deletecomment(comment instance);
         #endregion
 
         public MyDataDataContext() :
@@ -159,14 +159,6 @@ namespace Website_Course_AVG.Models
 			get
 			{
 				return this.GetTable<category>();
-			}
-		}
-		
-		public System.Data.Linq.Table<comment> comments
-		{
-			get
-			{
-				return this.GetTable<comment>();
 			}
 		}
 		
@@ -279,6 +271,14 @@ namespace Website_Course_AVG.Models
 			get
 			{
 				return this.GetTable<user>();
+			}
+		}
+		
+		public System.Data.Linq.Table<comment> comments
+		{
+			get
+			{
+				return this.GetTable<comment>();
 			}
 		}
 	}
@@ -1387,318 +1387,6 @@ namespace Website_Course_AVG.Models
 		{
 			this.SendPropertyChanging();
 			entity.category = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.comments")]
-	public partial class comment : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _content;
-		
-		private System.Nullable<int> _lesson_id;
-		
-		private System.Nullable<int> _user_id;
-		
-		private System.Nullable<int> _type;
-		
-		private System.Nullable<System.DateTime> _updated_at;
-		
-		private System.Nullable<System.DateTime> _created_at;
-		
-		private System.Nullable<System.DateTime> _deleted_at;
-		
-		private EntityRef<lesson> _lesson;
-		
-		private EntityRef<user> _user;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OncontentChanging(string value);
-    partial void OncontentChanged();
-    partial void Onlesson_idChanging(System.Nullable<int> value);
-    partial void Onlesson_idChanged();
-    partial void Onuser_idChanging(System.Nullable<int> value);
-    partial void Onuser_idChanged();
-    partial void OntypeChanging(System.Nullable<int> value);
-    partial void OntypeChanged();
-    partial void Onupdated_atChanging(System.Nullable<System.DateTime> value);
-    partial void Onupdated_atChanged();
-    partial void Oncreated_atChanging(System.Nullable<System.DateTime> value);
-    partial void Oncreated_atChanged();
-    partial void Ondeleted_atChanging(System.Nullable<System.DateTime> value);
-    partial void Ondeleted_atChanged();
-    #endregion
-		
-		public comment()
-		{
-			this._lesson = default(EntityRef<lesson>);
-			this._user = default(EntityRef<user>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_content", DbType="NVarChar(MAX)")]
-		public string content
-		{
-			get
-			{
-				return this._content;
-			}
-			set
-			{
-				if ((this._content != value))
-				{
-					this.OncontentChanging(value);
-					this.SendPropertyChanging();
-					this._content = value;
-					this.SendPropertyChanged("content");
-					this.OncontentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lesson_id", DbType="Int")]
-		public System.Nullable<int> lesson_id
-		{
-			get
-			{
-				return this._lesson_id;
-			}
-			set
-			{
-				if ((this._lesson_id != value))
-				{
-					if (this._lesson.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onlesson_idChanging(value);
-					this.SendPropertyChanging();
-					this._lesson_id = value;
-					this.SendPropertyChanged("lesson_id");
-					this.Onlesson_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="Int")]
-		public System.Nullable<int> user_id
-		{
-			get
-			{
-				return this._user_id;
-			}
-			set
-			{
-				if ((this._user_id != value))
-				{
-					if (this._user.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onuser_idChanging(value);
-					this.SendPropertyChanging();
-					this._user_id = value;
-					this.SendPropertyChanged("user_id");
-					this.Onuser_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="Int")]
-		public System.Nullable<int> type
-		{
-			get
-			{
-				return this._type;
-			}
-			set
-			{
-				if ((this._type != value))
-				{
-					this.OntypeChanging(value);
-					this.SendPropertyChanging();
-					this._type = value;
-					this.SendPropertyChanged("type");
-					this.OntypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_updated_at", DbType="DateTime")]
-		public System.Nullable<System.DateTime> updated_at
-		{
-			get
-			{
-				return this._updated_at;
-			}
-			set
-			{
-				if ((this._updated_at != value))
-				{
-					this.Onupdated_atChanging(value);
-					this.SendPropertyChanging();
-					this._updated_at = value;
-					this.SendPropertyChanged("updated_at");
-					this.Onupdated_atChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_at", DbType="DateTime")]
-		public System.Nullable<System.DateTime> created_at
-		{
-			get
-			{
-				return this._created_at;
-			}
-			set
-			{
-				if ((this._created_at != value))
-				{
-					this.Oncreated_atChanging(value);
-					this.SendPropertyChanging();
-					this._created_at = value;
-					this.SendPropertyChanged("created_at");
-					this.Oncreated_atChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_deleted_at", DbType="DateTime")]
-		public System.Nullable<System.DateTime> deleted_at
-		{
-			get
-			{
-				return this._deleted_at;
-			}
-			set
-			{
-				if ((this._deleted_at != value))
-				{
-					this.Ondeleted_atChanging(value);
-					this.SendPropertyChanging();
-					this._deleted_at = value;
-					this.SendPropertyChanged("deleted_at");
-					this.Ondeleted_atChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="lesson_comment", Storage="_lesson", ThisKey="lesson_id", OtherKey="id", IsForeignKey=true)]
-		public lesson lesson
-		{
-			get
-			{
-				return this._lesson.Entity;
-			}
-			set
-			{
-				lesson previousValue = this._lesson.Entity;
-				if (((previousValue != value) 
-							|| (this._lesson.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._lesson.Entity = null;
-						previousValue.comments.Remove(this);
-					}
-					this._lesson.Entity = value;
-					if ((value != null))
-					{
-						value.comments.Add(this);
-						this._lesson_id = value.id;
-					}
-					else
-					{
-						this._lesson_id = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("lesson");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="user_comment", Storage="_user", ThisKey="user_id", OtherKey="id", IsForeignKey=true)]
-		public user user
-		{
-			get
-			{
-				return this._user.Entity;
-			}
-			set
-			{
-				user previousValue = this._user.Entity;
-				if (((previousValue != value) 
-							|| (this._user.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._user.Entity = null;
-						previousValue.comments.Remove(this);
-					}
-					this._user.Entity = value;
-					if ((value != null))
-					{
-						value.comments.Add(this);
-						this._user_id = value.id;
-					}
-					else
-					{
-						this._user_id = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("user");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -3682,13 +3370,13 @@ namespace Website_Course_AVG.Models
 		
 		private System.Nullable<System.DateTime> _deleted_at;
 		
-		private EntitySet<comment> _comments;
-		
 		private EntitySet<detail_course> _detail_courses;
 		
 		private EntitySet<exercise> _exercises;
 		
 		private EntitySet<note> _notes;
+		
+		private EntitySet<comment> _comments;
 		
 		private EntityRef<course> _course;
 		
@@ -3726,10 +3414,10 @@ namespace Website_Course_AVG.Models
 		
 		public lesson()
 		{
-			this._comments = new EntitySet<comment>(new Action<comment>(this.attach_comments), new Action<comment>(this.detach_comments));
 			this._detail_courses = new EntitySet<detail_course>(new Action<detail_course>(this.attach_detail_courses), new Action<detail_course>(this.detach_detail_courses));
 			this._exercises = new EntitySet<exercise>(new Action<exercise>(this.attach_exercises), new Action<exercise>(this.detach_exercises));
 			this._notes = new EntitySet<note>(new Action<note>(this.attach_notes), new Action<note>(this.detach_notes));
+			this._comments = new EntitySet<comment>(new Action<comment>(this.attach_comments), new Action<comment>(this.detach_comments));
 			this._course = default(EntityRef<course>);
 			this._video = default(EntityRef<video>);
 			OnCreated();
@@ -3983,19 +3671,6 @@ namespace Website_Course_AVG.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="lesson_comment", Storage="_comments", ThisKey="id", OtherKey="lesson_id")]
-		public EntitySet<comment> comments
-		{
-			get
-			{
-				return this._comments;
-			}
-			set
-			{
-				this._comments.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="lesson_detail_course", Storage="_detail_courses", ThisKey="id", OtherKey="lesson_learned_id")]
 		public EntitySet<detail_course> detail_courses
 		{
@@ -4032,6 +3707,19 @@ namespace Website_Course_AVG.Models
 			set
 			{
 				this._notes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="lesson_comment", Storage="_comments", ThisKey="id", OtherKey="lesson_id")]
+		public EntitySet<comment> comments
+		{
+			get
+			{
+				return this._comments;
+			}
+			set
+			{
+				this._comments.Assign(value);
 			}
 		}
 		
@@ -4123,18 +3811,6 @@ namespace Website_Course_AVG.Models
 			}
 		}
 		
-		private void attach_comments(comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.lesson = this;
-		}
-		
-		private void detach_comments(comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.lesson = null;
-		}
-		
 		private void attach_detail_courses(detail_course entity)
 		{
 			this.SendPropertyChanging();
@@ -4166,6 +3842,18 @@ namespace Website_Course_AVG.Models
 		}
 		
 		private void detach_notes(note entity)
+		{
+			this.SendPropertyChanging();
+			entity.lesson = null;
+		}
+		
+		private void attach_comments(comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.lesson = this;
+		}
+		
+		private void detach_comments(comment entity)
 		{
 			this.SendPropertyChanging();
 			entity.lesson = null;
@@ -5700,8 +5388,6 @@ namespace Website_Course_AVG.Models
 		
 		private EntitySet<blog> _blogs;
 		
-		private EntitySet<comment> _comments;
-		
 		private EntitySet<detail_course> _detail_courses;
 		
 		private EntitySet<forgot_password> _forgot_passwords;
@@ -5713,6 +5399,8 @@ namespace Website_Course_AVG.Models
 		private EntitySet<order> _orders;
 		
 		private EntitySet<promotion> _promotions;
+		
+		private EntitySet<comment> _comments;
 		
 		private EntityRef<account> _account;
 		
@@ -5745,13 +5433,13 @@ namespace Website_Course_AVG.Models
 		public user()
 		{
 			this._blogs = new EntitySet<blog>(new Action<blog>(this.attach_blogs), new Action<blog>(this.detach_blogs));
-			this._comments = new EntitySet<comment>(new Action<comment>(this.attach_comments), new Action<comment>(this.detach_comments));
 			this._detail_courses = new EntitySet<detail_course>(new Action<detail_course>(this.attach_detail_courses), new Action<detail_course>(this.detach_detail_courses));
 			this._forgot_passwords = new EntitySet<forgot_password>(new Action<forgot_password>(this.attach_forgot_passwords), new Action<forgot_password>(this.detach_forgot_passwords));
 			this._notes = new EntitySet<note>(new Action<note>(this.attach_notes), new Action<note>(this.detach_notes));
 			this._notifications = new EntitySet<notification>(new Action<notification>(this.attach_notifications), new Action<notification>(this.detach_notifications));
 			this._orders = new EntitySet<order>(new Action<order>(this.attach_orders), new Action<order>(this.detach_orders));
 			this._promotions = new EntitySet<promotion>(new Action<promotion>(this.attach_promotions), new Action<promotion>(this.detach_promotions));
+			this._comments = new EntitySet<comment>(new Action<comment>(this.attach_comments), new Action<comment>(this.detach_comments));
 			this._account = default(EntityRef<account>);
 			OnCreated();
 		}
@@ -5973,19 +5661,6 @@ namespace Website_Course_AVG.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="user_comment", Storage="_comments", ThisKey="id", OtherKey="user_id")]
-		public EntitySet<comment> comments
-		{
-			get
-			{
-				return this._comments;
-			}
-			set
-			{
-				this._comments.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="user_detail_course", Storage="_detail_courses", ThisKey="id", OtherKey="user_id")]
 		public EntitySet<detail_course> detail_courses
 		{
@@ -6064,6 +5739,19 @@ namespace Website_Course_AVG.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="user_comment", Storage="_comments", ThisKey="id", OtherKey="user_id")]
+		public EntitySet<comment> comments
+		{
+			get
+			{
+				return this._comments;
+			}
+			set
+			{
+				this._comments.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="account_user", Storage="_account", ThisKey="account_id", OtherKey="id", IsForeignKey=true)]
 		public account account
 		{
@@ -6125,18 +5813,6 @@ namespace Website_Course_AVG.Models
 		}
 		
 		private void detach_blogs(blog entity)
-		{
-			this.SendPropertyChanging();
-			entity.user = null;
-		}
-		
-		private void attach_comments(comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.user = this;
-		}
-		
-		private void detach_comments(comment entity)
 		{
 			this.SendPropertyChanging();
 			entity.user = null;
@@ -6212,6 +5888,330 @@ namespace Website_Course_AVG.Models
 		{
 			this.SendPropertyChanging();
 			entity.user = null;
+		}
+		
+		private void attach_comments(comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.user = this;
+		}
+		
+		private void detach_comments(comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.user = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.comments")]
+	public partial class comment : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _content;
+		
+		private System.Nullable<int> _lesson_id;
+		
+		private System.Nullable<int> _user_id;
+		
+		private System.Nullable<int> _type;
+		
+		private System.Nullable<System.DateTime> _created_at;
+		
+		private System.Nullable<System.DateTime> _updated_at;
+		
+		private System.Nullable<System.DateTime> _deleted_at;
+		
+		private EntityRef<lesson> _lesson;
+		
+		private EntityRef<user> _user;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OncontentChanging(string value);
+    partial void OncontentChanged();
+    partial void Onlesson_idChanging(System.Nullable<int> value);
+    partial void Onlesson_idChanged();
+    partial void Onuser_idChanging(System.Nullable<int> value);
+    partial void Onuser_idChanged();
+    partial void OntypeChanging(System.Nullable<int> value);
+    partial void OntypeChanged();
+    partial void Oncreated_atChanging(System.Nullable<System.DateTime> value);
+    partial void Oncreated_atChanged();
+    partial void Onupdated_atChanging(System.Nullable<System.DateTime> value);
+    partial void Onupdated_atChanged();
+    partial void Ondeleted_atChanging(System.Nullable<System.DateTime> value);
+    partial void Ondeleted_atChanged();
+    #endregion
+		
+		public comment()
+		{
+			this._lesson = default(EntityRef<lesson>);
+			this._user = default(EntityRef<user>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_content", DbType="NVarChar(MAX)")]
+		public string content
+		{
+			get
+			{
+				return this._content;
+			}
+			set
+			{
+				if ((this._content != value))
+				{
+					this.OncontentChanging(value);
+					this.SendPropertyChanging();
+					this._content = value;
+					this.SendPropertyChanged("content");
+					this.OncontentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lesson_id", DbType="Int")]
+		public System.Nullable<int> lesson_id
+		{
+			get
+			{
+				return this._lesson_id;
+			}
+			set
+			{
+				if ((this._lesson_id != value))
+				{
+					if (this._lesson.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onlesson_idChanging(value);
+					this.SendPropertyChanging();
+					this._lesson_id = value;
+					this.SendPropertyChanged("lesson_id");
+					this.Onlesson_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="Int")]
+		public System.Nullable<int> user_id
+		{
+			get
+			{
+				return this._user_id;
+			}
+			set
+			{
+				if ((this._user_id != value))
+				{
+					if (this._user.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onuser_idChanging(value);
+					this.SendPropertyChanging();
+					this._user_id = value;
+					this.SendPropertyChanged("user_id");
+					this.Onuser_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="Int")]
+		public System.Nullable<int> type
+		{
+			get
+			{
+				return this._type;
+			}
+			set
+			{
+				if ((this._type != value))
+				{
+					this.OntypeChanging(value);
+					this.SendPropertyChanging();
+					this._type = value;
+					this.SendPropertyChanged("type");
+					this.OntypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_created_at", DbType="DateTime")]
+		public System.Nullable<System.DateTime> created_at
+		{
+			get
+			{
+				return this._created_at;
+			}
+			set
+			{
+				if ((this._created_at != value))
+				{
+					this.Oncreated_atChanging(value);
+					this.SendPropertyChanging();
+					this._created_at = value;
+					this.SendPropertyChanged("created_at");
+					this.Oncreated_atChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_updated_at", DbType="DateTime")]
+		public System.Nullable<System.DateTime> updated_at
+		{
+			get
+			{
+				return this._updated_at;
+			}
+			set
+			{
+				if ((this._updated_at != value))
+				{
+					this.Onupdated_atChanging(value);
+					this.SendPropertyChanging();
+					this._updated_at = value;
+					this.SendPropertyChanged("updated_at");
+					this.Onupdated_atChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_deleted_at", DbType="DateTime")]
+		public System.Nullable<System.DateTime> deleted_at
+		{
+			get
+			{
+				return this._deleted_at;
+			}
+			set
+			{
+				if ((this._deleted_at != value))
+				{
+					this.Ondeleted_atChanging(value);
+					this.SendPropertyChanging();
+					this._deleted_at = value;
+					this.SendPropertyChanged("deleted_at");
+					this.Ondeleted_atChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="lesson_comment", Storage="_lesson", ThisKey="lesson_id", OtherKey="id", IsForeignKey=true)]
+		public lesson lesson
+		{
+			get
+			{
+				return this._lesson.Entity;
+			}
+			set
+			{
+				lesson previousValue = this._lesson.Entity;
+				if (((previousValue != value) 
+							|| (this._lesson.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._lesson.Entity = null;
+						previousValue.comments.Remove(this);
+					}
+					this._lesson.Entity = value;
+					if ((value != null))
+					{
+						value.comments.Add(this);
+						this._lesson_id = value.id;
+					}
+					else
+					{
+						this._lesson_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("lesson");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="user_comment", Storage="_user", ThisKey="user_id", OtherKey="id", IsForeignKey=true)]
+		public user user
+		{
+			get
+			{
+				return this._user.Entity;
+			}
+			set
+			{
+				user previousValue = this._user.Entity;
+				if (((previousValue != value) 
+							|| (this._user.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._user.Entity = null;
+						previousValue.comments.Remove(this);
+					}
+					this._user.Entity = value;
+					if ((value != null))
+					{
+						value.comments.Add(this);
+						this._user_id = value.id;
+					}
+					else
+					{
+						this._user_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("user");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

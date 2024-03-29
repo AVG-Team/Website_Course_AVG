@@ -33,11 +33,13 @@ namespace Website_Course_AVG.Controllers
             }
 
             List<lesson> lessons = lessonsCourse.OrderBy(x => x.index).ToList();
+            int idLessonFirstOfCourse = lessons.First().id;
 
             string courseTitle = lesson.course.title;
             ViewBag.CourseTitle = courseTitle;
 
-            int userId = Helpers.GetUserFromToken().id;
+            user user = Helpers.GetUserFromToken();
+            int userId = user.id;
             detail_course detailCourse = _data.detail_courses.Where(x => x.user_id == userId && x.course_id == courseId).FirstOrDefault();
             if(detailCourse == null)
             {
@@ -45,7 +47,7 @@ namespace Website_Course_AVG.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            int lessonLearnedId = detailCourse.lesson_learned_id ?? 1;
+            int lessonLearnedId = detailCourse.lesson_learned_id ?? idLessonFirstOfCourse - 1;
             ViewBag.LessonLearnedId = lessonLearnedId;
             ViewBag.Lessons = lessons;
 
@@ -53,12 +55,11 @@ namespace Website_Course_AVG.Controllers
             ViewBag.Identity = identity;
 
             // 14 qua , 15 qua
-            if(lessonLearnedId + 1 < lesson.id)
+            if(lessonLearnedId + 1 < lesson.id && user.role != 2)
             {
                 Helpers.addCookie("Error", "You have not finished studying the previous lesson, please return to the previous lesson");
                 return RedirectToAction("Detail", "Course");
             }
-
 
             string fileJson = Server.MapPath("~/ltweb-avg-b91359369629.json");
             string url = Helpers.GetVideoLessonUrl(lesson.video, fileJson);

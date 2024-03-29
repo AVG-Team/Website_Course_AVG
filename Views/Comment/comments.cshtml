@@ -1,0 +1,28 @@
+﻿@model List<Website_Course_AVG.Models.comment>
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <div class="mb-3 d-flex comment-item justify-space-between" data-comment="@item.id"
+         data-ajax-delete="@Url.Action("Delete", "Comment")">
+        <div>
+            <label for="text_comment" class="form-label me-3">
+                <i class="fas @(item.user.role != 2 ? "fa-user" : "fa-user-shield") fs-5
+               @(item.user.role == 2 ? "text-success" : "") @(item.user.id == Website_Course_AVG.Managers.Helpers.GetUserFromToken().id ? "text-primary" : "")"
+                   style="margin-top: 0.2rem !important"></i>
+            </label>
+            <div>
+                <h5 class="text-dark">@item.user.fullname</h5>
+                <p class="text-dark" style="font-family: PoppinsVH">@item.content</p>
+            </div>
+        </div>
+        @if (Website_Course_AVG.Managers.Helpers.GetUserFromToken().id == item.user_id)
+        {
+            <button class="btn-none text-gray btn-delete-comment d-flex">
+                <i class="fa-solid fa-trash me-1 note-item-icon"></i>
+            </button>
+        }
+    </div>
+}

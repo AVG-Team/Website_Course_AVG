@@ -81,7 +81,7 @@ namespace Website_Course_AVG.Managers
             if (!IsAuthenticated())
                 return false;
             user user = GetUserFromToken();
-            return user != null && user.role == 1;
+            return user != null && user.role >= 1;
         }
 
         // role = 2 : admin

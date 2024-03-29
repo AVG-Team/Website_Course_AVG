@@ -188,9 +188,36 @@ namespace Website_Course_AVG.Managers
 
             return sensitiveWords;
         }
-        public static string SanitizeInput(string input)
+
+        //public static string SanitizeInput(string input)
+        //{
+        //    List<string> sensitiveWords = ReadJsonFromFile("~/sensitive_words.json");
+
+        //    int sensitiveWordCount = 0;
+        //    foreach (string word in sensitiveWords)
+        //    {
+        //        if (Regex.IsMatch(input, @"\b" + word + @"\b", RegexOptions.IgnoreCase))
+        //        {
+        //            sensitiveWordCount++;
+        //        }
+        //    }
+
+        //    if (sensitiveWordCount > 3)
+        //    {
+        //        return "Error: Input contains sensitive words.";
+        //    }
+
+        //    foreach (string word in sensitiveWords)
+        //    {
+        //        input = Regex.Replace(input, @"\b" + word + @"\b", "*");
+        //    }
+
+        //    return input;
+        //}
+
+        public static bool isBadWord(string input, string json)
         {
-            List<string> sensitiveWords = ReadJsonFromFile("~/sensitive_words.json");
+            List<string> sensitiveWords = ReadJsonFromFile(json);
 
             int sensitiveWordCount = 0;
             foreach (string word in sensitiveWords)
@@ -201,17 +228,12 @@ namespace Website_Course_AVG.Managers
                 }
             }
 
-            if (sensitiveWordCount > 3)
+            if (sensitiveWordCount >= 1)
             {
-                return "Error: Input contains sensitive words.";
+                return true;
             }
 
-            foreach (string word in sensitiveWords)
-            {
-                input = Regex.Replace(input, @"\b" + word + @"\b", "*");
-            }
-
-            return input;
+            return false;
         }
     }
 }
