@@ -273,7 +273,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\img\banner\banner_bg01.jpg" />
     <Content Include="Content\img\banner\layout_main_section.jpg" />
     <Content Include="Content\img\banner\slider_img01.jpg" />
     <Content Include="Content\img\banner\slider_img02.jpg" />
@@ -281,7 +280,6 @@
     <Content Include="Content\img\banner\s_slider_bg.jpg" />
     <Content Include="Content\default.css" />
     <Content Include="Content\flaticon.css" />
-    <Content Include="Content\img\banner\banner_bg01.jpg" />
     <Content Include="Content\img\bg\blog_bg.jpg" />
     <Content Include="Content\img\bg\breadcrumb_bg.jpg" />
     <Content Include="Content\img\bg\contact_bg.jpg" />
