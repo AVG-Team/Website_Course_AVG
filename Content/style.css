@@ -1124,11 +1124,23 @@ label {
                 }
 
 /* 6. Banner */
-.banner-bg {
+.banner-bg-1 {
     padding: 295px 0 273px;
     background-position: center;
     background-size: cover;
     background-image: url(img/banner/layout_main_section.jpg);
+}
+.banner-bg-2 {
+    padding: 295px 0 273px;
+    background-position: center;
+    background-size: cover;
+    background-image: url(img/banner/slider_img01.jpg);
+}
+.banner-bg-3 {
+    padding: 295px 0 273px;
+    background-position: center;
+    background-size: cover;
+    background-image: url(img/banner/slider_img02.jpg);
 }
 
 .banner-content .sub-title {
@@ -3576,7 +3588,7 @@ label {
             max-width: 100%;
             margin-left: 0;
             margin-right: 0;
-            padding-left: 15px;
+            padding-left: 20px;
             padding-right: 20px;
         }
 
@@ -3602,3 +3614,80 @@ label {
         background: none;
         box-shadow: none;
     }
+
+/*tesst*/
+.menu-user .avatar-user {
+    position: relative;
+    font-size: 30px;
+    top: 4px;
+    left: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.menu-user .profile-user{
+    position: absolute;
+    width: 14rem;
+    top: 57px;
+    right: 19px;
+    padding: 10px 20px;
+    background: #fff;
+    box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    transition: 0.5s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.menu-user .profile-user::before {
+    content: '';
+    position: absolute;
+    /*right: 28px;*/
+}
+
+.menu-user .profile-user ul li{
+    list-style: none;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.menu-user .profile-user.active{
+    visibility: visible;
+    opacity: 1;
+}
+
+.menu-user .profile-user ul li a{
+    text-decoration: none;
+    font-size: 17px;
+    color: black;
+
+}
+
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+    .menu-user .profile-user {
+        right: 45px !important;
+    }
+}
+
+/*mobile*/
+.menu-user-mobile{
+    position: relative;
+    text-align:center;
+}
+
+.menu-user-mobile .icon{
+    font-size: 50px;
+}
+
+.menu-user-mobile .user-name-mobile{
+    padding: 10px 0;
+}
+.menu-user .avatar-user-mobile .fa-solid{
+    font-size: 50px;
+}
+
+
+.

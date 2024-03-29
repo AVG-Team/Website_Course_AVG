@@ -234,6 +234,7 @@
     <Compile Include="Manager\TokenHelper.cs" />
     <Compile Include="Attributes\AllowAnonymousAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CategoryCourseViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Manager\UserManager.cs" />

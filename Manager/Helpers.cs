@@ -30,5 +30,16 @@ namespace Website_Course_AVG.Managers
             return
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
         }
+        public static bool IsUser()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.IsUser();
+        }
+
+        public static bool IsAdmin()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.IsAdmin();
+        }
     }
 }
