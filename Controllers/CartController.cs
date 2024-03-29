@@ -8,13 +8,15 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Xml.Schema;
 using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Controllers
 {
+    [Website_Course_AVG.Attributes.User]
     public class CartController : Controller
     {
-        MyDataDataContext db = new MyDataDataContext();
+        private MyDataDataContext db = new MyDataDataContext();
         public ActionResult Index()
         {
             var selectedCourseIdsCookie = Request.Cookies["selected_course_ids"];
@@ -50,7 +52,6 @@ namespace Website_Course_AVG.Controllers
                 {
                     totalAmount += course.price;
                 }
-
                 ViewBag.TotalAmount = totalAmount;
                 return View(coursesInCart);
             }

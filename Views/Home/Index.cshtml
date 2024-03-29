@@ -7,10 +7,69 @@
         <h1>@ViewBag.Course.title</h1>
         <button onclick="buy(@ViewBag.Course.id)">Buy</button>
         <script>
+            function setCookieForCart(cookieName, cookieValue, secondsToExpire, type = 1) {
+                if (type == 0) {
+                    var expires = secondsToExpire;
+                } else if (type == 1) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (secondsToExpire * 1000));
+                    var expires = "expires=" + date.toUTCString();
+                }
+
+                var valueCookie = getCookie(cookieName);
+                if (valueCookie == "") {
+                    var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+                } else {
+                    let str1 = valueCookie;
+                    let str2 = cookieValue;
+
+                    let updatedStr1 = '';
+                    let courseIdToUpdate = '';
+                    let countToAdd = 0;
+                    let courseIdExists = false;
+
+                    // Lấy courseId và count từ str2
+                    let str2Parts = str2.split('-');
+                    str2Parts.forEach(pair => {
+                        let [key, value] = pair.split('=');
+                        if (key === 'courseId') {
+                            courseIdToUpdate = value;
+                        } else if (key === 'count') {
+                            countToAdd = parseInt(value);
+                        }
+                    });
+
+                    // Cập nhật str1
+                    let parts1 = str1.split(',');
+                    parts1.forEach(part => {
+                        let keyValuePairs = part.split('-');
+                        let obj = {};
+                        keyValuePairs.forEach(pair => {
+                            let [key, value] = pair.split('=');
+                            obj[key] = value;
+                        });
+                        if (obj.courseId === courseIdToUpdate) {
+                            courseIdExists = true;
+                            obj.count = parseInt(obj.count) + countToAdd;
+                        }
+                        updatedStr1 += `courseId=${obj.courseId}-count=${obj.count}`;
+                    });
+
+                    if (!courseIdExists) {
+                        updatedStr1 += "," + str2;
+                    }
+
+                    valueCookie = updatedStr1;
+
+                    var updatedCookie = cookieName + "=" + valueCookie + ";" + expires + ";path=/";
+                }
+
+                document.cookie = updatedCookie;
+            }
             function buy(id) {
-                //let count = 5;
-                let value = "courseId=" + id; // + "-count=" + count
-                setCookie("cart", value, 30 * 24 * 60 * 60)
+                let count = 5;
+                let value = "courseId=" + id + "-count=" + count;
+                setCookieForCart("cart", value, 30*24*60*60)
             }
         </script>
     </div>
