@@ -200,9 +200,14 @@
                 });
             }
         });
+
         function redirectToDetail(courseId) {
-            // Điều hướng người dùng đến trang chi tiết với ID của khóa học
-            window.location.href = "Courses/Details?id=" + courseId; // Thay "DetailPage.aspx" thành đường dẫn thực tế của trang chi tiết
+            var url = window.location.href;
+            if(url.includes("Courses/Index")){
+                window.location.href = "Details?id=" + courseId;
+            }else{
+                window.location.href = "Courses/Details?id=" + courseId;
+            }
         }
     </script>
 }
