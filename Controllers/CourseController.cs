@@ -30,12 +30,11 @@ namespace Website_Course_AVG.Controllers
             var category = _data.categories.ToList();
             ViewBag.Categories = category;
             int pageNumber = (page ?? 1);
-
             var list = courses.ToPagedList(pageNumber, 12);
             return View(list);
         }
         // GET: Courses
-        public JsonResult GetCourse(int? page, int? CategoryID)
+        public JsonResult GetCourse(int? page, int? categoryId, int? index)
         {
             try
             {
@@ -44,14 +43,25 @@ namespace Website_Course_AVG.Controllers
                 {
                     page = 1;
                 }
-                var courses = from c in _data.courses
+
+                /*var courses = from c in _data.courses
                         .Include(m => m.category)
                         .Where(m => m.deleted_at == null)
-                              select c;
-                if (CategoryID != null)
+                              select c;*/
+                /*if (categoryId != null)
                 {
-                    courses = courses.Where(m => m.category_id == CategoryID);
+                    courses = courses.Where(m => m.category_id == categoryId);
                 }
+
+                if (index == 1)
+                {
+                    courses = courses.Where(m => m.price != 0);
+                }
+                else
+                {
+                    courses = courses.Where(m => m.price == 0);
+                }*/
+                var courses = ClassificationCourse(categoryId, index);
                 int pageNumber = (page ?? 1);
 
                 var list = courses.ToPagedList(pageNumber, 12);
@@ -125,6 +135,28 @@ namespace Website_Course_AVG.Controllers
                 return writer.ToString();
 
             }
+        }
+
+        private IQueryable<course> ClassificationCourse(int? id, int? idCost)
+        {
+            var courses = from c in _data.courses
+                    .Include(m => m.category)
+                    .Where(m => m.deleted_at == null)
+                          select c;
+            if (id != null)
+            {
+                courses = courses.Where(m => m.category_id == id && m.price != 0);
+            }
+
+            if (idCost == 1)
+            {
+                courses = courses.Where(m => m.price != 0);
+            }
+            else if (idCost == 0)
+            {
+                courses = courses.Where(m => m.price == 0);
+            }
+            return courses;
         }
 
     }

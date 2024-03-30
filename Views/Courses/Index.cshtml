@@ -13,10 +13,13 @@
                     <div class="row w-auto">
                         <div class="form-group col-md-3 d-flex align-items-center">
                             @*@Html.DropDownList("CategoryID", null, "All Category", htmlAttributes: new { @class = "form-control form-select-md" })*@
-                            <label id="filter" class="text-black-75 fw-bold">Filter</label>
+                            <label class="text-black-75 fw-bold me-1">Cost</label>
+                            <button value="0"  type="button" class="btn-filter me-2 ms-1">Free</button>
+                            <button value="1" type="button" class="btn-filter me-2 ms-1">Pro</button>
+                            <label id="filter" class="text-black-75 fw-bold me-1">Languages</label>
                             @foreach (var item in ViewBag.Categories)
                             {
-                                <button type="button" onclick="filterCategory(@item.id)" class="btn-filter me-2 ms-1" >@item.name</button>
+                                <button value="@item.id" type="button"  class="btn-cate btn-filter me-2 ms-1">@item.name</button>
                             }
                         </div>
                         @*<div class="form-group col-md-3 d-flex align-items-center">
@@ -118,6 +121,10 @@
         background-color: #0056b3;
         color:darkgray;
     }
+    .btn-filter .clicked{
+        background-color: #0056b3;
+        color:darkgray;
+    }
     .modal {
         top: 100%;
         transform: translateY(-100%);
@@ -126,22 +133,73 @@
 @section scripts
 {
     <script>
-         function filterCategory(idCategory) {
-             var categoryID = idCategory;
-             console.log(categoryID);
+        @*function filterByCategory(idCategory) {
+            var id = $(this).text();
+            console.log(id);
              $.ajax({
                 url: '/Courses/GetCourse?Page=@ViewBag.page',
-                type: 'GET',
-                data: { categoryID: categoryID },
+                 type: 'GET',
+                 data: { idCategory: idCategory || index: index },
                 success: function (response) {
                      $('.list-course').html(response.data);
                 }
              });
         }
 
+        function filterByCost(idCategory,index) {
+            var cost = $(this).text();
+            console.log(cost);
+            $.ajax({
+                url: '/Courses/GetCourse?Page=@ViewBag.page',
+                type: 'GET',
+                data: {
+                    idCategory: idCategory,
+                    index: index
+                },
+                success: function (response) {
+                    $('.list-course').html(response.data);
+                }
+            });
+        }*@
         var url = window.location.href;
         var domain = url.hostname;
+        $(document).ready(function() {
+            var buttons = document.getElementsByClassName("btn-filter");
+            var cate = document.getElementsByClassName("btn-cate");
 
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].addEventListener("click", function() {
+                    // Thay đổi màu của button
+                    $(this).toggleClass("clicked");
+
+                    var cost = $(this).val();
+                    var idCategory = null;
+
+                    for (var j = 0; j < cate.length; j++) {
+                        cate[j].addEventListener("click", function () {
+                            idCategory = cate[i].val();
+                            console.log(idCategory);
+                        });
+                    }
+
+                    console.log(cost);
+                    console.log(idCategory);
+
+                    $.ajax({
+                        url: '/Courses/GetCourse?Pages=@ViewBag.page',
+                        type: 'GET',
+                        data: {
+                            categoryId: idCategory,
+                            index: cost
+                        },
+                        success: function(response) {
+                            $('.list-course').html(response.data);
+                            console.log(response.data);
+                        }
+                    });
+                });
+            }
+        });
         function redirectToDetail(courseId) {
             // Điều hướng người dùng đến trang chi tiết với ID của khóa học
             window.location.href = "Details?id=" + courseId; // Thay "DetailPage.aspx" thành đường dẫn thực tế của trang chi tiết

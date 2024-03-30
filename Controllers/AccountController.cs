@@ -457,7 +457,7 @@ namespace Website_Course_AVG.Controllers
             var responseContent = await response.Content.ReadAsStringAsync();
             var values = HttpUtility.ParseQueryString(responseContent);
             var accessToken = values["access_token"];
-            var client1 = new GitHubClient(new Octokit.ProductHeaderValue("Huynguyenjv"));
+            var client1 = new GitHubClient(new Octokit.ProductHeaderValue("AVG-Course"));
             var tokenAuth = new Credentials(accessToken);
             client1.Credentials = tokenAuth;
             var user = await client1.User.Current();
