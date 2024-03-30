@@ -241,7 +241,6 @@ label {
 
 /* All-color */
 .navbar-wrap > ul > li:hover > a,
-.mobile-menu .navigation li.active > a,
 .header-lang form .icon,
 .banner-content .sub-title,
 .banner-content .title > span,
@@ -3671,7 +3670,7 @@ label {
         box-shadow: none;
     }
 
-/*tesst*/
+/* User/Admin */
 .menu-user .avatar-user {
     position: relative;
     font-size: 30px;
@@ -3722,6 +3721,10 @@ label {
 
 }
 
+    .menu-user .profile-user  ul  li a:hover {
+        color: #e4d804 !important;
+    }
+
 @media screen and (min-width: 990px) and (max-width: 1200px) {
     .menu-user .profile-user {
         right: 45px !important;
@@ -3741,12 +3744,11 @@ label {
 .menu-user-mobile .user-name-mobile{
     padding: 10px 0;
 }
-.menu-user .avatar-user-mobile .fa-solid{
+.menu-user-mobile .avatar-user-mobile .fa-solid{
     font-size: 50px;
 }
 
 
-.
 =======
 .desktop-header-module--header--a5wri .desktop-header-module--dropdown-counter-badge--unIZ1 {
     top: 0;

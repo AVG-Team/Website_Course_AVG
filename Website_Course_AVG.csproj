@@ -420,12 +420,12 @@
     <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-ExtraBold.ttf" />
     <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-Regular.ttf" />
     <Content Include="ltweb-avg-b91359369629.json" />
+    <Content Include="bad_words.json" />
     <Content Include="Models\MyData.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>MyData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="bad_words.json" />
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
     </None>
@@ -518,11 +518,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\MyData.dbml.layout">
-      <DependentUpon>MyData.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
