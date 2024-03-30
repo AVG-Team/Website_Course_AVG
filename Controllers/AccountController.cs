@@ -72,28 +72,26 @@ namespace Website_Course_AVG.Controllers
         // POST: /Account/Login
         [HttpPost]  
         [ValidateAntiForgeryToken]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
 			var userManager = new Website_Course_AVG.Managers.UserManager();
 			if (userManager.IsAuthenticated())
 			{
 				Helpers.addCookie("Error", "You are logging in.");
-				return RedirectToAction(returnUrl);
+				return RedirectToLocal(returnUrl);
 			}
 			if (ModelState.IsValid)
             {
-                user user = userManager.GetUserFromToken();
                 userManager.login(model.Email);
                 Helpers.addCookie("Notify", "Login Successfull");
-                return RedirectToAction(returnUrl);
+                return RedirectToLocal(returnUrl);
             }
             else
             {
-                Helpers.addCookie("Error", "Error Unknow, Please Try Again", 30);
+                Helpers.addCookie("Error", "Error Unknow, Please Try Again");
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
             return View(model);
         }
 
@@ -209,7 +207,8 @@ namespace Website_Course_AVG.Controllers
 		// POST: /Account/ForgotPassword
 
 		[HttpPost]
-		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
 		{
 			var userManager = new UserManager();
 			var subject = "AVG Courses- Reset Password";
@@ -363,7 +362,7 @@ namespace Website_Course_AVG.Controllers
             var UserManager = new Website_Course_AVG.Managers.UserManager();
             UserManager.logout();
 
-            Helpers.addCookie("Notify", "Logout Successful");
+            Helpers.addCookie("Notify", "Logout Successful", 5);
             return RedirectToAction("Index", "Home");
         }
 
@@ -462,17 +461,18 @@ namespace Website_Course_AVG.Controllers
             var client = new HttpClient();
             var parameters = new Dictionary<string, string>
             {
-                { "client_id", ConfigurationManager.AppSettings["ClientIdGH"].ToString() },
-                { "client_secret", ConfigurationManager.AppSettings["ClientSecretGH"].ToString() },
+                { "client_id", Helpers.GetValueFromAppSetting("ClientIdGH") },
+                { "client_secret", Helpers.GetValueFromAppSetting("ClientSecretGH") },
                 { "code", code },
-                { "redirect_uri", ConfigurationManager.AppSettings["RedirectUrl"].ToString() }
+                { "redirect_uri", Helpers.GetRedirectUrlGH() }
             };
             var content = new FormUrlEncodedContent(parameters);
             var response = await client.PostAsync("https://github.com/login/oauth/access_token", content);
             var responseContent = await response.Content.ReadAsStringAsync();
             var values = HttpUtility.ParseQueryString(responseContent);
             var accessToken = values["access_token"];
-            var client1 = new GitHubClient(new Octokit.ProductHeaderValue("Huynguyenjv"));
+            string idGithub = Helpers.GetValueFromAppSetting("IdGH");
+            var client1 = new GitHubClient(new Octokit.ProductHeaderValue(idGithub));
             var tokenAuth = new Credentials(accessToken);
             client1.Credentials = tokenAuth;
             var user = await client1.User.Current();

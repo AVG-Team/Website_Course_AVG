@@ -23,10 +23,18 @@ namespace Website_Course_AVG.Managers
             return global::System.Configuration.ConfigurationManager.AppSettings[key];
         }
 
+        public static string GetRedirectUrlGH()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Account/GithubLogin";
+        }
+
         public static string UrlGithubLogin()
         {
             string clientIdGh = GetValueFromAppSetting("ClientIdGH");
-            string redirectUrl = GetValueFromAppSetting("RedirectUrl");
+            string redirectUrl = GetRedirectUrlGH();
             return
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
         }
