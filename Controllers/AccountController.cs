@@ -21,7 +21,7 @@ namespace Website_Course_AVG.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-		private readonly MyDataDataContext _context;
+		private readonly MyDataDataContext _context = new MyDataDataContext();
 
 		public AccountController()
 		{
@@ -79,14 +79,15 @@ namespace Website_Course_AVG.Controllers
 			if (userManager.IsAuthenticated())
 			{
 				Helpers.addCookie("Error", "You are logging in.");
-				return RedirectToLocal(returnUrl);
+                return View(model);
 			}
 			if (ModelState.IsValid)
             {
-                userManager.login(model.Email);
+                user user = _context.users.Where(x => x.fullname == model.userName).FirstOrDefault();
+				userManager.login(user.email);
                 Helpers.addCookie("Notify", "Login Successfull");
-                return RedirectToLocal(returnUrl);
-            }
+				return RedirectToAction("Index", "Home");
+			}
             else
             {
                 Helpers.addCookie("Error", "Error Unknow, Please Try Again");
@@ -208,7 +209,8 @@ namespace Website_Course_AVG.Controllers
 
 		[HttpPost]
         [Website_Course_AVG.Attributes.AllowAnonymous]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
 		{
 			var userManager = new UserManager();
 			var subject = "AVG Courses- Reset Password";
@@ -464,7 +466,7 @@ namespace Website_Course_AVG.Controllers
                 { "client_id", Helpers.GetValueFromAppSetting("ClientIdGH") },
                 { "client_secret", Helpers.GetValueFromAppSetting("ClientSecretGH") },
                 { "code", code },
-                { "redirect_uri", Helpers.GetRedirectUrlGH() }
+                //{ "redirect_uri", Helpers.GetRedirectUrlGH() }
             };
             var content = new FormUrlEncodedContent(parameters);
             var response = await client.PostAsync("https://github.com/login/oauth/access_token", content);
@@ -523,12 +525,19 @@ namespace Website_Course_AVG.Controllers
             }
             if(!userManager.resetPassword(model.Password, model.Email, model.Code)) return View(model);
 			Helpers.addCookie("Notify", "ResetPassword successful");
-			return RedirectToAction("Index", "Home");
+			return RedirectToAction("ResetPasswordConfirmation", "Account");
+
 		}
 
 
 		[Website_Course_AVG.Attributes.AllowAnonymous]
 		public ActionResult EmailConfirmation()
+		{
+			return View();
+		}
+
+		[Website_Course_AVG.Attributes.AllowAnonymous]
+		public ActionResult ResetPasswordConfirmation()
 		{
 			return View();
 		}

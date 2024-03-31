@@ -36,34 +36,34 @@
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="row">
-                                    <div class="form-group mb-3">
-                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg bg-light fs-6  rounded", placeholder = "Email Address" })
-                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+                                       
+                                        @Html.TextBoxFor(m => m.userName, new { @class = "form-control form-control-lg bg-light fs-6  rounded-end", placeholder = "username" })
                                     </div>
-                                    
+                                    @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="row">
-                                    <div class="form-group mb-3">
-                                        @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end position-relative", placeholder = "Password" })
-                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                        <span id="enrypassword" class=" input-group-text border-0 position-absolute h-100 " style="z-index: 10; background-color: transparent; right: 2%; ">
-                                            <i class="fa fa-eye-slash" id="togglePassword" style="z-index: 10;"></i>
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+
+                                        @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end ", placeholder = "Password" })
+                                        <span id="eyeIcon" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
+                                            <i class="fa fa-eye-slash" id="togglePassword"></i>
                                         </span>
                                     </div>
-                                    
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="row">
                                     <div class="input-group mb-3 d-flex justify-content-between">
                                         <div class="checkbox">
                                             @*@Html.CheckBoxFor(m => m.RememberMe)
-                                            @Html.LabelFor(m => m.RememberMe)*@
+                        @Html.LabelFor(m => m.RememberMe)*@
                                         </div>
                                         <div class="row">
                                             <small><a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a></small>
                                             @*<section id="forgotPasswordForm">
-                                                @Html.ActionLinkl()
-                                            </section>*@
+                            @Html.ActionLinkl()
+                        </section>*@
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                         <input type="submit" value="Log in" class="btn btn-outline-dark w-75" />
                                     </div>
                                 </div>
-                             }
+                            }
                         </section>
                         <div class="input-group mb-3 justify-content-center">
                             <section id="socialLoginForm">
@@ -94,27 +94,30 @@
 }
 
 <script>
-    var eyeIcon = document.getElementById("togglePassword");
-    document.getElementById("enrypassword").addEventListener("click", function () {
+    var passwordField = document.getElementById("passwordField");
+    var eyeIcon = document.getElementById("eyeIcon");
+    var togglePassword = document.getElementById("togglePassword");
+
+    document.getElementById("eyeIcon").addEventListener("click", function () {
         var passwordField = document.getElementById("passwordField");
         if (passwordField.type === "password") {
             passwordField.type = "text";
-            eyeIcon.classList.remove("fa-eye-slash");
-            eyeIcon.classList.add("fa-eye");
+            togglePassword.classList.remove("fa-eye-slash");
+            togglePassword.classList.add("fa-eye");
         } else {
             passwordField.type = "password";
-            eyeIcon.classList.remove("fa-eye");
-            eyeIcon.classList.add("fa-eye-slash");
+            togglePassword.classList.remove("fa-eye");
+            togglePassword.classList.add("fa-eye-slash");
         }
     });
 
-    document.getElementById("passwordField").addEventListener("click", function () {
-        var span = document.getElementById("enrypassword");
-        span.classList.remove("visually-hidden")
+    passwordField.addEventListener("focus", function () {
+        eyeIcon.classList.remove("visually-hidden");
     });
 
-    //document.getElementById("passwordField").addEventListener("blur", function () {
-    //    var span = document.getElementById("enrypassword");
-    //    span.classList.add("visually-hidden")
+
+    //passwordField.addEventListener("blur", function () {
+    //    eyeIcon.classList.add("visually-hidden");
     //});
+
 </script>

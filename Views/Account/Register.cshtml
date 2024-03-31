@@ -47,21 +47,21 @@
                              </span>
 
                              @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end ", placeholder = "Password" })
-                             <span id="enrypassword" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
+                             <span id="eyeIcon" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
                                  <i class="fa fa-eye-slash" id="togglePassword"></i>
                              </span>
                          </div>                           
                          @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                       </div>
 
-
+                        
                      <div class="form-group mb-3">
                          <div class="input-group mb-3">
                              <span class="input-group-text bg-primary rounded-start">
                                  <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
                              </span>
                              @Html.PasswordFor(m => m.ConfirmPassword, new { @id = "RepasswordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end", placeholder = "Repassword" })
-                             <span id="Reenrypassword" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100" style="z-index:2; background-color: transparent">
+                             <span id="eyeIcon2" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100" style="z-index:2; background-color: transparent">
                                  <i class="fa fa-eye-slash" id="RetogglePassword"></i>
                              </span>
                          </div>
@@ -89,22 +89,29 @@
 }
 
 <script>
-    var eyeIcon = document.getElementById("togglePassword");
-    document.getElementById("enrypassword").addEventListener("click", function () {
+    var passwordField = document.getElementById("passwordField");
+    var eyeIcon = document.getElementById("eyeIcon");
+    var togglePassword = document.getElementById("togglePassword");
+
+    var reeyeIcon = document.getElementById("eyeIcon2");
+    var rePasswordField = document.getElementById("RepasswordField");
+    var reTogglePassword = document.getElementById("RetogglePassword");
+
+    document.getElementById("eyeIcon").addEventListener("click", function () {
         var passwordField = document.getElementById("passwordField");
         if (passwordField.type === "password") {
             passwordField.type = "text";
-            eyeIcon.classList.remove("fa-eye-slash");
-            eyeIcon.classList.add("fa-eye");
+            togglePassword.classList.remove("fa-eye-slash");
+            togglePassword.classList.add("fa-eye");
         } else {
             passwordField.type = "password";
-            eyeIcon.classList.remove("fa-eye");
-            eyeIcon.classList.add("fa-eye-slash");
+            togglePassword.classList.remove("fa-eye");
+            togglePassword.classList.add("fa-eye-slash");
         }
     });
 
-    var reeyeIcon = document.getElementById("RetogglePassword");
-    document.getElementById("Reenrypassword").addEventListener("click", function () {
+    
+    document.getElementById("eyeIcon2").addEventListener("click", function () {
         var repasswordField = document.getElementById("RepasswordField");
         if (repasswordField.type === "password") {
             repasswordField.type = "text";
@@ -136,16 +143,27 @@
         }
     })
 
+   
 
-    //document.getElementById("RepasswordField").addEventListener("blur", function () {
-    //    var span = document.getElementById("Reenrypassword");
-    //    span.classList.add("visually-hidden");
+    
+    passwordField.addEventListener("focus", function () {
+        eyeIcon.classList.remove("visually-hidden");
+    });
+
+    
+    //passwordField.addEventListener("blur", function () {
+    //    eyeIcon.classList.add("visually-hidden");
     //});
 
-    //document.getElementById("passwordField").addEventListener("blur", function () {
-    //    var span = document.getElementById("enrypassword");
-    //    span.classList.add("visually-hidden")
+    rePasswordField.addEventListener("focus", function () {
+        reeyeIcon.classList.remove("visually-hidden");
+    });
+
+
+    //rePasswordField.addEventListener("blur", function () {
+    //    reeyeIcon.classList.add("visually-hidden");
     //});
+   
 
    
 </script>

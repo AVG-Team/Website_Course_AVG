@@ -210,15 +210,16 @@ namespace Website_Course_AVG.Managers
 
         public bool resetPassword(String newPassword, String toEmail, String code)
         {
-			user user = _data.users.FirstOrDefault(x => x.email == toEmail);
-
+			forgot_password forgot_Password = _data.forgot_passwords.FirstOrDefault(x => x.code == code);
+			user user = _data.users.FirstOrDefault(x => x.id == forgot_Password.user_id);
+			account account = _data.accounts.Where(x => x.username == user.fullname).FirstOrDefault();
 			if (user == null)
 			{
 				Helpers.addCookie("Error", "You have not already sign up");
                 return false;
 			}
 
-			forgot_password forgot_Password = _data.forgot_passwords.FirstOrDefault(x => x.user_id == user.id);
+			
 			if (forgot_Password == null)
 			{
 				Helpers.addCookie("Error", "You have not already sign up");
@@ -233,7 +234,7 @@ namespace Website_Course_AVG.Managers
             {
 				if (code == forgot_Password.code)
 				{
-					account account = _data.accounts.Where(x => x.username == user.email).FirstOrDefault();
+					
 					if (account != null)
 					{
 
