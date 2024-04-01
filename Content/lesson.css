@@ -22,6 +22,10 @@
     background: #e7e7e7;
 }
 
+.btn-down-exercise:hover {
+    background: #e7e7e7;
+}
+
 .close-modal-note {
     color: rgb(33 37 41);
 }
@@ -260,6 +264,12 @@ a.div-lesson {
         font-size: 1rem;
         font-weight: bold;
     }
+
+    .btn-down-exercise.pc-1 {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+    }
 }
 
 @media(min-width: 992px) {
@@ -318,6 +328,13 @@ a.div-lesson {
         padding: 0.5rem 0.5rem !important;
         font-size: 12px;
         font-weight: bold;
+    }
+
+    .btn-down-exercise.pc-1 {
+        padding: 0.5rem 1rem !important;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 0.5rem;
     }
 
     .title-lesson.fs-3 {

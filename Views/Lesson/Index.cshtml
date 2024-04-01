@@ -67,10 +67,16 @@
                         <p class="fs-3 text-dark title-lesson">@Model.title</p>
                         <p class="date-update">Cập Nhật Ngày @((Convert.ToDateTime(Model.updated_at)).ToString("dd - MM - yyyy"))</p>
                     </div>
-                    <button type="button" class="border-0 rounded pc-1 btn-add-note" data-bs-toggle="modal" data-bs-target="#modal_add_note">
-                        <i class="fas fa-plus"></i>
-                        <span>Thêm ghi chú</span>
-                    </button>
+                    <div>
+                        <button type="button" class="border-0 rounded pc-1 btn-add-note" data-bs-toggle="modal" data-bs-target="#modal_add_note">
+                            <i class="fas fa-plus"></i>
+                            <span>Thêm ghi chú</span>
+                        </button>
+                        <button type="button" class="border-0 rounded pc-1 btn-down-exercise" data-bs-toggle="modal" data-bs-target="#modal_down_exercise">
+                            <i class="fas fa-plus"></i>
+                            <span>Tải Bài Tập</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="description text-body mt-md-2 mx-md-3 mt-lg-5 text-justify mx-lg-5" style="height: fit-content">
                     @Model.description
@@ -277,6 +283,24 @@
                             </a>
                         }
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_down_exercise" tabindex="-1" aria-labelledby="modal_down_exercise" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Download Exercise</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to download the exercise?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-save-down-exercise">Save changes</button>
                 </div>
             </div>
         </div>
