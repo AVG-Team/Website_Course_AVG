@@ -54,7 +54,7 @@ namespace Website_Course_AVG.Models
 
 		[Required(ErrorMessage = "Password is required")]
 		[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-		[RegularExpression(@"[A-Za-z\d]{6,}$", ErrorMessage = "Password must contain at least 6 letter or 6 digit.")]
+		[RegularExpression(@"^.{6,}$", ErrorMessage = "Password must contain at least 6 characters.")]
 		[DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -126,6 +126,9 @@ namespace Website_Course_AVG.Models
 		[Display(Name = "Code")]
 		public string Code { get; set; }
 
+		public string Name { get; set; }
+
 		public string RedirectURL { get; set; }
+		public string UrlWebsite { get; set; }
 	}
 }

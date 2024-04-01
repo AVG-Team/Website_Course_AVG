@@ -78,21 +78,35 @@ namespace Website_Course_AVG.Controllers
 			var userManager = new Website_Course_AVG.Managers.UserManager();
 			if (userManager.IsAuthenticated())
 			{
-				Helpers.addCookie("Error", "You are logging in.");
+				Helpers.addCookie("Error", "You are logging in !!!");
                 return View(model);
 			}
 			if (ModelState.IsValid)
             {
-                user user = _context.users.Where(x => x.fullname == model.userName).FirstOrDefault();
-				userManager.login(user.email);
+                account account = _context.accounts.Where(x => x.username == model.userName).FirstOrDefault();
+                
+                if(account == null)
+                {
+				    Helpers.addCookie("Error", "username and password are wrong !!!");
+                    return View(model);
+                }
+
+
+                bool isVerify = await userManager.ValidatePasswordAsync(account, model.Password);
+
+                user user = account.users.FirstOrDefault();
+                if(user == null)
+                {
+                    Helpers.addCookie("Error", "username and password are wrong !!!");
+                    return View(model);
+                }
+
+				userManager.login(account.username);
                 Helpers.addCookie("Notify", "Login Successfull");
 				return RedirectToAction("Index", "Home");
 			}
-            else
-            {
-                Helpers.addCookie("Error", "Error Unknow, Please Try Again");
-            }
 
+            Helpers.addCookie("Error", "Error Unknow, Please Try Again");
             return View(model);
         }
 
@@ -173,7 +187,7 @@ namespace Website_Course_AVG.Controllers
 					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 					Helpers.addCookie("Notify", "Register Successful");
-					UserManager.login(model.Email);
+					UserManager.login(model.userName);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -212,8 +226,22 @@ namespace Website_Course_AVG.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
 		{
+            user user = _context.users.Where(x => x.email == forgotPassword.Email).FirstOrDefault();
+
+            if (user == null) {
+                Helpers.addCookie("Error", "Error Unknown");
+                return RedirectToAction("Index", "Home");
+            }
+            int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
+
+            if (countForgotPassword > 3)
+            {
+                Helpers.addCookie("Error", "We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you");
+                return RedirectToAction("Index", "Home");
+            }
+
 			var userManager = new UserManager();
-			var subject = "AVG Courses- Reset Password";
+			var subject = "AVG Courses - Reset Password";
 
 			Random random = new Random();
 			int length = 10;
@@ -228,20 +256,51 @@ namespace Website_Course_AVG.Controllers
 				}
 				return RedirectToAction("ForgotPasswordConfirmation", "Account");
 			}
-            else
-            {
-				Helpers.addCookie("Error", "Has Error");
-				return RedirectToAction(returnUrl);
-			}
-
-			return View();
-
-		}
+			Helpers.addCookie("Error", "Has Error");
+            return RedirectToAction("Index", "Home");
+        }
 
 		//
 		// GET: /Account/ForgotPasswordConfirmation
 		[Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        //Reset Password
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            UserManager userManager = new UserManager();
+            if (ModelState.IsValid)
+            {
+                Helpers.addCookie("Error", "You enter error Code or Re-password");
+                return View();
+            }
+            if (!userManager.ResetPassword(model.Password, model.Email, model.Code)) return View(model);
+            Helpers.addCookie("Notify", "Reset Password Successful");
+            return RedirectToAction("ResetPasswordConfirmation", "Account");
+
+        }
+
+
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+        public ActionResult EmailConfirmation()
+        {
+            return View();
+        }
+
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+        public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
@@ -504,43 +563,5 @@ namespace Website_Course_AVG.Controllers
         {
             throw new System.NotImplementedException();
         }
-
-
-		[Website_Course_AVG.Attributes.AllowAnonymous]
-		public ActionResult ResetPassword()
-		{
-			return View();
-		}
-
-        [HttpPost]
-		[Website_Course_AVG.Attributes.AllowAnonymous]
-		[ValidateAntiForgeryToken]
-		public ActionResult ResetPassword(ResetPasswordViewModel model)
-		{
-            UserManager userManager = new UserManager();
-            if (ModelState.IsValid)
-            {
-				Helpers.addCookie("Error", "You enter error Code or Re-password");
-                return View();
-            }
-            if(!userManager.resetPassword(model.Password, model.Email, model.Code)) return View(model);
-			Helpers.addCookie("Notify", "ResetPassword successful");
-			return RedirectToAction("ResetPasswordConfirmation", "Account");
-
-		}
-
-
-		[Website_Course_AVG.Attributes.AllowAnonymous]
-		public ActionResult EmailConfirmation()
-		{
-			return View();
-		}
-
-		[Website_Course_AVG.Attributes.AllowAnonymous]
-		public ActionResult ResetPasswordConfirmation()
-		{
-			return View();
-		}
-
 	}
 }

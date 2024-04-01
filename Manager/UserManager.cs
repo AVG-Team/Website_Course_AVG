@@ -40,7 +40,7 @@ namespace Website_Course_AVG.Managers
                 if (account.password == null)
                     account.password = "12345678";
 
-                if (!_data.users.Where(x=> x.email ==email).Any() || !_data.users.Where(x => x.fullname == account.username).Any())
+                if (!_data.users.Where(x=> x.email == email).Any())
                 {
 					string password = BCrypt.Net.BCrypt.HashPassword(account.password);
 					account.password = password;
@@ -86,11 +86,25 @@ namespace Website_Course_AVG.Managers
 
         public user GetUserFromToken()
         {
-            MyDataDataContext _data1 = new MyDataDataContext();
-            string token = HttpContext.Current.Request.Cookies["AuthToken"]?.Value;
-            string username = TokenHelper.GetUsernameFromToken(token);
-            user user = _data1.users.Where(x => x.email == username).FirstOrDefault();
-            return user;
+            using (MyDataDataContext _data1 = new MyDataDataContext())
+            {
+                if (HttpContext.Current == null || HttpContext.Current.Request.Cookies["AuthToken"] == null)
+                {
+                    return null;
+                }
+
+                string token = HttpContext.Current.Request.Cookies["AuthToken"].Value;
+                string username = TokenHelper.GetUsernameFromToken(token);
+
+                try
+                {
+                    account account = _data1.accounts.Where(x => x.username == username).FirstOrDefault();
+                    return account?.users.FirstOrDefault();
+                } catch (Exception ex)
+                {
+                    return null;
+                }
+            }
         }
 
         public bool IsAuthenticated()
@@ -117,9 +131,9 @@ namespace Website_Course_AVG.Managers
             return user.role > 1;
         }
 
-        public void login(string email)
+        public void login(string username)
         {
-            var token = TokenHelper.GenerateToken(email);
+            var token = TokenHelper.GenerateToken(username);
             HttpCookie cookie = new HttpCookie("AuthToken", token);
             cookie.Expires = DateTime.Now.AddDays(30);
             HttpContext.Current.Response.Cookies.Add(cookie);
@@ -135,11 +149,16 @@ namespace Website_Course_AVG.Managers
             }
         }
 
-        public async Task<bool> ValidatePasswordAsync(user user, string password)
+        public async Task<bool> ValidatePasswordAsync(account account, string password)
         {
-            // Thêm code để kiểm tra mật khẩu khớp với mật khẩu được lưu trữ hay không
+            if (account == null || string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
 
-            return false;
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+            return BCrypt.Net.BCrypt.Verify(hashedPassword, account.password);
         }
 
 
@@ -189,14 +208,15 @@ namespace Website_Course_AVG.Managers
 			EmailConfirmation emailConfirmation = new EmailConfirmation();
 			emailConfirmation.Code = messageLast;
 			string currentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
-			emailConfirmation.RedirectURL = currentUrl.Replace("ForgotPassword", "ResetPassword");
+            string urlWebsite = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            emailConfirmation.RedirectURL = currentUrl.Replace("ForgotPassword", "ResetPassword");
+            emailConfirmation.UrlWebsite = urlWebsite;
+            emailConfirmation.Name = user.fullname;
 
-			bodyBuilder.HtmlBody = RenderViewToString("Account", "EmailConfirmation", emailConfirmation);
 
+            bodyBuilder.HtmlBody = RenderViewToString("Account", "EmailConfirmation", emailConfirmation);
 
 			messageBody.Body = bodyBuilder.ToMessageBody();
-
-
 
 			using (var client = new SmtpClient())
 			{
@@ -208,44 +228,42 @@ namespace Website_Course_AVG.Managers
             return true;
 		}
 
-        public bool resetPassword(String newPassword, String toEmail, String code)
+        public bool ResetPassword(String newPassword, String toEmail, String code)
         {
 			forgot_password forgot_Password = _data.forgot_passwords.FirstOrDefault(x => x.code == code);
-			user user = _data.users.FirstOrDefault(x => x.id == forgot_Password.user_id);
-			account account = _data.accounts.Where(x => x.username == user.fullname).FirstOrDefault();
-			if (user == null)
-			{
-				Helpers.addCookie("Error", "You have not already sign up");
-                return false;
-			}
 
-			
-			if (forgot_Password == null)
-			{
-				Helpers.addCookie("Error", "You have not already sign up");
-                return false;
-			}
-            if(forgot_Password.expired_date <= DateTime.Now)
+            if(forgot_Password == null || forgot_Password.type == true || forgot_Password.expired_date < DateTime.Now)
             {
-				Helpers.addCookie("Error", "This code is expired");
-				return false;
-			}
+                Helpers.addCookie("Error", "The code is incorrect or has been used or has expired, please try again");
+                return false;
+            }
+
+			user user = _data.users.FirstOrDefault(x => x.id == forgot_Password.user_id);
+            if (user == null)
+            {
+                Helpers.addCookie("Error", "You have not already sign up");
+                return false;
+            }
+
+            forgot_password forgot_PasswordCheck = user.forgot_passwords.OrderByDescending(x => x.created_at).First();   
+            if(forgot_PasswordCheck.code != code)
+            {
+                Helpers.addCookie("Error", "You are using old code, please check the latest email, thank you");
+                return false;
+            }
+
+            account account = user.account;
 			try
             {
-				if (code == forgot_Password.code)
+				if (account != null)
 				{
-					
-					if (account != null)
-					{
-
-						account.password = newPassword;
-						forgot_Password.type = true;
-						_data.SubmitChanges();
-					}
-
-				}
-
-                return true;
+				    account.password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+				    forgot_Password.type = true;
+				    _data.SubmitChanges();
+                    return true;
+                }
+                Helpers.addCookie("Error", "Error Unknow, Please try again");
+                return false;
             }
             catch (Exception ex)
             {

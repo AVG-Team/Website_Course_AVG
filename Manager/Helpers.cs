@@ -15,7 +15,7 @@ namespace Website_Course_AVG.Managers
         public static bool IsAuthenticated()
         {
             UserManager userManager = new UserManager();
-            return userManager.IsAuthenticated() && userManager.IsUser();
+            return userManager.IsUser();
         }
 
         public static string GetValueFromAppSetting(string key)
