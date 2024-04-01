@@ -76,8 +76,8 @@
                                         <li class="active menu-item-has-children">
                                             <a href="@Url.Action("Index","Home")">Home</a>
                                         </li>
-                                        <li class="menu-item-has-children"><a href="#">Course</a></li>
-                                        <li class="menu-item-has-children"><a href="#">blog</a></li>
+                                        <li class="menu-item-has-children"><a href="@Url.Action("Index","Course")">Course</a></li>
+                                        <li class="menu-item-has-children"><a href="@Url.Action("Index","Blog")">blog</a></li>
                                         <li><a href="@Url.Action("Contact","Home")">contacts</a></li>
                                     </ul>
                                 </div>
@@ -209,15 +209,15 @@
 
                                     <ul class="navigation">
                                         <li class="active menu-item-has-children">
-                                            <a href="#">Home</a>
+                                            <a href="@Url.Action("Index","Home")">Home</a>
                                         </li>
 
                                         <li class="menu-item-has-children">
-                                            <a href="#">Course</a>
+                                            <a href="@Url.Action("Index","Course")">Course</a>
                                         </li>
 
                                         <li class="menu-item-has-children">
-                                            <a href="#">blog</a>
+                                            <a href="@Url.Action("Index","Blog")">blog</a>
                                         </li>
 
                                         <li><a href="@Url.Action("Contact","Home")">contacts</a></li>
@@ -308,9 +308,9 @@
                             <div class="footer-menu">
                                 <nav>
                                     <ul class="navigation">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="index.html">Course</a></li>
-                                        <li><a href="index.html">Blog</a></li>
+                                        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                                        <li><a href="@Url.Action("Index","Course")">Course</a></li>
+                                        <li><a href="@Url.Action("Index","Blog")">Blog</a></li>
                                         <li><a href="@Url.Action("Contact","Home")">Contacts</a></li>
                                     </ul>
                                     <div class="footer-search">
@@ -472,22 +472,6 @@
                 header.classList.remove('sticky-menu');
             }
         });
-
-        // slide-show
-        let slideIndex = 0;
-        showSlides();
-
-        function showSlides() {
-            let i;
-            let slides = document.getElementsByClassName("slide-show");
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) { slideIndex = 1 }
-            slides[slideIndex - 1].style.display = "block";
-            setTimeout(showSlides, 3000); // Change image every 2 seconds
-        }
 
         // mobile-menu
         let body = document.getElementsByTagName("body");
