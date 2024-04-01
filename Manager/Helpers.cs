@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,20 @@ using System.Net.Http;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.Json;
+using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 using Website_Course_AVG.Models;
 using System.IO;
 using System.Text.RegularExpressions;
+using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void addCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 10)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -53,15 +57,23 @@ namespace Website_Course_AVG.Managers
             return global::System.Configuration.ConfigurationManager.AppSettings[key];
         }
 
+        public static string GetRedirectUrlGH()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Account/GithubLogin";
+        }
+
         public static string UrlGithubLogin()
         {
             string clientIdGh = GetValueFromAppSetting("ClientIdGH");
-            string redirectUrl = GetValueFromAppSetting("RedirectUrl");
+            string redirectUrl = GetRedirectUrlGH();
             return
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
         }
 
-        public static string GenerateRandomString(int length)
+        public static string GenerateRandomString(int length = 10)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder builder = new StringBuilder();
@@ -295,6 +307,23 @@ namespace Website_Course_AVG.Managers
             }
 
             return false;
+        }
+
+        public static string GetDeviceFingerprint()
+        {
+            HttpContext context = HttpContext.Current;
+            string userAgent = context.Request.UserAgent;
+            string ipAddress = context.Request.UserHostAddress;
+            string screenWidth = context.Request.Browser.ScreenPixelsWidth.ToString();
+            string screenHeight = context.Request.Browser.ScreenPixelsHeight.ToString();
+            string timeZone = TimeZoneInfo.Local.DisplayName;
+
+            // Tạo dấu vân tay bằng cách kết hợp các thuộc tính
+            string deviceFingerprint = $"{userAgent}_{ipAddress}_{screenWidth}_{screenHeight}_{timeZone}";
+
+            // Lưu hoặc xử lý dấu vân tay ở đây (ví dụ: lưu vào CSDL, so sánh với dấu vân tay đã lưu, ...)
+
+            return deviceFingerprint;
         }
     }
 }
