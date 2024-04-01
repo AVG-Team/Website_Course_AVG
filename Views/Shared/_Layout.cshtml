@@ -75,13 +75,9 @@
                                     <ul class="navigation">
                                         <li class="active menu-item-has-children">
                                             <a href="@Url.Action("Index","Home")">Home</a>
-                                            @*                                            <ul class="submenu" style="top:70%">
-                                                    <li class="active"><a href="index.html">Home One</a></li>
-                                                    <li><a href="index-2.html">Home Two</a></li>
-                                                </ul>*@
                                         </li>
-                                        <li class="menu-item-has-children"><a href="#">Course</a></li>
-                                        <li class="menu-item-has-children"><a href="#">blog</a></li>
+                                        <li class="menu-item-has-children"><a href="@Url.Action("Index","Course")">Course</a></li>
+                                        <li class="menu-item-has-children"><a href="@Url.Action("Index","Blog")">blog</a></li>
                                         <li><a href="@Url.Action("Contact","Home")">contacts</a></li>
                                     </ul>
                                 </div>
@@ -122,11 +118,53 @@
                                         @if (!Website_Course_AVG.Managers.Helpers.IsAuthenticated())
                                         {
                                             <li class="header-btn d-flex align-items-center"><a href="@Url.Action("Login", "Account")" class="btn">Sign In</a></li>
-                                            <li class="header-btn d-flex align-items-center" style="margin-left:5px"><a href="@Url.Action("Register", "Account")" class="btn">Sign Up</a></li>
+                                            <li class="header-btn d-flex align-items-center"><a href="@Url.Action("Register", "Account")" class="btn">Sign Up</a></li>
                                         }
                                         else
                                         {
-                                            <li class="header-btn d-flex align-items-center"><a href="@Url.Action("LogOff", "Account")" class="btn">Sign Out</a></li>
+                                            var userManager = new Website_Course_AVG.Managers.UserManager();
+                                            var currentUser = userManager.GetUserFromToken();
+                                            <li>
+                                                <div class="menu-user">
+                                                    <div class="avatar-user" onclick="menuToggle();">
+                                                        @if (Website_Course_AVG.Managers.Helpers.IsAdmin())
+                                                        {
+                                                            <a href="#">
+                                                                <i class="fa-solid fa-user-shield" style="color:rgb(124 217 110)!important"></i>
+                                                            </a>
+                                                        }
+                                                        else if (Website_Course_AVG.Managers.Helpers.IsUser())
+                                                        {
+                                                            <a href="#">
+                                                                <i class="fa-solid fa-user"></i>
+                                                            </a>
+                                                        }
+                                                    </div>
+                                                    <div class="profile-user">
+                                                        <ul>
+                                                            @if (Website_Course_AVG.Managers.Helpers.IsAdmin())
+                                                            {
+                                                                <li>
+                                                                    <a href="#">
+                                                                        <i class="fa-solid fa-user-shield me-2"></i>
+                                                                        <span>@currentUser.fullname</span>
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                            else if (Website_Course_AVG.Managers.Helpers.IsUser())
+                                                            {
+                                                                <li>
+                                                                    <a href="#">
+                                                                        <i class="fa-solid fa-user me-2"></i>
+                                                                        <span>@currentUser.fullname</span>
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                            <li><a href="@Url.Action("LogOff","Account")"><span class="fa fa-sign-out me-3"></span>Sign out</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
                                         }
                                     </ul>
                                 </div>
@@ -142,87 +180,67 @@
                                     <a href="index.html"><img src="../Content/img/logo/avg_team.png" alt="" title=""></a>
                                 </div>
 
-                                <div class="menu-user">
-                                    <div class="avatar-user">
-                                        <div class="FallbackAvatar_avatar__gmj3S" style="--font-size: 8.8px;">
-                                            <img src="https://files.fullstack.edu.vn/f8-prod/user_photos/261670/635af2fa0d526.jpg" style="border-radius: 50px;margin-bottom:10px" alt="7527_ Nguyễn Văn Hoàng">
+                                @if (Website_Course_AVG.Managers.Helpers.IsAuthenticated())
+                                {
+                                    var userManager = new Website_Course_AVG.Managers.UserManager();
+                                    var currentUser = userManager.GetUserFromToken();
+                                    <div class="menu-user-mobile">
+                                        <div class="avatar-user-mobile">
+                                            @if (Website_Course_AVG.Managers.Helpers.IsAdmin())
+                                            {
+                                                <a href="#">
+                                                    <i class="icon fa-solid fa-user-shield" style="color:rgb(124 217 110)!important" ></i>
+                                                </a>
+                                                <div class="user-name-mobile"><span>@currentUser.fullname</span></div>
+                                            }
+                                            else if (Website_Course_AVG.Managers.Helpers.IsUser())
+                                            {
+                                                <a href="#">
+                                                    <i class="icon fa-solid fa-user"></i>
+                                                </a>
+                                                <div class="user-name-mobile"><span>@currentUser.fullname</span></div>
+                                            }
                                         </div>
+                                        
                                     </div>
-                                    <div class="user-name"><span>7527_ Nguyễn Văn Hoàng</span></div>
-                                </div>
-
+                                }
                                 <div class="menu-outer">
                                     <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
 
                                     <ul class="navigation">
                                         <li class="active menu-item-has-children">
-                                            <a href="#">Home</a>
-                                            @*                                            <ul class="submenu" style="display: none;">
-                                                    <li class="active"><a href="index.html">Home One</a></li>
-                                                    <li><a href="index-2.html">Home Two</a></li>
-                                                </ul>*@
-                                            @*<div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>*@
+                                            <a href="@Url.Action("Index","Home")">Home</a>
                                         </li>
+
                                         <li class="menu-item-has-children">
-                                            <a href="#">Course</a>
-                                            @*<ul class="submenu" style="display: none;">
-                                                    <li><a href="movie.html">Movie</a></li>
-                                                    <li><a href="movie-details.html">Movie Details</a></li>
-                                                </ul>
-                                                <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>*@
+                                            <a href="@Url.Action("Index","Course")">Course</a>
                                         </li>
+
                                         <li class="menu-item-has-children">
-                                            <a href="#">blog</a>
-                                            @*<ul class="submenu" style="display: none;">
-                                                    <li><a href="blog.html">Our Blog</a></li>
-                                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                                </ul>
-                                                <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>*@
+                                            <a href="@Url.Action("Index","Blog")">blog</a>
                                         </li>
+
                                         <li><a href="@Url.Action("Contact","Home")">contacts</a></li>
-                                        <li><a href="@Url.Action("Login","Account")"><span class="fa fa-sign-in me-2"></span>Sign in</a></li>
-                                        <li><a href="#"><span class="fa fa-sign-out me-2"></span>Sign out</a></li>
+
+                                        @if (!Website_Course_AVG.Managers.Helpers.IsAuthenticated())
+                                        {
+                                            <li><a href="@Url.Action("Login","Account")"><span class="fa fa-sign-in me-2"></span>Sign in</a></li>
+                                            <li><a href="@Url.Action("Register","Account")"><span class="fa-regular fa-registered me-2"></span>Sign up</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="@Url.Action("LogOff","Account")"><span class="fa fa-sign-out me-2"></span>Sign out</a></li>
+                                        }
                                     </ul>
                                 </div>
                                 <div class="social-links">
                                     <ul class="clearfix">
-                                        <li><a href="#"><span class="fab fa-github"></span></a></li>
-                                        <li><a href="#"><span class="fab fa-facebook-square"></span></a></li>
+                                        <li><a href="https://github.com/AVG-Team/Website_Course_AVG"><span class="fab fa-github"></span></a></li>
+                                        <li><a href="https://www.facebook.com/avg.team"><span class="fab fa-facebook-square"></span></a></li>
                                     </ul>
                                 </div>
                             </nav>
                         </div>
-                        @*<nav class="mobile-menu bg-light">
-                                <div class="container-fluid">
-                                    <a class="navbar-brand" href="#">Navbar</a>
-                                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                                        <span class="navbar-toggler-icon"></span>
-                                    </button>
-                                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                                        <ul class="navbar-nav">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">Features</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">Pricing</a>
-                                            </li>
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Dropdown link
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </nav>*@
                         <div class="menu-backdrop"></div>
                         <!-- End Mobile Menu -->
                         <!-- Modal Search -->
@@ -290,9 +308,9 @@
                             <div class="footer-menu">
                                 <nav>
                                     <ul class="navigation">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="index.html">Course</a></li>
-                                        <li><a href="index.html">Blog</a></li>
+                                        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                                        <li><a href="@Url.Action("Index","Course")">Course</a></li>
+                                        <li><a href="@Url.Action("Index","Blog")">Blog</a></li>
                                         <li><a href="@Url.Action("Contact","Home")">Contacts</a></li>
                                     </ul>
                                     <div class="footer-search">
@@ -321,8 +339,8 @@
                         <div class="col-md-5">
                             <div class="footer-social">
                                 <ul>
-                                    <li><a href="#"><i class="fab fa-github"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="https://github.com/AVG-Team/Website_Course_AVG"><i class="fab fa-github"></i></a></li>
+                                    <li><a href="https://www.facebook.com/avg.team"><i class="fab fa-facebook-f"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -455,22 +473,6 @@
             }
         });
 
-        // slide-show
-        let slideIndex = 0;
-        showSlides();
-
-        function showSlides() {
-            let i;
-            let slides = document.getElementsByClassName("slide-show");
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) { slideIndex = 1 }
-            slides[slideIndex - 1].style.display = "block";
-            setTimeout(showSlides, 3000); // Change image every 2 seconds
-        }
-
         // mobile-menu
         let body = document.getElementsByTagName("body");
         let iconMenu = document.querySelector(".mobile-nav-toggler");
@@ -511,6 +513,11 @@
                 });
             });
         });
+
+        function menuToggle() {
+            const toggleMenu = document.querySelector('.profile-user');
+            toggleMenu.classList.toggle('active');
+        }
 
     </script>
 </body>

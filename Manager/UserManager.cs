@@ -87,7 +87,7 @@ namespace Website_Course_AVG.Managers
         // role = 2 : admin
         public bool IsAdmin()
         {
-            if (!IsAuthenticated())
+            if (!IsUser())
                 return false;
             user user = GetUserFromToken();
             return user.role > 1;

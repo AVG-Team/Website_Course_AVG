@@ -241,7 +241,6 @@ label {
 
 /* All-color */
 .navbar-wrap > ul > li:hover > a,
-.mobile-menu .navigation li.active > a,
 .header-lang form .icon,
 .banner-content .sub-title,
 .banner-content .title > span,
@@ -385,6 +384,16 @@ label {
     flex-wrap: wrap;
     justify-content: flex-start;
     margin-left: -20px;
+}
+
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+    .menu-nav {
+        padding: 15px 0;
+    }
+
+    .menu-area .mobile-nav-toggler {
+        margin-top: 27px !important;
+    }
 }
 
 .navbar-wrap {
@@ -1131,11 +1140,23 @@ label {
                 }
 
 /* 6. Banner */
-.banner-bg {
+.banner-bg-1 {
     padding: 295px 0 273px;
     background-position: center;
     background-size: cover;
     background-image: url(img/banner/layout_main_section.jpg);
+}
+.banner-bg-2 {
+    padding: 295px 0 273px;
+    background-position: center;
+    background-size: cover;
+    background-image: url(img/banner/slider_img01.jpg);
+}
+.banner-bg-3 {
+    padding: 295px 0 273px;
+    background-position: center;
+    background-size: cover;
+    background-image: url(img/banner/slider_img02.jpg);
 }
 
 .banner-content .sub-title {
@@ -3620,9 +3641,18 @@ label {
         padding-top: 110px !important;
     }
 
+        .container, .custom-container {
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
     body {
         overflow-x: hidden;
     }
+
 
     .container, .custom-container {
         max-width: 100%;
@@ -3638,6 +3668,98 @@ label {
     }
 }
 
+    .home {
+        position: absolute;
+        left: 0;
+        top: 0px;
+        width: 100%;
+        z-index: 9;
+        height: auto;
+        padding: 20px 0;
+        background: none;
+        box-shadow: none;
+    }
+
+/* User/Admin */
+.menu-user .avatar-user {
+    position: relative;
+    font-size: 30px;
+    top: 4px;
+    left: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.menu-user .profile-user{
+    position: absolute;
+    width: 14rem;
+    top: 57px;
+    right: 19px;
+    padding: 10px 20px;
+    background: #fff;
+    box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    transition: 0.5s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.menu-user .profile-user::before {
+    content: '';
+    position: absolute;
+    /*right: 28px;*/
+}
+
+.menu-user .profile-user ul li{
+    list-style: none;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.menu-user .profile-user.active{
+    visibility: visible;
+    opacity: 1;
+}
+
+.menu-user .profile-user ul li a{
+    text-decoration: none;
+    font-size: 17px;
+    color: black;
+
+}
+
+    .menu-user .profile-user  ul  li a:hover {
+        color: #e4d804 !important;
+    }
+
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+    .menu-user .profile-user {
+        right: 45px !important;
+    }
+}
+
+/*mobile*/
+.menu-user-mobile{
+    position: relative;
+    text-align:center;
+}
+
+.menu-user-mobile .icon{
+    font-size: 50px;
+}
+
+.menu-user-mobile .user-name-mobile{
+    padding: 10px 0;
+}
+.menu-user-mobile .avatar-user-mobile .fa-solid{
+    font-size: 50px;
+}
+
+
+=======
 .desktop-header-module--header--a5wri .desktop-header-module--dropdown-counter-badge--unIZ1 {
     top: 0;
     left: 50%;
@@ -3654,3 +3776,4 @@ label {
     background: none;
     box-shadow: none;
 }
+
