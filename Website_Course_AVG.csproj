@@ -309,6 +309,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\fonts\DesignerVN-Poppins\Readme.txt" />
     <Content Include="Content\img\banner\banner_bg01.jpg" />
+    <Content Include="Content\img\banner\layout_main.png" />
     <Content Include="Content\img\banner\layout_main_section.jpg" />
     <Content Include="Content\img\banner\slider_img01.jpg" />
     <Content Include="Content\img\banner\slider_img02.jpg" />

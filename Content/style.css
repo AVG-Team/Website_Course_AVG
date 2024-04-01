@@ -386,6 +386,16 @@ label {
     margin-left: -20px;
 }
 
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+    .menu-nav {
+        padding: 15px 0;
+    }
+
+    .menu-area .mobile-nav-toggler {
+        margin-top: 27px !important;
+    }
+}
+
 .navbar-wrap {
     display: flex;
     flex-grow: 0;
