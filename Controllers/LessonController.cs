@@ -54,7 +54,6 @@ namespace Website_Course_AVG.Controllers
             Identity identity = Helpers.GetIdentity(lesson, lessons);
             ViewBag.Identity = identity;
 
-            // 14 qua , 15 qua
             if(lessonLearnedId + 1 < lesson.id && user.role != 2)
             {
                 Helpers.AddCookie("Error", "You have not finished studying the previous lesson, please return to the previous lesson");
@@ -64,6 +63,12 @@ namespace Website_Course_AVG.Controllers
             string fileJson = Server.MapPath("~/ltweb-avg-b91359369629.json");
             string url = Helpers.GetVideoLessonUrl(lesson.video, fileJson);
             ViewBag.Url = url;
+
+            // add view
+            lesson lessonTmp = _data.lessons.Where(x => x.id == lesson.id).First();
+            int view = lesson.views ?? 0;
+            lessonTmp.views = view + 1;
+            _data.SubmitChanges();
 
             return View(lesson);
         }
