@@ -30,13 +30,15 @@ namespace Website_Course_AVG.Managers
             try
             {
                 if (account.password == null)
-                    account.password = "12345678";
+                    account.password = Helpers.GenerateString();
 
                 if (!_data.users.Where(x=> x.email == email).Any())
                 {
 					string password = BCrypt.Net.BCrypt.HashPassword(account.password);
 					account.password = password;
-					_data.accounts.InsertOnSubmit(account);
+                    account.created_at = DateTime.Now;
+                    account.updated_at = DateTime.Now;
+                    _data.accounts.InsertOnSubmit(account);
 					_data.SubmitChanges();
 
 					account accountTmp = _data.accounts.Where(x => x.username == account.username).First();
@@ -45,6 +47,8 @@ namespace Website_Course_AVG.Managers
 					user.fullname = fullname;
 					user.email = email;
 					user.account_id = accountTmp.id;
+                    user.created_at = DateTime.Now;
+                    user.updated_at = DateTime.Now;
 					_data.users.InsertOnSubmit(user);
 					_data.SubmitChanges();
 			
@@ -52,7 +56,7 @@ namespace Website_Course_AVG.Managers
 				}
 
 
-                Helpers.addCookie("Error", "This email or username already belong to one account");
+                Helpers.AddCookie("Error", "This email or username already belong to one account");
                 return IdentityResult.Failed();
              
             }
@@ -196,7 +200,7 @@ namespace Website_Course_AVG.Managers
 			user user = _data.users.Where(x => x.email == toEmail).FirstOrDefault();
             if (user == null)
             {
-				Helpers.addCookie("Error", "Have not have email yet");
+				Helpers.AddCookie("Error", "Have not have email yet");
                 return false;
 			}
 			forgot_password forgot_Password = new forgot_password();
@@ -244,21 +248,21 @@ namespace Website_Course_AVG.Managers
 
             if(forgot_Password == null || forgot_Password.type == true || forgot_Password.expired_date < DateTime.Now)
             {
-                Helpers.addCookie("Error", "The code is incorrect or has been used or has expired, please try again");
+                Helpers.AddCookie("Error", "The code is incorrect or has been used or has expired, please try again");
                 return false;
             }
 
 			user user = _data.users.FirstOrDefault(x => x.id == forgot_Password.user_id);
             if (user == null)
             {
-                Helpers.addCookie("Error", "You have not already sign up");
+                Helpers.AddCookie("Error", "You have not already sign up");
                 return false;
             }
 
             forgot_password forgot_PasswordCheck = user.forgot_passwords.OrderByDescending(x => x.created_at).First();   
             if(forgot_PasswordCheck.code != code)
             {
-                Helpers.addCookie("Error", "You are using old code, please check the latest email, thank you");
+                Helpers.AddCookie("Error", "You are using old code, please check the latest email, thank you");
                 return false;
             }
 
@@ -272,12 +276,12 @@ namespace Website_Course_AVG.Managers
 				    _data.SubmitChanges();
                     return true;
                 }
-                Helpers.addCookie("Error", "Error Unknow, Please try again");
+                Helpers.AddCookie("Error", "Error Unknow, Please try again");
                 return false;
             }
             catch (Exception ex)
             {
-				Helpers.addCookie("Error", ex.Message);
+				Helpers.AddCookie("Error", ex.Message);
                 return false; 
 			}
 

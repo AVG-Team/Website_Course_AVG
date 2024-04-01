@@ -30,7 +30,7 @@ namespace Website_Course_AVG
 
                 if (user.account.info != deviceFinger)
                 {
-                    Helpers.addCookie("Error", "Looks like you're logged in somewhere else !!!");
+                    Helpers.AddCookie("Error", "Looks like you're logged in somewhere else !!!");
 
                     UserManager userManager = new UserManager();
                     userManager.logout();

@@ -1,5 +1,7 @@
 ﻿using Octokit;
 using System;
+using System.Linq;
+using System.Text;
 using System.Web;
 using Website_Course_AVG.Models;
 
@@ -7,7 +9,7 @@ namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void addCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 10)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -39,6 +41,20 @@ namespace Website_Course_AVG.Managers
             string redirectUrl = GetRedirectUrlGH();
             return
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
+        }
+
+        public static string GenerateString(int length = 10)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            StringBuilder sb = new StringBuilder(length);
+            Random random = new Random();
+
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(chars[random.Next(chars.Length)]);
+            }
+
+            return sb.ToString();
         }
 
         public static user GetUserFromToken()

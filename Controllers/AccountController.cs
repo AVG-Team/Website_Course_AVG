@@ -78,7 +78,7 @@ namespace Website_Course_AVG.Controllers
 			var userManager = new Website_Course_AVG.Managers.UserManager();
 			if (userManager.IsAuthenticated())
 			{
-				Helpers.addCookie("Error", "You are logging in !!!");
+				Helpers.AddCookie("Error", "You are logging in !!!");
                 return View(model);
 			}
 			if (ModelState.IsValid)
@@ -87,7 +87,7 @@ namespace Website_Course_AVG.Controllers
                 
                 if(account == null)
                 {
-				    Helpers.addCookie("Error", "username and password are wrong !!!");
+				    Helpers.AddCookie("Error", "username and password are wrong !!!");
                     return View(model);
                 }
 
@@ -97,16 +97,16 @@ namespace Website_Course_AVG.Controllers
                 user user = account.users.FirstOrDefault();
                 if(user == null)
                 {
-                    Helpers.addCookie("Error", "username and password are wrong !!!");
+                    Helpers.AddCookie("Error", "username and password are wrong !!!");
                     return View(model);
                 }
 
 				userManager.login(account.username);
-                Helpers.addCookie("Notify", "Login Successfull");
+                Helpers.AddCookie("Notify", "Login Successfull");
 				return RedirectToAction("Index", "Home");
 			}
 
-            Helpers.addCookie("Error", "Error Unknow, Please Try Again");
+            Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
             return View(model);
         }
 
@@ -186,7 +186,7 @@ namespace Website_Course_AVG.Controllers
 					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-					Helpers.addCookie("Notify", "Register Successful");
+					Helpers.AddCookie("Notify", "Register Successful");
 					UserManager.login(model.userName);
                     return RedirectToAction("Index", "Home");
                 }
@@ -229,25 +229,22 @@ namespace Website_Course_AVG.Controllers
             user user = _context.users.Where(x => x.email == forgotPassword.Email).FirstOrDefault();
 
             if (user == null) {
-                Helpers.addCookie("Error", "Error Unknown");
+                Helpers.AddCookie("Error", "Error Unknown");
                 return RedirectToAction("Index", "Home");
             }
             int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
 
             if (countForgotPassword > 3)
             {
-                Helpers.addCookie("Error", "We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you");
+                Helpers.AddCookie("Error", "We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you");
                 return RedirectToAction("Index", "Home");
             }
 
 			var userManager = new UserManager();
 			var subject = "AVG Courses - Reset Password";
 
-			Random random = new Random();
-			int length = 10;
-			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             String messageHead = "Mã khôi phục pass của bạn là ";
-			String messageLast = new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+			String messageLast = Helpers.GenerateString(10);
 			if (!userManager.IsAuthenticated())
 			{
                 if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
@@ -256,7 +253,7 @@ namespace Website_Course_AVG.Controllers
 				}
 				return RedirectToAction("ForgotPasswordConfirmation", "Account");
 			}
-			Helpers.addCookie("Error", "Has Error");
+			Helpers.AddCookie("Error", "Has Error");
             return RedirectToAction("Index", "Home");
         }
 
@@ -283,11 +280,11 @@ namespace Website_Course_AVG.Controllers
             UserManager userManager = new UserManager();
             if (ModelState.IsValid)
             {
-                Helpers.addCookie("Error", "You enter error Code or Re-password");
+                Helpers.AddCookie("Error", "You enter error Code or Re-password");
                 return View();
             }
             if (!userManager.ResetPassword(model.Password, model.Email, model.Code)) return View(model);
-            Helpers.addCookie("Notify", "Reset Password Successful");
+            Helpers.AddCookie("Notify", "Reset Password Successful");
             return RedirectToAction("ResetPasswordConfirmation", "Account");
 
         }
@@ -324,7 +321,7 @@ namespace Website_Course_AVG.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                Helpers.addCookie("Error", "Error Unknow, Please Try Again");
+                Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
                 return RedirectToAction("Login");
             }
 
@@ -332,13 +329,13 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.CheckUsername(loginInfo.DefaultUserName))
             {
-                Helpers.addCookie("Notify", "Login Successful");
+                Helpers.AddCookie("Notify", "Login Successful");
                 UserManager.login(loginInfo.DefaultUserName);
                 return RedirectToAction("Index", "Home");
             }
             else if (UserManager.CheckUsername(loginInfo.Email))
             {
-                Helpers.addCookie("Notify", "Login Successful");
+                Helpers.AddCookie("Notify", "Login Successful");
                 UserManager.login(loginInfo.Email);
                 return RedirectToAction("Index", "Home");
             }
@@ -361,7 +358,7 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.IsAuthenticated())
             {
-                Helpers.addCookie("Error", "You are logging in.");
+                Helpers.AddCookie("Error", "You are logging in.");
                 return RedirectToAction("Index", "Manage");
             }
 
@@ -380,7 +377,7 @@ namespace Website_Course_AVG.Controllers
 
                 if (info == null && loginProvider != "Github")
                 {
-                    Helpers.addCookie("Error", "Error Unknow, Please Try Again");
+                    Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
                     return View("ExternalLoginFailure");
                 }
 
@@ -404,11 +401,11 @@ namespace Website_Course_AVG.Controllers
                     if (result.Succeeded)
                     {
                         UserManager.login(info.Email);
-                        Helpers.addCookie("Notify", "Login Successful");
+                        Helpers.AddCookie("Notify", "Login Successful");
                         return RedirectToLocal(returnUrl);
                     }
                     AddErrors(result);
-                    Helpers.addCookie("Error", "Error Unknow, Please Try Again", 30);
+                    Helpers.AddCookie("Error", "Error Unknow, Please Try Again", 30);
                 }
             }
 
@@ -423,7 +420,7 @@ namespace Website_Course_AVG.Controllers
             var UserManager = new Website_Course_AVG.Managers.UserManager();
             UserManager.logout();
 
-            Helpers.addCookie("Notify", "Logout Successful", 5);
+            Helpers.AddCookie("Notify", "Logout Successful", 5);
             return RedirectToAction("Index", "Home");
         }
 
@@ -545,7 +542,7 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.CheckUsername(login))
             {
-                Helpers.addCookie("Notify", "Login Successful");
+                Helpers.AddCookie("Notify", "Login Successful");
                 UserManager.login(login);
                 return RedirectToAction("Index", "Home");
             }
