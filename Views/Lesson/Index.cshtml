@@ -1,0 +1,308 @@
+﻿@model Website_Course_AVG.Models.lesson
+@{
+    ViewBag.Title = ViewBag.CourseTitle;
+
+    Layout = "~/Views/Shared/_LayoutLesson.cshtml";
+    int learned_lesson_id = ViewBag.LessonLearnedId;
+    Website_Course_AVG.Models.note note = new Website_Course_AVG.Models.note();
+}
+
+@section Styles {
+    @Styles.Render("~/Content/lesson.css")
+    @Styles.Render("~/Content/ModalSide.css")
+    @Styles.Render("~/Content/loading.css")
+    <style>
+        .hidden {
+            display: none !important;
+        }
+    </style>
+}
+
+@section Header {
+    <header class="d-none d-lg-block">
+        <div class="menu-in-lesson sticky-header-lesson">
+            <div class="d-flex">
+                <button class="btn-back mx-2"><i class="fas fa-chevron-left fs-5"></i></button>
+                <div class="logo me-5">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/img/logo/avg_team.png" alt="Logo">
+                    </a>
+                </div>
+                <h4 class="title">@ViewBag.CourseTitle</h4>
+            </div>
+            <button class="d-flex header-note btn_open_notes" data-ajax="@Url.Action("Index", "Note")" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">Notes</p></button>
+        </div>
+    </header>
+    <header class="d-block d-lg-none">
+        <div class="menu-in-lesson sticky-header-lesson">
+            <div class="d-flex">
+                <button class="btn-back mx-2"><i class="fas fa-chevron-left fs-5"></i></button>
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/img/logo/favicon.png" alt="Logo">
+                    </a>
+                </div>
+                <h5 class="title ms-sm-2 d-sm-flex align-items-sm-center">@ViewBag.CourseTitle</h5>
+            </div>
+            <button class="d-flex header-note btn_open_notes" data-ajax="@Url.Action("Index", "Note")" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">Notes</p></button>
+        </div>
+    </header>
+}
+
+<main id="main-lesson" class="h-100">
+    <section class="row h-100">
+        <div class="col-12 col-lg-9 position-fixed position-lg-unset top-0 bottom-0 overflowY-scroll start-0 to-top to-bottom" style="padding-bottom: 1rem;">
+            <div class="col-12 bg-black text-center h-75 video">
+                <video id="video_lesson" controls controlsList="nodownload" class="w-100 h-100">
+                    <source src="@ViewBag.Url" type="video/mp4">
+                </video>
+                @using (Html.BeginForm("SetLessonLearnedId", "Lesson", FormMethod.Post, new { @class = "hidden", id = "form_video_lesson" }))
+                {
+                    @Html.AntiForgeryToken();
+                }
+            </div>
+            <div class="col-12 mt-2">
+                <div class="title d-flex justify-content-around align-items-lg-center align-items-start">
+                    <div class="mt-2">
+                        <p class="fs-3 text-dark title-lesson">@Model.title</p>
+                        <p class="date-update">Cập Nhật Ngày @((Convert.ToDateTime(Model.updated_at)).ToString("dd - MM - yyyy"))</p>
+                    </div>
+                    <div>
+                        <button type="button" class="border-0 rounded pc-1 btn-add-note" data-bs-toggle="modal" data-bs-target="#modal_add_note">
+                            <i class="fas fa-plus"></i>
+                            <span>Thêm ghi chú</span>
+                        </button>
+                        <button type="button" class="border-0 rounded pc-1 btn-down-exercise" data-bs-toggle="modal" data-bs-target="#modal_down_exercise">
+                            <i class="fas fa-plus"></i>
+                            <span>Tải Bài Tập</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="description text-body mt-md-2 mx-md-3 mt-lg-5 text-justify mx-lg-5" style="height: fit-content">
+                    @Model.description
+                </div>
+            </div>
+            <div class="position-fixed bottom-0 mb-5 row" style="width:100%">
+                <div class="col-9 position-relative">
+                    <button class="btn-comment" data-bs-toggle="modal" data-bs-target="#modal_comment" data-ajax="@Url.Action("Index", "Comment")">
+                        <i class="far fa-comments fs-5" style="color: #ff5800; margin-top:3px"></i>
+                        <p class="ms-3 mb-0 text-dark" style="font-family: 'PoppinsVH'; font-weight: bold; color: #ff5800 !important; font-size: 1rem;">Hỏi Đáp</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="d-none d-lg-block col-lg-3 position-fixed position-lg-unset end-0 top-0 bottom-0 to-top to-bottom pt-2 px-0 overflowY-scroll">
+            <div class="mt-3">
+                <h4 class="text-dark ms-3">Nội Dung Khóa Học</h4>
+            </div>
+            @foreach (var item in ViewBag.Lessons)
+            {
+                var href = "";
+                if (item.id <= learned_lesson_id + 1 || Website_Course_AVG.Managers.Helpers.GetUserFromToken().role == 2)
+                {
+                    href = Url.Action("Index", "Lesson", new { courseId = item.course_id, lessonId = item.id });
+                }
+
+                <a @(string.IsNullOrEmpty(href) ? "" : $"href={href}")
+                   class="py-2 px-4 div-lesson @(item.id == Model.id ? "active" : "") @(item.id > learned_lesson_id + 1 ? "disable" : "")">
+                    <h5 class="text-dark font-default" style="font-weight: 500;">@item.index . @item.title</h5>
+                    <div class="d-flex justify-content-between">
+                        <span class="d-flex position-relative">
+                            <i class="fas fa-play-circle"></i>
+                            <p class="time position-absolute" style="top: -0.4rem; left: 1.5rem;">@Website_Course_AVG.Managers.Helpers.ConvertTime(item.time)</p>
+                        </span>
+                        @if (item.id <= learned_lesson_id)
+                        {
+                            <span><i class="fas fa-check-circle" style="color:green;"></i></span>
+
+                        }
+                    </div>
+                </a>
+            }
+        </div>
+    </section>
+</main>
+
+@section Footer {
+    <footer>
+        <div class="footer-in-lesson" id="footer_lesson">
+            <div>
+                @if (ViewBag.Identity.IdPrevious != 0)
+                {
+
+                    <a href="@Url.Action("Index", "Lesson")?courseId=@Model.course_id&lessonId=@ViewBag.Identity.IdPrevious" class="first fs-6">
+                        <i class="fas fa-chevron-left"></i>Previous Lesson
+                    </a>
+                }
+                @if (ViewBag.Identity.IdNext != 999999)
+                {
+                    <a href="@Url.Action("Index", "Lesson")?courseId=@Model.course_id&lessonId=@ViewBag.Identity.IdNext" class="last fs-6 disable">Next Lesson <i class="fas fa-chevron-right"></i></a>
+                }
+            </div>
+            <div class="menu-footer position-absolute top-0 bottom-0 text-dark d-flex me-3" style="right:0; align-items:center;"><p class="mb-0 text-dark d-none d-lg-block title-lesson" style="font-size:1rem;">@Model.title</p> <i class="fas fa-sliders-h fs-5 p-2 ms-3 open-lesson" style="cursor:pointer"></i></div>
+        </div>
+    </footer>
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/lesson.js")
+}
+
+@section Modals {
+    <div class="modal modal-right fade" id="modal_note" tabindex="-1" role="dialog" aria-labelledby="modal_note">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-dark">Ghi Chú Của Tôi</h3>
+                    <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body px-5" id="body_notes">
+                    <div class="loading">
+                        <div class="loadingspinner">
+                            <h3 class="text-spinner">Loading</h3>
+                            <div class="square1"></div>
+                            <div class="square2"></div>
+                            <div class="square3"></div>
+                            <div class="square4"></div>
+                            <div class="square5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-bottom fade" id="modal_add_note" tabindex="-1" role="dialog" aria-labelledby="modal_add_note">
+        <div class="modal-dialog row" role="document">
+            <div class="modal-content col-9 col-lg-12" style="border-top: 1px #c7b8b8 solid;">
+                <div class="modal-header" style="justify-content: unset;">
+                    <h5 class="modal-title text-dark">Thêm Ghi Chú Tại</h5>
+                    <span class="note-time ms-2">00:00</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @using (Html.BeginForm("Create", "Note", FormMethod.Post, new { id = "form_add_note" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <label for="inp_note" class="control-label">Content</label>
+                            <textarea class="form-control" cols="20" id="inp_note" name="content" rows="3"></textarea>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-note-close" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-note-save" id="btn_submit_add_note">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-right fade" id="modal_comment" tabindex="-1" role="dialog" aria-labelledby="modal_comment">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h3 class="modal-title text-dark">Hỏi Đáp</h3>
+                        <div>
+                            <p>( Please do not comment spam or use vulgar or regionally discriminatory words, Comment once every 30 minutes )</p>
+                        </div>
+                    </div>
+                    <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2 top-0 mt-3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("Create", "Comment", FormMethod.Post, new { id = "form_add_comment" }))
+                    {
+                        @Html.AntiForgeryToken();
+
+                        <div class="mb-3 d-flex">
+                            <label for="text_comment" class="form-label me-3">
+                                <i class="fas fa-user fs-5 mt-1"></i>
+                            </label>
+                            <textarea class="form-control" name="content" id="text_comment" rows="3" placeholder="Do you have any questions about this lesson?"></textarea>
+                        </div>
+                    }
+                    <div style="text-align: end;">
+                        <button type="button" class="btn-save-comment">Save Changes</button>
+                    </div>
+                    <div id="body_comments">
+                        <div class="loading">
+                            <div class="loadingspinner">
+                                <h3 class="text-spinner">Loading</h3>
+                                <div class="square1"></div>
+                                <div class="square2"></div>
+                                <div class="square3"></div>
+                                <div class="square4"></div>
+                                <div class="square5"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal modal-right fade" id="modal_lesson" tabindex="-1" role="dialog" aria-labelledby="modal_lesson">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-dark">Nội Dung Khóa Học</h4>
+                    <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2 top-0 mt-3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body pb-3">
+                    <div>
+                        @foreach (var item in ViewBag.Lessons)
+                        {
+                            var href = "";
+                            if (item.id <= learned_lesson_id + 1 || Website_Course_AVG.Managers.Helpers.GetUserFromToken().role == 2)
+                            {
+                                href = Url.Action("Index", "Lesson", new { courseId = Model.course_id, lessonId = item.id });
+                            }
+
+                            <a @(string.IsNullOrEmpty(href) ? "" : $"href={href}")
+                               class="py-2 px-4 div-lesson @(item.id == Model.id ? "active" : "") @(item.id > learned_lesson_id + 1 ? "disable" : "")">
+                                <h5 class="text-dark font-default" style="font-weight: 500;">@item.index . @item.title</h5>
+                                <div class="d-flex justify-content-between">
+                                    <span class="d-flex position-relative">
+                                        <i class="fas fa-play-circle"></i>
+                                        <p class="time position-absolute" style="top: -0.4rem; left: 1.5rem;">@Website_Course_AVG.Managers.Helpers.ConvertTime(item.time)</p>
+                                    </span>
+                                    @if (item.id <= learned_lesson_id)
+                                    {
+                                        <span><i class="fas fa-check-circle" style="color:green;"></i></span>
+
+                                    }
+                                </div>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_down_exercise" tabindex="-1" aria-labelledby="modal_down_exercise" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Download Exercise</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to download the exercise?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-save-down-exercise">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

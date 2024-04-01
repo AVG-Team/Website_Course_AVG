@@ -1,4 +1,4 @@
-/*
+﻿/*
   Theme Name: Movflx - Online Movies & TV Shows Template.
   Author Name: ThemeBeyond.
   Support: ctoofbb@gmail.com.
@@ -37,8 +37,15 @@
 /* 1. Theme default css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&amp;display=swap');
 
+@font-face {
+    font-family: 'PoppinsVH';
+    src: url('fonts/DesignerVN-Poppins/DesignerVN-Poppins-Regular.ttf') format('truetype');
+    /* Nếu cần hỗ trợ cho IE9 trở xuống, sử dụng dòng sau */
+    /* src: url('fonts/poppins.ttf') format('truetype'), url('fonts/poppins.woff') format('woff'); */
+}
+
 body {
-    font-family: 'Poppins', sans-serif;
+    /*font-family: 'Poppins', sans-serif;*/
     font-weight: 500;
     font-style: normal;
     font-size: 14px;
@@ -110,7 +117,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'PoppinsVH', sans-serif;
     color: #fff;
     margin-top: 0px;
     font-style: normal;
@@ -233,9 +240,7 @@ label {
 }
 
 /* All-color */
-.navbar-wrap > ul > li.active > a,
 .navbar-wrap > ul > li:hover > a,
-.mobile-menu .navigation li.active > a,
 .header-lang form .icon,
 .banner-content .sub-title,
 .banner-content .title > span,
@@ -379,6 +384,16 @@ label {
     flex-wrap: wrap;
     justify-content: flex-start;
     margin-left: -20px;
+}
+
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+    .menu-nav {
+        padding: 15px 0;
+    }
+
+    .menu-area .mobile-nav-toggler {
+        margin-top: 27px !important;
+    }
 }
 
 .navbar-wrap {
@@ -562,7 +577,7 @@ label {
     padding: 10px 20px;
 }
 
-.sticky-menu {
+.sticky-menu-clone, .sticky-menu {
     left: 0;
     padding: 0 0;
     margin: auto;
@@ -952,6 +967,7 @@ label {
         -o-transition: all 500ms ease;
         transition: all 500ms ease;
         border: none;
+        text-decoration: none;
     }
 
     .mobile-menu .navigation li ul li > a {
@@ -992,9 +1008,9 @@ label {
         background: #2f373e;
         cursor: pointer;
         border-radius: 2px;
-        -webkit-transition: all 500ms ease;
+        /*-webkit-transition: all 500ms ease;
         -o-transition: all 500ms ease;
-        transition: all 500ms ease;
+        transition: all 500ms ease;*/
         z-index: 5;
     }
 
@@ -1008,6 +1024,13 @@ label {
     .mobile-menu .navigation li > ul > li > ul {
         display: none;
     }
+
+
+.mobile-menu .menu-user {
+    position: relative;
+    text-align: center;
+    padding-bottom: 20px;
+}
 
 .mobile-menu .social-links {
     position: relative;
@@ -1117,11 +1140,23 @@ label {
                 }
 
 /* 6. Banner */
-.banner-bg {
+.banner-bg-1 {
     padding: 295px 0 273px;
     background-position: center;
     background-size: cover;
     background-image: url(img/banner/layout_main_section.jpg);
+}
+.banner-bg-2 {
+    padding: 295px 0 273px;
+    background-position: center;
+    background-size: cover;
+    background-image: url(img/banner/slider_img01.jpg);
+}
+.banner-bg-3 {
+    padding: 295px 0 273px;
+    background-position: center;
+    background-size: cover;
+    background-image: url(img/banner/slider_img02.jpg);
 }
 
 .banner-content .sub-title {
@@ -3445,7 +3480,300 @@ label {
     transform: translate(-50%, -50%);
 }
 
+
 .text-black-75 {
     --bs-text-opacity: 0.75; /* ?? trong su?t 75% */
     color: rgba(var(--bs-black-rgb), var(--bs-text-opacity)) !important;
 }
+
+/*Custom Css Lesson*/
+
+.h-3 {
+    height: 3rem;
+}
+
+.pc-1 {
+    padding: 1rem;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-gray {
+    color: gray;
+}
+
+.btn-none {
+    border: 0;
+    background: none;
+}
+
+.text-red-price {
+    color: red;
+}
+
+/* slide-show */
+.slide-show {
+    position: relative;
+    width: 100%;
+}
+
+.w3-animate-right {
+    position: relative;
+    animation: animateright 5s linear;
+}
+
+@keyframes animateright {
+    from {
+        right: 0px;
+        opacity: 1;
+    }
+
+    to {
+        right: 0px;
+        opacity: 1;
+    }
+}
+
+
+
+/* course */
+.a_course {
+    position: relative;
+}
+
+    .a_course::after {
+        background-color: rgba(0,0,0,.5);
+        border-radius: 16px;
+        content: "";
+        inset: 0;
+        opacity: 0;
+        position: absolute;
+        visibility: hidden;
+    }
+
+    .a_course .btn_course {
+        background-color: #fff;
+        border-color: #fff;
+        left: 50%;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%,-50%);
+        transition: all .3s ease 0s;
+        visibility: hidden;
+        z-index: 1;
+        font-weight: bold;
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+    }
+
+
+    .a_course:hover .btn_course, .a_course:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+.pt-lg-100 {
+    padding-top: 100px !important;
+}
+
+@media screen and (min-width: 768px) and (max-width: 990px) {
+    .a_course .btn_course {
+        font-size: 10px;
+    }
+}
+
+@media screen and (min-width: 991px) and (max-width: 1199px) {
+    .a_course .btn_course {
+        font-size: 12px;
+    }
+}
+
+.title-course {
+    color: #242424;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+/*width 990px - 1200px navbar*/
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+
+    .pt-md-60 {
+        padding-top: 60px !important;
+    }
+
+    .navbar-wrap {
+        display: none !important; /*Ẩn navbar-wrap */
+    }
+
+    .mobile-nav-toggler {
+        display: block !important; /* Hiển thị icon fa-bars */
+        padding-left: 40px;
+    }
+
+        .mobile-nav-toggler .svg-menu svg {
+            display: none !important;
+        }
+}
+
+@media screen and (min-width: 767px) and (max-width: 991px) {
+    .pt-sm-110 {
+        padding-top: 110px !important;
+    }
+
+    .header-action {
+        display: none !important; /*Ẩn navbar-wrap */
+    }
+}
+
+/* footer payment-method */
+@media only screen and (max-width: 760px) {
+    .payment-method-img .justify-content-end {
+        justify-content: center !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .pt-sx-110 {
+        padding-top: 110px !important;
+    }
+
+        .container, .custom-container {
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+    body {
+        overflow-x: hidden;
+    }
+
+
+    .container, .custom-container {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 15px;
+        padding-right: 20px;
+    }
+
+    .banner-area {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+    .home {
+        position: absolute;
+        left: 0;
+        top: 0px;
+        width: 100%;
+        z-index: 9;
+        height: auto;
+        padding: 20px 0;
+        background: none;
+        box-shadow: none;
+    }
+
+/* User/Admin */
+.menu-user .avatar-user {
+    position: relative;
+    font-size: 30px;
+    top: 4px;
+    left: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.menu-user .profile-user{
+    position: absolute;
+    width: 14rem;
+    top: 57px;
+    right: 19px;
+    padding: 10px 20px;
+    background: #fff;
+    box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    transition: 0.5s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.menu-user .profile-user::before {
+    content: '';
+    position: absolute;
+    /*right: 28px;*/
+}
+
+.menu-user .profile-user ul li{
+    list-style: none;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.menu-user .profile-user.active{
+    visibility: visible;
+    opacity: 1;
+}
+
+.menu-user .profile-user ul li a{
+    text-decoration: none;
+    font-size: 17px;
+    color: black;
+
+}
+
+    .menu-user .profile-user  ul  li a:hover {
+        color: #e4d804 !important;
+    }
+
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+    .menu-user .profile-user {
+        right: 45px !important;
+    }
+}
+
+/*mobile*/
+.menu-user-mobile{
+    position: relative;
+    text-align:center;
+}
+
+.menu-user-mobile .icon{
+    font-size: 50px;
+}
+
+.menu-user-mobile .user-name-mobile{
+    padding: 10px 0;
+}
+.menu-user-mobile .avatar-user-mobile .fa-solid{
+    font-size: 50px;
+}
+
+
+=======
+.desktop-header-module--header--a5wri .desktop-header-module--dropdown-counter-badge--unIZ1 {
+    top: 0;
+    left: 50%;
+}
+
+.home {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    z-index: 9;
+    height: auto;
+    padding: 20px 0;
+    background: none;
+    box-shadow: none;
+}
+
