@@ -1,24 +1,16 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
-using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
-using Octokit;
-using System.Runtime.ConstrainedExecution;
 using MailKit.Net.Smtp;
 using MimeKit;
-using Org.BouncyCastle.Math.Field;
 using System.Web.Mvc;
-using System.Security.Policy;
 using System.IO;
 using System.Web.Routing;
 using Website_Course_AVG.Controllers;
-using Microsoft.Ajax.Utilities;
 using System.Configuration;
-using System.Web.UI;
 
 namespace Website_Course_AVG.Managers
 {
@@ -133,10 +125,28 @@ namespace Website_Course_AVG.Managers
 
         public void login(string username)
         {
-            var token = TokenHelper.GenerateToken(username);
-            HttpCookie cookie = new HttpCookie("AuthToken", token);
-            cookie.Expires = DateTime.Now.AddDays(30);
-            HttpContext.Current.Response.Cookies.Add(cookie);
+            using (MyDataDataContext _data = new MyDataDataContext())
+            {
+                try
+                {
+                    var token = TokenHelper.GenerateToken(username);
+
+                    account account = _data.accounts.Where(x => x.username == username).FirstOrDefault();
+                    if(account != null)
+                    {
+                        account.info = Helpers.GetDeviceFingerprint();
+                        account.token = token;
+                        _data.SubmitChanges();
+
+                        HttpCookie cookie = new HttpCookie("AuthToken", token);
+                        cookie.Expires = DateTime.Now.AddDays(30);
+                        HttpContext.Current.Response.Cookies.Add(cookie);
+                    }
+                } catch(Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
 
         public void logout()

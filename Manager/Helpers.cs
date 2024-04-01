@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Octokit;
+using System;
 using System.Web;
+using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Managers
 {
@@ -37,6 +39,29 @@ namespace Website_Course_AVG.Managers
             string redirectUrl = GetRedirectUrlGH();
             return
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
+        }
+
+        public static user GetUserFromToken()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.GetUserFromToken();
+        }
+
+        public static string GetDeviceFingerprint()
+        {
+            HttpContext context = HttpContext.Current;
+            string userAgent = context.Request.UserAgent;
+            string ipAddress = context.Request.UserHostAddress;
+            string screenWidth = context.Request.Browser.ScreenPixelsWidth.ToString();
+            string screenHeight = context.Request.Browser.ScreenPixelsHeight.ToString();
+            string timeZone = TimeZoneInfo.Local.DisplayName;
+
+            // Tạo dấu vân tay bằng cách kết hợp các thuộc tính
+            string deviceFingerprint = $"{userAgent}_{ipAddress}_{screenWidth}_{screenHeight}_{timeZone}";
+
+            // Lưu hoặc xử lý dấu vân tay ở đây (ví dụ: lưu vào CSDL, so sánh với dấu vân tay đã lưu, ...)
+
+            return deviceFingerprint;
         }
     }
 }
