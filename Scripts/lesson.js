@@ -360,3 +360,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 })
+
+// exercise
+document.addEventListener("DOMContentLoaded", () => {
+    $(".btn-save-down-exercise").click(() => {
+        var urlParams = new URLSearchParams(window.location.search);
+        var lessonId = urlParams.get('lessonId');
+        
+        $.ajax({
+            url: "/Exercise/GetExercise?lessonId=" + lessonId,
+            type: "GET",
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                var a = document.createElement('a');
+                var url = result.data;
+                a.href = url;
+                a.download = 'file.docx';
+                a.target = '_blank';
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function (xhr) {
+                toastr.error(xhr.responseJSON.message, "Error");
+            },
+        });
+    })
+})

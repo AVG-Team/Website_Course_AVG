@@ -25,11 +25,18 @@ namespace Website_Course_AVG.Controllers
             // Tạo bucket
             string projectId = Helpers.GetValueFromAppSetting("ProjectIdGG");
 
-            var bucketName = "video-lesson";
-            var bucket = storageClient.CreateBucket(projectId, bucketName);
+            var bucketName = "exercise-lesson";
+
+            try
+            {
+                var bucket = storageClient.GetBucket(bucketName);
+            } catch (Exception ex)
+            {
+                var bucket = storageClient.CreateBucket(projectId, bucketName);
+            }
 
             // Tải file video lên bucket
-            var fileName = "test.mp4";
+            var fileName = "AVG COURSES.docx";
             var filePath = Server.MapPath("~/Content/" + fileName);
 
             using (var fileStream = new FileStream(filePath, FileMode.Open))
