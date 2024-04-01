@@ -49,13 +49,13 @@ namespace Website_Course_AVG.Models
     public class LoginViewModel
     {
 		[Required(ErrorMessage = "username is required")]
-		[RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$", ErrorMessage = "Must contain at least 6 characters and at least one character.")]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Must contain at least 6 characters and at least one character.")]
 		public string userName { get; set; }
 
 
 		[Required(ErrorMessage = "Password is required")]
 		[StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-		[RegularExpression(@"^.{6,20}$", ErrorMessage = "Password must contain at least 6 characters.")]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Password must contain at least 6 characters.")]
 		[DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -68,7 +68,7 @@ namespace Website_Course_AVG.Models
     {
 		[Required(ErrorMessage = "Required")]
 		[StringLength(12, ErrorMessage = "The {0} must be have", MinimumLength = 6)]
-		[RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)|[A-Za-z]{6,12}$", ErrorMessage = "Must contain at least 6 characters and at least one character.")]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Must contain at least 6 characters and at least one character.")]
 		[Display(Name = "userName")]
 		public string userName { get; set; }
 
@@ -80,7 +80,7 @@ namespace Website_Course_AVG.Models
         [Required]
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-		[RegularExpression(@"^.{6,20}$", ErrorMessage = "Password must contain at least 6 characters.")]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Password must contain at least 6 characters.")]
 		[Display(Name = "Password")]
         public string Password { get; set; }
 
@@ -99,7 +99,7 @@ namespace Website_Course_AVG.Models
 
         [Required]
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-		[RegularExpression(@"^.{6,20}$", ErrorMessage = "Password must contain at least 6 characters.")]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Password must contain at least 6 characters.")]
 		[DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

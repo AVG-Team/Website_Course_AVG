@@ -20,7 +20,7 @@ namespace Website_Course_AVG.Controllers
 
             if (lessonsCourse.Count() < 1)
             {
-                Helpers.addCookie("Error", "The course is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.");
+                Helpers.AddCookie("Error", "The course is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.");
                 return RedirectToAction("Index", "Home");
             }
 
@@ -28,7 +28,7 @@ namespace Website_Course_AVG.Controllers
 
             if (lesson == null)
             {
-                Helpers.addCookie("Error", "The lesson is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.");
+                Helpers.AddCookie("Error", "The lesson is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.");
                 return RedirectToAction("Index", "Home");
             }
 
@@ -43,7 +43,7 @@ namespace Website_Course_AVG.Controllers
             detail_course detailCourse = _data.detail_courses.Where(x => x.user_id == userId && x.course_id == courseId).FirstOrDefault();
             if(detailCourse == null)
             {
-                Helpers.addCookie("Error", "It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you.");
+                Helpers.AddCookie("Error", "It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you.");
                 return RedirectToAction("Index", "Home");
             }
 
@@ -57,7 +57,7 @@ namespace Website_Course_AVG.Controllers
             // 14 qua , 15 qua
             if(lessonLearnedId + 1 < lesson.id && user.role != 2)
             {
-                Helpers.addCookie("Error", "You have not finished studying the previous lesson, please return to the previous lesson");
+                Helpers.AddCookie("Error", "You have not finished studying the previous lesson, please return to the previous lesson");
                 return RedirectToAction("Detail", "Course");
             }
 

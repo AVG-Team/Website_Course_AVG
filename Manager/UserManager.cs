@@ -30,7 +30,7 @@ namespace Website_Course_AVG.Managers
             try
             {
                 if (account.password == null)
-                    account.password = Helpers.GenerateString();
+                    account.password = Helpers.GenerateRandomString();
 
                 if (!_data.users.Where(x=> x.email == email).Any())
                 {
@@ -115,7 +115,7 @@ namespace Website_Course_AVG.Managers
             if (!IsAuthenticated())
                 return false;
             user user = GetUserFromToken();
-            return user != null && user.role >= 1;
+            return user != null && (user.role == null || user.role <= 1 );
         }
 
         // role = 2 : admin

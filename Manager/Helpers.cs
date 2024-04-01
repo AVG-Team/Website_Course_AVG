@@ -73,7 +73,7 @@ namespace Website_Course_AVG.Managers
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
         }
 
-        public static string GenerateRandomString(int length)
+        public static string GenerateRandomString(int length = 10)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder builder = new StringBuilder();
@@ -307,6 +307,23 @@ namespace Website_Course_AVG.Managers
             }
 
             return false;
+        }
+
+        public static string GetDeviceFingerprint()
+        {
+            HttpContext context = HttpContext.Current;
+            string userAgent = context.Request.UserAgent;
+            string ipAddress = context.Request.UserHostAddress;
+            string screenWidth = context.Request.Browser.ScreenPixelsWidth.ToString();
+            string screenHeight = context.Request.Browser.ScreenPixelsHeight.ToString();
+            string timeZone = TimeZoneInfo.Local.DisplayName;
+
+            // Tạo dấu vân tay bằng cách kết hợp các thuộc tính
+            string deviceFingerprint = $"{userAgent}_{ipAddress}_{screenWidth}_{screenHeight}_{timeZone}";
+
+            // Lưu hoặc xử lý dấu vân tay ở đây (ví dụ: lưu vào CSDL, so sánh với dấu vân tay đã lưu, ...)
+
+            return deviceFingerprint;
         }
     }
 }

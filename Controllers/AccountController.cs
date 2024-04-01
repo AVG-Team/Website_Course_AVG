@@ -244,7 +244,7 @@ namespace Website_Course_AVG.Controllers
 			var subject = "AVG Courses - Reset Password";
 
             String messageHead = "Mã khôi phục pass của bạn là ";
-			String messageLast = Helpers.GenerateString(10);
+			String messageLast = Helpers.GenerateRandomString(10);
 			if (!userManager.IsAuthenticated())
 			{
                 if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
@@ -335,8 +335,10 @@ namespace Website_Course_AVG.Controllers
             }
             else if (UserManager.CheckUsername(loginInfo.Email))
             {
-                Helpers.AddCookie("Notify", "Login Successful");
-                UserManager.login(loginInfo.Email);
+                user user = _context.users.Where(x => x.email == loginInfo.Email).FirstOrDefault();
+                
+                Helpers.AddCookie("Notify", "Login Successful With Gmail");
+                UserManager.login(user.account.username);
                 return RedirectToAction("Index", "Home");
             }
 
