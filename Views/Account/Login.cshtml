@@ -97,38 +97,31 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
-    var passwordField = document.getElementById("passwordField");
-    var firstEyeIcon = document.getElementById("firstEyeIcon");
-    var firstEyeSpan = document.getElementById("firstEyeSpan");
+    <script>
+        var passwordField = document.getElementById("passwordField");
+        var firstEyeIcon = document.getElementById("firstEyeIcon");
+        var firstEyeSpan = document.getElementById("firstEyeSpan");
 
-    firstEyeSpan.addEventListener("click", function () {
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            firstEyeIcon.classList.remove("fa-eye-slash");
-            firstEyeIcon.classList.add("fa-eye");
-        } else {
-            passwordField.type = "password";
-            firstEyeIcon.classList.remove("fa-eye");
-            firstEyeIcon.classList.add("fa-eye-slash");
-        }
-    });
+        firstEyeSpan.addEventListener("click", function () {
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                firstEyeIcon.classList.remove("fa-eye-slash");
+                firstEyeIcon.classList.add("fa-eye");
+            } else {
+                passwordField.type = "password";
+                firstEyeIcon.classList.remove("fa-eye");
+                firstEyeIcon.classList.add("fa-eye-slash");
+            }
+        });
 
+        passwordField.addEventListener("click", function () {
+            firstEyeSpan.classList.remove("visually-hidden")
+        });
 
-
-
-    passwordField.addEventListener("click", function () {
-        firstEyeSpan.classList.remove("visually-hidden")
-    });
-
-
-    passwordField.addEventListener("focus", function () {
-        firstEyeIcon.classList.remove("visually-hidden");
-    });
-
-
-
-</script>
+        passwordField.addEventListener("focus", function () {
+            firstEyeIcon.classList.remove("visually-hidden");
+        });
+    </script>
 }
 
 
