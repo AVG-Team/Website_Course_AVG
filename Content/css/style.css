@@ -40,8 +40,11 @@
 @font-face {
     font-family: 'PoppinsVH';
     src: url('../fonts/DesignerVN-Poppins/DesignerVN-Poppins-Regular.ttf') format('truetype');
-    /* Nếu cần hỗ trợ cho IE9 trở xuống, sử dụng dòng sau */
-    /* src: url('fonts/poppins.ttf') format('truetype'), url('fonts/poppins.woff') format('woff'); */
+}
+
+@font-face {
+    font-family: 'PoppinsVHEB';
+    src: url('../fonts/DesignerVN-Poppins/DesignerVN-Poppins-Regular.ttf') format('truetype');
 }
 
 body {
