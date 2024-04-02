@@ -1,0 +1,114 @@
+﻿@using Website_Course_AVG.Models
+@model BoxSendOTP
+@{
+    ViewBag.Title = "SendOTP";
+}
+<style>
+    main {
+        margin-top: 50px;
+    }
+
+    input {
+        max-width: none;
+    }
+</style>
+
+<main aria-labelledby="title">
+    <!----------------------- Main Container -------------------------->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <!----------------------- Login Container -------------------------->
+        <div class="row border rounded-5 p-3 bg-white shadow box-area" style="width: 930px;">
+            <!--------------------------- Left Box ----------------------------->
+            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #103cbe;">
+                <div class="featured-image mb-3">
+                    @*<img src="/Content/img/images/login.png" class="img-fluid" style="width: 250px;">*@
+                </div>
+                <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Be Verified</p>
+                @*<small class="text-white text-wrap text-center" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Join experienced Designers on this platform.</small>*@
+            </div>
+            <!-------------------- ------ Right Box ---------------------------->
+
+            <div class="col-md-6 ">
+                <div class="right-box" style="padding: 20px 15px 20px 20px;">
+                    <div class="row align-items-center">
+                        <div class="header-text mb-4">
+                            <h2 class="text-info">Hello,Again</h2>
+                            <p>We are happy to have you back.</p>
+                        </div>
+                        <div id="loginForm">
+
+                            @using (Html.BeginForm("BoxSendOTP", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group mb-3">
+                                    <div style="display:flex">
+                                        <div class="dropdown-center rounded-start w-25">
+                                            <button class="btn dropdown-toggle rounded-end" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size:6px; padding-left: 0; align-content:center">
+                                                dropdown
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>Action</li>
+                                                <li>Action two</li>
+                                                <li>Action three<</li>
+                                            </ul>
+                                        </div>
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control form-control-lg bg-light fs-6 rounded-0 rounded-end h-25 w-75", placeholder = "username" })
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3"> 
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control form-control-lg bg-light fs-6 rounded-0 rounded-end h-25 w-75", placeholder = "username" })
+                                        <button class="btn_send"> Send</button>
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control form-control-lg bg-light fs-6 rounded-0 rounded-end", placeholder = "username" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control form-control-lg bg-light fs-6 rounded-0 rounded-end", placeholder = "username" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control form-control-lg bg-light fs-6 rounded-0 rounded-end", placeholder = "username" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                                </div>
+                             
+                                <div class="row">
+                                    <div class="input-group mb-3 d-flex justify-content-center">
+                                        <input type="submit" value="Recieve Email" class="btn btn-outline-dark w-75" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="input-group mb-3 justify-content-center">
+                            <section id="socialLoginForm">
+                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                            </section>
+                        </div>
+                        <div class="row">
+                            <small>Don't have account? <a href="@Url.Action("Register", "Account")">Sign Up</a></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

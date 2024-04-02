@@ -135,4 +135,21 @@ namespace Website_Course_AVG.Models
 		public string RedirectURL { get; set; }
 		public string UrlWebsite { get; set; }
 	}
+
+	public class BoxSendOTP
+	{
+		[Required]
+		[Display(Name = "Your Phone Number")]
+		[RegularExpression(@"^(0\d{9})|([1-9]\d{9})$", ErrorMessage = "Invalid Phone Number")]
+		public string Phone { get; set; }
+	}
+
+
+
+	public class CustomSMS
+    {
+        [Required]
+        [Display(Name = "Code")]
+        public string Code { get; set; }   
+    }
 }

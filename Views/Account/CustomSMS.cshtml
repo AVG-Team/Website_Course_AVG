@@ -1,0 +1,15 @@
+﻿@model Website_Course_AVG.Models.CustomSMS
+@{
+    ViewBag.Title = "CustomSMS";
+    Layout = null;
+}
+
+<main aria-labelledby="title">
+    <p class="black-color">
+        Your OTP is @Model.Code
+    </p>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

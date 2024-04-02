@@ -562,5 +562,11 @@ namespace Website_Course_AVG.Controllers
         {
             throw new System.NotImplementedException();
         }
+
+		[Website_Course_AVG.Attributes.AllowAnonymous]
+		public ActionResult BoxSendOTP(BoxSendOTP model)
+        {
+            return View();
+        }
 	}
 }
