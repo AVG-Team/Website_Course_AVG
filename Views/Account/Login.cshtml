@@ -41,7 +41,6 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group mb-3">
                                     <div class="input-group">
-                                       
                                         @Html.TextBoxFor(m => m.userName, new { @class = "form-control form-control-lg bg-light fs-6  rounded-end", placeholder = "username" })
                                     </div>
                                     @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
@@ -50,8 +49,8 @@
                                     <div class="input-group">
 
                                         @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end ", placeholder = "Password" })
-                                        <span id="eyeIcon" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
-                                            <i class="fa fa-eye-slash" id="togglePassword"></i>
+                                        <span id="firstEyeSpan" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
+                                            <i class="fa fa-eye-slash" id="firstEyeIcon"></i>
                                         </span>
                                     </div>
                                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
@@ -94,33 +93,38 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
-
 <script>
     var passwordField = document.getElementById("passwordField");
-    var eyeIcon = document.getElementById("eyeIcon");
-    var togglePassword = document.getElementById("togglePassword");
+    var firstEyeIcon = document.getElementById("firstEyeIcon");
+    var firstEyeSpan = document.getElementById("firstEyeSpan");
 
-    document.getElementById("eyeIcon").addEventListener("click", function () {
-        var passwordField = document.getElementById("passwordField");
+    firstEyeSpan.addEventListener("click", function () {
         if (passwordField.type === "password") {
             passwordField.type = "text";
-            togglePassword.classList.remove("fa-eye-slash");
-            togglePassword.classList.add("fa-eye");
+            firstEyeIcon.classList.remove("fa-eye-slash");
+            firstEyeIcon.classList.add("fa-eye");
         } else {
             passwordField.type = "password";
-            togglePassword.classList.remove("fa-eye");
-            togglePassword.classList.add("fa-eye-slash");
+            firstEyeIcon.classList.remove("fa-eye");
+            firstEyeIcon.classList.add("fa-eye-slash");
         }
     });
 
-    passwordField.addEventListener("focus", function () {
-        eyeIcon.classList.remove("visually-hidden");
+
+
+
+    passwordField.addEventListener("click", function () {
+        firstEyeSpan.classList.remove("visually-hidden")
     });
 
 
-    //passwordField.addEventListener("blur", function () {
-    //    eyeIcon.classList.add("visually-hidden");
-    //});
+    passwordField.addEventListener("focus", function () {
+        firstEyeIcon.classList.remove("visually-hidden");
+    });
+
+
 
 </script>
+}
+
+
