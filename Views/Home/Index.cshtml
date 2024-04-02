@@ -3,101 +3,284 @@
 }
 
 <main>
-    <div>
-        <h1>@ViewBag.Course.title</h1>
-        <button onclick="buy(@ViewBag.Course.id)">Buy</button>
-        <script>
-            function setCookieForCart(cookieName, cookieValue, secondsToExpire, type = 1) {
-                if (type == 0) {
-                    var expires = secondsToExpire;
-                } else if (type == 1) {
-                    var date = new Date();
-                    date.setTime(date.getTime() + (secondsToExpire * 1000));
-                    var expires = "expires=" + date.toUTCString();
-                }
-
-                var valueCookie = getCookie(cookieName);
-                if (valueCookie == "") {
-                    var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
-                } else {
-                    let str1 = valueCookie;
-                    let str2 = cookieValue;
-
-                    let updatedStr1 = '';
-                    let courseIdToUpdate = '';
-                    let countToAdd = 0;
-                    let courseIdExists = false;
-
-                    // Lấy courseId và count từ str2
-                    let str2Parts = str2.split('-');
-                    str2Parts.forEach(pair => {
-                        let [key, value] = pair.split('=');
-                        if (key === 'courseId') {
-                            courseIdToUpdate = value;
-                        } else if (key === 'count') {
-                            countToAdd = parseInt(value);
-                        }
-                    });
-
-                    // Cập nhật str1
-                    let parts1 = str1.split(',');
-                    parts1.forEach(part => {
-                        let keyValuePairs = part.split('-');
-                        let obj = {};
-                        keyValuePairs.forEach(pair => {
-                            let [key, value] = pair.split('=');
-                            obj[key] = value;
-                        });
-                        if (obj.courseId === courseIdToUpdate) {
-                            courseIdExists = true;
-                            obj.count = parseInt(obj.count) + countToAdd;
-                        }
-                        updatedStr1 += `courseId=${obj.courseId}-count=${obj.count}`;
-                    });
-
-                    if (!courseIdExists) {
-                        updatedStr1 += "," + str2;
-                    }
-
-                    valueCookie = updatedStr1;
-
-                    var updatedCookie = cookieName + "=" + valueCookie + ";" + expires + ";path=/";
-                }
-
-                document.cookie = updatedCookie;
-            }
-            function buy(id) {
-                let count = 5;
-                let value = "courseId=" + id + "-count=" + count;
-                setCookieForCart("cart", value, 30*24*60*60)
-            }
-        </script>
+    <!-- banner-area -->
+    <div class="slide-show w3-animate-right">
+        <section class="banner-area banner-bg" data-background="~/Content/img/banner/layout_main_section.jpg">
+            <div class="container custom-container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="banner-content">
+                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
+                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
+                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                                <ul>
+                                    <li class="quality">
+                                        <span>Pg 18</span>
+                                        <span>hd</span>
+                                    </li>
+                                    <li class="category">
+                                        <a href="#">Romance,</a>
+                                        <a href="#">Drama</a>
+                                    </li>
+                                    <li class="release-time">
+                                        <span><i class="far fa-calendar-alt"></i> 2021</span>
+                                        <span><i class="far fa-clock"></i> 128 min</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://www.youtube.com/watch?v=R2gbPxeNk2E" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 class="fw-bold text-dark" id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+    <div class="slide-show w3-animate-right">
+        <section class="banner-area banner-bg" data-background="~/Content/img/banner/layout_main_section.jpg">
+            <div class="container custom-container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="banner-content">
+                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
+                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
+                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                                <ul>
+                                    <li class="quality">
+                                        <span>Pg 18</span>
+                                        <span>hd</span>
+                                    </li>
+                                    <li class="category">
+                                        <a href="#">Romance,</a>
+                                        <a href="#">Drama</a>
+                                    </li>
+                                    <li class="release-time">
+                                        <span><i class="far fa-calendar-alt"></i> 2021</span>
+                                        <span><i class="far fa-clock"></i> 128 min</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://www.youtube.com/watch?v=R2gbPxeNk2E" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="slide-show w3-animate-right">
+        <section class="banner-area banner-bg" data-background="~/Content/img/banner/layout_main_section.jpg">
+            <div class="container custom-container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="banner-content">
+                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
+                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
+                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                                <ul>
+                                    <li class="quality">
+                                        <span>Pg 18</span>
+                                        <span>hd</span>
+                                    </li>
+                                    <li class="category">
+                                        <a href="#">Romance,</a>
+                                        <a href="#">Drama</a>
+                                    </li>
+                                    <li class="release-time">
+                                        <span><i class="far fa-calendar-alt"></i> 2021</span>
+                                        <span><i class="far fa-clock"></i> 128 min</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://www.youtube.com/watch?v=R2gbPxeNk2E" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 class="text-dark" id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 class="text-dark" id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 class="text-dark" id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+    @*course pro*@
+    <div class="container custom-container">
+        <div class="row">
+            <div class="mt-4 ms-2">
+                <span class="title-course">Khoá học Pro</span>
+            </div>
+            <div class="col-12 mt-2 d-lg-flex d-md-flex">
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+                <hr />
+            </div>
+        </div>
+    </div>
+
+    @*course free*@
+    <div class="container custom-container">
+        <div class="row">
+            <div class="mt-2 ms-2">
+                <span class="title-course">Khoá học miễn phí</span>
+            </div>
+            <div class="col-12 mt-2 d-lg-flex d-md-flex">
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
+                        </div>
+                        <div class="price-new mt-2">
+                            <span class="courseItem_old_price">1.000.000</span>
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+                <hr />
+            </div>
+        </div>
     </div>
 </main>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var header = document.getElementById('sticky-header');
+            header.classList.add("home");
+        })
+        window.addEventListener('scroll', function () {
+            var header = document.getElementById('sticky-header');
+
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+            if (scrollTop < 100 && ! header.classList.contains("home")) {
+                header.classList.add("home");
+            } else if (scrollTop >= 100 && header.classList.contains("home")) {
+                header.classList.remove("home");
+            }
+        })
+    </script>
+}

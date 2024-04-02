@@ -71,6 +71,12 @@
     <Reference Include="Octokit, Version=10.0.0.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
       <HintPath>packages\Octokit.10.0.0\lib\netstandard2.0\Octokit.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -233,9 +239,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Manager\Helpers.cs" />
+    <Compile Include="Manager\ResponseHelper.cs" />
     <Compile Include="Manager\TokenHelper.cs" />
     <Compile Include="Attributes\AllowAnonymousAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CoursesViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Manager\UserManager.cs" />
@@ -266,7 +274,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\img\banner\banner_bg01.jpg" />
     <Content Include="Content\img\banner\layout_main_section.jpg" />
     <Content Include="Content\img\banner\slider_img01.jpg" />
     <Content Include="Content\img\banner\slider_img02.jpg" />
@@ -274,7 +281,6 @@
     <Content Include="Content\img\banner\s_slider_bg.jpg" />
     <Content Include="Content\default.css" />
     <Content Include="Content\flaticon.css" />
-    <Content Include="Content\img\banner\banner_bg01.jpg" />
     <Content Include="Content\img\bg\blog_bg.jpg" />
     <Content Include="Content\img\bg\breadcrumb_bg.jpg" />
     <Content Include="Content\img\bg\contact_bg.jpg" />
@@ -358,6 +364,7 @@
     <Content Include="Content\odometer.css" />
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\owl.video.play.html" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\style.css" />
@@ -379,9 +386,6 @@
       <LastGenOutput>MyData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Models\MyData.dbml.layout">
-      <DependentUpon>MyData.dbml</DependentUpon>
-    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -423,6 +427,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\GithubLogin.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\_CourseListPartial.cshtml" />
+    <Content Include="Views\Courses\ListCourses.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Views\Course\Index.cshtml" />
@@ -467,6 +475,11 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\MyData.dbml.layout">
+      <DependentUpon>MyData.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
