@@ -4,14 +4,18 @@
 @{
     ViewBag.Title = "LOGIN";
 }
-<style>
-    main{
-        margin-top: 50px;
-    }
-    input {
-        max-width: none;
-    }
-</style>
+
+@section Styles {
+    <style>
+        main {
+            margin-top: 50px;
+        }
+
+        input {
+            max-width: none;
+        }
+    </style>
+}
 <main aria-labelledby="title">
     <!----------------------- Main Container -------------------------->
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -59,13 +63,13 @@
                                     <div class="input-group mb-3 d-flex justify-content-between">
                                         <div class="checkbox">
                                             @*@Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe)*@
+                                                @Html.LabelFor(m => m.RememberMe)*@
                                         </div>
                                         <div class="row">
                                             <small><a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a></small>
                                             @*<section id="forgotPasswordForm">
-                            @Html.ActionLinkl()
-                        </section>*@
+                                                    @Html.ActionLinkl()
+                                                </section>*@
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +83,7 @@
                         <div class="input-group mb-3 justify-content-center">
                             <section id="socialLoginForm">
                                 @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                            </section>                            
+                            </section>
                         </div>
                         <div class="row">
                             <small>Don't have account? <a href="@Url.Action("Register", "Account")">Sign Up</a></small>
