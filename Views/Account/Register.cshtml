@@ -100,8 +100,7 @@
     var rePasswordField = document.getElementById("RepasswordField");
     var reTogglePassword = document.getElementById("RetogglePassword");
 
-    document.getElementById("eyeIcon").addEventListener("click", function () {
-        var passwordField = document.getElementById("passwordField");
+    eyeIcon.addEventListener("click", function () {
         if (passwordField.type === "password") {
             passwordField.type = "text";
             togglePassword.classList.remove("fa-eye-slash");
@@ -113,9 +112,8 @@
         }
     });
 
-    
-    document.getElementById("eyeIcon2").addEventListener("click", function () {
-        var repasswordField = document.getElementById("RepasswordField");
+
+    reeyeIcon.addEventListener("click", function () {
         if (repasswordField.type === "password") {
             repasswordField.type = "text";
             reeyeIcon.classList.remove("fa-eye-slash");
@@ -127,24 +125,17 @@
         }
     });
 
-    document.getElementById("RepasswordField").addEventListener("click", function () {
-        var span = document.getElementById("Reenrypassword");
+    rePasswordField.addEventListener("click", function () {
+        var span = document.getElementById("eyeIcon2");
         span.classList.remove("visually-hidden")
     });
 
-    document.getElementById("passwordField").addEventListener("click", function () {
-        var span = document.getElementById("enrypassword");
+    passwordField.addEventListener("click", function () {
+        var span = document.getElementById("eyeIcon");
         span.classList.remove("visually-hidden")
     });
 
-    const password = document.getElementById("passwordField");
 
-    document.addEventListener("click", (e) => {
-        if (!e.target.getElementById("passwordField")) {
-            var span = document.getElementById("enrypassword");
-            span.classList.add("visually-hidden")
-        }
-    })
 
    
 
@@ -153,20 +144,14 @@
         eyeIcon.classList.remove("visually-hidden");
     });
 
-    
-    //passwordField.addEventListener("blur", function () {
-    //    eyeIcon.classList.add("visually-hidden");
-    //});
+ 
 
     rePasswordField.addEventListener("focus", function () {
         reeyeIcon.classList.remove("visually-hidden");
     });
 
 
-    //rePasswordField.addEventListener("blur", function () {
-    //    reeyeIcon.classList.add("visually-hidden");
-    //});
-   
+ 
 
    
 </script>
