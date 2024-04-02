@@ -39,7 +39,7 @@
 
 @font-face {
     font-family: 'PoppinsVH';
-    src: url('fonts/DesignerVN-Poppins/DesignerVN-Poppins-Regular.ttf') format('truetype');
+    src: url('../fonts/DesignerVN-Poppins/DesignerVN-Poppins-Regular.ttf') format('truetype');
     /* Nếu cần hỗ trợ cho IE9 trở xuống, sử dụng dòng sau */
     /* src: url('fonts/poppins.ttf') format('truetype'), url('fonts/poppins.woff') format('woff'); */
 }
@@ -1144,19 +1144,21 @@ label {
     padding: 295px 0 273px;
     background-position: center;
     background-size: cover;
-    background-image: url(img/banner/layout_main_section.jpg);
+    background-image: url(../img/banner/layout_main_section.jpg);
 }
+
 .banner-bg-2 {
     padding: 295px 0 273px;
     background-position: center;
     background-size: cover;
-    background-image: url(img/banner/slider_img01.jpg);
+    background-image: url(../img/banner/slider_img01.jpg);
 }
+
 .banner-bg-3 {
     padding: 295px 0 273px;
     background-position: center;
     background-size: cover;
-    background-image: url(img/banner/slider_img02.jpg);
+    background-image: url(../img/banner/slider_img02.jpg);
 }
 
 .banner-content .sub-title {
@@ -3114,7 +3116,7 @@ label {
 .newsletter-bg {
     background-position: center;
     background-size: cover;
-    background-image: url('../Content/img/bg/newsletter_footer_bg.jpg');
+    background-image: url('../img/bg/newsletter_footer_bg.jpg');
 }
 
 .newsletter-inner-wrap {
@@ -3286,7 +3288,7 @@ label {
 
 /* 19. Footer */
 .footer-top-wrap {
-    background-image: url('../Content/img/bg/footer_bg.jpg');
+    background-image: url('../img/bg/footer_bg.jpg');
     background-position: center;
     background-size: cover;
     padding: 80px 0 55px;
@@ -3641,13 +3643,13 @@ label {
         padding-top: 110px !important;
     }
 
-        .container, .custom-container {
-            max-width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
+    .container, .custom-container {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 
     body {
         overflow-x: hidden;
@@ -3668,17 +3670,17 @@ label {
     }
 }
 
-    .home {
-        position: absolute;
-        left: 0;
-        top: 0px;
-        width: 100%;
-        z-index: 9;
-        height: auto;
-        padding: 20px 0;
-        background: none;
-        box-shadow: none;
-    }
+.home {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    z-index: 9;
+    height: auto;
+    padding: 20px 0;
+    background: none;
+    box-shadow: none;
+}
 
 /* User/Admin */
 .menu-user .avatar-user {
@@ -3693,7 +3695,7 @@ label {
     cursor: pointer;
 }
 
-.menu-user .profile-user{
+.menu-user .profile-user {
     position: absolute;
     width: 14rem;
     top: 57px;
@@ -3707,33 +3709,32 @@ label {
     opacity: 0;
 }
 
-.menu-user .profile-user::before {
-    content: '';
-    position: absolute;
-    /*right: 28px;*/
-}
-
-.menu-user .profile-user ul li{
-    list-style: none;
-    padding: 10px 0;
-    align-items: center;
-}
-
-.menu-user .profile-user.active{
-    visibility: visible;
-    opacity: 1;
-}
-
-.menu-user .profile-user ul li a{
-    text-decoration: none;
-    font-size: 17px;
-    color: black;
-
-}
-
-    .menu-user .profile-user  ul  li a:hover {
-        color: #e4d804 !important;
+    .menu-user .profile-user::before {
+        content: '';
+        position: absolute;
+        /*right: 28px;*/
     }
+
+    .menu-user .profile-user ul li {
+        list-style: none;
+        padding: 10px 0;
+        align-items: center;
+    }
+
+    .menu-user .profile-user.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .menu-user .profile-user ul li a {
+        text-decoration: none;
+        font-size: 17px;
+        color: black;
+    }
+
+        .menu-user .profile-user ul li a:hover {
+            color: #e4d804 !important;
+        }
 
 @media screen and (min-width: 990px) and (max-width: 1200px) {
     .menu-user .profile-user {
@@ -3742,21 +3743,22 @@ label {
 }
 
 /*mobile*/
-.menu-user-mobile{
+.menu-user-mobile {
     position: relative;
-    text-align:center;
+    text-align: center;
 }
 
-.menu-user-mobile .icon{
-    font-size: 50px;
-}
+    .menu-user-mobile .icon {
+        font-size: 50px;
+    }
 
-.menu-user-mobile .user-name-mobile{
-    padding: 10px 0;
-}
-.menu-user-mobile .avatar-user-mobile .fa-solid{
-    font-size: 50px;
-}
+    .menu-user-mobile .user-name-mobile {
+        padding: 10px 0;
+    }
+
+    .menu-user-mobile .avatar-user-mobile .fa-solid {
+        font-size: 50px;
+    }
 
 
 =======
@@ -3776,4 +3778,3 @@ label {
     background: none;
     box-shadow: none;
 }
-

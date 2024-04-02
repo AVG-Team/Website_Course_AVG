@@ -4,14 +4,18 @@
 @{
     ViewBag.Title = "LOGIN";
 }
-<style>
-    main{
-        margin-top: 50px;
-    }
-    input {
-        max-width: none;
-    }
-</style>
+
+@section Styles {
+    <style>
+        main {
+            margin-top: 50px;
+        }
+
+        input {
+            max-width: none;
+        }
+    </style>
+}
 <main aria-labelledby="title">
     <!----------------------- Main Container -------------------------->
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -41,7 +45,7 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group mb-3">
                                     <div class="input-group">
-                                       
+
                                         @Html.TextBoxFor(m => m.userName, new { @class = "form-control form-control-lg bg-light fs-6  rounded-end", placeholder = "username" })
                                     </div>
                                     @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
@@ -60,13 +64,13 @@
                                     <div class="input-group mb-3 d-flex justify-content-between">
                                         <div class="checkbox">
                                             @*@Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe)*@
+                                                @Html.LabelFor(m => m.RememberMe)*@
                                         </div>
                                         <div class="row">
                                             <small><a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a></small>
                                             @*<section id="forgotPasswordForm">
-                            @Html.ActionLinkl()
-                        </section>*@
+                                                    @Html.ActionLinkl()
+                                                </section>*@
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +84,7 @@
                         <div class="input-group mb-3 justify-content-center">
                             <section id="socialLoginForm">
                                 @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                            </section>                            
+                            </section>
                         </div>
                         <div class="row">
                             <small>Don't have account? <a href="@Url.Action("Register", "Account")">Sign Up</a></small>
@@ -94,33 +98,33 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var passwordField = document.getElementById("passwordField");
+        var eyeIcon = document.getElementById("eyeIcon");
+        var togglePassword = document.getElementById("togglePassword");
+
+        document.getElementById("eyeIcon").addEventListener("click", function () {
+            var passwordField = document.getElementById("passwordField");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                togglePassword.classList.remove("fa-eye-slash");
+                togglePassword.classList.add("fa-eye");
+            } else {
+                passwordField.type = "password";
+                togglePassword.classList.remove("fa-eye");
+                togglePassword.classList.add("fa-eye-slash");
+            }
+        });
+
+        passwordField.addEventListener("focus", function () {
+            eyeIcon.classList.remove("visually-hidden");
+        });
+
+
+            //passwordField.addEventListener("blur", function () {
+            //    eyeIcon.classList.add("visually-hidden");
+            //});
+
+    </script>
 }
 
-<script>
-    var passwordField = document.getElementById("passwordField");
-    var eyeIcon = document.getElementById("eyeIcon");
-    var togglePassword = document.getElementById("togglePassword");
-
-    document.getElementById("eyeIcon").addEventListener("click", function () {
-        var passwordField = document.getElementById("passwordField");
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            togglePassword.classList.remove("fa-eye-slash");
-            togglePassword.classList.add("fa-eye");
-        } else {
-            passwordField.type = "password";
-            togglePassword.classList.remove("fa-eye");
-            togglePassword.classList.add("fa-eye-slash");
-        }
-    });
-
-    passwordField.addEventListener("focus", function () {
-        eyeIcon.classList.remove("visually-hidden");
-    });
-
-
-    //passwordField.addEventListener("blur", function () {
-    //    eyeIcon.classList.add("visually-hidden");
-    //});
-
-</script>
