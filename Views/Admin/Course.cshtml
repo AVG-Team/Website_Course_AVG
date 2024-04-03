@@ -1,0 +1,60 @@
+﻿@model Website_Course_AVG.Models.AdminViewModels
+@{
+    ViewBag.Title = "Course";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row gx-3">
+    <div class="col-xxl-12">
+        <div></div>
+    </div>
+    <div class="col-xxl-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Author</th>
+                                <th>Image code</th>
+                                <th>Price</th>
+                                <th>Category id</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Deleted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.Courses)
+                        {
+                            <tr>
+                                <td>@item.id</td>
+                                <td>@item.title</td>
+                                <td>@item.description</td>
+                                <td>@item.author</td>
+                                @*<td>
+                                    <span class="badge border border-danger text-danger">Open</span>
+                                </td>*@
+                                <td>@item.image_code</td>
+                                <td>@item.price</td>
+                                <td>@item.category_id</td>
+                                @*<td>
+                                    <span class="badge border border-success text-success">High</span>
+                                </td>*@
+                                <td class="text-success">@item.created_at</td>
+                                <td class="text-warning">@item.updated_at</td>
+                                <td class="text-danger">@item.deleted_at</td>
+                            </tr>
+
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
