@@ -515,7 +515,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Course\" />
     <Folder Include="Views\Exercise\" />
   </ItemGroup>
   <ItemGroup>
