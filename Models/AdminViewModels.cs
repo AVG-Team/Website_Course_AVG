@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PagedList;
 
 namespace Website_Course_AVG.Models
 {
@@ -14,5 +15,7 @@ namespace Website_Course_AVG.Models
         public List<option> Options { get; set; }
         public List<order> Orders { get; set; }
         public List<promotion> Promotions { get; set; }
+
+        public IPagedList<course> CoursesPagedList { get; set; }
     }
 }

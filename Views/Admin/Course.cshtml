@@ -1,4 +1,5 @@
-﻿@model Website_Course_AVG.Models.AdminViewModels
+﻿@using PagedList.Mvc
+@model Website_Course_AVG.Models.AdminViewModels
 @{
     ViewBag.Title = "Course";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -14,26 +15,30 @@
                 <div class="table-responsive">
                     <table class="table table-bordered m-0">
                         <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Author</th>
-                                <th>Image code</th>
-                                <th>Price</th>
-                                <th>Category id</th>
-                                <th>Created</th>
-                                <th>Updated</th>
-                                <th>Deleted</th>
-                            </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Author</th>
+                            <th>Image code</th>
+                            <th>Price</th>
+                            <th>Category id</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Deleted</th>
+                        </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in Model.Courses)
+                        @foreach (var item in Model.CoursesPagedList)
                         {
                             <tr>
                                 <td>@item.id</td>
-                                <td>@item.title</td>
-                                <td>@item.description</td>
+                                <td><span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                    @item.title
+                                </span></td>
+                                <td><span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                    @item.description
+                                </span></td>
                                 <td>@item.author</td>
                                 @*<td>
                                     <span class="badge border border-danger text-danger">Open</span>
@@ -56,5 +61,22 @@
             </div>
         </div>
     </div>
+    <div class="panel-footer">
+        Page @(Model.CoursesPagedList.PageCount < Model.CoursesPagedList.PageNumber ? 0 : Model.CoursesPagedList.PageNumber) of @Model.CoursesPagedList.PageCount
+        @Html.PagedListPager(Model.CoursesPagedList, page => Url.Action("Course", new { InstructorPage = page }))
+    </div>
 </div>
 
+<style>
+    .pagination li{
+        background-color: azure;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin: 2px;
+        padding: 5px;
+    }
+    .pagination li a{
+        text-decoration: none;
+
+    }
+</style>
