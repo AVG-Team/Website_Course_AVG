@@ -5,78 +5,154 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="row gx-3">
-    <div class="col-xxl-12">
-        <div></div>
-    </div>
-    <div class="col-xxl-12">
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered m-0">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Author</th>
-                            <th>Image code</th>
-                            <th>Price</th>
-                            <th>Category id</th>
-                            <th>Created</th>
-                            <th>Updated</th>
-                            <th>Deleted</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var item in Model.CoursesPagedList)
-                        {
+<div class="app-body">
+    <div class="row gx-3">
+        <div class="col-xxl-12">
+           @Html.Partial("InsertCourse")
+        </div>
+        <div class="col-xxl-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered m-0">
+                            <thead>
                             <tr>
-                                <td>@item.id</td>
-                                <td><span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                    @item.title
-                                </span></td>
-                                <td><span class="d-inline-block text-truncate" style="max-width: 200px;">
-                                    @item.description
-                                </span></td>
-                                <td>@item.author</td>
-                                @*<td>
-                                    <span class="badge border border-danger text-danger">Open</span>
-                                </td>*@
-                                <td>@item.image_code</td>
-                                <td>@item.price</td>
-                                <td>@item.category_id</td>
-                                @*<td>
-                                    <span class="badge border border-success text-success">High</span>
-                                </td>*@
-                                <td class="text-success">@item.created_at</td>
-                                <td class="text-warning">@item.updated_at</td>
-                                <td class="text-danger">@item.deleted_at</td>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Author</th>
+                                <th>Image code</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Deleted</th>
+                                <th>Action</th>
                             </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model.CoursesPagedList)
+                            {
+                                <tr>
+                                    <td>@item.id</td>
+                                    <td>
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            @item.title
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                            @item.description
+                                        </span>
+                                    </td>
+                                    <td>@item.author</td>
+                                    @*<td>
+                                        <span class="badge border border-danger text-danger">Open</span>
+                                    </td>*@
+                                    <td>@item.image_code</td>
+                                    <td>@item.category_id</td>
+                                    <td>@item.price</td>
+                                    @*<td>
+                                        <span class="badge border border-success text-success">High</span>
+                                    </td>*@
+                                    <td class="text-success">@item.created_at</td>
+                                    <td class="text-warning">@item.updated_at</td>
+                                    <td class="text-danger">@item.deleted_at</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a class="btn btn-info btn-sm me-1 border rounded-3 btn-update" href="@Url.Action("UpdateCourse","Admin",@item)">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm ms-1 border rounded-3" href="#">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
 
-                        }
-                        </tbody>
-                    </table>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div>
+                    Page @(Model.CoursesPagedList.PageCount < Model.CoursesPagedList.PageNumber ? 0 : Model.CoursesPagedList.PageNumber) of @Model.CoursesPagedList.PageCount
+                </div>
+                <div class="MenuPage">
+                    @Html.PagedListPager(Model.CoursesPagedList, page => Url.Action("Course", new { page = page }))
                 </div>
             </div>
         </div>
     </div>
-    <div class="panel-footer">
-        Page @(Model.CoursesPagedList.PageCount < Model.CoursesPagedList.PageNumber ? 0 : Model.CoursesPagedList.PageNumber) of @Model.CoursesPagedList.PageCount
-        @Html.PagedListPager(Model.CoursesPagedList, page => Url.Action("Course", new { InstructorPage = page }))
-    </div>
 </div>
 
+
 <style>
-    .pagination li{
-        background-color: azure;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin: 2px;
-        padding: 5px;
+    ul .pagination {
+        justify-content: center;
     }
-    .pagination li a{
+
+    .MenuPage {
+        padding: 20px 0 10px 0;
+    }
+
+        .MenuPage li {
+            display: inline;
+        }
+</style>
+
+<style type="text/css">
+    .MenuPage a {
+        clear: both;
+        color: black;
+        padding: 4px 8px;
         text-decoration: none;
+        background-color: #e8e8e8;
+        border-radius: 5px;
+        margin-left: 5px;
+    }
+
+        .MenuPage a:hover {
+            background-color: darkcyan;
+            border-radius: 5px;
+        }
+
+    a:not([href]):not([class]) {
+        &, &:hover
+
+    {
+        background-color: dodgerblue;
+        color: white;
+    }
 
     }
+
+    .btn-filter {
+        background-color: #007bff;
+        color: white;
+        border-radius: 10px;
+        border-color: transparent;
+        height: 100%;
+    }
+
+        .btn-filter:hover {
+            background-color: #0056b3;
+            color: darkgray;
+        }
+
+        .btn-filter .clicked {
+            background-color: #0056b3;
+            color: darkgray;
+        }
+
+    .modal {
+        top: 100%;
+        transform: translateY(-100%);
+    }
 </style>
+
+@section Scripts{
+    document.getElementByClassName("btn-update").addEventListener("click", function () {
+        
+    });
+}

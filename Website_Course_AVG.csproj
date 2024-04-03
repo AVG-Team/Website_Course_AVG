@@ -285,6 +285,7 @@
     <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NoteController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -298,6 +299,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Identity.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\MyData.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1248,6 +1250,8 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Views\Admin\InsertCourse.cshtml" />
+    <Content Include="Views\Admin\_TableCourseParticial.cshtml" />
     <None Include="Views\Note\notes.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1288,10 +1292,9 @@
     <Content Include="Views\Shared\_LayoutLesson.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Comment\comments.cshtml" />
-    <Content Include="Views\Courses\Index.cshtml"/>
-    <Content Include="Views\Courses\ListCourses.cshtml"/>
-    <Content Include="Views\Courses\Detail.cshtml"/>
-    <Content Include="Views\Courses\_CourseListPartial.cshtml"/>
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Courses\ListCourses.cshtml" />
+    <Content Include="Views\Courses\Detail.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Scripts\js\.DS_Store" />
