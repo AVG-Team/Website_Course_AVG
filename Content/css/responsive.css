@@ -211,9 +211,9 @@
 
 /* Large devices (desktops, 992px and up) */
 @media (max-width: 991.98px) {
-.custom-container {
+/*.custom-container {
     max-width: 720px;
-}
+}*/
 .menu-area {
 	padding: 25px 0;
 }
@@ -583,9 +583,9 @@
 
 /* Small devices (landscape phones, 576px and up) */
 @media only screen and (min-width: 576px) and (max-width: 767px) {
-    .custom-container {
+    /*.custom-container {
         max-width: 540px;
-    }
+    }*/
     .banner-content .title {
         font-size: 42px;
     }

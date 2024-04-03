@@ -52,6 +52,9 @@
     <Reference Include="Google.Api.Gax, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3ec5ea7f18953e47, processorArchitecture=MSIL">
       <HintPath>packages\Google.Api.Gax.4.6.0\lib\net462\Google.Api.Gax.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>packages\BouncyCastle.Cryptography.2.3.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Api.Gax.Rest, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3ec5ea7f18953e47, processorArchitecture=MSIL">
       <HintPath>packages\Google.Api.Gax.Rest.4.6.0\lib\net462\Google.Api.Gax.Rest.dll</HintPath>
     </Reference>
@@ -69,6 +72,12 @@
     </Reference>
     <Reference Include="Google.Cloud.Storage.V1, Version=4.9.0.0, Culture=neutral, PublicKeyToken=185c282632e132a0, processorArchitecture=MSIL">
       <HintPath>packages\Google.Cloud.Storage.V1.4.9.0\lib\net462\Google.Cloud.Storage.V1.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=4.4.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>packages\MailKit.4.4.0\lib\net48\MailKit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -95,6 +104,12 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="MimeKit, Version=4.4.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>packages\MimeKit.4.4.0\lib\net48\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Octokit, Version=10.0.0.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
       <HintPath>packages\Octokit.10.0.0\lib\netstandard2.0\Octokit.dll</HintPath>
     </Reference>
@@ -114,6 +129,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Formats.Asn1, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Formats.Asn1.8.0.0\lib\net462\System.Formats.Asn1.dll</HintPath>
+    </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\System.IdentityModel.Tokens.Jwt.7.4.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
@@ -125,8 +143,8 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -262,6 +280,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -274,6 +293,7 @@
     <Compile Include="Manager\TokenHelper.cs" />
     <Compile Include="Attributes\AllowAnonymousAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CategoryCourseViewModels.cs" />
     <Compile Include="Models\CoursesViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Identity.cs" />
@@ -288,33 +308,35 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\animate.min.css" />
-    <Content Include="Content\aos.css" />
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-grid.rtl.css" />
-    <Content Include="Content\bootstrap-grid.rtl.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
-    <Content Include="Content\bootstrap-reboot.rtl.css" />
-    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
-    <Content Include="Content\bootstrap-utilities.css" />
-    <Content Include="Content\bootstrap-utilities.min.css" />
-    <Content Include="Content\bootstrap-utilities.rtl.css" />
-    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\bootstrap.rtl.css" />
-    <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\all.min.css" />
+    <Content Include="Content\css\animate.min.css" />
+    <Content Include="Content\css\aos.css" />
+    <Content Include="Content\css\bootstrap-grid.css" />
+    <Content Include="Content\css\bootstrap-grid.min.css" />
+    <Content Include="Content\css\bootstrap-grid.rtl.css" />
+    <Content Include="Content\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\css\bootstrap-reboot.css" />
+    <Content Include="Content\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\css\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\css\bootstrap-utilities.css" />
+    <Content Include="Content\css\bootstrap-utilities.min.css" />
+    <Content Include="Content\css\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.rtl.css" />
+    <Content Include="Content\css\bootstrap.rtl.min.css" />
     <Content Include="Content\fonts\DesignerVN-Poppins\Readme.txt" />
     <Content Include="Content\img\banner\banner_bg01.jpg" />
+    <Content Include="Content\img\banner\layout_main.png" />
     <Content Include="Content\img\banner\layout_main_section.jpg" />
     <Content Include="Content\img\banner\slider_img01.jpg" />
     <Content Include="Content\img\banner\slider_img02.jpg" />
     <Content Include="Content\img\banner\slider_img03.jpg" />
     <Content Include="Content\img\banner\s_slider_bg.jpg" />
-    <Content Include="Content\default.css" />
-    <Content Include="Content\flaticon.css" />
+    <Content Include="Content\css\default.css" />
+    <Content Include="Content\css\flaticon.css" />
     <Content Include="Content\img\bg\blog_bg.jpg" />
     <Content Include="Content\img\bg\breadcrumb_bg.jpg" />
     <Content Include="Content\img\bg\contact_bg.jpg" />
@@ -391,44 +413,45 @@
     <Content Include="Content\img\poster\ucm_poster09.jpg" />
     <Content Include="Content\img\poster\ucm_poster10.jpg" />
     <Content Include="Content\img\preloader.svg" />
-    <Content Include="Content\lesson.css" />
-    <Content Include="Content\loading.css" />
-    <Content Include="Content\magnific-popup.css" />
-    <Content Include="Content\ModalSide.css" />
-    <Content Include="Content\odometer.css" />
-    <Content Include="Content\owl.carousel.min.css" />
-    <Content Include="Content\owl.video.play.html" />
-    <Content Include="Content\PagedList.css" />
-    <Content Include="Content\responsive.css" />
-    <Content Include="Content\slick.css" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\css\lesson.css" />
+    <Content Include="Content\css\loading.css" />
+    <Content Include="Content\css\magnific-popup.css" />
+    <Content Include="Content\css\ModalSide.css" />
+    <Content Include="Content\css\odometer.css" />
+    <Content Include="Content\css\owl.carousel.min.css" />
+    <Content Include="Content\css\owl.video.play.html" />
+    <Content Include="Content\css\PagedList.css" />
+    <Content Include="Content\css\responsive.css" />
+    <Content Include="Content\css\slick.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\test.mp4" />
-    <Content Include="Content\toastr.css" />
-    <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\css\toastr.css" />
+    <Content Include="Content\css\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\css\Site.css" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\toastr.scss" />
-    <Content Include="Content\toastr.less" />
+    <Content Include="Content\css\toastr.scss" />
+    <Content Include="Content\css\toastr.less" />
     <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-ExtraBold.ttf" />
     <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-Regular.ttf" />
     <Content Include="ltweb-avg-b91359369629.json" />
+    <Content Include="bad_words.json" />
     <Content Include="Models\MyData.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>MyData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="bad_words.json" />
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
     </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\d30a7cc1f2.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -458,7 +481,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\EmailConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
@@ -482,27 +505,36 @@
     <Content Include="Views\Shared\_LayoutLesson.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Comment\comments.cshtml" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Course\" />
+    <Folder Include="Views\Exercise\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.rtl.min.css.map" />
-    <Content Include="Content\bootstrap.rtl.css.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
-    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
-    <Content Include="Content\bootstrap-utilities.min.css.map" />
-    <Content Include="Content\bootstrap-utilities.css.map" />
-    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
-    <Content Include="Content\bootstrap-grid.rtl.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\css\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\css\bootstrap.rtl.css.map" />
+    <Content Include="Content\css\bootstrap.min.css.map" />
+    <Content Include="Content\css\bootstrap.css.map" />
+    <Content Include="Content\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\css\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\css\bootstrap-utilities.css.map" />
+    <Content Include="Content\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\css\bootstrap-grid.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
@@ -516,11 +548,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\MyData.dbml.layout">
-      <DependentUpon>MyData.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

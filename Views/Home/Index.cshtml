@@ -1,301 +1,226 @@
-﻿@{
+﻿@model List<Website_Course_AVG.Models.CategoryCourseViewModels>
+
+@{
     ViewBag.Title = "Home Page";
 }
+@section Styles {
+    <style>
+        .course_title {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
 
-@section BannerArea {
-    <section class="banner-area banner-bg" data-background="~/Content/img/banner/layout_main_section">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-8">
+        .carousel-caption {
+            text-align: unset !important;
+            left: 6%;
+            vertical-align: middle;
+            padding-bottom: 26.75rem;
+            width: 43%;
+            height: 50%;
+        }
+
+        .banner-content h6 {
+            font-size: 20px !important;
+        }
+
+        @@media (max-width: 575px) {
+            .carousel-caption {
+                padding-bottom: 1.25rem !important;
+            }
+
+            .banner-content .title {
+                margin-bottom: 10px;
+            }
+
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 11px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 8px !important;
+            }
+        }
+
+        @@media screen and (min-width: 576px) and (max-width: 694px) {
+            .carousel-caption {
+                padding-bottom: 8.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 16px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 10px !important;
+            }
+        }
+
+        @@media screen and (min-width: 695px) and (max-width: 768px) {
+            .carousel-caption {
+                padding-bottom: 11.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 22px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 12px !important;
+            }
+        }
+
+        @@media screen and (min-width: 769px) and (max-width: 991px) {
+            .carousel-caption {
+                padding-bottom: 13.75rem !important;
+            }
+
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 27px !important;
+            }
+        }
+
+        @@media screen and (min-width: 992px) and (max-width: 1199px) {
+            .carousel-caption {
+                padding-bottom: 18.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 36px !important;
+            }
+        }
+
+        @@media screen and (min-width: 1200px) and (max-width: 1359px) {
+            .carousel-caption {
+                padding-bottom: 23.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 40px !important;
+            }
+        }
+    </style>
+}
+
+<main>
+    <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="0" class="active d-none" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="1" class="d-none" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="2" class="d-none" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner rounded-0">
+            <div class="carousel-item active">
+                <img src="~/Content/img/banner/layout_main.png" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
                     <div class="banner-content">
-                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
-                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
                         <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
                             <ul>
-                                <li class="quality">
-                                    <span>Pg 18</span>
-                                    <span>hd</span>
-                                </li>
-                                <li class="category">
-                                    <a href="#">Romance,</a>
-                                    <a href="#">Drama</a>
-                                </li>
                                 <li class="release-time">
-                                    <span><i class="far fa-calendar-alt"></i> 2021</span>
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
                                     <span><i class="far fa-clock"></i> 128 min</span>
                                 </li>
                             </ul>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=R2gbPxeNk2E" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-}
-
-<main>
-    <!-- banner-area -->
-    <div class="slide-show w3-animate-right">
-        <section class="banner-area banner-bg" data-background="~/Content/img/banner/layout_main_section.jpg">
-            <div class="container custom-container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-8">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="quality">
-                                        <span>Pg 18</span>
-                                        <span>hd</span>
-                                    </li>
-                                    <li class="category">
-                                        <a href="#">Romance,</a>
-                                        <a href="#">Drama</a>
-                                    </li>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2021</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a href="https://www.youtube.com/watch?v=R2gbPxeNk2E" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+            <div class="carousel-item">
+                <img src="~/Content/img/banner/layout_main.png" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 min</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
-    <div class="slide-show w3-animate-right">
-        <section class="banner-area banner-bg" data-background="~/Content/img/banner/layout_main_section.jpg">
-            <div class="container custom-container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-8">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="quality">
-                                        <span>Pg 18</span>
-                                        <span>hd</span>
-                                    </li>
-                                    <li class="category">
-                                        <a href="#">Romance,</a>
-                                        <a href="#">Drama</a>
-                                    </li>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2021</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a href="https://www.youtube.com/watch?v=R2gbPxeNk2E" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+            <div class="carousel-item">
+                <img src="~/Content/img/banner/layout_main.png" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 min</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
-    <div class="slide-show w3-animate-right">
-        <section class="banner-area banner-bg" data-background="~/Content/img/banner/layout_main_section.jpg">
-            <div class="container custom-container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-8">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">Movflx</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s">Unlimited <span>Movie</span>, TVs Shows, & More.</h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="quality">
-                                        <span>Pg 18</span>
-                                        <span>hd</span>
-                                    </li>
-                                    <li class="category">
-                                        <a href="#">Romance,</a>
-                                        <a href="#">Drama</a>
-                                    </li>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2021</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a href="https://www.youtube.com/watch?v=R2gbPxeNk2E" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    @*course pro*@
-    <div class="container custom-container">
-        <div class="row">
-            <div class="mt-4 ms-2">
-                <span class="title-course">Khoá học Pro</span>
-            </div>
-            <div class="col-12 mt-2 d-lg-flex d-md-flex">
-                <section class="col-lg-3 ps-2 pe-2">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            <button class="btn_course text-dark rounded-5 p-2">
-                                Xem khoá học
-                            </button>
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="col-lg-3 ps-2 pe-2">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            <button class="btn_course text-dark rounded-5 p-2">
-                                Xem khoá học
-                            </button>
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="col-lg-3 ps-2 pe-2">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            <button class="btn_course text-dark rounded-5 p-2">
-                                Xem khoá học
-                            </button>
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="col-lg-3 ps-2 pe-2">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            <button class="btn_course text-dark rounded-5 p-2">
-                                Xem khoá học
-                            </button>
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-                <hr />
-            </div>
-        </div>
-    </div>
-
-    @*course free*@
-    <div class="container custom-container">
-        <div class="row">
-            <div class="mt-2 ms-2">
-                <span class="title-course">Khoá học miễn phí</span>
-            </div>
-            <div class="col-12 mt-2 d-lg-flex d-md-flex">
-                <section class="col-lg-3 ps-2 pe-2">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            <button class="btn_course text-dark rounded-5 p-2">
-                                Xem khoá học
-                            </button>
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="col-lg-3 ps-2 pe-2">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            <button class="btn_course text-dark rounded-5 p-2">
-                                Xem khoá học
-                            </button>
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="col-lg-3 ps-2 pe-2">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            <button class="btn_course text-dark rounded-5 p-2">
-                                Xem khoá học
-                            </button>
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="col-lg-3 ps-2 pe-2">
-                    <div class="mb-3 w-100 h-100 overflow-auto">
-                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
-                            <button class="btn_course text-dark rounded-5 p-2">
-                                Xem khoá học
-                            </button>
-                            <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-                        </a>
-                        <div class="course_title">
-                            <span class="text-black-75 fs-6">HTML CSS Pro</span>
-                        </div>
-                        <div class="price-new mt-2">
-                            <span class="courseItem_old_price">1.000.000</span>
-                            <span class="courseItem_main_price"></span>
-                        </div>
-                    </div>
-                </section>
-                <hr />
             </div>
         </div>
     </div>
 </main>
+
+
+<div class="container custom-container">
+    @foreach (var categoryViewModel in Model)
+    {
+        <div class="row">
+            <div class="mt-2 ms-2 mb-3">
+                <span class="title-course">@categoryViewModel.Category.name</span>
+            </div>
+            @foreach (var course in categoryViewModel.Courses)
+            {
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="@course.title" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="@course.image_code" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+
+                            @*thay đổi category_id theo database*@
+                            @if (course.category_id == 3)
+                            {
+                                <i class="fa-solid fa-crown" style="color: #FFD43B; position: absolute; top: 10px; right: 20px;"></i>
+                            }
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">@course.title</span>
+                        </div>
+                        <div class="price-new mt-4">
+                            @if (course.price.HasValue)
+                            {
+                                @*thay đổi category_id theo database*@
+                                if (course.category_id == 3)
+                                {
+                                    <span class="courseItem_old_price">@course.price.Value.ToString("N0")</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="courseItem_old_price">Miễn phí</span>
+                            }
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+            }
+        </div>
+    }
+</div>
 
 @section Scripts{
     <script>
@@ -308,7 +233,7 @@
 
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
-            if (scrollTop < 100 && ! header.classList.contains("home")) {
+            if (scrollTop < 100 && !header.classList.contains("home")) {
                 header.classList.add("home");
             } else if (scrollTop >= 100 && header.classList.contains("home")) {
                 header.classList.remove("home");
@@ -316,3 +241,4 @@
         })
     </script>
 }
+
