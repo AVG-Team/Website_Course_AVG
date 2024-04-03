@@ -48,14 +48,14 @@ namespace Website_Course_AVG.Models
 
     public class LoginViewModel
     {
-		[Required(ErrorMessage = "Email is required")]
-		[Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+		[Required(ErrorMessage = "username is required")]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Must contain at least 6 characters and at least one character.")]
+		public string userName { get; set; }
+
 
 		[Required(ErrorMessage = "Password is required")]
-		[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-		[RegularExpression(@"[A-Za-z\d]{6,}$", ErrorMessage = "Password must contain at least 6 letter or 6 digit.")]
+		[StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Password must contain at least 6 characters.")]
 		[DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -66,15 +66,22 @@ namespace Website_Course_AVG.Models
 
     public class RegisterViewModel
     {
-        [Required]
+		[Required(ErrorMessage = "Required")]
+		[StringLength(12, ErrorMessage = "The {0} must be have", MinimumLength = 6)]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Must contain at least 6 characters and at least one character.")]
+		[Display(Name = "userName")]
+		public string userName { get; set; }
+
+		[Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Password must contain at least 6 characters.")]
+		[Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
@@ -91,8 +98,9 @@ namespace Website_Course_AVG.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
+        [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+		[RegularExpression(@"^.{6,30}$", ErrorMessage = "Password must contain at least 6 characters.")]
+		[DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
@@ -101,6 +109,7 @@ namespace Website_Course_AVG.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]    
         public string Code { get; set; }
     }
 
@@ -110,5 +119,20 @@ namespace Website_Course_AVG.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-    }
+
+		public string ReturnUrl { get; set; }
+	}
+
+	public class EmailConfirmation
+	{
+		[Required]
+		[EmailAddress]
+		[Display(Name = "Code")]
+		public string Code { get; set; }
+
+		public string Name { get; set; }
+
+		public string RedirectURL { get; set; }
+		public string UrlWebsite { get; set; }
+	}
 }

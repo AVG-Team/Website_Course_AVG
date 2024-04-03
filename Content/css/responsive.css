@@ -1,4 +1,4 @@
-/* Extra large devices (large desktops, 1800px and up) */
+﻿/* Extra large devices (large desktops, 1800px and up) */
 @media (max-width: 1800px) {
 .slider-img > img {
     margin-right: 0;
@@ -211,9 +211,9 @@
 
 /* Large devices (desktops, 992px and up) */
 @media (max-width: 991.98px) {
-.custom-container {
+/*.custom-container {
     max-width: 720px;
-}
+}*/
 .menu-area {
 	padding: 25px 0;
 }
@@ -227,7 +227,7 @@
 	margin-right: 40px;
 }
 .menu-outer .navbar-wrap {
-	display: block !important;
+	display: none !important;
 }
 .menu-area .mobile-nav-toggler {
 	display: block;
@@ -583,76 +583,76 @@
 
 /* Small devices (landscape phones, 576px and up) */
 @media only screen and (min-width: 576px) and (max-width: 767px) {
-.custom-container {
-    max-width: 540px;
-}
-.banner-content .title {
-    font-size: 42px;
-}
-.services-img-wrap .download-btn {
-    right: -64px;
-}
-.services-list ul li {
-    display: flex;
-}
-.services-list ul li .icon {
-    margin-bottom: 0;
-}
-.breadcrumb-content .title {
-    font-size: 48px;
-}
-.movie-item-row .custom-col- {
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
-}
-.contact-form {
-    padding: 30px 30px 40px;
-}
-.contact-info-wrap {
-    padding: 40px 34px 60px;
-}
-.blog-post-content .title {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-.blog-sidebar {
-    margin-top: 120px;
-}
-.rc-post-item .content .title {
-    font-size: 16px;
-    line-height: 24px;
-}
-.rc-post-item .thumb {
-    flex: 0 0 100px;
-    width: 100px;
-    margin-right: 20px;
-}
-.blog-widget {
-    padding: 40px 30px;
-}
-.movie-details-content h2 {
-    font-size: 46px;
-}
-.movie-details-prime ul li.watch {
-    margin-left: auto;
-}
-.episode-watch-wrap .card-body ul li a {
-    font-size: 14px;
-    display: inline-block;
-}
-.episode-watch-wrap .card-body ul li .duration {
-    float: right;
-    display: inline-block;
-    margin-top: 0;
-    margin-left: 0;
-}
-.movie-details-content h5 {
-    font-size: 22px;
-}
-.comment-avatar-info h5 {
-    font-size: 18px;
-}
+    /*.custom-container {
+        max-width: 540px;
+    }*/
+    .banner-content .title {
+        font-size: 42px;
+    }
+    .services-img-wrap .download-btn {
+        right: -64px;
+    }
+    .services-list ul li {
+        display: flex;
+    }
+        .services-list ul li .icon {
+            margin-bottom: 0;
+        }
+    .breadcrumb-content .title {
+        font-size: 48px;
+    }
+    .movie-item-row .custom-col- {
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .contact-form {
+        padding: 30px 30px 40px;
+    }
+    .contact-info-wrap {
+        padding: 40px 34px 60px;
+    }
+    .blog-post-content .title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .blog-sidebar {
+        margin-top: 120px;
+    }
+    .rc-post-item .content .title {
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .rc-post-item .thumb {
+        flex: 0 0 100px;
+        width: 100px;
+        margin-right: 20px;
+    }
+    .blog-widget {
+        padding: 40px 30px;
+    }
+    .movie-details-content h2 {
+        font-size: 46px;
+    }
+    .movie-details-prime ul li.watch {
+        margin-left: auto;
+    }
+    .episode-watch-wrap .card-body ul li a {
+        font-size: 14px;
+        display: inline-block;
+    }
+    .episode-watch-wrap .card-body ul li .duration {
+        float: right;
+        display: inline-block;
+        margin-top: 0;
+        margin-left: 0;
+    }
+    .movie-details-content h5 {
+        font-size: 22px;
+    }
+    .comment-avatar-info h5 {
+        font-size: 18px;
+    }
 
 }
 

@@ -1,0 +1,38 @@
+﻿@model PagedList.IPagedList<Website_Course_AVG.Models.course>
+@using PagedList.Mvc
+@{
+    Layout = null;
+}
+
+<div class="row list-course d-flex justify-content-center">
+    @foreach (var item in Model)
+    {
+        <section class="col-lg-3 ps-2 pe-2">
+            <div class="mb-3 w-100 h-100 overflow-auto">
+                <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                    <button class="btn_course text-dark rounded-5 p-2" onclick="redirectToDetail(@item.id)">
+                        Watch Course
+                    </button>
+                    <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                </a>
+                <div class="course_title">
+                    <span class="text-black-75 fs-6">@item.title</span>
+                </div>
+                <div class="price-new mt-2">
+                    <span class="courseItem_old_price">@item.price</span>
+                    <span class="courseItem_main_price"></span>
+                </div>
+            </div>
+        </section>
+    }
+    <div>
+        <div>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) /
+            @Model.PageCount
+        </div>
+
+        <div class="MenuPage">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+        </div>
+    </div>
+</div>

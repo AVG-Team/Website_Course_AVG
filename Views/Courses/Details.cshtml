@@ -1,0 +1,231 @@
+﻿@model Website_Course_AVG.Models.CoursesViewModel
+@using Website_Course_AVG.Models
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    .lesson-item {
+        cursor: pointer;
+    }
+
+        .lesson-item:hover {
+            background-color: rgba(0,0,0,.05) !important;
+        }
+
+    .item-des {
+        margin-bottom: 5px;
+    }
+
+    .item_description {
+        font-size: 14px;
+    }
+</style>
+<main class="container pt-lg-100 pt-md-60 pt-sm-110 pt-sx-110" aria-labellesdby="title">
+    @foreach (var item in Model.Courses)
+    {
+        <div class="row">
+            <div class="col-lg-8" id="content">
+                <div class="course_title mb-4">
+                    <span class="fs-3 text-info" style="font-weight:600;">@item.title</span>
+                    <p class="text-black-75 mt-2" style="font-size:12px">
+                        @item.description
+                    </p>
+                </div>
+                <div class="course_description mt-1">
+                    <span class="fs-5 text-black" style="font-weight:600">What will you learn?</span>
+                    <div class="row mt-2">
+                        <div class="col-lg-6">
+                            <ul>
+                                <li>
+                                    <i class="fa-solid fa-check text-info"></i>
+                                    <span class="item_description ms-2 text-black-50">Understand the basics of HTML and CSS</span>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-check text-info"></i>
+                                    <span class="item_description ms-2 text-black-50">
+                                        Core concepts and terms when deploying applications
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul>
+                                <li>
+                                    <i class="fa-solid fa-check text-info"></i>
+                                    <span class="item_description ms-2 text-black-50">Understand the basics of HTML and CSS</span>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-check text-info"></i>
+                                    <span class="item_description ms-2 text-black-50">
+                                        Core concepts and terms when deploying applications
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="course_content mt-4">
+                    <span class="fs-4 text-black" style="font-weight:600;">Course content</span>
+                    <p class="text-black-75 mt-2" style="font-size:12px">
+                        <span class="text-info totalLesson"></span> lessons • <span class="text-info totalTime"></span> minutes total length
+                    </p>
+                    <div class="mt-1">
+                        <ul>
+                            @foreach (var lesson in Model.Lessons)
+                            {
+                                <li class="border-bottom lesson-item" style="border-bottom-color:rgba(0,0,0,.05)!important;">
+                                    <div class="row d-flex align-items-center" style="height:40px">
+                                        <div class="col-10 ">
+                                            <i class="fa-solid fa-circle-play text-info" ></i>
+                                            <span class="item_description ms-2 text-black-50">@lesson.title</span>
+                                        </div>
+                                        <div class="col-2">
+                                            <span class="item_description ms-2 text-black-50 time-lesson">@lesson.time</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4" id="description">
+                <div class="mb-3 w-100 h-100 overflow-auto">
+                    <a class="rounded-4 d-block object-fit-cover overflow-hidden mt-20  w-100 a_course mb-4" title="HTML CSS Pro" target="_self">
+                        @*<img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />*@
+                        <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner rounded-4">
+                                <div class="carousel-item active">
+                                    <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" class="d-block w-100" alt="..." loading="lazy">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="https://files.fullstack.edu.vn/f8-prod/courses/27/64e184ee5d7a2.png" class="d-block w-100" alt="..." loading="lazy">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="https://files.fullstack.edu.vn/f8-prod/courses/21/63e1bcbaed1dd.png" class="d-block w-100" alt="..." loading="lazy">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#sliderCourse" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#sliderCourse" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </a>
+                    <div class="course_title text-center mb-4">
+                        <span class="text-primary fs-3">
+                            @if (@item.price == 0)
+                            {
+                                <p class="text-primary fs-3 fw-semibold">Free</p>
+                            }
+                            else
+                            {
+                                <input value="@item.price" class="d-none" id="priceCourse" />
+                                <p class="text-red-price fs-3 fw-semibold" id="price"></p>
+                            }
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary rounded-4 text-white fs-6"> Register</button>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <ul>
+                            <li class="item-des">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="gauge-high" style="width: 15px; height:15px;" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 64C238.3 64 224 78.33 224 96C224 113.7 238.3 128 256 128C273.7 128 288 113.7 288 96C288 78.33 273.7 64 256 64zM256 416C291.3 416 320 387.3 320 352C320 334.6 313.1 318.9 301.9 307.4L365.1 161.7C371.3 149.5 365.8 135.4 353.7 130C341.5 124.7 327.4 130.2 322 142.3L257.9 288C257.3 288 256.6 287.1 256 287.1C220.7 287.1 192 316.7 192 352C192 387.3 220.7 416 256 416V416zM144 112C126.3 112 112 126.3 112 144C112 161.7 126.3 176 144 176C161.7 176 176 161.7 176 144C176 126.3 161.7 112 144 112zM96 288C113.7 288 128 273.7 128 256C128 238.3 113.7 224 96 224C78.33 224 64 238.3 64 256C64 273.7 78.33 288 96 288zM416 224C398.3 224 384 238.3 384 256C384 273.7 398.3 288 416 288C433.7 288 448 273.7 448 256C448 238.3 433.7 224 416 224z"></path></svg>
+                                <span class="item_description ms-2 text-black-50">Basic level</span>
+                            </li>
+                            <li class="item-des">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="film" style="width: 15px; height:15px;" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M463.1 32h-416C21.49 32-.0001 53.49-.0001 80v352c0 26.51 21.49 48 47.1 48h416c26.51 0 48-21.49 48-48v-352C511.1 53.49 490.5 32 463.1 32zM111.1 408c0 4.418-3.582 8-8 8H55.1c-4.418 0-8-3.582-8-8v-48c0-4.418 3.582-8 8-8h47.1c4.418 0 8 3.582 8 8L111.1 408zM111.1 280c0 4.418-3.582 8-8 8H55.1c-4.418 0-8-3.582-8-8v-48c0-4.418 3.582-8 8-8h47.1c4.418 0 8 3.582 8 8V280zM111.1 152c0 4.418-3.582 8-8 8H55.1c-4.418 0-8-3.582-8-8v-48c0-4.418 3.582-8 8-8h47.1c4.418 0 8 3.582 8 8L111.1 152zM351.1 400c0 8.836-7.164 16-16 16H175.1c-8.836 0-16-7.164-16-16v-96c0-8.838 7.164-16 16-16h160c8.836 0 16 7.162 16 16V400zM351.1 208c0 8.836-7.164 16-16 16H175.1c-8.836 0-16-7.164-16-16v-96c0-8.838 7.164-16 16-16h160c8.836 0 16 7.162 16 16V208zM463.1 408c0 4.418-3.582 8-8 8h-47.1c-4.418 0-7.1-3.582-7.1-8l0-48c0-4.418 3.582-8 8-8h47.1c4.418 0 8 3.582 8 8V408zM463.1 280c0 4.418-3.582 8-8 8h-47.1c-4.418 0-8-3.582-8-8v-48c0-4.418 3.582-8 8-8h47.1c4.418 0 8 3.582 8 8V280zM463.1 152c0 4.418-3.582 8-8 8h-47.1c-4.418 0-8-3.582-8-8l0-48c0-4.418 3.582-8 7.1-8h47.1c4.418 0 8 3.582 8 8V152z"></path></svg>
+                                <span class="item_description ms-2 text-black-50">Total <span class="text-info totalLesson"></span> lessons</span>
+                            </li>
+                            <li class="item-des">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" style="width: 15px; height:15px;" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512zM232 256C232 264 236 271.5 242.7 275.1L338.7 339.1C349.7 347.3 364.6 344.3 371.1 333.3C379.3 322.3 376.3 307.4 365.3 300L280 243.2V120C280 106.7 269.3 96 255.1 96C242.7 96 231.1 106.7 231.1 120L232 256z"></path></svg>
+                                <span class="item_description ms-2 text-black-50">Duration <span class="text-info totalTime"></span> minutes</span>
+                            </li>
+                            <li class="item-des">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="battery-full" style="width: 15px; height:15px;" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"></path></svg>
+                                <span class="item_description ms-2 text-black-50">Study every time and everywhere</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</main>
+
+<script>
+    var itemPrice = document.getElementById("priceCourse");
+    var itemPriceValue = itemPrice.value;
+
+    var price = parseFloat(itemPriceValue);
+    console.log(price);
+    if (!isNaN(price)) {
+        var formatPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+        console.log(formatPrice);
+        document.getElementById("price").textContent = formatPrice;
+    } else {
+        console.log("Error");
+    }
+
+    // Khởi tạo biến để lưu tổng thời gian
+    var totalTimeInMinutes = 0;
+    var count = 0;
+    var timeElements = document.querySelectorAll(".time-lesson");
+    timeElements.forEach(function (element) {
+
+        var lessonTime = parseInt(element.textContent);
+        count = count + 1;
+
+        if (!isNaN(lessonTime)) {
+            totalTimeInMinutes += lessonTime;
+        }
+    })
+
+    var totalTimeElements = document.getElementsByClassName("totalTime");
+    for (var i = 0; i < totalTimeElements.length; i++) {
+        totalTimeElements[i].textContent = totalTimeInMinutes;
+    }
+
+    // Lặp qua các phần tử có class là "totalLesson" và gán giá trị
+    var totalLessonElements = document.getElementsByClassName("totalLesson");
+    for (var j = 0; j < totalLessonElements.length; j++) {
+        totalLessonElements[j].textContent = count;
+    }
+    // Hiển thị tổng thời gian
+    console.log("Tổng thời gian: " + totalTimeInMinutes + " phút");
+
+   
+
+    window.addEventListener('resize', function () {
+        swapDivs();
+    });
+
+    function swapDivs() {
+        var div1 = document.getElementById('content');
+        var div2 = document.getElementById('description');
+
+        // Kiểm tra kích thước màn hình
+        var screenWidth = window.innerWidth;
+        console.log = screenWidth;
+        // Kiểm tra điều kiện hoán đổi
+        if (screenWidth <= 768) {
+            // Thực hiện hoán đổi chỗ
+            var temp = div1.innerHTML;
+            div1.innerHTML = div2.innerHTML;
+            div2.innerHTML = temp;
+        }
+    }
+
+</script>

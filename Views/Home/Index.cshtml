@@ -1,33 +1,244 @@
-﻿@{
+﻿@model List<Website_Course_AVG.Models.CategoryCourseViewModels>
+
+@{
     ViewBag.Title = "Home Page";
+}
+@section Styles {
+    <style>
+        .course_title {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
+
+        .carousel-caption {
+            text-align: unset !important;
+            left: 6%;
+            vertical-align: middle;
+            padding-bottom: 26.75rem;
+            width: 43%;
+            height: 50%;
+        }
+
+        .banner-content h6 {
+            font-size: 20px !important;
+        }
+
+        @@media (max-width: 575px) {
+            .carousel-caption {
+                padding-bottom: 1.25rem !important;
+            }
+
+            .banner-content .title {
+                margin-bottom: 10px;
+            }
+
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 11px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 8px !important;
+            }
+        }
+
+        @@media screen and (min-width: 576px) and (max-width: 694px) {
+            .carousel-caption {
+                padding-bottom: 8.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 16px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 10px !important;
+            }
+        }
+
+        @@media screen and (min-width: 695px) and (max-width: 768px) {
+            .carousel-caption {
+                padding-bottom: 11.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 22px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 12px !important;
+            }
+        }
+
+        @@media screen and (min-width: 769px) and (max-width: 991px) {
+            .carousel-caption {
+                padding-bottom: 13.75rem !important;
+            }
+
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 27px !important;
+            }
+        }
+
+        @@media screen and (min-width: 992px) and (max-width: 1199px) {
+            .carousel-caption {
+                padding-bottom: 18.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 36px !important;
+            }
+        }
+
+        @@media screen and (min-width: 1200px) and (max-width: 1359px) {
+            .carousel-caption {
+                padding-bottom: 23.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 40px !important;
+            }
+        }
+    </style>
 }
 
 <main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 class="fw-bold text-dark" id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
-
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 class="text-dark" id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 class="text-dark" id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 class="text-dark" id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+    <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="0" class="active d-none" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="1" class="d-none" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="2" class="d-none" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner rounded-0">
+            <div class="carousel-item active">
+                <img src="~/Content/img/banner/layout_main.png" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 min</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/img/banner/layout_main.png" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 min</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/img/banner/layout_main.png" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 min</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
+
+
+<div class="container custom-container">
+    @foreach (var categoryViewModel in Model)
+    {
+        <div class="row">
+            <div class="mt-2 ms-2 mb-3">
+                <span class="title-course">@categoryViewModel.Category.name</span>
+            </div>
+            @foreach (var course in categoryViewModel.Courses)
+            {
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="@course.title" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="@course.image_code" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+
+                            @*thay đổi category_id theo database*@
+                            @if (course.category_id == 3)
+                            {
+                                <i class="fa-solid fa-crown" style="color: #FFD43B; position: absolute; top: 10px; right: 20px;"></i>
+                            }
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">@course.title</span>
+                        </div>
+                        <div class="price-new mt-4">
+                            @if (course.price.HasValue)
+                            {
+                                @*thay đổi category_id theo database*@
+                                if (course.category_id == 3)
+                                {
+                                    <span class="courseItem_old_price">@course.price.Value.ToString("N0")</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="courseItem_old_price">Miễn phí</span>
+                            }
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var header = document.getElementById('sticky-header');
+            header.classList.add("home");
+        })
+        window.addEventListener('scroll', function () {
+            var header = document.getElementById('sticky-header');
+
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+            if (scrollTop < 100 && !header.classList.contains("home")) {
+                header.classList.add("home");
+            } else if (scrollTop >= 100 && header.classList.contains("home")) {
+                header.classList.remove("home");
+            }
+        })
+    </script>
+}
+

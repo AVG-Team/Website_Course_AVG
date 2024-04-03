@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/logo/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Place favicon.ico in the root directory -->
+    <!-- CSS here -->
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/animate.min.css">
+    <link rel="stylesheet" href="~/Content/magnific-popup.css">
+    <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/flaticon.css">
+    <link rel="stylesheet" href="~/Content/odometer.css">
+    <link rel="stylesheet" href="~/Content/aos.css">
+    <link rel="stylesheet" href="~/Content/slick.css">
+    <link rel="stylesheet" href="~/Content/default.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/Content/responsive.css">
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/toastr.css")
+    @RenderSection("styles", required: false)
+
+    <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Scroll-top -->
+    <button class="scroll-top scroll-to-target" data-target="html">
+        <i class="fas fa-angle-up"></i>
+    </button>
+    <!-- Scroll-top-end-->
+    <!-- header-area -->
+    @RenderSection("header", required: false)
+
+    @RenderSection("Modals", required: false)
+
+    <!-- main-area -->
+    <main>
+        <div class="container custom" id="container-custom">
+            <div class="row">
+                <div class="col-12 mt-5">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </main>
+
+    @RenderSection("footer", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/toastr.js")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cookieName, cookieValue, secondsToExpire, type = 1) {
+            if (type == 0) {
+                var expires = secondsToExpire;
+            } else if (type == 1) {
+                var date = new Date();
+                date.setTime(date.getTime() + (secondsToExpire * 1000));
+                var expires = "expires=" + date.toUTCString();
+            }
+
+            var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+
+            var existingCookies = document.cookie.split(';');
+
+            var found = false;
+            for (var i = 0; i < existingCookies.length; i++) {
+                var cookie = existingCookies[i].trim();
+                if (cookie.indexOf(cookieName + "=") === 0) {
+                    existingCookies[i] = updatedCookie;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                existingCookies.push(updatedCookie);
+            }
+
+            document.cookie = existingCookies.join(';');
+        }
+
+        function deleteCookie(cookieName) {
+            setCookie(cookieName, "", 'expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;', 0)
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let cookies = document.cookie;
+
+            var cookieNotify = getCookie('Notify');
+            if (cookieNotify !== "")
+                toastr.success(cookieNotify, 'Notify')
+
+            var cookieError = getCookie('Error');
+            if (cookieError !== "")
+                toastr.error(cookieError, 'Error')
+        })
+
+    </script>
+</body>
+</html>
