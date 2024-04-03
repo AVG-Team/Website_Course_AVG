@@ -2,27 +2,33 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Octokit;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
-
 namespace Website_Course_AVG.Controllers
 {
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+		private readonly MyDataDataContext _context = new MyDataDataContext();
 
-        public AccountController()
-        {
-        }
+		public AccountController()
+		{
+			
+		}
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+		public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -64,45 +70,58 @@ namespace Website_Course_AVG.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]
-        [Website_Course_AVG.Attributes.AllowAnonymous]
+        [HttpPost]  
         [ValidateAntiForgeryToken]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
-            {
+			var userManager = new Website_Course_AVG.Managers.UserManager();
+			if (userManager.IsAuthenticated())
+			{
+				Helpers.AddCookie("Error", "You are logging in !!!");
                 return View(model);
-            }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+			}
+			if (ModelState.IsValid)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                account account = _context.accounts.Where(x => x.username == model.userName).FirstOrDefault();
+                
+                if(account == null)
+                {
+				    Helpers.AddCookie("Error", "username and password are wrong !!!");
                     return View(model);
-            }
+                }
+
+
+                bool isVerify = await userManager.ValidatePasswordAsync(account, model.Password);
+
+                user user = account.users.FirstOrDefault();
+                if(user == null)
+                {
+                    Helpers.AddCookie("Error", "username and password are wrong !!!");
+                    return View(model);
+                }
+
+				userManager.login(account.username);
+                Helpers.AddCookie("Notify", "Login Successfull");
+				return RedirectToAction("Index", "Home");
+			}
+
+            Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
+            return View(model);
         }
 
         //
         // GET: /Account/VerifyCode
         [Website_Course_AVG.Attributes.AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        public ActionResult VerifyCode()
         {
-            // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            //// Require that the user has already logged in via username/password or external login
+            //if (!await SignInManager.HasBeenVerifiedAsync())
+            //{
+            //    return View("Error");
+            //}
+            //return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return View();
         }
 
         //
@@ -112,27 +131,28 @@ namespace Website_Course_AVG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
 
-            // The following code protects for brute force attacks against the two factor codes. 
-            // If a user enters incorrect codes for a specified amount of time then the user account 
-            // will be locked out for a specified amount of time. 
-            // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
-            }
+            //// The following code protects for brute force attacks against the two factor codes. 
+            //// If a user enters incorrect codes for a specified amount of time then the user account 
+            //// will be locked out for a specified amount of time. 
+            //// You can configure the account lockout settings in IdentityConfig
+            //var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(model.ReturnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("", "Invalid code.");
+            //        return View(model);
+            //}
+            return View(model);
         }
 
         //
@@ -140,8 +160,8 @@ namespace Website_Course_AVG.Controllers
         [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
-        }
+			return View();
+		}
 
         //
         // POST: /Account/Register
@@ -150,20 +170,24 @@ namespace Website_Course_AVG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+			var UserManager = new Website_Course_AVG.Managers.UserManager();
+			if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+
+				//if user have not ever register before
+				account account = new account();
+				account.username = model.userName;
+				account.password = model.Password;
+				var result = await UserManager.CreateAccountUserAsync(model.userName, account, model.Email);
+				if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+					// Send an email with this link
+					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+					Helpers.AddCookie("Notify", "Register Successful");
+					UserManager.login(model.userName);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -194,38 +218,86 @@ namespace Website_Course_AVG.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/ForgotPassword
+		//
+		// POST: /Account/ForgotPassword
+
+		[HttpPost]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
+		{
+            user user = _context.users.Where(x => x.email == forgotPassword.Email).FirstOrDefault();
+
+            if (user == null) {
+                Helpers.AddCookie("Error", "Error Unknown");
+                return RedirectToAction("Index", "Home");
+            }
+            int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
+
+            if (countForgotPassword > 3)
+            {
+                Helpers.AddCookie("Error", "We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you");
+                return RedirectToAction("Index", "Home");
+            }
+
+			var userManager = new UserManager();
+			var subject = "AVG Courses - Reset Password";
+
+            String messageHead = "Mã khôi phục pass của bạn là ";
+			String messageLast = Helpers.GenerateRandomString(10);
+			if (!userManager.IsAuthenticated())
+			{
+                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
+                {
+					return View();
+				}
+				return RedirectToAction("ForgotPasswordConfirmation", "Account");
+			}
+			Helpers.AddCookie("Error", "Has Error");
+            return RedirectToAction("Index", "Home");
+        }
+
+		//
+		// GET: /Account/ForgotPasswordConfirmation
+		[Website_Course_AVG.Attributes.AllowAnonymous]
+        public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        //Reset Password
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
         [HttpPost]
         [Website_Course_AVG.Attributes.AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
         {
+            UserManager userManager = new UserManager();
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
-
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                Helpers.AddCookie("Error", "You enter error Code or Re-password");
+                return View();
             }
+            if (!userManager.ResetPassword(model.Password, model.Email, model.Code)) return View(model);
+            Helpers.AddCookie("Notify", "Reset Password Successful");
+            return RedirectToAction("ResetPasswordConfirmation", "Account");
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
         }
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
+
         [Website_Course_AVG.Attributes.AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
+        public ActionResult EmailConfirmation()
+        {
+            return View();
+        }
+
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+        public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
@@ -249,7 +321,7 @@ namespace Website_Course_AVG.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                Helpers.addCookie("Error", "Error Unknow, Please Try Again");
+                Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
                 return RedirectToAction("Login");
             }
 
@@ -257,14 +329,16 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.CheckUsername(loginInfo.DefaultUserName))
             {
-                Helpers.addCookie("Notify", "Login Successful");
+                Helpers.AddCookie("Notify", "Login Successful");
                 UserManager.login(loginInfo.DefaultUserName);
                 return RedirectToAction("Index", "Home");
             }
             else if (UserManager.CheckUsername(loginInfo.Email))
             {
-                Helpers.addCookie("Notify", "Login Successful");
-                UserManager.login(loginInfo.Email);
+                user user = _context.users.Where(x => x.email == loginInfo.Email).FirstOrDefault();
+                
+                Helpers.AddCookie("Notify", "Login Successful With Gmail");
+                UserManager.login(user.account.username);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -286,7 +360,7 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.IsAuthenticated())
             {
-                Helpers.addCookie("Error", "You are logging in.");
+                Helpers.AddCookie("Error", "You are logging in.");
                 return RedirectToAction("Index", "Manage");
             }
 
@@ -305,7 +379,7 @@ namespace Website_Course_AVG.Controllers
 
                 if (info == null && loginProvider != "Github")
                 {
-                    Helpers.addCookie("Error", "Error Unknow, Please Try Again");
+                    Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
                     return View("ExternalLoginFailure");
                 }
 
@@ -320,7 +394,7 @@ namespace Website_Course_AVG.Controllers
                         userAccount.username = info.DefaultUserName;
                     }
                     else
-                        userAccount.username = info.Email;
+                    userAccount.username = info.Email;
                     userAccount.provide = info.Login.LoginProvider;
                     userAccount.provide_id = info.Login.ProviderKey;
 
@@ -329,11 +403,11 @@ namespace Website_Course_AVG.Controllers
                     if (result.Succeeded)
                     {
                         UserManager.login(info.Email);
-                        Helpers.addCookie("Notify", "Login Successful");
+                        Helpers.AddCookie("Notify", "Login Successful");
                         return RedirectToLocal(returnUrl);
                     }
                     AddErrors(result);
-                    Helpers.addCookie("Error", "Error Unknow, Please Try Again", 30);
+                    Helpers.AddCookie("Error", "Error Unknow, Please Try Again", 30);
                 }
             }
 
@@ -348,7 +422,7 @@ namespace Website_Course_AVG.Controllers
             var UserManager = new Website_Course_AVG.Managers.UserManager();
             UserManager.logout();
 
-            Helpers.addCookie("Notify", "Logout Successful");
+            Helpers.AddCookie("Notify", "Logout Successful", 5);
             return RedirectToAction("Index", "Home");
         }
 
@@ -447,17 +521,18 @@ namespace Website_Course_AVG.Controllers
             var client = new HttpClient();
             var parameters = new Dictionary<string, string>
             {
-                { "client_id", ConfigurationManager.AppSettings["ClientIdGH"].ToString() },
-                { "client_secret", ConfigurationManager.AppSettings["ClientSecretGH"].ToString() },
+                { "client_id", Helpers.GetValueFromAppSetting("ClientIdGH") },
+                { "client_secret", Helpers.GetValueFromAppSetting("ClientSecretGH") },
                 { "code", code },
-                { "redirect_uri", ConfigurationManager.AppSettings["RedirectUrl"].ToString() }
+                //{ "redirect_uri", Helpers.GetRedirectUrlGH() }
             };
             var content = new FormUrlEncodedContent(parameters);
             var response = await client.PostAsync("https://github.com/login/oauth/access_token", content);
             var responseContent = await response.Content.ReadAsStringAsync();
             var values = HttpUtility.ParseQueryString(responseContent);
             var accessToken = values["access_token"];
-            var client1 = new GitHubClient(new Octokit.ProductHeaderValue("AVG-Course"));
+            string idGithub = Helpers.GetValueFromAppSetting("IdGH");
+            var client1 = new GitHubClient(new Octokit.ProductHeaderValue(idGithub));
             var tokenAuth = new Credentials(accessToken);
             client1.Credentials = tokenAuth;
             var user = await client1.User.Current();
@@ -469,7 +544,7 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.CheckUsername(login))
             {
-                Helpers.addCookie("Notify", "Login Successful");
+                Helpers.AddCookie("Notify", "Login Successful");
                 UserManager.login(login);
                 return RedirectToAction("Index", "Home");
             }
@@ -487,5 +562,5 @@ namespace Website_Course_AVG.Controllers
         {
             throw new System.NotImplementedException();
         }
-    }
+	}
 }

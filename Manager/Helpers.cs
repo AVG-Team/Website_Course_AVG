@@ -1,11 +1,27 @@
-﻿using System;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Storage.V1;
+using Octokit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Security.AccessControl;
+using System.Text;
+using System.Text.Json;
+using System.Linq;
+using System.Text;
 using System.Web;
+using System.Web.UI.WebControls;
+using Website_Course_AVG.Models;
+using System.IO;
+using System.Text.RegularExpressions;
+using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void addCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 10)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -18,17 +34,296 @@ namespace Website_Course_AVG.Managers
             return userManager.IsAuthenticated();
         }
 
+        public static bool IsUser()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.IsUser();
+        }
+
+        public static bool IsAdmin()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.IsAdmin();
+        }
+
+        public static user GetUserFromToken()
+        {
+            UserManager userManager = new UserManager();
+            return userManager.GetUserFromToken();
+        }
+
         public static string GetValueFromAppSetting(string key)
         {
             return global::System.Configuration.ConfigurationManager.AppSettings[key];
         }
 
+        public static string GetRedirectUrlGH()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Account/GithubLogin";
+        }
+
         public static string UrlGithubLogin()
         {
             string clientIdGh = GetValueFromAppSetting("ClientIdGH");
-            string redirectUrl = GetValueFromAppSetting("RedirectUrl");
+            string redirectUrl = GetRedirectUrlGH();
             return
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
+        }
+
+        public static string GenerateRandomString(int length = 10)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                int index = random.Next(chars.Length);
+                builder.Append(chars[index]);
+            }
+            return builder.ToString();
+        }
+
+        // 30 * 24 * 60 *60 = 30 ngày
+        public static string GetVideoLessonUrl(video video, string fileJson, int seconds = 7 * 24 * 60 * 60)
+        {
+            if (video == null)
+            {
+                throw new ArgumentNullException(nameof(video));
+            }
+
+            string url = GetSignedUrl(video, fileJson, seconds);
+
+            return url;
+        }
+
+        //30 * 24 * 60 *60 = 30 ngày
+        public static string GetExerciseUrl(exercise exercise, string fileJson, int seconds = 7 * 24 * 60 * 60)
+        {
+            if (exercise == null)
+            {
+                throw new ArgumentNullException(nameof(video));
+            }
+
+            string url = GetSignedUrl(exercise, fileJson, seconds);
+
+            return url;
+        }
+
+        public static string GetSignedUrl(object item, string fileJson, int seconds = 7 * 24 * 60 * 60)
+        {
+            string bucketName;
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            GoogleCredential google = GoogleCredential.FromFile(fileJson);
+
+            if (item is video)
+            {
+                var video = item as video;
+                if (!string.IsNullOrEmpty(video.link) && video.time < DateTime.Now)
+                {
+                    return video.link;
+                }
+
+                bucketName = "video-lesson";
+            }
+            else if (item is exercise)
+            {
+                var exercise = item as exercise;
+                if (!string.IsNullOrEmpty(exercise.link) && exercise.time < DateTime.Now)
+                {
+                    return exercise.link;
+                }
+
+                bucketName = "exercise-lesson";
+            }
+            else
+            {
+                throw new ArgumentException("Unsupported item type");
+            }
+
+            UrlSigner urlSigner = UrlSigner.FromCredential(google);
+            string url = urlSigner.Sign(
+                bucketName,
+                (item is video) ? (item as video).name : (item as exercise).name,
+                TimeSpan.FromSeconds(seconds),
+                HttpMethod.Get);
+
+            using (MyDataDataContext dataContext = new MyDataDataContext())
+            {
+                if (item is video)
+                {
+                    var videoTmp = dataContext.videos.FirstOrDefault(x => x.name == (item as video).name);
+
+                    if (videoTmp != null)
+                    {
+                        videoTmp.link = url;
+                        videoTmp.updated_at = DateTime.Now;
+                        videoTmp.time = DateTime.Now.AddSeconds(seconds);
+
+                        dataContext.SubmitChanges();
+                    }
+                }
+                else if (item is exercise)
+                {
+                    var exerciseTmp = dataContext.exercises.FirstOrDefault(x => x.name == (item as exercise).name);
+
+                    if (exerciseTmp != null)
+                    {
+                        exerciseTmp.link = url;
+                        exerciseTmp.updated_at = DateTime.Now;
+                        exerciseTmp.time = DateTime.Now.AddSeconds(seconds);
+
+                        dataContext.SubmitChanges();
+                    }
+                }
+            }
+
+            return url;
+        }
+
+
+        public static string ConvertTime(int time)
+        {
+            int hours = (int)(time / 3600);
+            double remainingSeconds = time % 3600;
+            int minutes = (int)(remainingSeconds / 60);
+            int seconds = (int)(remainingSeconds % 60);
+
+            string result =
+                (hours < 10 ? "0" + hours : hours.ToString()) +
+                ":" +
+                (minutes < 10 ? "0" + minutes : minutes.ToString());
+
+            if (seconds < 10)
+            {
+                result += ":0" + seconds;
+            }
+            else
+            {
+                result += ":" + seconds;
+            }
+
+            return result;
+        }
+
+        public static Identity GetIdentity(lesson lesson, List<lesson> lessons)
+        {
+            int indexCurrentLesson = lesson.index;
+
+            int identityPrevious = 0;
+
+            if (indexCurrentLesson >= 1)
+            {
+                lesson previous = lessons.Where(x => x.index == ( indexCurrentLesson - 1) ).FirstOrDefault();
+                if(previous != null)
+                {
+                    identityPrevious = previous.id;
+                }
+            }
+            int identityNext = 999999;
+
+            lesson next = lessons.Where(x => x.index == (indexCurrentLesson + 1)).FirstOrDefault();
+            if (next != null)
+            {
+                identityNext = next.id;
+            }
+
+            Identity index = new Identity
+            {
+                IdCurrent = lesson.id,
+                IdPrevious = identityPrevious,
+                IdNext = identityNext,
+            };
+
+            return index;
+        }
+
+        public static List<string> ReadJsonFromFile(string filePath)
+        {
+            List<string> sensitiveWords = new List<string>();
+
+            try
+            {
+                string jsonText = File.ReadAllText(filePath);
+
+                sensitiveWords = JsonSerializer.Deserialize<List<string>>(jsonText);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error reading json file: " + ex.Message);
+            }
+
+            return sensitiveWords;
+        }
+
+        //public static string SanitizeInput(string input)
+        //{
+        //    List<string> sensitiveWords = ReadJsonFromFile("~/sensitive_words.json");
+
+        //    int sensitiveWordCount = 0;
+        //    foreach (string word in sensitiveWords)
+        //    {
+        //        if (Regex.IsMatch(input, @"\b" + word + @"\b", RegexOptions.IgnoreCase))
+        //        {
+        //            sensitiveWordCount++;
+        //        }
+        //    }
+
+        //    if (sensitiveWordCount > 3)
+        //    {
+        //        return "Error: Input contains sensitive words.";
+        //    }
+
+        //    foreach (string word in sensitiveWords)
+        //    {
+        //        input = Regex.Replace(input, @"\b" + word + @"\b", "*");
+        //    }
+
+        //    return input;
+        //}
+
+        public static bool isBadWord(string input, string json)
+        {
+            List<string> sensitiveWords = ReadJsonFromFile(json);
+
+            int sensitiveWordCount = 0;
+            foreach (string word in sensitiveWords)
+            {
+                if (Regex.IsMatch(input, @"\b" + word + @"\b", RegexOptions.IgnoreCase))
+                {
+                    sensitiveWordCount++;
+                }
+            }
+
+            if (sensitiveWordCount >= 1)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static string GetDeviceFingerprint()
+        {
+            HttpContext context = HttpContext.Current;
+            string userAgent = context.Request.UserAgent;
+            string ipAddress = context.Request.UserHostAddress;
+            string screenWidth = context.Request.Browser.ScreenPixelsWidth.ToString();
+            string screenHeight = context.Request.Browser.ScreenPixelsHeight.ToString();
+            string timeZone = TimeZoneInfo.Local.DisplayName;
+
+            // Tạo dấu vân tay bằng cách kết hợp các thuộc tính
+            string deviceFingerprint = $"{userAgent}_{ipAddress}_{screenWidth}_{screenHeight}_{timeZone}";
+
+            // Lưu hoặc xử lý dấu vân tay ở đây (ví dụ: lưu vào CSDL, so sánh với dấu vân tay đã lưu, ...)
+
+            return deviceFingerprint;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Website_Course_AVG
     {
         public void Configuration(IAppBuilder app)
         {
+
             ConfigureAuth(app);
         }
     }
