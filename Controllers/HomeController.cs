@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Xml.Linq;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
@@ -12,11 +11,26 @@ namespace Website_Course_AVG.Controllers
 {
     public class HomeController : Controller
     {
-        MyDataDataContext _data = new MyDataDataContext();
+        private readonly MyDataDataContext data = new MyDataDataContext();
         public ActionResult Index()
         {
-            ViewBag.Course = _data.courses.First();
-            return View();
+            var categories = data.categories.ToList(); 
+
+
+            List<CategoryCourseViewModels> categoryViewModels = new List<CategoryCourseViewModels>();
+
+            foreach (var category in categories)
+            {
+                CategoryCourseViewModels categoryViewModel = new CategoryCourseViewModels
+                {
+                    Category = category,
+                    Courses = data.courses.Where(c => c.category_id == category.id).ToList()
+                };
+
+                categoryViewModels.Add(categoryViewModel);
+            }
+
+            return View(categoryViewModels);
         }
 
         public ActionResult About()

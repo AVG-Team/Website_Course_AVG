@@ -19,7 +19,7 @@ namespace Website_Course_AVG.Attributes
         {
             if (!UserManager.IsUser())
             {
-                Helpers.addCookie("Error", "You are't login!!!");
+                Helpers.AddCookie("Error", "You are't login!!!");
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new { controller = "Home", action = "Index" }));
                 return;

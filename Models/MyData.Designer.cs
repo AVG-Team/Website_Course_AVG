@@ -94,9 +94,9 @@ namespace Website_Course_AVG.Models
 
         public MyDataDataContext() :
                 base(global::System.Configuration.ConfigurationManager.ConnectionStrings["AVG_Website_CourseConnectionString"].ConnectionString, mappingSource)
+            global::System.Configuration.ConfigurationManager.ConnectionStrings["AVG_Website_CourseConnectionString"]
+                .ConnectionString, mappingSource)
         {
-            OnCreated();
-        }
 
         public MyDataDataContext(System.Data.IDbConnection connection) :
                 base(connection, mappingSource)
@@ -6278,6 +6278,8 @@ namespace Website_Course_AVG.Models
         {
             this.SendPropertyChanging();
             entity.video = null;
+        }
+    }
         }
     }
 }

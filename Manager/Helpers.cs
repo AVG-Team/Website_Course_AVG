@@ -1,4 +1,6 @@
-﻿using Octokit;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Storage.V1;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +16,12 @@ using Website_Course_AVG.Models;
 using System.IO;
 using System.Text.RegularExpressions;
 using Website_Course_AVG.Models;
-using System.Security.Principal;
 
 namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void addCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 10)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -85,6 +86,107 @@ namespace Website_Course_AVG.Managers
             return builder.ToString();
         }
 
+        // 30 * 24 * 60 *60 = 30 ngày
+        public static string GetVideoLessonUrl(video video, string fileJson, int seconds = 7 * 24 * 60 * 60)
+        {
+            if (video == null)
+            {
+                throw new ArgumentNullException(nameof(video));
+            }
+
+            string url = GetSignedUrl(video, fileJson, seconds);
+
+            return url;
+        }
+
+        //30 * 24 * 60 *60 = 30 ngày
+        public static string GetExerciseUrl(exercise exercise, string fileJson, int seconds = 7 * 24 * 60 * 60)
+        {
+            if (exercise == null)
+            {
+                throw new ArgumentNullException(nameof(video));
+            }
+
+            string url = GetSignedUrl(exercise, fileJson, seconds);
+
+            return url;
+        }
+
+        public static string GetSignedUrl(object item, string fileJson, int seconds = 7 * 24 * 60 * 60)
+        {
+            string bucketName;
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            GoogleCredential google = GoogleCredential.FromFile(fileJson);
+
+            if (item is video)
+            {
+                var video = item as video;
+                if (!string.IsNullOrEmpty(video.link) && video.time < DateTime.Now)
+                {
+                    return video.link;
+                }
+
+                bucketName = "video-lesson";
+            }
+            else if (item is exercise)
+            {
+                var exercise = item as exercise;
+                if (!string.IsNullOrEmpty(exercise.link) && exercise.time < DateTime.Now)
+                {
+                    return exercise.link;
+                }
+
+                bucketName = "exercise-lesson";
+            }
+            else
+            {
+                throw new ArgumentException("Unsupported item type");
+            }
+
+            UrlSigner urlSigner = UrlSigner.FromCredential(google);
+            string url = urlSigner.Sign(
+                bucketName,
+                (item is video) ? (item as video).name : (item as exercise).name,
+                TimeSpan.FromSeconds(seconds),
+                HttpMethod.Get);
+
+            using (MyDataDataContext dataContext = new MyDataDataContext())
+            {
+                if (item is video)
+                {
+                    var videoTmp = dataContext.videos.FirstOrDefault(x => x.name == (item as video).name);
+
+                    if (videoTmp != null)
+                    {
+                        videoTmp.link = url;
+                        videoTmp.updated_at = DateTime.Now;
+                        videoTmp.time = DateTime.Now.AddSeconds(seconds);
+
+                        dataContext.SubmitChanges();
+                    }
+                }
+                else if (item is exercise)
+                {
+                    var exerciseTmp = dataContext.exercises.FirstOrDefault(x => x.name == (item as exercise).name);
+
+                    if (exerciseTmp != null)
+                    {
+                        exerciseTmp.link = url;
+                        exerciseTmp.updated_at = DateTime.Now;
+                        exerciseTmp.time = DateTime.Now.AddSeconds(seconds);
+
+                        dataContext.SubmitChanges();
+                    }
+                }
+            }
+
+            return url;
+        }
+
 
         public static string ConvertTime(int time)
         {
@@ -106,7 +208,40 @@ namespace Website_Course_AVG.Managers
             {
                 result += ":" + seconds;
             }
+
             return result;
+        }
+
+        public static Identity GetIdentity(lesson lesson, List<lesson> lessons)
+        {
+            int indexCurrentLesson = lesson.index;
+
+            int identityPrevious = 0;
+
+            if (indexCurrentLesson >= 1)
+            {
+                lesson previous = lessons.Where(x => x.index == ( indexCurrentLesson - 1) ).FirstOrDefault();
+                if(previous != null)
+                {
+                    identityPrevious = previous.id;
+                }
+            }
+            int identityNext = 999999;
+
+            lesson next = lessons.Where(x => x.index == (indexCurrentLesson + 1)).FirstOrDefault();
+            if (next != null)
+            {
+                identityNext = next.id;
+            }
+
+            Identity index = new Identity
+            {
+                IdCurrent = lesson.id,
+                IdPrevious = identityPrevious,
+                IdNext = identityNext,
+            };
+
+            return index;
         }
 
         public static List<string> ReadJsonFromFile(string filePath)
