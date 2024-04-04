@@ -372,7 +372,6 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/toastr.js")
     @RenderSection("scripts", required: false)
-    @RenderSection("filter", required: false)
     @{
         string currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
     }
