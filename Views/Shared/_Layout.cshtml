@@ -45,7 +45,7 @@
                         <div class="mobile-nav-toggler">
                             <ul class="d-flex">
                                 <li class="header-cart">
-                                    <a href="#" class="svg-menu">
+                                    <a href="@Url.Action("Index","Cart")" class="svg-menu">
                                         <svg style="width:30px;height:30px;margin-bottom:7.2px;margin-right:10px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -91,7 +91,7 @@
                                             </a>
                                         </li>
                                         <li class="header-cart">
-                                            <a href="#">
+                                            <a href="@Url.Action("Index", "Cart")">
                                                 <svg style="width:21px;height:21px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -392,38 +392,28 @@
         }
 
         function setCookie(cookieName, cookieValue, secondsToExpire, type = 1) {
-            if (type == 0) {
-                var expires = secondsToExpire;
-            } else if (type == 1) {
+            var expires;
+            if (type === 0) {
+                expires = secondsToExpire;
+            } else if (type === 1) {
                 var date = new Date();
                 date.setTime(date.getTime() + (secondsToExpire * 1000));
-                var expires = "expires=" + date.toUTCString();
+                expires = "expires=" + date.toUTCString();
             }
 
             var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
 
-            var existingCookies = document.cookie.split(';');
-
-            var found = false;
-            for (var i = 0; i < existingCookies.length; i++) {
-                var cookie = existingCookies[i].trim();
-                if (cookie.indexOf(cookieName + "=") === 0) {
-                    existingCookies[i] = updatedCookie;
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                existingCookies.push(updatedCookie);
-            }
-
-            document.cookie = existingCookies.join(';');
+            document.cookie = updatedCookie;
         }
 
         function deleteCookie(cookieName) {
-            setCookie(cookieName, "", 'expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;', 0)
+            var date = new Date(0);
+            var expires = "expires=" + date.toUTCString();
+            var updatedCookie = cookieName + "=;" + expires + ";path=/";
+
+            document.cookie = updatedCookie;
         }
+
 
         document.addEventListener("DOMContentLoaded", () => {
             let cookies = document.cookie;
