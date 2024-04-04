@@ -332,6 +332,9 @@
     <Content Include="Content\fonts\DesignerVN-Poppins\Readme.txt" />
     <Content Include="Content\img\banner\banner_bg01.jpg" />
     <Content Include="Content\img\banner\layout_main.png" />
+    <Content Include="Content\img\banner\layout_main_2.jpg" />
+    <Content Include="Content\img\banner\layout_main_3.jpg" />
+    <Content Include="Content\img\banner\layout_main_4.jpg" />
     <Content Include="Content\img\banner\layout_main_section.jpg" />
     <Content Include="Content\img\banner\slider_img01.jpg" />
     <Content Include="Content\img\banner\slider_img02.jpg" />
@@ -392,6 +395,7 @@
     <Content Include="Content\img\images\services_img02.jpg" />
     <Content Include="Content\img\images\title_shape.png" />
     <Content Include="Content\img\images\vnpay_footer.png" />
+    <Content Include="Content\img\logo\AVG_Course.png" />
     <Content Include="Content\img\logo\avg_team.png" />
     <Content Include="Content\img\logo\favicon.png" />
     <Content Include="Content\img\logo\logo.png" />
@@ -524,6 +528,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Course\" />
+    <Folder Include="Views\Eror\" />
     <Folder Include="Views\Exercise\" />
   </ItemGroup>
   <ItemGroup>
