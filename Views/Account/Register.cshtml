@@ -18,49 +18,64 @@
                             <h3 class="text-primary">Create Account</h3>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <form action="">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text bg-primary rounded-start"><i class="fa-solid fa-user " style="width: 15px; color:white; "></i></span>
-                                <input type="text" class="form-control form-control form-control-lg bg-light fs-6" placeholder="Username">
+                    @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text bg-primary rounded-start"><i class="fa-solid fa-user" style="width: 15px; color:white; "></i></span>
+                                @Html.TextBoxFor(m => m.userName, new { @class = "form-control form-control-lg bg-light fs-6  rounded-end", placeholder = "UserName" })
+
                             </div>
-                            <div class="input-group mb-3">
+                            @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group">
                                 <span class="input-group-text bg-primary rounded-start">
                                     <i class="fa-solid fa-envelope" style="width: 15px; color:white; "></i>
                                 </span>
-                                <input type="email" class="form-control form-control form-control-lg bg-light fs-6" placeholder="Email">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg bg-light fs-6  rounded-end", placeholder = "Email Address" })
                             </div>
-                            <div class="input-group mb-3">
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group">
                                 <span class="input-group-text bg-primary rounded-start">
                                     <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
                                 </span>
 
                                 @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end ", placeholder = "Password" })
-                                <span id="enrypassword" class=" visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
-                                    <i class="fa fa-eye-slash" id="togglePassword"></i>
+                                <span id="firstEyeSpan" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
+                                    <i class="fa fa-eye-slash" id="firstEyeIcon"></i>
                                 </span>
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
-                            <div class="input-group mb-3 align-content-center">
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text bg-primary rounded-start">
                                     <i class="fa-solid fa-lock" style="width: 15px; color:white; "></i>
                                 </span>
-                                <input id="RepasswordField" style="z-index:1;" type="password" class="form-control form-control-lg bg-light fs-6 rounded-end" placeholder="Repassword">
-                                @*@Html.PasswordFor(m => m.Password, new { @id = "RepasswordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end", placeholder = "Repassword" })*@
-                                <span id="Reenrypassword" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100" style="z-index:2; background-color: transparent">
-                                    <i class="fa fa-eye-slash" id="RetogglePassword"></i>
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @id = "RepasswordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end", placeholder = "Repassword" })
+                                <span id="secondEyeSpan" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100" style="z-index:2; background-color: transparent">
+                                    <i class="fa fa-eye-slash" id="secondEyeIcon"></i>
                                 </span>
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="d-grid col-12 mx-auto mb-4 mt-2 d-flex justify-content-center">
-                                <button class="btn btn-primary rounded-2 " type="button"><span></span> Sign up</button>
-                            </div>
-                            <div class="row">
-                                <small>Do you have account? <a href="~/Views/Account/Login.cshtml">Sign In</a></small>
-                            </div>
-                        </form>
-                    </div>
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="d-grid col-12 mx-auto mb-4 mt-2 d-flex justify-content-center">
+                            <button class="btn btn-primary rounded-2 " type="submit"><span></span> Sign up</button>
+                        </div>
+                        <div class="row">
+                            <small>Do you have account? <a href="@Url.Action("Login", "Account")">Sign In</a></small>
+                        </div>
+
+
+                    }
                 </div>
             </div>
         </div>
@@ -69,56 +84,54 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var passwordField = document.getElementById("passwordField");
+        var firstEyeIcon = document.getElementById("firstEyeIcon");
+        var firstEyeSpan = document.getElementById("firstEyeSpan");
+
+        var rePasswordField = document.getElementById("RepasswordField");
+        var secondEyeIcon = document.getElementById("secondEyeIcon");
+        var secondEyeSpan = document.getElementById("secondEyeSpan");
+
+        firstEyeSpan.addEventListener("click", function () {
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                firstEyeIcon.classList.remove("fa-eye-slash");
+                firstEyeIcon.classList.add("fa-eye");
+            } else {
+                passwordField.type = "password";
+                firstEyeIcon.classList.remove("fa-eye");
+                firstEyeIcon.classList.add("fa-eye-slash");
+            }
+        });
+
+        secondEyeSpan.addEventListener("click", function () {
+            if (rePasswordField.type === "password") {
+                rePasswordField.type = "text";
+                secondEyeIcon.classList.remove("fa-eye-slash");
+                secondEyeIcon.classList.add("fa-eye");
+            } else {
+                rePasswordField.type = "password";
+                secondEyeIcon.classList.remove("fa-eye");
+                secondEyeIcon.classList.add("fa-eye-slash");
+            }
+        });
+
+        rePasswordField.addEventListener("click", function () {
+            secondEyeSpan.classList.remove("visually-hidden")
+        });
+
+        passwordField.addEventListener("click", function () {
+            firstEyeSpan.classList.remove("visually-hidden")
+        });
+
+        passwordField.addEventListener("focus", function () {
+            firstEyeIcon.classList.remove("visually-hidden");
+        });
+
+        rePasswordField.addEventListener("focus", function () {
+            secondEyeIcon.classList.remove("visually-hidden");
+        });
+    </script>
 }
 
-<script>
-    var eyeIcon = document.getElementById("togglePassword");
-    document.getElementById("enrypassword").addEventListener("click", function () {
-        var passwordField = document.getElementById("passwordField");
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            eyeIcon.classList.remove("fa-eye-slash");
-            eyeIcon.classList.add("fa-eye");
-        } else {
-            passwordField.type = "password";
-            eyeIcon.classList.remove("fa-eye");
-            eyeIcon.classList.add("fa-eye-slash");
-        }
-    });
-
-    var reeyeIcon = document.getElementById("RetogglePassword");
-    document.getElementById("Reenrypassword").addEventListener("click", function () {
-        var repasswordField = document.getElementById("RepasswordField");
-        if (repasswordField.type === "password") {
-            repasswordField.type = "text";
-            reeyeIcon.classList.remove("fa-eye-slash");
-            reeyeIcon.classList.add("fa-eye");
-        } else {
-            repasswordField.type = "password";
-            reeyeIcon.classList.remove("fa-eye");
-            reeyeIcon.classList.add("fa-eye-slash");
-        }
-    });
-
-    document.getElementById("RepasswordField").addEventListener("click", function () {
-        var span = document.getElementById("Reenrypassword");
-        span.classList.remove("visually-hidden")
-    });
-
-    document.getElementById("passwordField").addEventListener("click", function () {
-        var span = document.getElementById("enrypassword");
-        span.classList.remove("visually-hidden")
-    });
-
-    document.getElementById("RepasswordField").addEventListener("blur", function () {
-        var span = document.getElementById("Reenrypassword");
-        span.classList.add("visually-hidden");
-    });
-
-    document.getElementById("passwordField").addEventListener("blur", function () {
-        var span = document.getElementById("enrypassword");
-        span.classList.add("visually-hidden")
-    });
-
-   
-</script>

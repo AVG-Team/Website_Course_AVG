@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,20 @@ using System.Net.Http;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.Json;
+using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 using Website_Course_AVG.Models;
 using System.IO;
 using System.Text.RegularExpressions;
+using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void addCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 10)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -53,15 +57,23 @@ namespace Website_Course_AVG.Managers
             return global::System.Configuration.ConfigurationManager.AppSettings[key];
         }
 
+        public static string GetRedirectUrlGH()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Account/GithubLogin";
+        }
+
         public static string UrlGithubLogin()
         {
             string clientIdGh = GetValueFromAppSetting("ClientIdGH");
-            string redirectUrl = GetValueFromAppSetting("RedirectUrl");
+            string redirectUrl = GetRedirectUrlGH();
             return
                 "https://github.com//login/oauth/authorize?client_id=" + clientIdGh + "&redirect_uri=" + redirectUrl + "&scope=user:email";
         }
 
-        public static string GenerateRandomString(int length)
+        public static string GenerateRandomString(int length = 10)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder builder = new StringBuilder();
@@ -74,46 +86,107 @@ namespace Website_Course_AVG.Managers
             return builder.ToString();
         }
 
-        public static string GetVideoLessonUrl(video video, string fileJson, int seconds = 300)
+        // 30 * 24 * 60 *60 = 30 ngày
+        public static string GetVideoLessonUrl(video video, string fileJson, int seconds = 7 * 24 * 60 * 60)
         {
             if (video == null)
             {
                 throw new ArgumentNullException(nameof(video));
             }
 
+            string url = GetSignedUrl(video, fileJson, seconds);
+
+            return url;
+        }
+
+        //30 * 24 * 60 *60 = 30 ngày
+        public static string GetExerciseUrl(exercise exercise, string fileJson, int seconds = 7 * 24 * 60 * 60)
+        {
+            if (exercise == null)
+            {
+                throw new ArgumentNullException(nameof(video));
+            }
+
+            string url = GetSignedUrl(exercise, fileJson, seconds);
+
+            return url;
+        }
+
+        public static string GetSignedUrl(object item, string fileJson, int seconds = 7 * 24 * 60 * 60)
+        {
+            string bucketName;
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             GoogleCredential google = GoogleCredential.FromFile(fileJson);
 
-            var bucketName = "video-lesson";
-
-            if(!string.IsNullOrEmpty(video.link) && video.time < DateTime.Now)
+            if (item is video)
             {
-                return video.link;
+                var video = item as video;
+                if (!string.IsNullOrEmpty(video.link) && video.time < DateTime.Now)
+                {
+                    return video.link;
+                }
+
+                bucketName = "video-lesson";
+            }
+            else if (item is exercise)
+            {
+                var exercise = item as exercise;
+                if (!string.IsNullOrEmpty(exercise.link) && exercise.time < DateTime.Now)
+                {
+                    return exercise.link;
+                }
+
+                bucketName = "exercise-lesson";
+            }
+            else
+            {
+                throw new ArgumentException("Unsupported item type");
             }
 
             UrlSigner urlSigner = UrlSigner.FromCredential(google);
             string url = urlSigner.Sign(
                 bucketName,
-                video.name,
+                (item is video) ? (item as video).name : (item as exercise).name,
                 TimeSpan.FromSeconds(seconds),
                 HttpMethod.Get);
 
-
             using (MyDataDataContext dataContext = new MyDataDataContext())
             {
-                video videoTmp = dataContext.videos.FirstOrDefault(x => x.name == video.name);
-
-                if (videoTmp != null)
+                if (item is video)
                 {
-                    videoTmp.link = url;
-                    videoTmp.updated_at = DateTime.Now;
-                    videoTmp.time = DateTime.Now.AddMonths(1);
+                    var videoTmp = dataContext.videos.FirstOrDefault(x => x.name == (item as video).name);
 
-                    dataContext.SubmitChanges();
+                    if (videoTmp != null)
+                    {
+                        videoTmp.link = url;
+                        videoTmp.updated_at = DateTime.Now;
+                        videoTmp.time = DateTime.Now.AddSeconds(seconds);
+
+                        dataContext.SubmitChanges();
+                    }
+                }
+                else if (item is exercise)
+                {
+                    var exerciseTmp = dataContext.exercises.FirstOrDefault(x => x.name == (item as exercise).name);
+
+                    if (exerciseTmp != null)
+                    {
+                        exerciseTmp.link = url;
+                        exerciseTmp.updated_at = DateTime.Now;
+                        exerciseTmp.time = DateTime.Now.AddSeconds(seconds);
+
+                        dataContext.SubmitChanges();
+                    }
                 }
             }
 
             return url;
         }
+
 
         public static string ConvertTime(int time)
         {
@@ -234,6 +307,23 @@ namespace Website_Course_AVG.Managers
             }
 
             return false;
+        }
+
+        public static string GetDeviceFingerprint()
+        {
+            HttpContext context = HttpContext.Current;
+            string userAgent = context.Request.UserAgent;
+            string ipAddress = context.Request.UserHostAddress;
+            string screenWidth = context.Request.Browser.ScreenPixelsWidth.ToString();
+            string screenHeight = context.Request.Browser.ScreenPixelsHeight.ToString();
+            string timeZone = TimeZoneInfo.Local.DisplayName;
+
+            // Tạo dấu vân tay bằng cách kết hợp các thuộc tính
+            string deviceFingerprint = $"{userAgent}_{ipAddress}_{screenWidth}_{screenHeight}_{timeZone}";
+
+            // Lưu hoặc xử lý dấu vân tay ở đây (ví dụ: lưu vào CSDL, so sánh với dấu vân tay đã lưu, ...)
+
+            return deviceFingerprint;
         }
     }
 }

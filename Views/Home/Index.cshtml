@@ -14,97 +14,104 @@
         -webkit-line-clamp: 1;
     }
 
-    .carousel-caption {
-        text-align: unset !important;
-        left: 6%;
-        vertical-align: middle;
-        padding-bottom: 26.75rem;
-        width: 43%;
-        height: 50%;
-    }
-    .banner-content h6{
-        font-size: 20px !important;
-    }
-    @@media (max-width: 575px) {
         .carousel-caption {
-            padding-bottom: 1.25rem !important;
-        }
-        .banner-content .title{
-            margin-bottom: 10px;
-        }
-
-        
-        .banner-content h2,
-        .banner-content ul li a {
-            font-size: 11px !important;
+            text-align: unset !important;
+            left: 6%;
+            vertical-align: middle;
+            padding-bottom: 26.75rem;
+            width: 43%;
+            height: 50%;
         }
 
-        .banner-meta ul li.release-time > span{
-            font-size: 8px !important;
+        .banner-content h6 {
+            font-size: 20px !important;
         }
 
-    }
-    @@media screen and (min-width: 576px) and (max-width: 694px) {
-        .carousel-caption{
-            padding-bottom: 8.75rem !important;
-        }
+        @@media (max-width: 575px) {
+            .carousel-caption {
+                padding-bottom: 1.25rem !important;
+            }
 
-        .banner-content h2,
-        .banner-content ul li a {
-            font-size: 16px !important;
-        }
-
-        .banner-meta ul li.release-time > span {
-            font-size: 10px !important;
-        }
-    }
-    @@media screen and (min-width: 695px) and (max-width: 768px) {
-        .carousel-caption {
-            padding-bottom: 11.75rem !important;
-        }
-
-        .banner-content h2,
-        .banner-content ul li a {
-            font-size: 22px !important;
-        }
-
-        .banner-meta ul li.release-time > span {
-            font-size: 12px !important;
-        }
-    }
-    @@media screen and (min-width: 769px) and (max-width: 991px) {
-        .carousel-caption {
-            padding-bottom: 13.75rem !important;
-        }
+            .banner-content .title {
+                margin-bottom: 10px;
+            }
 
 
-        .banner-content h2,
-        .banner-content ul li a {
-            font-size: 27px !important;
-        }
-    }
-    @@media screen and (min-width: 992px) and (max-width: 1199px) {
-        .carousel-caption {
-            padding-bottom: 18.75rem !important;
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 11px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 8px !important;
+            }
         }
 
-        .banner-content h2,
-        .banner-content ul li a {
-            font-size: 36px !important;
-        }
-    }
-    @@media screen and (min-width: 1200px) and (max-width: 1359px) {
-        .carousel-caption {
-            padding-bottom: 23.75rem !important;
+        @@media screen and (min-width: 576px) and (max-width: 694px) {
+            .carousel-caption {
+                padding-bottom: 8.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 16px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 10px !important;
+            }
         }
 
-        .banner-content h2,
-        .banner-content ul li a {
-            font-size: 40px !important;
-        }
-    }
+        @@media screen and (min-width: 695px) and (max-width: 768px) {
+            .carousel-caption {
+                padding-bottom: 11.75rem !important;
+            }
 
-</style>
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 22px !important;
+            }
+
+            .banner-meta ul li.release-time > span {
+                font-size: 12px !important;
+            }
+        }
+
+        @@media screen and (min-width: 769px) and (max-width: 991px) {
+            .carousel-caption {
+                padding-bottom: 13.75rem !important;
+            }
+
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 27px !important;
+            }
+        }
+
+        @@media screen and (min-width: 992px) and (max-width: 1199px) {
+            .carousel-caption {
+                padding-bottom: 18.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 36px !important;
+            }
+        }
+
+        @@media screen and (min-width: 1200px) and (max-width: 1359px) {
+            .carousel-caption {
+                padding-bottom: 23.75rem !important;
+            }
+
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 40px !important;
+            }
+        }
+    </style>
+}
 
     <main>
         <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
@@ -170,63 +177,64 @@
     </main>
 
 
-    <div class="container custom-container">
-        @foreach (var categoryViewModel in Model)
-        {
-            <div class="row">
-                <div class="mt-2 ms-2 mb-3">
-                    <span class="title-course">@categoryViewModel.Category.name</span>
-                </div>
-                @foreach (var course in categoryViewModel.Courses)
-                {
-                    <section class="col-lg-3 ps-2 pe-2">
-                        <div class="mb-3 w-100 h-100 overflow-auto">
-                            <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="@course.title" target="_self">
-                                <button class="btn_course text-dark rounded-5 p-2">
-                                    Xem khoá học
-                                </button>
-                                <img src="@course.image_code" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
-
-                                @*thay đổi category_id theo database*@
-                                @if(course.category_id == 3){
-                                    <i class="fa-solid fa-crown" style="color: #FFD43B; position: absolute; top: 10px; right: 20px;"></i>
-                                }
-                            </a>
-                            <div class="course_title">
-                                <span class="text-black-75 fs-6">@course.title</span>
-                            </div>
-                            <div class="price-new mt-4">
-                                @if (course.price.HasValue)
-                                {
-                                    @*thay đổi category_id theo database*@
-                                    if (course.category_id == 3)
-                                    {
-                                        <span class="courseItem_old_price">@course.price.Value.ToString("N0")</span>
-                                    }
-                                }
-                                else
-                                {
-                                    <span class="courseItem_old_price">Miễn phí</span>
-                                }
-                                <span class="courseItem_main_price"></span>
-                            </div>
-                        </div>
-                    </section>
-                }
+<div class="container custom-container">
+    @foreach (var categoryViewModel in Model)
+    {
+        <div class="row">
+            <div class="mt-2 ms-2 mb-3">
+                <span class="title-course">@categoryViewModel.Category.name</span>
             </div>
-        }
-    </div>
+            @foreach (var course in categoryViewModel.Courses)
+            {
+                <section class="col-lg-3 ps-2 pe-2">
+                    <div class="mb-3 w-100 h-100 overflow-auto">
+                        <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="@course.title" target="_self">
+                            <button class="btn_course text-dark rounded-5 p-2">
+                                Xem khoá học
+                            </button>
+                            <img src="@course.image_code" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
 
-    @section Scripts{
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                var header = document.getElementById('sticky-header');
-                header.classList.add("home");
-            })
-            window.addEventListener('scroll', function () {
-                var header = document.getElementById('sticky-header');
+                            @*thay đổi category_id theo database*@
+                            @if (course.category_id == 3)
+                            {
+                                <i class="fa-solid fa-crown" style="color: #FFD43B; position: absolute; top: 10px; right: 20px;"></i>
+                            }
+                        </a>
+                        <div class="course_title">
+                            <span class="text-black-75 fs-6">@course.title</span>
+                        </div>
+                        <div class="price-new mt-4">
+                            @if (course.price.HasValue)
+                            {
+                                @*thay đổi category_id theo database*@
+                                if (course.category_id == 3)
+                                {
+                                    <span class="courseItem_old_price">@course.price.Value.ToString("N0")</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="courseItem_old_price">Miễn phí</span>
+                            }
+                            <span class="courseItem_main_price"></span>
+                        </div>
+                    </div>
+                </section>
+            }
+        </div>
+    }
+</div>
 
-                var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var header = document.getElementById('sticky-header');
+            header.classList.add("home");
+        })
+        window.addEventListener('scroll', function () {
+            var header = document.getElementById('sticky-header');
+
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
                 if (scrollTop < 100 && !header.classList.contains("home")) {
                     header.classList.add("home");
