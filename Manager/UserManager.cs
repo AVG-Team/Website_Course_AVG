@@ -107,20 +107,7 @@ namespace Website_Course_AVG.Managers
         public bool IsAuthenticated()
         {
             string authToken = HttpContext.Current.Request.Cookies["AuthToken"]?.Value;
-            if (string.IsNullOrEmpty(authToken))
-            {
-                return false;
-            }
-
-            user user = GetUserFromToken();
-            if (user == null)
-            {
-                return false;
-            }
-
-            bool b = user.role == null || user.role >= 1;
-            bool a = !string.IsNullOrEmpty(authToken) && (user.role == null || user.role >= 1);
-            return !string.IsNullOrEmpty(authToken) && (user.role == null || user.role >= 1);
+            return !string.IsNullOrEmpty(authToken);
         }
 
         //role = 1 : user

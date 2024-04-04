@@ -12,7 +12,6 @@ namespace Website_Course_AVG.Controllers
     {
         private MyDataDataContext db = new MyDataDataContext();
 
-        //GET: /Cart
         public ActionResult Index()
         {
             var itemCookie = Request.Cookies["Item"];
@@ -30,8 +29,7 @@ namespace Website_Course_AVG.Controllers
             return View(new CartViewModels { Courses = new List<course>(), CourseCount = 0 });
         }
 
-        //GET: /Cart/Payment + User
-        [Website_Course_AVG.Attributes.Authorize]
+        [Website_Course_AVG.Attributes.User]
         public ActionResult Payment()
         {
             var itemCookie = Request.Cookies["Item"];
@@ -55,10 +53,9 @@ namespace Website_Course_AVG.Controllers
             }
         }
 
-        //POST: /Payment/CheckDiscountCode + CSRF + User
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Website_Course_AVG.Attributes.Authorize]
+        [Website_Course_AVG.Attributes.User]
         public ActionResult CheckDiscountCode(string discountCode)
         {
             var promo = db.promotions.FirstOrDefault(c => c.code_promotion.Equals(discountCode));
@@ -100,7 +97,6 @@ namespace Website_Course_AVG.Controllers
             return ResponseHelper.ErrorResponse("Promotion code does not exist.");
         }
 
-        // POST: /Payment/Checkout + CSRF
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Checkout(string paymentMethod)
