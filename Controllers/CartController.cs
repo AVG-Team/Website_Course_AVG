@@ -1,17 +1,8 @@
-﻿using Microsoft.Ajax.Utilities;
-using Microsoft.Owin.Security.Infrastructure;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Numerics;
 using System.Text;
-using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using System.Xml.Schema;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
@@ -40,7 +31,7 @@ namespace Website_Course_AVG.Controllers
         }
 
         //GET: /Cart/Payment + User
-        [Website_Course_AVG.Attributes.User]
+        [Website_Course_AVG.Attributes.Authorize]
         public ActionResult Payment()
         {
             var itemCookie = Request.Cookies["Item"];
@@ -59,7 +50,7 @@ namespace Website_Course_AVG.Controllers
             }
             else
             {
-                Helpers.addCookie("Error", "No course in your cart");
+                Helpers.AddCookie("Error", "No course in your cart");
                 return RedirectToAction("Index", "Cart");
             }
         }
@@ -67,7 +58,7 @@ namespace Website_Course_AVG.Controllers
         //POST: /Payment/CheckDiscountCode + CSRF + User
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Website_Course_AVG.Attributes.User]
+        [Website_Course_AVG.Attributes.Authorize]
         public ActionResult CheckDiscountCode(string discountCode)
         {
             var promo = db.promotions.FirstOrDefault(c => c.code_promotion.Equals(discountCode));
@@ -171,12 +162,12 @@ namespace Website_Course_AVG.Controllers
                 db.SubmitChanges();
                 Response.Cookies["Item"].Expires = DateTime.Now.AddDays(-1);
                 TempData.Remove("promotionId");
-                Helpers.addCookie("Notify", "Payment success!");
+                Helpers.AddCookie("Notify", "Payment success!");
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                Helpers.addCookie("Error", "No course in your cart");
+                Helpers.AddCookie("Error", "No course in your cart");
                 return RedirectToAction("Index", "Cart");
             }
         }

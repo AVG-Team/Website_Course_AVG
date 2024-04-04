@@ -472,13 +472,6 @@
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <None Include="Views\Note\notes.cshtml" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -512,8 +505,8 @@
     <Content Include="Views\Courses\_CourseListPartial.cshtml" />
     <Content Include="Views\Courses\ListCourses.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Web.config" />
     <Content Include="Views\Cart\Payment.cshtml" />
+    <Content Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -524,10 +517,10 @@
     <Content Include="Views\Shared\_LayoutLesson.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Comment\comments.cshtml" />
-    <Content Include="Views\Courses\Index.cshtml"/>
-    <Content Include="Views\Courses\ListCourses.cshtml"/>
-    <Content Include="Views\Courses\Detail.cshtml"/>
-    <Content Include="Views\Courses\_CourseListPartial.cshtml"/>
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Courses\ListCourses.cshtml" />
+    <Content Include="Views\Courses\Detail.cshtml" />
+    <Content Include="Views\Courses\_CourseListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
