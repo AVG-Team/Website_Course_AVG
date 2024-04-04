@@ -5,6 +5,9 @@
 }
 
 <style>
+    body {
+        overscroll-behavior: none; 
+    }
     .course_title{
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -231,6 +234,18 @@
                     header.classList.remove("home");
                 }
             })
+
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    var btnCourse = document.querySelectorAll('.btn_course');
+                    btnCourse.forEach(function (button) {
+                        button.addEventListener('click', function (event) {
+                            var url = '@Url.Action("Contact", "Home")';
+                            window.location.href = url;
+                        });
+                    });
+                });
+
         </script>
     }
 
