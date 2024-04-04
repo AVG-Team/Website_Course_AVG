@@ -110,8 +110,7 @@
                 font-size: 40px !important;
             }
         }
-    </style>
-}
+</style>
 
     <main>
         <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
@@ -236,24 +235,23 @@
 
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
-                if (scrollTop < 100 && !header.classList.contains("home")) {
-                    header.classList.add("home");
-                } else if (scrollTop >= 100 && header.classList.contains("home")) {
-                    header.classList.remove("home");
-                }
-            })
+            if (scrollTop < 100 && !header.classList.contains("home")) {
+                header.classList.add("home");
+            } else if (scrollTop >= 100 && header.classList.contains("home")) {
+                header.classList.remove("home");
+            }
+        })
 
-
-                document.addEventListener("DOMContentLoaded", function () {
-                    var btnCourse = document.querySelectorAll('.btn_course');
-                    btnCourse.forEach(function (button) {
-                        button.addEventListener('click', function (event) {
-                            var url = '@Url.Action("Contact", "Home")';
-                            window.location.href = url;
-                        });
-                    });
+        document.addEventListener("DOMContentLoaded", function () {
+            var btnCourse = document.querySelectorAll('.btn_course');
+            btnCourse.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    var url = '@Url.Action("Details", "Course")';
+                    window.location.href = url;
                 });
+            });
+        });
 
-        </script>
-    }
+    </script>
+}
 
