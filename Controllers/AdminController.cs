@@ -25,7 +25,7 @@ namespace Website_Course_AVG.Controllers
         // GET : Course 
         #region Course
 
-        public ActionResult Course(int? page)
+        public  ActionResult Course(int? page)
         {
             var courses = _data.courses.ToList();
             var categories = _data.categories.Where(cate => cate.deleted_at == null).ToList();
@@ -76,25 +76,22 @@ namespace Website_Course_AVG.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateCourse(FormCollection collection,AdminViewModels models)
+        public ActionResult UpdateCourse(FormCollection form,course model)
         {
-            if (ModelState.IsValid)
+           
+            var course = _data.courses.FirstOrDefault(c => c.id == model.id);
+            if (course != null)
             {
-                var course = _data.courses.FirstOrDefault(c => c.id == models.Course.id);
-                if (course != null)
-                {
-                    course.title = models.Course.title;
-                    course.description = models.Course.description;
-                    course.price = models.Course.price;
-                    course.author = models.Course.author;
-                    course.category_id = models.Course.category_id;
-                    course.image_code = models.Course.image_code;
-                    _data.SubmitChanges();
-                    Helpers.AddCookie("success", "Update course successfully");
-                    return RedirectToAction("Course");
-                }
+                course.title = form["Course.title"];
+                course.description = form["Course.description"];
+                course.price = long.Parse(form["Course.Price"]);
+                course.author = form["Course.author"];
+                /*course.category_id = int.Parse(form.Get("Course.category_id"));*/
+                /*course.image_code = form.Get("Course.image_code");*/
+                _data.SubmitChanges();
+                return RedirectToAction("Course");
             }
-            Helpers.AddCookie("error", "Update course failed");
+            
             return RedirectToAction("Course");
         }
         public JsonResult ReloadTableCourse(int? page)
@@ -122,6 +119,20 @@ namespace Website_Course_AVG.Controllers
             }
         }
 
+        [HttpGet]
+        public JsonResult GetCourseById(int? id)
+        {
+            try
+            {
+                var course = _data.courses.Where(c => c.id == id).ToList();
+                var view = RenderViewToString("Admin", "GetCourseById", course);
+                return ResponseHelper.SuccessResponse("", view);
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper.ErrorResponse("");
+            }
+        }
         #endregion
         
 

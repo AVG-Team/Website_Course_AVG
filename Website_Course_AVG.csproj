@@ -951,6 +951,8 @@
     <Content Include="Content\img\images\services_img02.jpg" />
     <Content Include="Content\img\images\title_shape.png" />
     <Content Include="Content\img\images\vnpay_footer.png" />
+    <Content Include="Content\img\logo\AVG_admin.png" />
+    <Content Include="Content\img\logo\AVG_course.png" />
     <Content Include="Content\img\logo\avg_team.png" />
     <Content Include="Content\img\logo\favicon.png" />
     <Content Include="Content\img\logo\logo.png" />
@@ -1252,6 +1254,7 @@
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Views\Admin\InsertCourse.cshtml" />
     <Content Include="Views\Admin\_TableCourseParticial.cshtml" />
+    <Content Include="Views\Admin\GetCourseById.cshtml" />
     <None Include="Views\Note\notes.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

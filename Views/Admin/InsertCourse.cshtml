@@ -2,7 +2,7 @@
 @model Website_Course_AVG.Models.AdminViewModels
 
 @{
-    <div class="card mb-3">
+    <div id="form" class="card mb-3">
         @using (Html.BeginForm("InsertCourse", "Admin", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -67,9 +67,7 @@
                                         {
                                             <option value=@item.id>@item.name</option>
                                         }
-
                                     </select>
-                                    @Html.ValidationMessageFor(m => m.Course.category_id, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
