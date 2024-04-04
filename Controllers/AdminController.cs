@@ -86,8 +86,9 @@ namespace Website_Course_AVG.Controllers
                 course.description = form["Course.description"];
                 course.price = long.Parse(form["Course.Price"]);
                 course.author = form["Course.author"];
-                /*course.category_id = int.Parse(form.Get("Course.category_id"));*/
+                course.category_id = int.Parse(form.Get("Course.category_id"));
                 /*course.image_code = form.Get("Course.image_code");*/
+                course.updated_at = DateTime.Now;
                 _data.SubmitChanges();
                 return RedirectToAction("Course");
             }
@@ -125,7 +126,13 @@ namespace Website_Course_AVG.Controllers
             try
             {
                 var course = _data.courses.Where(c => c.id == id).ToList();
-                var view = RenderViewToString("Admin", "GetCourseById", course);
+                var categories = _data.categories.ToList();
+                var model = new AdminViewModels()
+                {
+                    Courses = course,
+                    Categories = categories
+                };
+                var view = RenderViewToString("Admin", "GetCourseById",model);
                 return ResponseHelper.SuccessResponse("", view);
             }
             catch (Exception ex)

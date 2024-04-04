@@ -1,11 +1,11 @@
 ﻿
-@model IEnumerable<Website_Course_AVG.Models.course>
+@model Website_Course_AVG.Models.AdminViewModels
 @{
     Layout = null;
 }
 @{
     <div id="form" class="card mb-3">
-        @foreach (var item in Model)
+        @foreach (var item in Model.Courses)
         {
             using (Html.BeginForm("UpdateCourse", "Admin",@item, FormMethod.Post))
             {
@@ -60,22 +60,22 @@
                                 </div>
                             </div>
                         </div>
-                        @*<div class="col-xl-4 col-sm-6 col-12">
+                        <div class="col-xl-4 col-sm-6 col-12">
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="m-0">
                                         <label class="form-label">Select Category </label>
                                         <select class="form-select" aria-label="Default select example" name="Course.category_id">
-                                            <option selected="@item.category_id">@item.category.name</option>
-                                            @foreach (var category in ViewBag.Category)
+                                            <option selected="">Open this select menu</option>
+                                            @foreach (var category in Model.Categories)
                                             {
-                                                <option value="@category.Id" @(category.Id == item.category_id ? "selected" : "")>@category.Name</option>
+                                                <option value="@category.id" @(category.id == item.category_id ? "selected" : "") name="Course.category_id">@category.name</option>
                                             }
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                        </div>*@
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">

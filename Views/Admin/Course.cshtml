@@ -52,7 +52,7 @@
                                         <span class="badge border border-danger text-danger">Open</span>
                                     </td>*@
                                     <td>@item.image_code</td>
-                                    <td>@item.category_id</td>
+                                    <td>@item.category.name</td>
                                     <td>@item.price</td>
                                     @*<td>
                                         <span class="badge border border-success text-success">High</span>
@@ -166,8 +166,13 @@
                        id: id
                    },
                    success: function (response) {
-                       console.log(response.data);
-                       $('#form').html(response.data);
+                       if (response.success) {
+                           console.log(response.data);
+                           $('#form').html(response.data);
+                       } else {
+                           alert('Error');
+                       }
+                       
                        
                    }
                });
