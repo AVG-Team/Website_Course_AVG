@@ -27,7 +27,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/toastr.css")
     @RenderSection("styles", required: false)
-
+    
     <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
 </head>
 
@@ -68,7 +68,7 @@
                             <nav class="menu-nav show justify-content-between">
                                 <div class="logo me-5">
                                     <a href="@Url.Action("Index", "Home")">
-                                        <img src="~/Content/img/logo/avg_team.png" alt="Logo">
+                                        <img src="~/Content/img/logo/AVG_Course.png" alt="Logo">
                                     </a>
                                 </div>
                                 <div class="navbar-wrap main-menu d-none d-lg-flex">
@@ -177,7 +177,7 @@
 
                             <nav class="menu-box">
                                 <div class="nav-logo">
-                                    <a href="index.html"><img src="../Content/img/logo/avg_team.png" alt="" title=""></a>
+                                    <a href="index.html"><img src="../Content/img/logo/AVG_Course.png" alt="" title=""></a>
                                 </div>
 
                                 @if (Website_Course_AVG.Managers.Helpers.IsAuthenticated())
@@ -189,7 +189,7 @@
                                             @if (Website_Course_AVG.Managers.Helpers.IsAdmin())
                                             {
                                                 <a href="#">
-                                                    <i class="icon fa-solid fa-user-shield" style="color:rgb(124 217 110)!important" ></i>
+                                                    <i class="icon fa-solid fa-user-shield" style="color:rgb(124 217 110)!important"></i>
                                                 </a>
                                                 <div class="user-name-mobile"><span>@currentUser.fullname</span></div>
                                             }
@@ -201,7 +201,7 @@
                                                 <div class="user-name-mobile"><span>@currentUser.fullname</span></div>
                                             }
                                         </div>
-                                        
+
                                     </div>
                                 }
                                 <div class="menu-outer">
@@ -268,7 +268,7 @@
     </header>
     <!-- main-area -->
     <main>
-        <div class="pb-5 ">
+        <div class="pb-5 to-top">
             @RenderBody()
         </div>
         <!-- newsletter-area -->
@@ -301,7 +301,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-3">
                             <div class="footer-logo">
-                                <a href="index.html"><img src="~/Content/img/logo/avg_team.png" alt=""></a>
+                                <a href="index.html"><img src="~/Content/img/logo/AVG_Course.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9">
@@ -373,7 +373,10 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/toastr.js")
     @RenderSection("scripts", required: false)
-    @RenderSection("filter", required:false)
+    @RenderSection("filter", required: false)
+    @{
+        string currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    }
 
     <script>
         function getCookie(cookieName) {
@@ -518,6 +521,19 @@
             const toggleMenu = document.querySelector('.profile-user');
             toggleMenu.classList.toggle('active');
         }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            var controller = "@currentController";
+
+            if (controller !== "home") {
+                var header = $('#sticky-header');
+
+                let heightHeader = header[0].offsetHeight !== 0 ? header[0].offsetHeight : header[1].offsetHeight;
+
+                var divTop = $(".to-top");
+                divTop.css("margin-top", heightHeader + "px");
+            }
+        });
 
     </script>
 </body>
