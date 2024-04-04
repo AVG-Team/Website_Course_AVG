@@ -1,39 +1,40 @@
-﻿@model IEnumerable<Website_Course_AVG.Models.course>
+﻿@model Website_Course_AVG.Models.CartViewModels
+@using Website_Course_AVG.Managers
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int courseCount = Model?.CourseCount ?? 0;
+    bool isLoggedIn = Helpers.IsUser();
 }
 
 <section class="h-100" style="background-color: #eee;">
-    <div class="container h-100 py-5">
-        <a href="@Url.Action("Index", "Course")" class="btn btn-primary btn-payment m-lg-2">Back</a>
-        @if (Model != null && Model.Any())
+    <div id="sp-container" class="container h-100 py-5">
+        <a href="@Url.Action("Index", "Courses")" class="btn btn-primary btn-back m-lg-2">Back</a>
+        @if (Model.CourseCount > 0)
         {
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-10">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-
-                        <h3 class="mb-0 text-black">Cart</h3>
+                        <h3 class="header mb-0 text-black">Cart</h3>
                         <div>
-                            @if (@ViewBag.count == 1)
+                            @if (@Model.CourseCount == 1)
                             {
-                                <p class="mb-0">You have @ViewBag.count course in your cart</p>
+                                <p class="mb-0 text-black cart-count">You have @Model.CourseCount course in your cart</p>
                             }
-                            else if (@ViewBag.count > 1)
+                            else
                             {
-                                <p class="mb-0">You have @ViewBag.count courses in your cart</p>
+                                <p class="mb-0 text-black cart-count">You have @Model.CourseCount courses in your cart</p>
                             }
                         </div>
                     </div>
-                    @foreach (var course in Model)
+                    @foreach (var course in Model.Courses)
                     {
-                        <div class="card rounded-3 mb-4">
+                        <div id="item-card" class="card rounded-3 mb-4">
                             <div class="card-body p-4">
                                 <div class="row d-flex justify-content-between align-items-center">
                                     <div class="col-md-2 col-lg-2 col-xl-2">
-                                        <img src="@course.image_code" class="card-img card-img-top"
-                                             class="img-fluid rounded-3" alt="img_code">
+                                        <img src="@course.image_code" class="card-img card-img-top img-fluid rounded-3" alt="img_code">
                                     </div>
                                     <div class="col-md-6 col-lg-6 col-xl-6">
                                         <p class="lead text-black fw-normal mb-2">@course.title</p>
@@ -49,29 +50,19 @@
                             </div>
                         </div>
                     }
-                    <div class="card mb-4">
-                        <div class="card-body p-4 d-flex flex-row">
-                            <div class="form-outline flex-fill">
-                                <input type="text" class="form-control mb-1" placeholder="Discount code">
-                            </div>
-                            <button class="btn btn-outline-warning btn-lg ms-3 apply-btn">Apply</button>
-                        </div>
-                    </div>
-
                     <div class="card">
                         <div class="card-body text-center">
                             <h4 class="text-black">Total:</h4>
                             <h3 id="totalAmount" class="text-primary"> @ViewBag.TotalAmount VND</h3>
-                            <a href="@Url.Action("Payment", "Cart")" class="btn btn-primary btn-payment">Proceed to Pay</a>
+                            <button class="btn btn-primary btn-payment" onclick="proceedToPayment()">Proceed to Pay</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         }
         else
         {
-            <h1 class="text-center text-black">No courses in your cart</h1>
+            <h1 class="noti text-center text-black">No courses in your cart</h1>
         }
     </div>
 </section>
@@ -79,44 +70,64 @@
 
 @section scripts {
     <script>
+        function redirectToLogin() {
+            window.location.href = '@Url.Action("Login", "Account")';
+        }
+
+        function proceedToPayment() {
+            var isLoggedIn = @Html.Raw(Json.Encode(isLoggedIn));
+            if (!isLoggedIn) {
+                //document.cookie = "Error=" + "You aren't logged in!" + ";path=/"
+                setCookie("Error", "You aren't logged in!", 10)
+                redirectToLogin();
+            } else {
+                window.location.href = '@Url.Action("Payment", "Cart")';
+            }
+        }
+
         function deleteItem(itemId, element) {
             removeFromCookie(itemId);
 
             var card = element.closest('.card');
             card.remove();
+
+            updateCourseCount();
         }
 
         function removeFromCookie(itemId) {
-            var cookieValue = getCookie("selected_course_ids");
-            var ids = cookieValue.split(',');
+            var cookieValue = atob(getCookie("Item"));
+            var ids = cookieValue.split(';');
             var index = ids.indexOf(itemId.toString());
             if (index !== -1) {
                 ids.splice(index, 1);
             }
-            var updatedCookieValue = ids.join(',');
-            document.cookie = "selected_course_ids=" + updatedCookieValue + ";path=/";
+
+            var updatedCookieValue = ids.join(';');
+            document.cookie = "Item=" + btoa(updatedCookieValue) + ";path=/";
         }
 
-        $(document).ready(function() {
-            $('.apply-btn').click(function () {
-            var discountCode = $('.form-outline input[type="text"]').val();
-            $.ajax({
-                url: '@Url.Action("CheckDiscountCode", "Cart")',
-                type: 'POST',
-                data: { discountCode: discountCode },
-                success: function(response) {
-                    if (response.success) {
-                        alert(response.message);
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function() {
-                    alert('An error occurred while processing your request.');
+        function updateCourseCount() {
+            var courseCount = $('.card').length-1;
+            if (courseCount !== 0) {
+                if (courseCount == 1) {
+                    $('.cart-count').text("You have " + courseCount + " course in your cart");
+                } else {
+                    $('.cart-count').text("You have " + courseCount + " courses in your cart");
                 }
-            });
-        });
-    });
+                $('.noti').hide()
+            }
+            else {
+                $('.noti').show();
+                $('.header').hide();
+                $('.card').hide();
+                $('.cart-count').hide();
+                //document.cookie = "Item=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                deleteCookie("Item");
+                if ($('#sp-container.noti').length === 0) {
+                    $('#sp-container').append('<h1 class="noti text-center text-black">No courses in your cart</h1>');
+                }
+            }
+        }
     </script>
 }
 

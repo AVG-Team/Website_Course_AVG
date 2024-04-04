@@ -243,6 +243,7 @@
     <Compile Include="Manager\TokenHelper.cs" />
     <Compile Include="Attributes\AllowAnonymousAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CartViewModels.cs" />
     <Compile Include="Models\CoursesViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -338,6 +339,8 @@
     <Content Include="Content\img\logo\avg_team.png" />
     <Content Include="Content\img\logo\favicon.png" />
     <Content Include="Content\img\logo\logo.png" />
+    <Content Include="Content\img\payment_icon\momo.png" />
+    <Content Include="Content\img\payment_icon\vnpay.png" />
     <Content Include="Content\img\poster\movie_details_img.jpg" />
     <Content Include="Content\img\poster\s_ucm_poster01.jpg" />
     <Content Include="Content\img\poster\s_ucm_poster02.jpg" />
@@ -386,6 +389,9 @@
       <LastGenOutput>MyData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Models\MyData.dbml.layout">
+      <DependentUpon>MyData.dbml</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -433,7 +439,6 @@
     <Content Include="Views\Courses\ListCourses.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Web.config" />
-    <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Cart\Payment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -475,11 +480,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\MyData.dbml.layout">
-      <DependentUpon>MyData.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -117,7 +117,7 @@ namespace Website_Course_AVG.Controllers
             {
                 var routeData = new RouteData();
                 routeData.Values.Add("controller", controllerName);
-                var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://google.com", null), new HttpResponse(null))), routeData, new CourseController());
+                var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://google.com", null), new HttpResponse(null))), routeData, new CoursesController());
                 var razorViewEngine = new RazorViewEngine();
                 var razorViewResult = razorViewEngine.FindView(fakeControllerContext, viewName, "", false);
 
