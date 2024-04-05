@@ -1255,6 +1255,9 @@
     <Content Include="Views\Admin\InsertCourse.cshtml" />
     <Content Include="Views\Admin\_TableCourseParticial.cshtml" />
     <Content Include="Views\Admin\GetCourseById.cshtml" />
+    <Content Include="Views\Admin\Category.cshtml" />
+    <Content Include="Views\Admin\InsertCategory.cshtml" />
+    <Content Include="Views\Admin\GetCategoryById.cshtml" />
     <None Include="Views\Note\notes.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

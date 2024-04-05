@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Website_Course_AVG.Models;
-using Website_Course_AVG.Managers;
 using System.IO;
 using System.Web.Routing;
 
@@ -24,7 +22,6 @@ namespace Website_Course_AVG.Controllers
         
         // GET : Course 
         #region Course
-
         public  ActionResult Course(int? page)
         {
             var courses = _data.courses.ToList();
@@ -32,7 +29,7 @@ namespace Website_Course_AVG.Controllers
             var images = _data.images.ToList();
             var pageNumber = page ?? 1;
             var pageSize = 10;
-            AdminViewModels adminView = new AdminViewModels()
+            var adminView = new AdminViewModels()
             {
                 Courses = courses,
                 Categories = categories,
@@ -66,11 +63,9 @@ namespace Website_Course_AVG.Controllers
                 };
                 _data.courses.InsertOnSubmit(course);
                 _data.SubmitChanges();
-                Helpers.AddCookie("success", "Insert course successfully");
                 return RedirectToAction("Course");
             }
 
-            Helpers.AddCookie("error", "Insert course failed");
             return RedirectToAction("Course");
         }
 
@@ -93,6 +88,19 @@ namespace Website_Course_AVG.Controllers
                 return RedirectToAction("Course");
             }
             
+            return RedirectToAction("Course");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCourse(course model)
+        {
+            var course = _data.courses.FirstOrDefault(c => c.id == model.id);
+            if (course != null)
+            {
+                course.deleted_at = DateTime.Now;
+                _data.SubmitChanges();
+                return RedirectToAction("Course");
+            }
             return RedirectToAction("Course");
         }
         public JsonResult ReloadTableCourse(int? page)
@@ -140,8 +148,107 @@ namespace Website_Course_AVG.Controllers
                 return ResponseHelper.ErrorResponse("");
             }
         }
+
+  
         #endregion
-        
+
+        #region Category
+        public ActionResult Category(int? page )
+        {
+            var categories = _data.categories.ToList();
+            var courses = _data.courses.ToList();
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+            var categoriesListPage = categories.ToPagedList(pageNumber, pageSize);
+
+            var viewModel = new AdminViewModels()
+            {
+                Categories = categories,
+                Courses = courses,
+                CategoriesPagedList = categoriesListPage
+            };
+            return View(viewModel);
+        }
+
+        public ActionResult InsertCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult InsertCategory(AdminViewModels model)
+        {
+            if (ModelState.IsValid)
+            {
+                var category = new category()
+                {
+                    name = model.Category.name,
+                };
+                _data.categories.InsertOnSubmit(category);
+                _data.SubmitChanges();
+                return RedirectToAction("Category");
+            }
+            return RedirectToAction("Category");
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCategory(FormCollection form, category model)
+        {
+            var category = _data.categories.FirstOrDefault(c => c.id == model.id);
+            if (category != null)
+            {
+                category.name = form["Category.name"];
+                category.updated_at = DateTime.Now;
+                _data.SubmitChanges();
+                return RedirectToAction("Category");
+            }
+            return RedirectToAction("Category");
+        }
+
+        public ActionResult DeleteCategory()
+        {
+            return View("Category");
+        }
+        [HttpPost]
+        public JsonResult DeleteCategory(category model)
+        {
+            try
+            {
+                var category = _data.categories.FirstOrDefault(c => c.id == model.id);
+                if (category != null)
+                {
+                    category.deleted_at = DateTime.Now;
+                    _data.SubmitChanges();
+                }
+                var categories = _data.categories.ToList();
+                var view = RenderViewToString("Admin", "Category", categories);
+                return ResponseHelper.SuccessResponse("", view);
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper.ErrorResponse("Don't delete category !");
+            }
+        }   
+        [HttpGet]
+        public JsonResult GetCategoryById(int? id )
+        {
+            try
+            {
+                var category = _data.categories.Where(c => c.id == id).ToList();
+                var model = new AdminViewModels()
+                {
+                    Categories = category
+                };
+                var view = RenderViewToString("Admin", "GetCategoryById", model);
+                return ResponseHelper.SuccessResponse("", view);
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper.ErrorResponse("Don't get category by id !");
+            }
+        }
+        #endregion
 
         protected string RenderViewToString(string controllerName, string viewName, object viewData)
         {

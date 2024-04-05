@@ -1,0 +1,260 @@
+﻿@using PagedList.Mvc
+@model Website_Course_AVG.Models.AdminViewModels
+
+@functions {
+    public int count { get; set; }
+
+}
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div id="body" class="app-body">
+    <div class="row gx-3">
+        <div class="col-xxl-12">
+            <div id="form" class="card mb-3">
+                @Html.Partial("InsertCategory")
+            </div>
+        </div>
+        <div class="col-xxl-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered m-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
+                                    <th>Deleted</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.CategoriesPagedList)
+                                {
+                                    <tr class="item-row" data-id="@item.id">
+                                        <td>@item.id</td>
+                                        <td>
+                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                @item.name
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @{
+                                                count = 0;
+                                                foreach (var course in Model.Courses)
+                                                {
+                                                    if (course.category_id == @item.id)
+                                                    {
+                                                        count++;
+                                                    }
+                                                }
+                                            }
+                                            @count
+                                        </td>
+                                        <td class="text-success">@item.created_at</td>
+                                        <td class="text-warning">@item.updated_at</td>
+                                        <td class="text-danger">@item.deleted_at</td>
+                                        <td class="d-flex justify-content-center">
+                                            <button class="btn btn-info btn-sm me-1 border rounded-3 btn-update" data-id="@item.id">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete btn-open-modal" value="@count" >
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                                
+                                            <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title text-success" id="ConfirmModalLabel">
+                                                                Confirm Remove Category
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                                Are you sure you want to remove this category?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                Close
+                                                            </button>
+                                                            <button type="submit" class="btn btn-danger btn-submit">
+                                                                Submit
+                                                            </button>
+                                                        </div>
+                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade" id="ErrorModal" tabindex="-1" aria-labelledby="ErrorModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title text-danger" id="ErrorModalLabel">
+                                                                Error
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body text-danger">
+                                                            This category has courses, you can't delete it! Please delete the course first.
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                Close
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div>
+                    Page @(Model.CategoriesPagedList.PageCount < Model.CategoriesPagedList.PageNumber ? 0 : Model.CategoriesPagedList.PageNumber) of @Model.CategoriesPagedList.PageCount
+                </div>
+                <div class="MenuPage">
+                    @Html.PagedListPager(Model.CategoriesPagedList, page => Url.Action("Category", new { page = page }))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    ul .pagination {
+        justify-content: center;
+    }
+
+    .MenuPage {
+        padding: 20px 0 10px 0;
+    }
+
+        .MenuPage li {
+            display: inline;
+        }
+</style>
+
+<style type="text/css">
+    .MenuPage a {
+        clear: both;
+        color: black;
+        padding: 4px 8px;
+        text-decoration: none;
+        background-color: #e8e8e8;
+        border-radius: 5px;
+        margin-left: 5px;
+    }
+
+        .MenuPage a:hover {
+            background-color: darkcyan;
+            border-radius: 5px;
+        }
+
+    a:not([href]):not([class]) {
+        &, &:hover
+
+    {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    }
+
+    .btn-filter {
+        background-color: #007bff;
+        color: white;
+        border-radius: 10px;
+        border-color: transparent;
+        height: 100%;
+    }
+
+        .btn-filter:hover {
+            background-color: #0056b3;
+            color: darkgray;
+        }
+
+        .btn-filter .clicked {
+            background-color: #0056b3;
+            color: darkgray;
+        }
+
+    .modal {
+        top: 100%;
+        transform: translateY(-100%);
+    }
+</style>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            console.log("ready");
+            $('.btn-update').add('.item-row').click(function () {
+                var id = $(this).data('id'); // Sử dụng thuộc tính data-id để lấy giá trị id
+                console.log(id);
+                $.ajax({
+                    url: '/Admin/GetCategoryById',
+                    type: 'GET',
+                    data: {
+                        id: id
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            console.log(response.data);
+                            $('#form').html(response.data);
+                        } else {
+                            alert('Error');
+                        }
+
+
+                    }
+                });
+            });
+
+            $(".btn-cancel").click(function () {
+                $('input').each(function () {
+                    $(this).val('');
+                });
+            });
+
+            $(".btn-open-modal").click(function () {
+                var count = $(this).val();
+                var id = $(this).closest('.item-row').data('id');
+                if (count == 0) {
+                    $('#ConfirmModal').modal('show');
+                    $('#ConfirmModal').on('click', '.btn-submit', function () {
+                        $.ajax({
+                            url: '/Admin/DeleteCategory',
+                            type: 'POST',
+                            data: {
+                                id: id
+                            },
+                            success: function (response) {
+                                $('#body').html(response.data);
+                            }
+                        });
+                    });
+                    
+                } else {
+                    $('#ErrorModal').modal('show');
+                }
+
+            });
+           
+        });
+
+</script>
+}
+

@@ -34,6 +34,8 @@ namespace Website_Course_AVG.Models
         public List<promotion> Promotions { get; set; }
         public List<image> Images { get; set; }
         public IPagedList<course> CoursesPagedList { get; set; }
+        public IPagedList<category> CategoriesPagedList { get; set; }
+
         #endregion
 
     }

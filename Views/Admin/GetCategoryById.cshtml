@@ -1,0 +1,41 @@
+﻿@model Website_Course_AVG.Models.AdminViewModels
+@{
+    Layout = null;
+}
+@{
+    <div id="form" class="card mb-3">
+    @foreach (var item in Model.Categories)
+    {
+        using (Html.BeginForm("UpdateCategory", "Admin",@item, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <h5 class="card-title">Update Category</h5>
+            </div>
+            <div class="card-body ">
+                <div class="row gx-3 d-flex justify-content-center">
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3 ">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="Category.name" class="form-control" placeholder="Name Category" value="@item.name"/>
+                                    @Html.ValidationMessageFor(m => m.Category.name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" aria-controls="@Url.Action("Course","Admin")">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    }
+    
+</div>
+}
+

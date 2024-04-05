@@ -35,7 +35,7 @@
                             <tbody>
                             @foreach (var item in Model.CoursesPagedList)
                             {
-                                <tr>
+                                <tr class="item-row" data-id="@item.id">
                                     <td>@item.id</td>
                                     <td>
                                         <span class="d-inline-block text-truncate" style="max-width: 150px;">
@@ -64,9 +64,37 @@
                                         <button class="btn btn-info btn-sm me-1 border rounded-3 btn-update"  data-id="@item.id">
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        <button class="btn btn-danger btn-sm ms-1 border rounded-3" href="#">
+                                        <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete"  data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             <i class="bi bi-trash"></i>
                                         </button>
+                                        @using (Html.BeginForm("DeleteCourse", "Admin",@item, FormMethod.Post))
+                                        {
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                                Confirm Remove Course
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to remove this course?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                Close
+                                                            </button>
+                                                            <button type="submit" class="btn btn-danger btn-submit">
+                                                                Submit
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                       
                                     </td>
                                 </tr>
 
@@ -156,7 +184,7 @@
 @section Scripts{
    <script>
        $(document).ready(function () {
-           $('.btn-update').click(function () {
+           $('.btn-update').add('.item-row').click(function () {
                var id = $(this).data('id'); // Sử dụng thuộc tính data-id để lấy giá trị id
                console.log(id);
                $.ajax({
@@ -179,5 +207,7 @@
            });
        });
 
+       
+       
     </script>
 }
