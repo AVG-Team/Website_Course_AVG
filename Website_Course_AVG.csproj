@@ -1267,11 +1267,16 @@
     <Content Include="Views\Admin\Category.cshtml" />
     <Content Include="Views\Admin\InsertCategory.cshtml" />
     <Content Include="Views\Admin\GetCategoryById.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml"/>
     <None Include="Views\Note\notes.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LayoutLesson.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -1287,27 +1292,18 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Account\GithubLogin.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Account\GithubLogin.cshtml" />
     <Content Include="Views\Lesson\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutLesson.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Comment\comments.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
-    <Content Include="Views\Courses\ListCourses.cshtml" />
-    <Content Include="Views\Courses\_CourseListPartial.cshtml" />
-    <Content Include="Web.config" />
-    <Content Include="Views\Courses\Index.cshtml" />
-    <Content Include="Views\Courses\Details.cshtml" />
-    <Content Include="Views\Courses\_CourseListPartial.cshtml" />
     <Content Include="Views\Courses\ListCourses.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\Payment.cshtml" />
@@ -1319,13 +1315,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Views\Lesson\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutLesson.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Comment\comments.cshtml" />
-    <Content Include="Views\Courses\Index.cshtml" />
-    <Content Include="Views\Courses\ListCourses.cshtml" />
-    <Content Include="Views\Courses\Detail.cshtml" />
-    <Content Include="Views\Courses\_CourseListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -250,6 +250,8 @@ namespace Website_Course_AVG.Controllers
         }
         #endregion
 
+
+
         protected string RenderViewToString(string controllerName, string viewName, object viewData)
         {
             using (var writer = new StringWriter())
