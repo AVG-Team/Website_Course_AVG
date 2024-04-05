@@ -277,6 +277,7 @@
     <Compile Include="Attributes\UserAttribute.cs" />
     <Compile Include="Attributes\AuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -293,6 +294,7 @@
     <Compile Include="Manager\TokenHelper.cs" />
     <Compile Include="Attributes\AllowAnonymousAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CartViewModels.cs" />
     <Compile Include="Models\CategoryCourseViewModels.cs" />
     <Compile Include="Models\CoursesViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -330,6 +332,9 @@
     <Content Include="Content\fonts\DesignerVN-Poppins\Readme.txt" />
     <Content Include="Content\img\banner\banner_bg01.jpg" />
     <Content Include="Content\img\banner\layout_main.png" />
+    <Content Include="Content\img\banner\layout_main_2.jpg" />
+    <Content Include="Content\img\banner\layout_main_3.jpg" />
+    <Content Include="Content\img\banner\layout_main_4.jpg" />
     <Content Include="Content\img\banner\layout_main_section.jpg" />
     <Content Include="Content\img\banner\slider_img01.jpg" />
     <Content Include="Content\img\banner\slider_img02.jpg" />
@@ -370,6 +375,8 @@
     <Content Include="Content\img\blog\rc_post_thumb01.jpg" />
     <Content Include="Content\img\blog\rc_post_thumb02.jpg" />
     <Content Include="Content\img\blog\rc_post_thumb03.jpg" />
+    <Content Include="Content\img\course_images\aws.jpg" />
+    <Content Include="Content\img\course_images\unreal engine.jpg" />
     <Content Include="Content\img\favicon.png" />
     <Content Include="Content\img\images\card_img.png" />
     <Content Include="Content\img\images\episode_img.jpg" />
@@ -388,9 +395,12 @@
     <Content Include="Content\img\images\services_img02.jpg" />
     <Content Include="Content\img\images\title_shape.png" />
     <Content Include="Content\img\images\vnpay_footer.png" />
+    <Content Include="Content\img\logo\AVG_Course.png" />
     <Content Include="Content\img\logo\avg_team.png" />
     <Content Include="Content\img\logo\favicon.png" />
     <Content Include="Content\img\logo\logo.png" />
+    <Content Include="Content\img\payment_icon\momo.png" />
+    <Content Include="Content\img\payment_icon\vnpay.png" />
     <Content Include="Content\img\poster\movie_details_img.jpg" />
     <Content Include="Content\img\poster\s_ucm_poster01.jpg" />
     <Content Include="Content\img\poster\s_ucm_poster02.jpg" />
@@ -466,13 +476,6 @@
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <None Include="Views\Note\notes.cshtml" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -510,15 +513,32 @@
     <Content Include="Views\Courses\ListCourses.cshtml" />
     <Content Include="Views\Courses\_CourseListPartial.cshtml" />
 	  <Content Include="Web.config" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\_CourseListPartial.cshtml" />
+    <Content Include="Views\Courses\ListCourses.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\Payment.cshtml" />
+    <Content Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Views\Lesson\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutLesson.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Comment\comments.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Courses\ListCourses.cshtml" />
+    <Content Include="Views\Courses\Detail.cshtml" />
+    <Content Include="Views\Courses\_CourseListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Course\" />
+    <Folder Include="Views\Eror\" />
     <Folder Include="Views\Exercise\" />
   </ItemGroup>
   <ItemGroup>

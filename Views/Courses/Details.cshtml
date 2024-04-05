@@ -23,9 +23,11 @@
         font-size: 14px;
     }
 </style>
+
 <main class="container pt-lg-100 pt-md-60 pt-sm-110 pt-sx-110" aria-labellesdby="title">
     @foreach (var item in Model.Courses)
     {
+        ViewBag.Id = item.id;
         <div class="row">
             <div class="col-lg-8" id="content">
                 <div class="course_title mb-4">
@@ -79,7 +81,7 @@
                                 <li class="border-bottom lesson-item" style="border-bottom-color:rgba(0,0,0,.05)!important;">
                                     <div class="row d-flex align-items-center" style="height:40px">
                                         <div class="col-10 ">
-                                            <i class="fa-solid fa-circle-play text-info" ></i>
+                                            <i class="fa-solid fa-circle-play text-info"></i>
                                             <span class="item_description ms-2 text-black-50">@lesson.title</span>
                                         </div>
                                         <div class="col-2">
@@ -136,8 +138,8 @@
                             }
                         </span>
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <button class="btn btn-primary rounded-4 text-white fs-6"> Register</button>
+                    <div class="d-flex justify-content-center course-des">
+                        <button class="btn btn-primary rounded-4 text-white fs-6 add-btn" data-course-id="@item.id">Add to Cart</button>
                     </div>
                     <div class="d-flex justify-content-center mt-3">
                         <ul>
@@ -165,67 +167,105 @@
     }
 </main>
 
-<script>
-    var itemPrice = document.getElementById("priceCourse");
-    var itemPriceValue = itemPrice.value;
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var itemPrice = document.getElementById("priceCourse");
+            var itemPriceValue = itemPrice.value;
+            var courseId = @ViewBag.Id;
 
-    var price = parseFloat(itemPriceValue);
-    console.log(price);
-    if (!isNaN(price)) {
-        var formatPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
-        console.log(formatPrice);
-        document.getElementById("price").textContent = formatPrice;
-    } else {
-        console.log("Error");
-    }
+            var existingIds = getCookie("Item");
+            if (existingIds) {
+                var decodedIds = atob(existingIds).split(";");
+                if (decodedIds.includes(courseId.toString())) {
+                    $('.add-btn').hide();
+                    $('.course-des').append('<h4 class="text-center text-warning">This course is already in your cart.</h4>');
+                }
+            }
 
-    // Khởi tạo biến để lưu tổng thời gian
-    var totalTimeInMinutes = 0;
-    var count = 0;
-    var timeElements = document.querySelectorAll(".time-lesson");
-    timeElements.forEach(function (element) {
+            var price = parseFloat(itemPriceValue);
+            console.log(price);
+            if (!isNaN(price)) {
+                var formatPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+                console.log(formatPrice);
+                document.getElementById("price").textContent = formatPrice;
+            } else {
+                console.log("Error");
+            }
 
-        var lessonTime = parseInt(element.textContent);
-        count = count + 1;
+            // Khởi tạo biến để lưu tổng thời gian
+            var totalTimeInMinutes = 0;
+            var count = 0;
+            var timeElements = document.querySelectorAll(".time-lesson");
+            timeElements.forEach(function (element) {
 
-        if (!isNaN(lessonTime)) {
-            totalTimeInMinutes += lessonTime;
-        }
-    })
+                var lessonTime = parseInt(element.textContent);
+                count = count + 1;
 
-    var totalTimeElements = document.getElementsByClassName("totalTime");
-    for (var i = 0; i < totalTimeElements.length; i++) {
-        totalTimeElements[i].textContent = totalTimeInMinutes;
-    }
+                if (!isNaN(lessonTime)) {
+                    totalTimeInMinutes += lessonTime;
+                }
+            })
 
-    // Lặp qua các phần tử có class là "totalLesson" và gán giá trị
-    var totalLessonElements = document.getElementsByClassName("totalLesson");
-    for (var j = 0; j < totalLessonElements.length; j++) {
-        totalLessonElements[j].textContent = count;
-    }
-    // Hiển thị tổng thời gian
-    console.log("Tổng thời gian: " + totalTimeInMinutes + " phút");
+            var totalTimeElements = document.getElementsByClassName("totalTime");
+            for (var i = 0; i < totalTimeElements.length; i++) {
+                totalTimeElements[i].textContent = totalTimeInMinutes;
+            }
 
-   
+            // Lặp qua các phần tử có class là "totalLesson" và gán giá trị
+            var totalLessonElements = document.getElementsByClassName("totalLesson");
+            for (var j = 0; j < totalLessonElements.length; j++) {
+                totalLessonElements[j].textContent = count;
+            }
+            // Hiển thị tổng thời gian
+            console.log("Tổng thời gian: " + totalTimeInMinutes + " phút");
 
-    window.addEventListener('resize', function () {
-        swapDivs();
-    });
 
-    function swapDivs() {
-        var div1 = document.getElementById('content');
-        var div2 = document.getElementById('description');
 
-        // Kiểm tra kích thước màn hình
-        var screenWidth = window.innerWidth;
-        console.log = screenWidth;
-        // Kiểm tra điều kiện hoán đổi
-        if (screenWidth <= 768) {
-            // Thực hiện hoán đổi chỗ
-            var temp = div1.innerHTML;
-            div1.innerHTML = div2.innerHTML;
-            div2.innerHTML = temp;
-        }
-    }
+            window.addEventListener('resize', function () {
+                swapDivs();
+            });
 
-</script>
+            function swapDivs() {
+                var div1 = document.getElementById('content');
+                var div2 = document.getElementById('description');
+
+                // Kiểm tra kích thước màn hình
+                var screenWidth = window.innerWidth;
+                console.log = screenWidth;
+                // Kiểm tra điều kiện hoán đổi
+                if (screenWidth <= 768) {
+                    // Thực hiện hoán đổi chỗ
+                    var temp = div1.innerHTML;
+                    div1.innerHTML = div2.innerHTML;
+                    div2.innerHTML = temp;
+                }
+            }
+
+            $('.add-btn').click(function () {
+                var courseId = $(this).data('course-id');
+                var existingIds = getsCookie("Item");
+                if (existingIds && existingIds.includes(courseId.toString())) {
+                    toastr.error('This course is already in your cart.');
+                }
+                else {
+                    if (existingIds) {
+                        existingIds += ";" + courseId;
+                    } else {
+                        existingIds = courseId;
+                    }
+                    document.cookie = "Item=" + btoa(existingIds) + ";path=/";
+                    toastr.success("Add to cart successfully.");
+                    $('.add-btn').hide();
+                    $('.course-des').append('<h4 class="text-center text-warning">This course is already in your cart.</h4>');
+                }
+            });
+
+            function getsCookie(name) {
+                var value = "; " + document.cookie;
+                var parts = value.split("; " + name + "=");
+                if (parts.length == 2) return atob(parts.pop().split(";").shift());
+            }
+        });
+    </script>
+}

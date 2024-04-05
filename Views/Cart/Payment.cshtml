@@ -1,0 +1,192 @@
+﻿@model Website_Course_AVG.Models.CartViewModels
+
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .card-flex {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .form-outline {
+        flex: 1 !important;
+        margin-right: 0px !important;
+    }
+
+    .apply-btn {
+        height: 50px !important;
+        width: auto !important;
+    }
+</style>
+
+
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <h5 class="mb-3">
+                                    <a href="@Url.Action("Index", "Cart")" class="btn btn-primary btn-back m-lg-2">Back</a>
+                                </h5>
+                                <hr>
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <h3 class="mb-1 text-black">Cart (@Model.CourseCount)</h3>
+                                    </div>
+                                </div>
+
+                                @foreach (var course in Model.Courses)
+                                {
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div>
+                                                        <img src="@course.image_code"
+                                                             class="img-fluid rounded-3" alt="course-img" style="width: 65px;">
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <h5 class="text-black fw-normal">@course.title</h5>
+                                                        <p class="small mb-0">By @course.author</p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div style="width: 130px;">
+                                                        <h5 class="mb-0 text-primary">@course.price VND</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="card bg-primary text-white rounded-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <h5 class="mb-0">Card details</h5>
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
+                                                 class="img-fluid rounded-3" style="width: 45px;" alt="Avatar">
+                                        </div>
+
+                                        <p class="small mb-2 text-white">Card type</p>
+                                        <a href="#!" type="submit" class="text-white payment-btn" data-payment-method="Momo">
+                                            <img src="~/Content/img/payment_icon/momo.png" alt="Momo" style="width: 40px;">
+                                        </a>
+
+                                        <a href="#!" type="submit" class="text-white payment-btn" data-payment-method="VNPay">
+                                            <img src="~/Content/img/payment_icon/vnpay.png" alt="Vnpay" style="width: 37px;">
+                                        </a>
+                                        <hr class="my-4">
+
+                                        <div class="d-flex justify-content-between">
+                                            <p class="mb-2 text-white">Subtotal</p>
+                                            <p class="mb-2 text-white">@ViewBag.SubTotal VND</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-4">
+                                            <p class="mb-2 text-white">Discount</p>
+                                            <p class="mb-2 text-white" id="discount">@ViewBag.Discount%</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-4">
+                                            <p class="mb-2 text-white">Total</p>
+                                            <p class="mb-2 text-white" id="total">@ViewBag.Total VND</p>
+                                        </div>
+                                        <hr class="my-4">
+
+                                        @using (Html.BeginForm("CheckDiscountCode", "Cart", FormMethod.Post, new { @class = "card-body p-4 d-flex flex-row card-flex", id = "form_check_discount" }))
+                                        {
+                                            @Html.AntiForgeryToken();
+                                            <div class="flex-fill">
+                                                <input name="discountCode" type="text" id="discountInput" class="form-control mb-1" placeholder="Discount code">
+                                            </div>
+                                            <button class="btn btn-outline-warning btn-lg ms-3 apply-btn" type="button">Apply</button>
+                                        }
+
+                                        @using (Html.BeginForm("Checkout", "Cart", FormMethod.Post, new { @class = "card-footer text-center", id = "form_checkout" }))
+                                        {
+                                            @Html.AntiForgeryToken();
+                                            <input type="hidden" id="paymentMethod" name="paymentMethod" value="" />
+                                            <button id="checkout-btn" type="button" class="btn btn-info btn-block btn-lg">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                                </div>
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var discountApplied = false;
+
+            $('.apply-btn').click(function () {
+                if (discountApplied) {
+                    toastr.error("You have already applied the discount code!");
+                    return;
+                }
+                var formData = new FormData($("#form_check_discount")[0]);
+                $.ajax({
+                    url: '@Url.Action("CheckDiscountCode", "Cart")',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        RequestVerificationToken: $('#form_check_discount input:hidden[name="__RequestVerificationToken"]').val(),
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        toastr.success(response.message, "Check discount success!");
+                        $('#total').text(response.data.newTotalAmount + ' VND');
+                        $('#discount').text(response.data.discount + '%');
+                        $('#discountInput').prop('disabled', true);
+                        discountApplied = true;
+                    },
+                    error: function (xhr) {
+                        toastr.error(xhr.responseJSON.message, "Error");
+                    },
+                });
+            });
+
+            $('#checkout-btn').click(function (e) {
+                var selectedPaymentMethod = $('#paymentMethod').val();
+                if (!selectedPaymentMethod) {
+                    toastr.error("Please select payment method.");
+                    e.preventDefault();
+                }
+                else {
+                    $("#form_checkout").submit();
+                }
+            });
+
+            $('.payment-btn').click(function () {
+                var paymentMethod = $(this).data('payment-method');
+                if (paymentMethod === "Momo" || paymentMethod === "VNPay") {
+                    $('#paymentMethod').val(paymentMethod);
+                    var selectedPaymentMethod = paymentMethod;
+                    $('#checkout-btn').data('payment-method', selectedPaymentMethod);
+                } else {
+                    toastr.error("Please select payment method.");
+                    return false;
+                }
+            });
+        });
+    </script>
+}
