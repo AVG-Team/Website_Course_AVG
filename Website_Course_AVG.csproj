@@ -505,7 +505,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\GithubLogin.cshtml" />
     <Content Include="Views\Lesson\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutLesson.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Comment\comments.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />

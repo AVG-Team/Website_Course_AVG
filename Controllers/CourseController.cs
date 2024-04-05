@@ -11,7 +11,7 @@ using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Controllers
 {
-    public class CoursesController : Controller
+    public class CourseController : Controller
     {
         private readonly MyDataDataContext _data = new MyDataDataContext();
 
@@ -127,7 +127,7 @@ namespace Website_Course_AVG.Controllers
             {
                 var routeData = new RouteData();
                 routeData.Values.Add("controller", controllerName);
-                var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://google.com", null), new HttpResponse(null))), routeData, new CoursesController());
+                var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://google.com", null), new HttpResponse(null))), routeData, new CourseController());
                 var razorViewEngine = new RazorViewEngine();
                 var razorViewResult = razorViewEngine.FindView(fakeControllerContext, viewName, "", false);
 
