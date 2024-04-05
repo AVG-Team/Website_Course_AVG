@@ -508,11 +508,11 @@
     <Content Include="Views\Shared\_LayoutLesson.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Comment\comments.cshtml" />
-    <Content Include="Views\Courses\Index.cshtml"/>
+    <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\ListCourses.cshtml" />
     <Content Include="Views\Courses\_CourseListPartial.cshtml" />
-	  <Content Include="Web.config" />
+    <Content Include="Web.config" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\_CourseListPartial.cshtml" />
@@ -537,8 +537,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Course\" />
-    <Folder Include="Views\Eror\" />
     <Folder Include="Views\Exercise\" />
   </ItemGroup>
   <ItemGroup>
