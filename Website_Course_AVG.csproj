@@ -504,6 +504,15 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\GithubLogin.cshtml" />
+    <Content Include="Views\Lesson\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutLesson.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Comment\comments.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml"/>
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\ListCourses.cshtml" />
+    <Content Include="Views\Courses\_CourseListPartial.cshtml" />
+	  <Content Include="Web.config" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\_CourseListPartial.cshtml" />
