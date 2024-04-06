@@ -186,7 +186,7 @@
                     console.log(idCategory);
 
                     $.ajax({
-                        url: '/Courses/GetCourse?Pages=@ViewBag.page',
+                        url: '/Course/GetCourse?Pages=@ViewBag.page',
                         type: 'GET',
                         data: {
                             categoryId: idCategory,
@@ -203,10 +203,10 @@
 
         function redirectToDetail(courseId) {
             var url = window.location.href;
-            if(url.includes("Courses/Index")){
+            if(url.includes("Course/Index")){
                 window.location.href = "Details?id=" + courseId;
             }else{
-                window.location.href = "Courses/Details?id=" + courseId;
+                window.location.href = "Course/Details?id=" + courseId;
             }
         }
     </script>
