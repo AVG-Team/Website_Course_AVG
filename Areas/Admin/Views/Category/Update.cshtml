@@ -1,4 +1,4 @@
-﻿@model Website_Course_AVG.Models.AdminViewModels
+﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
@@ -17,7 +17,7 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Name</label>
-                                    <input type="text" name="Category.name" class="form-control" placeholder="Name Category" value="@Model.Category.name"/>
+                                    <input type="text" name="Category.name" class="form-control" placeholder="Name Category" value="@Model.Category.name" />
                                     @Html.ValidationMessageFor(m => m.Category.name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -42,6 +42,6 @@
             })
         })
     </script>
-}   
+}
 
 

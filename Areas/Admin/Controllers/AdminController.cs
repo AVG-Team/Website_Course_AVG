@@ -6,6 +6,7 @@ using PagedList;
 using Website_Course_AVG.Models;
 using System.IO;
 using System.Web.Routing;
+using Website_Course_AVG.Areas.Admin.Data.ViewModels;
 
 
 namespace Website_Course_AVG.Areas.Admin.Controllers
@@ -214,7 +215,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         }
         #endregion
 
-        /*protected string RenderViewToString(string controllerName, string viewName, object viewData)
+        protected string RenderViewToString(string controllerName, string viewName, object viewData)
         {
             using (var writer = new StringWriter())
             {
@@ -229,6 +230,6 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
                 return writer.ToString();
 
             }
-        }*/
+        }
     }
 }
