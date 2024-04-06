@@ -29,7 +29,6 @@ namespace Website_Course_AVG.Controllers
             return View(new CartViewModels { Courses = new List<course>(), CourseCount = 0 });
         }
 
-        [Website_Course_AVG.Attributes.User]
         public ActionResult Payment()
         {
             var itemCookie = Request.Cookies["Item"];

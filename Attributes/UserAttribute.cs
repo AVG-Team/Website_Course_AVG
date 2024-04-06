@@ -17,12 +17,18 @@ namespace Website_Course_AVG.Attributes
         UserManager UserManager = new UserManager();
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+
+            if (Helpers.GetUserFromToken() == null)
+            {
+                Helpers.AddCookie("Error", "You are't login!!!");
+                filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary(new { controller = "Home", action = "Index" }));
+                return;
+            }
             if (!UserManager.IsUser())
             {
                 if (Helpers.GetUserFromToken().role > 1)
                     Helpers.AddCookie("Error", "You are Admin !!!");
-                else
-                    Helpers.AddCookie("Error", "You are't login!!!");
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new { controller = "Home", action = "Index" }));
                 return;

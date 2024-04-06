@@ -5,7 +5,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int courseCount = Model?.CourseCount ?? 0;
-    bool isLoggedIn = Helpers.IsUser();
+    bool isLoggedIn = Helpers.IsAuthenticated();
 }
 
 <section class="h-100" style="background-color: #eee;">
@@ -77,7 +77,6 @@
         function proceedToPayment() {
             var isLoggedIn = @Html.Raw(Json.Encode(isLoggedIn));
             if (!isLoggedIn) {
-                //document.cookie = "Error=" + "You aren't logged in!" + ";path=/"
                 setCookie("Error", "You aren't logged in!", 10)
                 redirectToLogin();
             } else {
