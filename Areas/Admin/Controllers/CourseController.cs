@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using PagedList;
+using Website_Course_AVG.Areas.Admin.Data.ViewModels;
 using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Areas.Admin.Controllers

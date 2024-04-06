@@ -300,7 +300,7 @@
     <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NoteController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -315,7 +315,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Identity.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\AdminViewModels.cs" />
+    <Compile Include="Areas\Admin\Data\ViewModels\AdminViewModels.cs" />
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\MyData.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1256,6 +1256,7 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Insert.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <None Include="Areas\Admin\Views\Course\Insert.cshtml" />
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
@@ -1283,9 +1284,6 @@
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Areas\Admin\Views\Course\Update.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Update.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Exercise.cshtml" />
-    <Content Include="Views\Admin\Lesson.cshtml" />
     <None Include="Views\Note\notes.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -1338,7 +1336,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Blog\" />
     <Folder Include="Areas\Admin\Views\Comment\" />
     <Folder Include="Areas\Admin\Views\Contact\" />
