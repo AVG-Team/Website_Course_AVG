@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Xml.Linq;
 using PagedList;
+using Website_Course_AVG.Areas.Admin.Data.ViewModels;
 using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Areas.Admin.Controllers

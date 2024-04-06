@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using PagedList;
+using Website_Course_AVG.Models;
 
-namespace Website_Course_AVG.Models
+namespace Website_Course_AVG.Areas.Admin.Data.ViewModels
 {
     public class AdminViewModels
     {
