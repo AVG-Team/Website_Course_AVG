@@ -1,0 +1,511 @@
+﻿@using System.Web.UI.WebControls
+@{
+    Layout = null;
+    string currentController = ViewContext.RouteData.Values["controller"].ToString();
+    string currentAction = ViewContext.RouteData.Values["action"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVG Course Admin Management</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/logo/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- CSS here -->
+
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/fonts/bootstrap/bootstrap-icons.css")
+    @Styles.Render("~/Content/main.min.css")
+    @Styles.Render("~/Content/vendor/overlay-scroll/OverlayScrollbars.min.css")
+    @Styles.Render("~/Content/vendor/toastify/toastify.css")
+    @RenderSection("styles", required: false)
+
+    <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="page-wrapper">
+
+<!-- App header starts -->
+<div class="app-header d-flex align-items-center">
+
+<!-- Toggle buttons start -->
+<div class="d-flex">
+    <button class="toggle-sidebar" id="toggle-sidebar">
+        <i class="bi bi-list lh-1"></i>
+    </button>
+    <button class="pin-sidebar" id="pin-sidebar">
+        <i class="bi bi-list lh-1"></i>
+    </button>
+</div>
+<!-- Toggle buttons end -->
+<!-- App brand starts -->
+<div class="app-brand py-2 ms-3">
+    <a href="@Url.Action("Index","Admin")" class="d-sm-block d-none">
+        <img src="~/Content/img/logo/AVG_admin.png" class="logo" alt="Bootstrap Gallery" />
+    </a>
+    <a href="@Url.Action("Index","Admin")" class="d-sm-none d-block">
+        <img src="~/Content/img/logo/AVG_admin.png" class="logo" alt="Bootstrap Gallery" />
+    </a>
+</div>
+<!-- App brand ends -->
+<!-- App header actions start -->
+<div class="header-actions col">
+<div class="d-lg-flex d-none">
+    <div class="dropdown">
+        <a class="dropdown-toggle d-flex px-3 py-4 position-relative" href="#!" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-grid fs-4 lh-1 text-secondary"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+            <!-- Row start -->
+            <div class="d-flex gap-2 m-2">
+                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                    <img src="~/Content/imagesAdmin/brand-behance.svg" class="img-3x" alt="Admin Themes" />
+                </a>
+                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                    <img src="~/Content/imagesAdmin/brand-gatsby.svg" class="img-3x" alt="Admin Themes" />
+                </a>
+                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                    <img src="~/Content/imagesAdmin/brand-google.svg" class="img-3x" alt="Admin Themes" />
+                </a>
+                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                    <img src="~/Content/imagesAdmin/brand-bitcoin.svg" class="img-3x" alt="Admin Themes" />
+                </a>
+                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                    <img src="~/Content/imagesAdmin/brand-dribbble.svg" class="img-3x" alt="Admin Themes" />
+                </a>
+            </div>
+            <!-- Row end -->
+        </div>
+    </div>
+    <div class="dropdown border-start">
+        <a class="dropdown-toggle d-flex px-3 py-4 position-relative" href="#!" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-exclamation-triangle fs-4 lh-1 text-secondary"></i>
+            <span class="count-label warning"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+            <h5 class="fw-semibold px-3 py-2 text-primary">
+                Notifications
+            </h5>
+            <div class="dropdown-item">
+                <div class="d-flex py-2 border-bottom">
+                    <div class="icon-box md bg-success rounded-circle me-3">
+                        <i class="bi bi-exclamation-triangle text-white fs-4"></i>
+                    </div>
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Rosalie Deleon</h6>
+                        <p class="mb-1">You have new order.</p>
+                        <p class="small m-0 text-secondary">30 mins ago</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                <div class="d-flex py-2 border-bottom">
+                    <div class="icon-box md bg-danger rounded-circle me-3">
+                        <i class="bi bi-exclamation-octagon text-white fs-4"></i>
+                    </div>
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Donovan Stuart</h6>
+                        <p class="mb-1">Membership has been expired.</p>
+                        <p class="small m-0 text-secondary">2 days ago</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                <div class="d-flex py-2">
+                    <div class="icon-box md bg-warning rounded-circle me-3">
+                        <i class="bi bi-exclamation-square text-white fs-4"></i>
+                    </div>
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Roscoe Richards</h6>
+                        <p class="mb-1">Payment pending. Pay now.</p>
+                        <p class="small m-0 text-secondary">3 days ago</p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid mx-3 my-1">
+                <a href="javascript:void(0)" class="btn btn-primary">View all</a>
+            </div>
+        </div>
+    </div>
+    <div class="dropdown border-start">
+        <a class="dropdown-toggle d-flex px-3 py-4 position-relative" href="#!" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-bell fs-4 lh-1 text-secondary"></i>
+            <span class="count-label info"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+            <h5 class="fw-semibold px-3 py-2 text-primary">Updates</h5>
+            <div class="dropdown-item">
+                <div class="d-flex py-2 border-bottom">
+                    <div class="icon-box md bg-success rounded-circle me-3">
+                        <span class="fw-bold text-white">DS</span>
+                    </div>
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Douglass Shaw</h6>
+                        <p class="mb-1">
+                            Membership has been ended.
+                        </p>
+                        <p class="small m-0 text-secondary">Today, 07:30pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                <div class="d-flex py-2 border-bottom">
+                    <div class="icon-box md bg-danger rounded-circle me-3">
+                        <span class="fw-bold text-white">WG</span>
+                    </div>
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Willie Garrison</h6>
+                        <p class="mb-1">
+                            Congratulate, James for new job.
+                        </p>
+                        <p class="small m-0 text-secondary">Today, 08:00pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                <div class="d-flex py-2">
+                    <div class="icon-box md bg-warning rounded-circle me-3">
+                        <span class="fw-bold text-white">TJ</span>
+                    </div>
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Terry Jenkins</h6>
+                        <p class="mb-1">
+                            Lewis added new schedule release.
+                        </p>
+                        <p class="small m-0 text-secondary">Today, 09:30pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid mx-3 my-1">
+                <a href="javascript:void(0)" class="btn btn-primary">View all</a>
+            </div>
+        </div>
+    </div>
+    <div class="dropdown border-start">
+        <a class="dropdown-toggle d-flex px-3 py-4 position-relative" href="#!" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-envelope-open fs-4 lh-1 text-secondary"></i>
+            <span class="count-label"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+            <h5 class="fw-semibold px-3 py-2 text-primary">Messages</h5>
+            <div class="dropdown-item">
+                <div class="d-flex py-2 border-bottom">
+                    <img src="~/Content/imagesAdmin/user3.png" class="img-3x me-3 rounded-5" alt="Admin Theme" />
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Angelia Payne</h6>
+                        <p class="mb-1">
+                            Membership has been ended.
+                        </p>
+                        <p class="small m-0 text-secondary">Today, 07:30pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                <div class="d-flex py-2 border-bottom">
+                    <img src="~/Content/imagesAdmin/user1.png" class="img-3x me-3 rounded-5" alt="Admin Theme" />
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Clyde Fowler</h6>
+                        <p class="mb-1">
+                            Congratulate, James for new job.
+                        </p>
+                        <p class="small m-0 text-secondary">Today, 08:00pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                <div class="d-flex py-2">
+                    <img src="~/Content/imagesAdmin/user4.png" class="img-3x me-3 rounded-5" alt="Admin Theme" />
+                    <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Sophie Michiels</h6>
+                        <p class="mb-1">
+                            Lewis added new schedule release.
+                        </p>
+                        <p class="small m-0 text-secondary">Today, 09:30pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid mx-3 my-1">
+                <a href="javascript:void(0)" class="btn btn-primary">View all</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dropdown ms-2">
+    <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
+       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="~/Content/imagesAdmin/user.png" class="rounded-2 img-3x" alt="Bootstrap Gallery" />
+        <span class="ms-2 text-truncate d-lg-block d-none">Anne Santiago</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end shadow-lg">
+        <div class="header-action-links mx-3 gap-2">
+            <a class="dropdown-item" href="profile.html"><i class="bi bi-person text-primary"></i>Profile</a>
+            <a class="dropdown-item" href="settings.html"><i class="bi bi-gear text-danger"></i>Settings</a>
+            <a class="dropdown-item" href="widgets.html"><i class="bi bi-box text-success"></i>Widgets</a>
+        </div>
+        <div class="mx-3 mt-2 d-grid">
+            <a href="login.html" class="btn btn-primary btn-sm">Logout</a>
+        </div>
+    </div>
+</div>
+</div>
+<!-- App header actions end -->
+
+</div>
+<!-- App header ends -->
+<!-- Main container start -->
+<div class="main-container">
+
+<!-- Sidebar wrapper start -->
+<nav id="sidebar" class="sidebar-wrapper">
+
+<!-- Sidebar profile starts -->
+<div class="shop-profile">
+    <p class="mb-1 fw-bold text-primary">AVG Course</p>
+    <p class="m-0">Hutech, HCM</p>
+</div>
+<!-- Sidebar profile ends -->
+<!-- Sidebar menu starts -->
+<div class="sidebarMenuScroll">
+<ul class="sidebar-menu">
+<li class="active current-page">
+    <a href="@Url.Action("Index","Admin")">
+        <i class="bi bi-pie-chart"></i>
+        <span class="menu-text">Dashboard</span>
+    </a>
+</li>
+<li>
+    <a href="analytics.html">
+        <i class="bi bi-person-square"></i>
+        <span class="menu-text">Account</span>
+    </a>
+</li>
+<li>
+    <a href="widgets.html">
+        <i class="bi bi-newspaper"></i>
+        <span class="menu-text">Blog</span>
+    </a>
+</li>
+<li class="treeview">
+    <a href="#!">
+        <i class="bi bi-window-sidebar"></i>
+        <span class="menu-text">Category</span>
+    </a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="@Url.Action("Index","Category")">Dashboard</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Insert","Category")">Insert</a>
+        </li>
+    </ul>
+</li>
+<li>
+    <a href="calendar.html">
+        <i class="bi bi-person-lines-fill"></i>
+        <span class="menu-text">Contact</span>
+    </a>
+</li>
+<li class="treeview">
+    <a href="#!">
+        <i class="bi bi-window-sidebar"></i>
+        <span class="menu-text">Course</span>
+    </a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="@Url.Action("Index","Course")">Dashboard</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Insert","Course")">Insert</a>
+        </li>
+    </ul>
+</li>
+@*<li>
+    <a href="@Url.Action("Exercise","Course")">
+        <i class="bi bi-wallet2"></i>
+        <span class="menu-text">Exercise</span>
+    </a>
+</li>*@
+<li>
+    <a href="@Url.Action("Image","Admin")">
+        <i class="bi bi-image"></i>
+        <span class="menu-text">Image</span>
+    </a>
+</li>
+<li>
+    <a href="@Url.Action("Order","Admin")">
+        <i class="bi bi-cart"></i>
+        <span class="menu-text">Order</span>
+    </a>
+</li>
+<li>
+    <a href="@Url.Action("Lesson","Admin")">
+        <i class="bi bi-journal-text"></i>
+        <span class="menu-text">Lesson</span>
+    </a>
+</li>
+<li class="treeview">
+    <a href="#!">
+        <i class="bi bi-upc-scan"></i>
+        <span class="menu-text">Login/Signup</span>
+    </a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="@Url.Action("Login","Account")">Login</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Register","Account")">Signup</a>
+        </li>
+        <li>
+            <a href="@Url.Action("ForgotPassword","Account")">Forgot Password</a>
+        </li>
+    </ul>
+</li>
+<li>
+    <a href="page-not-found.html">
+        <i class="bi bi-exclamation-diamond"></i>
+        <span class="menu-text">Page Not Found</span>
+    </a>
+</li>
+@*<li class="treeview">
+    <a href="#!">
+        <i class="bi bi-code-square"></i>
+        <span class="menu-text">Multi Level</span>
+    </a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="#!">Level One Link</a>
+        </li>
+        <li>
+            <a href="#!">
+                Level One Menu
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="#!">Level Two Link</a>
+                </li>
+                <li>
+                    <a href="#!">
+                        Level Two Menu
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="#!">Level Three Link</a>
+                        </li>
+                        <li>
+                            <a href="#!">Level Three Link</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#!">Level One Link</a>
+        </li>
+    </ul>
+</li>*@
+</ul>
+</div>
+<!-- Sidebar menu ends -->
+
+</nav>
+<!-- Sidebar wrapper end -->
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb start -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="bi bi-house lh-1 pe-3 me-3 border-end border-dark"></i>
+                <a href="#" class="text-decoration-none">Admin</a>
+            </li>
+            <li class="breadcrumb-item text-secondary" aria-current="page">
+                Dashboard
+            </li>
+        </ol>
+        <!-- Breadcrumb end -->
+        <!-- Sales stats start -->
+        <div class="ms-auto d-lg-flex d-none flex-row">
+            <div class="d-flex flex-row gap-2">
+                <button class="btn-day btn btn-sm btn-primary">Today</button>
+                <button class="btn-day btn btn-sm btn-white">7d</button>
+                <button class="btn-day btn btn-sm btn-white">2w</button>
+                <button class="btn-day btn btn-sm btn-white">1m</button>
+                <button class="btn-day btn btn-sm btn-white">3m</button>
+                <button class="btn-day btn btn-sm btn-white">6m</button>
+                <button class="btn-day btn btn-sm btn-white">1y</button>
+                <button id="create" class="btn btn-lg btn-primary visually-hidden">Create</button>
+            </div>
+
+        </div>
+        <!-- Sales stats end -->
+
+    </div>
+    <!-- App Hero header ends -->
+    <!-- App body starts -->
+    <div class="body-render">
+        @RenderBody()
+    </div>
+    <!-- App body ends -->
+    <!-- App footer start -->
+    <div class="app-footer">
+        <span>© Bootstrap Gallery 2023</span>
+    </div>
+    <!-- App footer end -->
+
+</div>
+<!-- App container ends -->
+
+</div>
+<!-- Main container end -->
+
+</div>
+
+@Scripts.Render("~/Scripts/js/jquery.min.js")
+@Scripts.Render("~/Scripts/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/vendor/overlay-scroll/jquery.overlayScrollbars.min.js")
+@Scripts.Render("~/Content/vendor/overlay-scroll/custom-scrollbar.js")
+@Scripts.Render("~/Content/vendor/toastify/toastify.js")
+@Scripts.Render("~/Content/vendor/toastify/custom.js")
+
+
+@Scripts.Render("~/Scripts/js/custom.js")
+@Scripts.Render("~/Scripts/js/todays-date.js")
+@Scripts.Render("~/Scripts/js/moment.min.js")
+@RenderSection("scripts", required: false)
+</body>
+</html>
+
+@section scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const controller = "@currentController".toLowerCase();
+            const action = "@currentAction".toLowerCase();
+            console.log("ddd");
+            if (controller === "admin" && action !== "index") {
+                console.log("dd");
+                document.getElementById("create").classList.remove("visually-hidden");
+
+                // Chuyển đổi HTMLCollection thành một mảng
+                const buttons = Array.from(document.getElementsByClassName("btn-day"));
+                buttons.forEach((btn) => {
+                    btn.classList.add("visually-hidden");
+                });
+            }
+        });
+
+    </script>
+}

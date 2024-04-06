@@ -18,7 +18,6 @@ namespace Website_Course_AVG
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
             /*routes.MapRoute(
                 name: "Cart",
                 url: "Cart/{action}/{id}",
