@@ -1,12 +1,10 @@
 ﻿@model Website_Course_AVG.Models.AdminViewModels
 @{
-    Layout = null;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-@{
+<div class="app-body">
     <div id="form" class="card mb-3">
-    @foreach (var item in Model.Categories)
-    {
-        using (Html.BeginForm("UpdateCategory", "Admin",@item, FormMethod.Post))
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
             <div class="card-header">
@@ -19,7 +17,7 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Name</label>
-                                    <input type="text" name="Category.name" class="form-control" placeholder="Name Category" value="@item.name"/>
+                                    <input type="text" name="Category.name" class="form-control" placeholder="Name Category" value="@Model.Category.name"/>
                                     @Html.ValidationMessageFor(m => m.Category.name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -29,13 +27,21 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex gap-2 justify-content-end">
-                    <button type="button" class="btn btn-outline-secondary" aria-controls="@Url.Action("Course","Admin")">Cancel</button>
+                    <button type="button" class="btn btn-outline-secondary btn-cancel" aria-controls="@Url.Action("Index","Category")">Cancel</button>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </div>
         }
-    }
-    
+    </div>
 </div>
-}
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btn-cancel').click(function () {
+                window.location.href = '/Admin/Category';
+            })
+        })
+    </script>
+}   
+
 

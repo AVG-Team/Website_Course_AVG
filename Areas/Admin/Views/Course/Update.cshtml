@@ -1,13 +1,16 @@
-﻿@using MimeKit.Text
+﻿
 @model Website_Course_AVG.Models.AdminViewModels
-
 @{
+    ViewBag.Title = "Course";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-body">
     <div id="form" class="card mb-3">
-        @using (Html.BeginForm("InsertCourse", "Admin", FormMethod.Post))
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
             <div class="card-header">
-                <h5 class="card-title">Insert course</h5>
+                <h5 class="card-title">Update course</h5>
             </div>
             <div class="card-body">
                 <div class="row gx-3">
@@ -16,8 +19,8 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Title</label>
-                                    <input type="text" name="Course.title" class="form-control" placeholder="Title" />
-                                    @Html.ValidationMessageFor(m => m.Course.title, "", new { @class = "text-danger" })
+                                    <input type="text" name="Course.title" class="form-control" placeholder="Title" value="@Model.Course.title" />
+                                    @Html.ValidationMessage(@Model.Course.title, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -27,8 +30,8 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Description</label>
-                                    <input type="text" name="Course.description" class="form-control" placeholder="Description" />
-                                    @Html.ValidationMessageFor(m => m.Course.description, "", new { @class = "text-danger" })
+                                    <input type="text" name="Course.description" class="form-control" placeholder="Description" value="@Model.Course.description" />
+                                    @Html.ValidationMessage(@Model.Course.description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -38,8 +41,8 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Author</label>
-                                    <input text="text" name="Course.author" class="form-control" placeholder="Author"/>
-                                    @Html.ValidationMessageFor(m => m.Course.author, "", new { @class = "text-danger" })
+                                    <input text="text" name="Course.author" class="form-control" placeholder="Author" value="@Model.Course.author" />
+                                    @Html.ValidationMessage(@Model.Course.author, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -49,9 +52,9 @@
                             <div class="card-body">
                                 <label class="form-label">Price</label>
                                 <div class="input-group">
-                                    <input type="text" name="Course.Price" class="form-control" />
+                                    <input type="text" name="Course.Price" class="form-control" value="@Model.Course.price" />
                                     <span class="input-group-text">VND</span>
-                                    @Html.ValidationMessageFor(m => m.Course.price, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessage(@Model.Course.price.ToString(), "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -63,9 +66,9 @@
                                     <label class="form-label">Select Category </label>
                                     <select class="form-select" aria-label="Default select example" name="Course.category_id">
                                         <option selected="">Open this select menu</option>
-                                        @foreach (var item in Model.Categories)
+                                        @foreach (var category in Model.Categories)
                                         {
-                                            <option value=@item.id>@item.name</option>
+                                            <option value="@category.id" @(category.id == @Model.Course.category_id ? "selected" : "") name="Course.category_id">@category.name</option>
                                         }
                                     </select>
                                 </div>
@@ -76,10 +79,20 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex gap-2 justify-content-end">
-                    <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                    <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </div>
         }
     </div>
+</div>
+    
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btn-cancel').click(function () {
+                window.location.href = '/Admin/Course';
+            })
+        })
+    </script>
 }

@@ -296,11 +296,19 @@
         <span class="menu-text">Blog</span>
     </a>
 </li>
-<li>
-    <a href="@Url.Action("Category","Admin")">
-        <i class="bi bi-collection"></i>
+<li class="treeview">
+    <a href="#!">
+        <i class="bi bi-window-sidebar"></i>
         <span class="menu-text">Category</span>
     </a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="@Url.Action("Index","Category")">Dashboard</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Insert","Category")">Insert</a>
+        </li>
+    </ul>
 </li>
 <li>
     <a href="calendar.html">
@@ -308,55 +316,40 @@
         <span class="menu-text">Contact</span>
     </a>
 </li>
-@*<li class="treeview">
+<li class="treeview">
     <a href="#!">
         <i class="bi bi-window-sidebar"></i>
-        <span class="menu-text">Invoices</span>
+        <span class="menu-text">Course</span>
     </a>
     <ul class="treeview-menu">
         <li>
-            <a href="create-invoice.html">Create Invoice</a>
+            <a href="@Url.Action("Index","Course")">Dashboard</a>
         </li>
         <li>
-            <a href="view-invoice.html">View Invoice</a>
-        </li>
-        <li>
-            <a href="invoice-list.html">Invoice List</a>
+            <a href="@Url.Action("Insert","Course")">Insert</a>
         </li>
     </ul>
-</li>**@
-<li>
-    <a href="@Url.Action("Course","Admin")">
-        <i class="bi bi-book"></i>
-        <span class="menu-text">Course</span>
-    </a>
 </li>
-<li>
-    <a href="events.html">
-        <i class="bi bi-layout-text-sidebar"></i>
-        <span class="menu-text">Detail Course</span>
-    </a>
-</li>
-<li>
-    <a href="subscribers.html">
-        <i class="bi bi-cart-check"></i>
-        <span class="menu-text">Detail Order</span>
-    </a>
-</li>
-<li>
-    <a href="contacts.html">
+@*<li>
+    <a href="@Url.Action("Exercise","Course")">
         <i class="bi bi-wallet2"></i>
         <span class="menu-text">Exercise</span>
     </a>
-</li>
+</li>*@
 <li>
-    <a href="settings.html">
+    <a href="@Url.Action("Image","Admin")">
         <i class="bi bi-image"></i>
         <span class="menu-text">Image</span>
     </a>
 </li>
 <li>
-    <a href="profile.html">
+    <a href="@Url.Action("Order","Admin")">
+        <i class="bi bi-cart"></i>
+        <span class="menu-text">Order</span>
+    </a>
+</li>
+<li>
+    <a href="@Url.Action("Lesson","Admin")">
         <i class="bi bi-journal-text"></i>
         <span class="menu-text">Lesson</span>
     </a>
@@ -368,13 +361,13 @@
     </a>
     <ul class="treeview-menu">
         <li>
-            <a href="login.html">Login</a>
+            <a href="@Url.Action("Login","Account")">Login</a>
         </li>
         <li>
-            <a href="signup.html">Signup</a>
+            <a href="@Url.Action("Register","Account")">Signup</a>
         </li>
         <li>
-            <a href="forgot-password.html">Forgot Password</a>
+            <a href="@Url.Action("ForgotPassword","Account")">Forgot Password</a>
         </li>
     </ul>
 </li>
@@ -437,7 +430,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <i class="bi bi-house lh-1 pe-3 me-3 border-end border-dark"></i>
-                <a href="index.html" class="text-decoration-none">Home</a>
+                <a href="#" class="text-decoration-none">Admin</a>
             </li>
             <li class="breadcrumb-item text-secondary" aria-current="page">
                 Dashboard

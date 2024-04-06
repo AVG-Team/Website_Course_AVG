@@ -35,6 +35,15 @@ namespace Website_Course_AVG.Models
         public List<image> Images { get; set; }
         public IPagedList<course> CoursesPagedList { get; set; }
         public IPagedList<category> CategoriesPagedList { get; set; }
+        public IPagedList<user> UsersPagedList { get; set; }
+        public IPagedList<lesson> LessonsPagedList { get; set; }
+        public IPagedList<comment> CommentsPagedList { get; set; }
+        public IPagedList<contact> ContactsPagedList { get; set; }
+        public IPagedList<exercise> ExercisesPagedList { get; set; }
+        public IPagedList<option> OptionsPagedList { get; set; }
+        public IPagedList<order> OrdersPagedList { get; set; }
+        public IPagedList<promotion> PromotionsPagedList { get; set; }
+        public IPagedList<image> ImagesPagedList { get; set; }
 
         #endregion
 

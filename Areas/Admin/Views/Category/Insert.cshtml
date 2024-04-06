@@ -1,8 +1,14 @@
-﻿@model Website_Course_AVG.Models.AdminViewModels
-
+﻿
 @{
+    ViewBag.Title = "InsertCategory";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model Website_Course_AVG.Models.AdminViewModels
+
+<div class="app-body">
     <div id="form" class="card mb-3">
-        @using (Html.BeginForm("InsertCategory", "Admin", FormMethod.Post))
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
             <div class="card-header">
@@ -31,4 +37,5 @@
             </div>
         }
     </div>
-}
+</div>
+
