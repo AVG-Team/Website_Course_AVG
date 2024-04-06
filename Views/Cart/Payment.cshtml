@@ -1,26 +1,27 @@
-﻿@model Website_Course_AVG.Models.CartViewModels
+﻿@model List<Website_Course_AVG.Models.course>
 
 @{
     ViewBag.Title = "Payment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    .card-flex {
-        display: flex !important;
-        align-items: center !important;
-    }
+@section Styles {
+    <style>
+        .card-flex {
+            display: flex !important;
+            align-items: center !important;
+        }
 
-    .form-outline {
-        flex: 1 !important;
-        margin-right: 0px !important;
-    }
+        .form-outline {
+            flex: 1 !important;
+            margin-right: 0px !important;
+        }
 
-    .apply-btn {
-        height: 50px !important;
-        width: auto !important;
-    }
-</style>
-
+        .apply-btn {
+            height: 50px !important;
+            width: auto !important;
+        }
+    </style>
+}
 
 <section class="h-100 h-custom" style="background-color: #eee;">
     <div class="container py-5 h-100">
@@ -36,11 +37,11 @@
                                 <hr>
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <div>
-                                        <h3 class="mb-1 text-black">Cart (@Model.CourseCount)</h3>
+                                        <h3 class="mb-1 text-black">Cart (@Model.Count())</h3>
                                     </div>
                                 </div>
 
-                                @foreach (var course in Model.Courses)
+                                @foreach (var course in Model)
                                 {
                                     <div class="card mb-3">
                                         <div class="card-body">
@@ -87,17 +88,17 @@
 
                                         <div class="d-flex justify-content-between">
                                             <p class="mb-2 text-white">Subtotal</p>
-                                            <p class="mb-2 text-white">@ViewBag.SubTotal VND</p>
+                                            <p class="mb-2 text-white">@Model.Sum(c => c.price) VND</p>
                                         </div>
 
                                         <div class="d-flex justify-content-between mb-4">
                                             <p class="mb-2 text-white">Discount</p>
-                                            <p class="mb-2 text-white" id="discount">@ViewBag.Discount%</p>
+                                            <p class="mb-2 text-white" id="discount">0%</p>
                                         </div>
 
                                         <div class="d-flex justify-content-between mb-4">
                                             <p class="mb-2 text-white">Total</p>
-                                            <p class="mb-2 text-white" id="total">@ViewBag.Total VND</p>
+                                            <p class="mb-2 text-white" id="total">@Model.Sum(c => c.price) VND</p>
                                         </div>
                                         <hr class="my-4">
 
@@ -110,10 +111,11 @@
                                             <button class="btn btn-outline-warning btn-lg ms-3 apply-btn" type="button">Apply</button>
                                         }
 
-                                        @using (Html.BeginForm("Checkout", "Cart", FormMethod.Post, new { @class = "card-footer text-center", id = "form_checkout" }))
+                                        @using (Html.BeginForm("Checkout", "Order", FormMethod.Post, new { @class = "card-footer text-center", id = "form_checkout" }))
                                         {
                                             @Html.AntiForgeryToken();
                                             <input type="hidden" id="paymentMethod" name="paymentMethod" value="" />
+                                            <input type="hidden" name="discountCode" />
                                             <button id="checkout-btn" type="button" class="btn btn-info btn-block btn-lg">
                                                 <div class="d-flex justify-content-between">
                                                     <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
@@ -157,6 +159,7 @@
                         $('#total').text(response.data.newTotalAmount + ' VND');
                         $('#discount').text(response.data.discount + '%');
                         $('#discountInput').prop('disabled', true);
+                        $('input[name="discountCode"]').val($("#discountInput").val());
                         discountApplied = true;
                     },
                     error: function (xhr) {
@@ -179,7 +182,11 @@
             $('.payment-btn').click(function () {
                 var paymentMethod = $(this).data('payment-method');
                 if (paymentMethod === "Momo" || paymentMethod === "VNPay") {
-                    $('#paymentMethod').val(paymentMethod);
+                    if (paymentMethod === "Momo")
+                        $('#paymentMethod').val("1");
+                    else if (paymentMethod === "VNPay")
+                        $('#paymentMethod').val("2");
+
                     var selectedPaymentMethod = paymentMethod;
                     $('#checkout-btn').data('payment-method', selectedPaymentMethod);
                 } else {

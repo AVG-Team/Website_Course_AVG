@@ -12,23 +12,22 @@
 
     <!-- Place favicon.ico in the root directory -->
     <!-- CSS here -->
-    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
-    <link rel="stylesheet" href="~/Content/animate.min.css">
-    <link rel="stylesheet" href="~/Content/magnific-popup.css">
-    <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/Content/flaticon.css">
-    <link rel="stylesheet" href="~/Content/odometer.css">
-    <link rel="stylesheet" href="~/Content/aos.css">
-    <link rel="stylesheet" href="~/Content/slick.css">
-    <link rel="stylesheet" href="~/Content/default.css">
-    <link rel="stylesheet" href="~/Content/style.css">
-    <link rel="stylesheet" href="~/Content/responsive.css">
-    @*@Styles.Render("~/Content/css")*@
+    @Styles.Render("~/Content/css/bootstrap.css")
+    @Styles.Render("~/Content/css/animate.min.css")
+    @Styles.Render("~/Content/css/magnific-popup.css")
+    @Styles.Render("~/Content/css/owl.carousel.min.css")
+    @Styles.Render("~/Content/css/flaticon.css")
+    @Styles.Render("~/Content/css/odometer.css")
+    @Styles.Render("~/Content/css/aos.css")
+    @Styles.Render("~/Content/css/slick.css")
+    @Styles.Render("~/Content/css/default.css")
+    @Styles.Render("~/Content/css/style.css")
+    @Styles.Render("~/Content/css/responsive.css")
     @Scripts.Render("~/bundles/modernizr")
-    @Styles.Render("~/Content/toastr.css")
+    @Styles.Render("~/Content/css/toastr.css")
     @RenderSection("styles", required: false)
 
-    <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
+    @Scripts.Render("~/Scripts/d30a7cc1f2.js")
 </head>
 
 <body>
