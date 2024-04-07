@@ -198,7 +198,7 @@
         $(document).ready(function () {
             console.log("ready");
             $('.btn-update').add('.item-row').click(function () {
-                var id = $(this).data('id'); // Sử dụng thuộc tính data-id để lấy giá trị id
+                var id = $(this).closest('.srow').data('id');; // Sử dụng thuộc tính data-id để lấy giá trị id
                 window.location.href = '/Admin/Category/Update?id=' + id;
             });
 

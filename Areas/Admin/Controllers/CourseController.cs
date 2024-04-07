@@ -50,7 +50,6 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Insert(AdminViewModels models)
         {
-
             if (ModelState.IsValid)
             {
                 var course = new course()
@@ -78,7 +77,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             var categories = _data.categories.Where( c => c.deleted_at == null ).ToList();
             var adminView= new AdminViewModels()
             {
-                Course = course
+                Course = course,
+                Categories = categories
             };
             return View(adminView);
         }

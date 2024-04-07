@@ -82,7 +82,7 @@
                                             }
                                             @count
                                         </td>
-                                        <td class="item-row">@item.course.category.name</td>
+                                        @*<td class="item-row">@item.course.category.name</td>*@
                                         <td class="text-success item-row">@item.created_at</td>
                                         <td class="text-warning item-row">@item.updated_at</td>
                                         <td class="text-danger item-row">@item.deleted_at</td>
@@ -93,8 +93,6 @@
                                             <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete btn-open-modal" value="@count">
                                                 <i class="bi bi-trash"></i>
                                             </button>
-
-
                                         </td>
                                     </tr>
 
@@ -121,7 +119,7 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                 Close
                             </button>
-                            <button type="submit" class="btn btn-danger btn-submit">
+                            <button type="submit" class="btn btn-danger btn-submit-delete">
                                 Submit
                             </button>
                         </div>
@@ -231,8 +229,9 @@
         $(document).ready(function () {
             console.log("ready");
             $('.btn-update').add('.item-row').click(function () {
-                var id = $(this).data('id'); // Sử dụng thuộc tính data-id để lấy giá trị id
-                window.location.href = '/Admin/Category/Update?id=' + id;
+                var id = $(this).closest('.srow').data('id');; // Sử dụng thuộc tính data-id để lấy giá trị id
+               console.log(id);
+                window.location.href = '/Admin/Lesson/Update?id=' + id;
             });
 
             $(".btn-cancel").click(function () {
@@ -247,7 +246,7 @@
             });
             $('.btn-submit-delete').click(function () {
                 $.ajax({
-                    url: '/Admin/Course/Delete',
+                    url: '/Admin/Lesson/Delete',
                     type: 'POST', // Hoặc 'GET' tùy vào phương thức của action
                     data: { id: idDelete },
                     success: function (response) {

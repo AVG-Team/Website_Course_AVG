@@ -348,11 +348,19 @@
         <span class="menu-text">Order</span>
     </a>
 </li>
-<li>
-    <a href="@Url.Action("Index","Lesson")">
-        <i class="bi bi-journal-text"></i>
+<li class="treeview">
+    <a href="#!">
+        <i class="bi bi-window-sidebar"></i>
         <span class="menu-text">Lesson</span>
     </a>
+    <ul class="treeview-menu">
+        <li>
+            <a href="@Url.Action("Index","Lesson")">Dashboard</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Insert","Lesson")">Insert</a>
+        </li>
+    </ul>
 </li>
 <li class="treeview">
     <a href="#!">

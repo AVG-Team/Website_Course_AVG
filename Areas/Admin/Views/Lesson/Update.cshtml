@@ -1,16 +1,15 @@
 ﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
 @{
-    ViewBag.Title = "Insert Lesson";
+    ViewBag.Title = "Update Lesson";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
 <div class="app-body">
     <div id="form" class="card mb-3">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
             <div class="card-header">
-                <h5 class="card-title">@ViewBag.Title</h5>
+                <h5 class="card-title">Update course</h5>
             </div>
             <div class="card-body">
                 <div class="row gx-3">
@@ -19,8 +18,8 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Title</label>
-                                    <input type="text" name="Lesson.title" class="form-control" placeholder="Title" />
-                                    @Html.ValidationMessageFor(m => m.Lesson.title, "", new { @class = "text-danger" })
+                                    <input type="text" name="Lesson.title" class="form-control" placeholder="Title" value="@Model.Lesson.title" />
+                                    @Html.ValidationMessage(@Model.Lesson.title, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -30,8 +29,8 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Description</label>
-                                    <input type="text" name="Lesson.description" class="form-control" placeholder="Description" />
-                                    @Html.ValidationMessageFor(m => m.Lesson.description, "", new { @class = "text-danger" })
+                                    <input type="text" name="Lesson.description" class="form-control" placeholder="Description" value="@Model.Lesson.description" />
+                                    @Html.ValidationMessage(@Model.Lesson.description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -41,8 +40,19 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Index</label>
-                                    <input text="text" name="Lesson.index" class="form-control" placeholder="Index" />
-                                    @Html.ValidationMessageFor(m => m.Lesson.index, "", new { @class = "text-danger" })
+                                    <input text="text" name="Lesson.index" class="form-control" placeholder="Index" value="@Model.Lesson.index" />
+                                    @Html.ValidationMessage(@Model.Lesson.index.ToString(), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <label class="form-label">Video</label>
+                                <div class="input-group">
+                                    <input type="text" name="Lesson.video_id" class="form-control" value="@Model.Lesson.video_id" />
+                                    @Html.ValidationMessage(@Model.Lesson.video_id.ToString(), "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -51,23 +61,12 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="m-0">
-                                    <label class="form-label">Video</label>
-                                    <input text="text" name="Lesson.video_id" class="form-control" placeholder="video id" />
-                                    @Html.ValidationMessageFor(m => m.Lesson.video_id, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-sm-6 col-12">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="m-0">
-                                    <label class="form-label">Select Course </label>
+                                    <label class="form-label">Select Category </label>
                                     <select class="form-select" aria-label="Default select example" name="Lesson.course_id">
                                         <option selected="">Open this select menu</option>
                                         @foreach (var item in Model.Courses)
                                         {
-                                            <option value=@item.id>@item.title</option>
+                                            <option value="@item.id" @(item.id == @Model.Lesson.course_id ? "selected" : "") name="Lesson.course_id">@item.title</option>
                                         }
                                     </select>
                                 </div>
@@ -78,12 +77,19 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex gap-2 justify-content-end">
-                    @*<button type="button" class="btn btn-outline-secondary">Cancel</button>*@
+                    <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </div>
         }
     </div>
 </div>
-
-
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btn-cancel').click(function () {
+                window.location.href = '/Admin/Course';
+            })
+        })
+    </script>
+}
