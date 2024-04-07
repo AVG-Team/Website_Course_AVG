@@ -38,7 +38,6 @@ namespace Website_Course_AVG.Controllers
                 var selectedCourseIds = Helpers.GetItem(itemCookie.Value);
                 var coursesInCart = db.courses.Where(c => selectedCourseIds.Contains(c.id)).ToList();
                 var coursesTmp = new List<course>(coursesInCart);
-                coursesTmp = coursesInCart;
                 List<int> ids = new List<int>();
                 bool isRemove = false;
 
@@ -66,9 +65,10 @@ namespace Website_Course_AVG.Controllers
                 if (isRemove)
                 {
                     string result = string.Join(";", ids);
-                    byte[] bytes = Convert.FromBase64String(result);
-                    string decodedString = Encoding.UTF8.GetString(bytes);
-                    Helpers.AddCookie("Item", decodedString, 30 * 24 * 60 * 60);
+                    byte[] bytes = Encoding.UTF8.GetBytes(result);
+                    string base64String = Convert.ToBase64String(bytes);
+                    Helpers.AddCookie("Error", "The course has been purchased");
+                    Helpers.AddCookie("Item", base64String, 30 * 24 * 60 * 60);
                 }
                 return View(coursesTmp);
             }
