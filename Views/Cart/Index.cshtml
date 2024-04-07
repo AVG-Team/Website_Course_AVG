@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Index";
     int courseCount = Model?.CourseCount ?? 0;
-    bool isLoggedIn = Helpers.IsUser();
+    bool isLoggedIn = Helpers.IsAuthenticated();
 }
 
 @section Styles {

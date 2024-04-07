@@ -322,7 +322,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyData.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrderController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Payment\MoMoResult.cs" />
+    <Compile Include="Payment\MoMoRequest.cs" />
+    <Compile Include="Payment\MoMoSecurity.cs" />
+    <Compile Include="Payment\PaymentRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

@@ -65,6 +65,15 @@ namespace Website_Course_AVG.Managers
             return currentUrl + "/Account/GithubLogin";
         }
 
+        public static string GetRedirectUrlMoMo()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Order/ConfirmPaymentClient";
+        }
+
+
         public static string UrlGithubLogin()
         {
             string clientIdGh = GetValueFromAppSetting("ClientIdGH");

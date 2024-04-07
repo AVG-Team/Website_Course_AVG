@@ -246,7 +246,8 @@
             $('.add-btn').click(function () {
                 var courseId = $(this).data('course-id');
                 var existingIds = getsCookie("Item");
-                if (existingIds && existingIds.includes(courseId.toString())) {
+                var idsArray = existingIds ? existingIds.split(";").map(id => parseInt(id)) : [];
+                if (existingIds && idsArray.includes(courseId)) {
                     toastr.error('This course is already in your cart.');
                 }
                 else {
