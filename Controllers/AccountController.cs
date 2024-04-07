@@ -1,20 +1,26 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json.Linq;
 using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Razor.Tokenizer.Symbols;
 using System.Web.Services.Description;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
+using System.Runtime.Caching;
+
 namespace Website_Course_AVG.Controllers
 {
     public class AccountController : Controller
@@ -562,5 +568,56 @@ namespace Website_Course_AVG.Controllers
         {
             throw new System.NotImplementedException();
         }
+
+		private string RemoveChar(string text)
+		{
+			string word = text.Normalize(NormalizationForm.FormD);
+			StringBuilder ketQua = new StringBuilder();
+
+			foreach (char letter in word)
+			{
+				UnicodeCategory theLoai = CharUnicodeInfo.GetUnicodeCategory(letter);
+				if (theLoai != UnicodeCategory.NonSpacingMark)
+				{
+					ketQua.Append(letter);
+				}
+			}
+
+			return ketQua.ToString().Normalize(NormalizationForm.FormC);
+		}
+
+		public ActionResult Autocomplete(string keyword)
+		{
+			string keywordWithoutDiacritics = RemoveChar(keyword).ToLower();
+
+			Dictionary<string, string> wordDictionary = new Dictionary<string, string>();
+
+			// Thử lấy dữ liệu từ cache trước
+			var cachedData = MemoryCache.Default.Get("cachedData_" + keywordWithoutDiacritics);
+			if (cachedData != null)
+			{
+				return Json((List<string>)cachedData, JsonRequestBehavior.AllowGet);
+			}
+
+			foreach (var sach in _context.courses)
+			{
+				string tensachWithoutDiacritics = RemoveChar(sach.title).ToLower();
+				if (!wordDictionary.ContainsKey(tensachWithoutDiacritics))
+				{
+					wordDictionary.Add(tensachWithoutDiacritics, sach.title);
+				}
+			}
+
+			var suggestions = wordDictionary
+								.Where(entry => entry.Key.Contains(keywordWithoutDiacritics) || entry.Value.Contains(keyword))
+								.Select(entry => entry.Value)
+								.Take(5)
+								.ToList();
+
+			// Lưu dữ liệu vào cache
+			MemoryCache.Default.Add("cachedData_" + keywordWithoutDiacritics, suggestions, DateTimeOffset.Now.AddMinutes(10));
+
+			return Json(suggestions, JsonRequestBehavior.AllowGet);
+		}
 	}
 }
