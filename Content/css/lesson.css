@@ -30,9 +30,9 @@
     color: rgb(33 37 41);
 }
 
-.close-modal-note:hover {
-    color: red;
-}
+    .close-modal-note:hover {
+        color: red;
+    }
 
 .note-item-header {
     display: flex;
@@ -72,10 +72,10 @@
     font-weight: 500;
 }
 
-.btn-note-close:hover {
-    opacity: 1;
-    font-weight: bold;
-}
+    .btn-note-close:hover {
+        opacity: 1;
+        font-weight: bold;
+    }
 
 .btn-note-save {
     padding: 0.5rem 1rem;
@@ -83,12 +83,12 @@
     opacity: 0.9;
 }
 
-.btn-note-save:hover {
-    opacity: 1;
-    border: none !important;
-    color: white !important;
-    background-color: #ff5800 !important;
-}
+    .btn-note-save:hover {
+        opacity: 1;
+        border: none !important;
+        color: white !important;
+        background-color: #ff5800 !important;
+    }
 
 .btn-comment {
     border: 0;
@@ -115,9 +115,9 @@
     opacity: 0.8;
 }
 
-.btn-save-comment:hover {
-    opacity: 1;
-}
+    .btn-save-comment:hover {
+        opacity: 1;
+    }
 
 .menu-in-lesson {
     box-shadow: 0 10px 15px rgba(25, 25, 25, 0.1);
@@ -132,39 +132,39 @@
     padding: 1rem 0;
 }
 
-.menu-in-lesson .btn-back {
-    background: none;
-    color: white;
-    border: none;
-}
+    .menu-in-lesson .btn-back {
+        background: none;
+        color: white;
+        border: none;
+    }
 
-.menu-in-lesson .btn-back i {
-    color: #f5f5f5c2;
-}
+        .menu-in-lesson .btn-back i {
+            color: #f5f5f5c2;
+        }
 
-.menu-in-lesson .btn-back i:hover {
-    color: white;
-}
+            .menu-in-lesson .btn-back i:hover {
+                color: white;
+            }
 
-.menu-in-lesson .title {
-    margin-bottom: 0;
-    text-align: center;
-    line-height: normal;
-    margin-top: 3px;
-}
+    .menu-in-lesson .title {
+        margin-bottom: 0;
+        text-align: center;
+        line-height: normal;
+        margin-top: 3px;
+    }
 
-.menu-in-lesson .header-note {
-    align-items: center;
-    cursor: pointer;
-    opacity: 0.9;
-    color: white;
-    background: none;
-    border: none;
-}
+    .menu-in-lesson .header-note {
+        align-items: center;
+        cursor: pointer;
+        opacity: 0.9;
+        color: white;
+        background: none;
+        border: none;
+    }
 
-.menu-in-lesson .header-note:hover {
-    opacity: 1;
-}
+        .menu-in-lesson .header-note:hover {
+            opacity: 1;
+        }
 
 .footer-in-lesson {
     position: fixed;
@@ -176,41 +176,41 @@
     box-shadow: 0 -2px 3px rgba(0, 0, 0, .1);
 }
 
-.footer-in-lesson a {
-    text-decoration: none;
-}
+    .footer-in-lesson a {
+        text-decoration: none;
+    }
 
-.footer-in-lesson a.first {
-    margin-right: 1.5rem;
-    color: #4a4a4ac4;
-}
+        .footer-in-lesson a.first {
+            margin-right: 1.5rem;
+            color: #4a4a4ac4;
+        }
 
-.footer-in-lesson a.first:hover {
-    color: black;
-}
+            .footer-in-lesson a.first:hover {
+                color: black;
+            }
 
-.footer-in-lesson a.last {
-    margin-left: 1.5rem;
-    border: 1px #2fa0e8 solid;
-    padding: 6px;
-    border-radius: 0.6rem;
-}
+        .footer-in-lesson a.last {
+            margin-left: 1.5rem;
+            border: 1px #2fa0e8 solid;
+            padding: 6px;
+            border-radius: 0.6rem;
+        }
 
-.footer-in-lesson a.last:hover {
-    background: #2fa0e8;
-    color: white;
-}
+            .footer-in-lesson a.last:hover {
+                background: #2fa0e8;
+                color: white;
+            }
 
-.footer-in-lesson a.disable {
-    border: 1px #4a4a4ac4 solid;
-    color: #4a4a4ac4;
-    cursor: unset;
-}
+        .footer-in-lesson a.disable {
+            border: 1px #4a4a4ac4 solid;
+            color: #4a4a4ac4;
+            cursor: unset;
+        }
 
-.footer-in-lesson a.disable:hover {
-    background: none;
-    color: #4a4a4ac4;
-}
+            .footer-in-lesson a.disable:hover {
+                background: none;
+                color: #4a4a4ac4;
+            }
 
 .menu-footer i:hover {
     border-radius: 50%;
@@ -291,7 +291,7 @@ a.div-lesson {
     }
 
     .footer-in-lesson {
-        padding: 0.5rem 0rem;
+        padding: 1rem 0rem;
     }
 }
 
@@ -364,8 +364,9 @@ a.div-lesson {
 
 @media(max-width: 370px) {
     .footer-in-lesson a.first {
-        margin-right:0;
+        margin-right: 0;
     }
+
     .footer-in-lesson a.last {
         margin-left: 0.3rem;
     }

@@ -65,6 +65,15 @@ namespace Website_Course_AVG.Managers
             return currentUrl + "/Account/GithubLogin";
         }
 
+        public static string GetRedirectUrlMoMo()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Order/ConfirmPaymentClient";
+        }
+
+
         public static string UrlGithubLogin()
         {
             string clientIdGh = GetValueFromAppSetting("ClientIdGH");
@@ -220,8 +229,8 @@ namespace Website_Course_AVG.Managers
 
             if (indexCurrentLesson >= 1)
             {
-                lesson previous = lessons.Where(x => x.index == ( indexCurrentLesson - 1) ).FirstOrDefault();
-                if(previous != null)
+                lesson previous = lessons.Where(x => x.index == (indexCurrentLesson - 1)).FirstOrDefault();
+                if (previous != null)
                 {
                     identityPrevious = previous.id;
                 }
@@ -317,13 +326,17 @@ namespace Website_Course_AVG.Managers
             string screenWidth = context.Request.Browser.ScreenPixelsWidth.ToString();
             string screenHeight = context.Request.Browser.ScreenPixelsHeight.ToString();
             string timeZone = TimeZoneInfo.Local.DisplayName;
-
-            // Tạo dấu vân tay bằng cách kết hợp các thuộc tính
             string deviceFingerprint = $"{userAgent}_{ipAddress}_{screenWidth}_{screenHeight}_{timeZone}";
 
-            // Lưu hoặc xử lý dấu vân tay ở đây (ví dụ: lưu vào CSDL, so sánh với dấu vân tay đã lưu, ...)
-
             return deviceFingerprint;
+        }
+
+        // get item in cart
+        public static List<int> GetItem(string base64String)
+        {
+            byte[] data = Convert.FromBase64String(base64String);
+            string decodedString = Encoding.UTF8.GetString(data);
+            return decodedString.Split(';').Select(int.Parse).ToList();
         }
     }
 }

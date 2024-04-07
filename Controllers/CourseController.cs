@@ -93,6 +93,7 @@ namespace Website_Course_AVG.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public ActionResult Details(int id)
         {
