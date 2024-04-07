@@ -18,6 +18,7 @@ namespace Website_Course_AVG.Areas.Admin.Data.ViewModels
         public order Order { get; set; }
         public promotion Promotion { get; set; }
         public image Image { get; set; }
+        public video Video { get; set; }
 
         #endregion
 
@@ -34,6 +35,7 @@ namespace Website_Course_AVG.Areas.Admin.Data.ViewModels
         public List<order> Orders { get; set; }
         public List<promotion> Promotions { get; set; }
         public List<image> Images { get; set; }
+        public List<video> Videos { get; set; }
         public IPagedList<course> CoursesPagedList { get; set; }
         public IPagedList<category> CategoriesPagedList { get; set; }
         public IPagedList<user> UsersPagedList { get; set; }

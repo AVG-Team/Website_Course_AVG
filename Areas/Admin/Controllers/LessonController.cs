@@ -40,9 +40,10 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
 
         public ActionResult Insert(course course)
         {
+            var videos = _data.videos.ToList();
+            var images = _data.images.ToList();
             var lessons = _data.lessons.ToList();
             var courses = _data.courses.Where(c => c.deleted_at == null).ToList();
-            var images = _data.images.ToList();
             var exercises = _data.exercises.Where(e => e.deleted_at == null).ToList();
             /*
             if (course == null)
@@ -61,7 +62,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
                 Lessons = lessons,
                 Courses = courses,
                 Images = images,
-                Exercises = exercises
+                Exercises = exercises,
+                Videos = videos
             };
             return View(adminView);
         }
