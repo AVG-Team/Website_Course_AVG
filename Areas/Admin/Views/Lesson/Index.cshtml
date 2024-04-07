@@ -6,7 +6,7 @@
 
 }
 @{
-    ViewBag.Title = "Category";
+    ViewBag.Title = "Lesson";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,8 +20,16 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
+                                    <th>Index</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Course</th>
+                                    <th>Image</th>
+                                    <th>Video</th>
+                                    <th>Views</th>
+                                    <th>Time</th>
                                     <th>Quantity</th>
+                                    <th>Category</th>
                                     <th>Created</th>
                                     <th>Updated</th>
                                     <th>Deleted</th>
@@ -29,21 +37,44 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.CategoriesPagedList)
+                                @foreach (var item in Model.LessonsPagedList)
                                 {
                                     <tr class="srow" data-id="@item.id">
                                         <td class="item-row">@item.id</td>
+                                        <td class="item-row">@item.index</td>
                                         <td class="item-row">
                                             <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                                @item.name
+                                                @item.title
                                             </span>
                                         </td>
                                         <td class="item-row">
+                                            <span class="d-inline-block text-truncate" style="max-width:150px;">
+                                                @item.description
+                                            </span>
+                                        </td>
+                                        <td class="item-row">
+                                            <span class="d-inline-block text-truncate" style="max-width:150px;">
+                                                @item.course.title
+                                            </span>
+                                        </td>
+                                        <td class="item-row">
+                                            <span class="d-inline-block text-truncate" style="max-width:150px">
+                                                @item.image_code
+                                            </span>
+                                        </td>
+                                        <td class="item-row">
+                                            <span class="d-inline-block text-truncate" style="max-width:150px">
+                                                @item.video_id
+                                            </span>
+                                        </td>
+                                        <td class="item-row">@item.views</td>
+                                        <td class="item-row">@item.time</td>
+                                        <td class="item-row">
                                             @{
                                                 count = 0;
-                                                foreach (var course in Model.Courses)
+                                                foreach (var course in Model.Exercises)
                                                 {
-                                                    if (course.category_id == @item.id)
+                                                    if (course.lesson_id == @item.id)
                                                     {
                                                         count++;
                                                     }
@@ -51,6 +82,7 @@
                                             }
                                             @count
                                         </td>
+                                        <td class="item-row">@item.course.category.name</td>
                                         <td class="text-success item-row">@item.created_at</td>
                                         <td class="text-warning item-row">@item.updated_at</td>
                                         <td class="text-danger item-row">@item.deleted_at</td>
@@ -78,12 +110,12 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-success" id="ConfirmModalLabel">
-                                Confirm Remove Category
+                                Confirm Remove Lesson
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            Are you sure you want to remove this category?
+                            Are you sure you want to remove this Lesson?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -107,7 +139,8 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-danger">
-                            This category has courses, you can't delete it! Please delete the course first.
+                            <p>This lesson has exercise, you can't delete it!</p>
+                            <p>Please delete the exercise.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -119,10 +152,10 @@
             </div>
             <div class="panel-footer">
                 <div>
-                    Page @(Model.CategoriesPagedList.PageCount < Model.CategoriesPagedList.PageNumber ? 0 : Model.CategoriesPagedList.PageNumber) of @Model.CategoriesPagedList.PageCount
+                    Page @(Model.LessonsPagedList.PageCount < Model.LessonsPagedList.PageNumber ? 0 : Model.LessonsPagedList.PageNumber) of @Model.LessonsPagedList.PageCount
                 </div>
                 <div class="MenuPage">
-                    @Html.PagedListPager(Model.CategoriesPagedList, page => Url.Action("Index", new { page = page }))
+                    @Html.PagedListPager(Model.LessonsPagedList, page => Url.Action("Index", new { page = page }))
                 </div>
             </div>
         </div>

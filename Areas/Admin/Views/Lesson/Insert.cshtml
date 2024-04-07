@@ -1,5 +1,6 @@
 ﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
 @{
+    ViewBag.Title = "Insert Lesson";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,8 +19,8 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Title</label>
-                                    <input type="text" name="Course.title" class="form-control" placeholder="Title" />
-                                    @Html.ValidationMessageFor(m => m.Course.title, "", new { @class = "text-danger" })
+                                    <input type="text" name="Lesson.title" class="form-control" placeholder="Title" />
+                                    @Html.ValidationMessageFor(m => m.Lesson.description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -29,8 +30,8 @@
                             <div class="card-body">
                                 <div class="m-0">
                                     <label class="form-label">Description</label>
-                                    <input type="text" name="Course.description" class="form-control" placeholder="Description" />
-                                    @Html.ValidationMessageFor(m => m.Course.description, "", new { @class = "text-danger" })
+                                    <input type="text" name="Lesson.description" class="form-control" placeholder="Description" />
+                                    @Html.ValidationMessageFor(m => m.Lesson.description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -39,9 +40,9 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="m-0">
-                                    <label class="form-label">Author</label>
-                                    <input text="text" name="Course.author" class="form-control" placeholder="Author" />
-                                    @Html.ValidationMessageFor(m => m.Course.author, "", new { @class = "text-danger" })
+                                    <label class="form-label">Index</label>
+                                    <input text="text" name="Lesson.description" class="form-control" placeholder="Author" value="@ViewBag.index"/>
+                                    @Html.ValidationMessageFor(m => m.Lesson.description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -49,11 +50,10 @@
                     <div class="col-xl-4 col-sm-6 col-12">
                         <div class="card mb-3">
                             <div class="card-body">
-                                <label class="form-label">Price</label>
+                                <label class="form-label">Video</label>
                                 <div class="input-group">
-                                    <input type="text" name="Course.Price" class="form-control" />
-                                    <span class="input-group-text">VND</span>
-                                    @Html.ValidationMessageFor(m => m.Course.price, "", new { @class = "text-danger" })
+                                    <input type="text" name="Lesson.video_id" class="form-control" placeholder="Cours" />
+                                    @Html.ValidationMessageFor(m => m.Lesson.course.title, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -62,14 +62,25 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="m-0">
-                                    <label class="form-label">Select Category </label>
-                                    <select class="form-select" aria-label="Default select example" name="Course.category_id">
+                                    <label class="form-label">Select Course </label>
+                                    <select class="form-select" aria-label="Default select example" name="Lesson.course">
                                         <option selected="">Open this select menu</option>
-                                        @foreach (var item in Model.Categories)
+                                        @foreach (var item in Model.Courses)
                                         {
-                                            <option value=@item.id>@item.name</option>
+                                            <option value=@item.id>@item.title</option>
                                         }
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <label class="form-label">Views</label>
+                                <div class="input-group">
+                                    <input type="text" name="Lesson.views" class="form-control disabled" placeholder="Views" />
+                                    @Html.ValidationMessageFor(m => m.Lesson.views, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>

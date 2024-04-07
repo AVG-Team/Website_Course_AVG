@@ -1258,6 +1258,8 @@
     <Content Include="Areas\Admin\Views\Category\Insert.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <None Include="Areas\Admin\Views\Course\Insert.cshtml" />
+    <Content Include="Areas\Admin\Views\Lesson\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Lesson\Insert.cshtml" />
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
     </None>
@@ -1341,7 +1343,6 @@
     <Folder Include="Areas\Admin\Views\Contact\" />
     <Folder Include="Areas\Admin\Views\Exercise\" />
     <Folder Include="Areas\Admin\Views\Image\" />
-    <Folder Include="Areas\Admin\Views\Lesson\" />
     <Folder Include="Areas\Admin\Views\Notify\" />
     <Folder Include="Areas\Admin\Views\Option\" />
     <Folder Include="Areas\Admin\Views\Order\" />

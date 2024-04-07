@@ -21,6 +21,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             var images = _data.images.ToList();
             var pageNumber = page ?? 1;
             var pageSize = 10;
+            ViewBag.controller = "Course";
             var adminView = new AdminViewModels()
             {
                 Courses = courses,
@@ -61,6 +62,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
                     category_id = models.Course.category_id,
                     image_code = models.Course.image_code,
                     created_at = DateTime.Now,
+                    updated_at = DateTime.Now
                 };
                 _data.courses.InsertOnSubmit(course);
                 _data.SubmitChanges();
