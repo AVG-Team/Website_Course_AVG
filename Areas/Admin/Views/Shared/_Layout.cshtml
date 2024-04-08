@@ -20,11 +20,11 @@
 
     <!-- CSS here -->
 
-    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/css/bootstrap.css")
     @Styles.Render("~/Content/fonts/bootstrap/bootstrap-icons.css")
     @Styles.Render("~/Content/main.min.css")
     @Styles.Render("~/Content/vendor/overlay-scroll/OverlayScrollbars.min.css")
-    @Styles.Render("~/Content/vendor/toastify/toastify.css")
+    @Styles.Render("~/Content/css/toastr.css")
     @RenderSection("styles", required: false)
 
     <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
@@ -254,7 +254,7 @@
             <a class="dropdown-item" href="widgets.html"><i class="bi bi-box text-success"></i>Widgets</a>
         </div>
         <div class="mx-3 mt-2 d-grid">
-            <a href="login.html" class="btn btn-primary btn-sm">Logout</a>
+            <a href="@Url.Action("Logout","Account")" class="btn btn-primary btn-sm">Logout</a>
         </div>
     </div>
 </div>
@@ -476,36 +476,90 @@
 <!-- Main container end -->
 
 </div>
-
 @Scripts.Render("~/Scripts/js/jquery.min.js")
 @Scripts.Render("~/Scripts/js/bootstrap.bundle.min.js")
 @Scripts.Render("~/Content/vendor/overlay-scroll/jquery.overlayScrollbars.min.js")
 @Scripts.Render("~/Content/vendor/overlay-scroll/custom-scrollbar.js")
-@Scripts.Render("~/Content/vendor/toastify/toastify.js")
-@Scripts.Render("~/Content/vendor/toastify/custom.js")
+@Scripts.Render("~/Scripts/toastr.js")
 
 
 @Scripts.Render("~/Scripts/js/custom.js")
 @Scripts.Render("~/Scripts/js/todays-date.js")
 @Scripts.Render("~/Scripts/js/moment.min.js")
 @RenderSection("scripts", required: false)
+
+
+<script>
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    @*function setCookie(cookieName, cookieValue, secondsToExpire, type = 1) {
+        var expires;
+        if (type === 0) {
+            expires = secondsToExpire;
+        } else if (type === 1) {
+            var date = new Date();
+            date.setTime(date.getTime() + (secondsToExpire * 1000));
+            expires = "expires=" + date.toUTCString();
+        }
+
+        var updatedCookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+
+        document.cookie = updatedCookie;
+    }
+
+    function deleteCookie(cookieName) {
+        var date = new Date(0);
+        var expires = "expires=" + date.toUTCString();
+        var updatedCookie = cookieName + "=;" + expires + ";path=/";
+
+        document.cookie = updatedCookie;
+    }*@
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var cookieNotify = getCookie('Notify');
+        if (cookieNotify !== "") {
+            toastr.success(cookieNotify, 'Notify')
+            console.log("ll")
+        }
+        var cookieError = getCookie('Error');
+        if (cookieError !== "") {
+            toastr.error(cookieError, 'Error')
+
+        }
+    })
+
+
+    @*$(document).ready(function () {
+        $('.btn-insert').click(function () {
+            var controller = $(this).data('controller');
+            if (controller == "Admin") {
+                $(this).hide();
+            }
+            if (controller) {
+                window.location.href = '/' + controller + '/Insert';
+            } else {
+                console.error("Controller is not defined");
+            }
+        })
+    });*@
+</script>
 </body>
 </html>
 
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            $('.btn-insert').click(function () {
-                var controller = $(this).data('controller');
-                if (controller == "Admin") {
-                    $(this).hide();
-                }
-                if (controller) {
-                    window.location.href = '/' + controller + '/Insert';
-                } else {
-                    console.error("Controller is not defined");
-                }
-            })
-        }) 
-    </script>
-}
+
+    
