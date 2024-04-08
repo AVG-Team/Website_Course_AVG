@@ -1316,8 +1316,6 @@
     <Content Include="Areas\Admin\Views\Category\Update.cshtml" />
     <Content Include="Views\Lesson\Index.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
-    <Content Include="Views\Error\BadRequest.cshtml" />
-    <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Views\Note\notes.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
