@@ -54,7 +54,7 @@ namespace Website_Course_AVG.Managers
 
         public static string GetValueFromAppSetting(string key)
         {
-            return global::System.Configuration.ConfigurationManager.AppSettings[key];
+            return MvcApplication.Configuration[key];
         }
 
         public static string GetRedirectUrlGH()
@@ -255,20 +255,20 @@ namespace Website_Course_AVG.Managers
 
         public static List<string> ReadJsonFromFile(string filePath)
         {
-            List<string> sensitiveWords = new List<string>();
+            List<string> listString = new List<string>();
 
             try
             {
                 string jsonText = File.ReadAllText(filePath);
 
-                sensitiveWords = JsonSerializer.Deserialize<List<string>>(jsonText);
+                listString = JsonSerializer.Deserialize<List<string>>(jsonText);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error reading json file: " + ex.Message);
             }
 
-            return sensitiveWords;
+            return listString;
         }
 
         //public static string SanitizeInput(string input)
