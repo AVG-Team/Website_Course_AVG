@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PageNotFound</title>
+    <link href="@Url.Content("~/Content/css/error.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="not-found">
+        <h2 class="text-error">@ViewBag.ErrorCode</h2>
+        <h1 class="text-title">Yêu cầu không hợp lệ</h1>
+        <ul class="text-suggestion">
+            <li>
+                Yêu cầu của bạn không được xử lý do
+                <strong>thiếu thông tin </strong> hoặc <strong> thông tin không hợp lệ</strong>.
+            </li>
+            <li>
+                <strong>Hãy kiểm tra lại thông tin và thử lại sau.</strong>
+            </li>
+        </ul>
+        <p><a class="btn_access" href="@Url.Action("Index","Home")">Truy cập trang chủ</a></p>
+        <p>👉 hoặc đi tới<a class="a_course" href="@Url.Action("Index","Course")">Khóa học của tôi</a></p>
+    </div>
+</body>
+</html>
