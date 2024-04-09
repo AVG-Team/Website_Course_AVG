@@ -14,6 +14,10 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
     {
         private readonly MyDataDataContext _data = new MyDataDataContext();
 
+        public CourseController()
+        {
+            ViewBag.controller = "Course";
+        }
         public ActionResult Index(int? page)
         {
             var courses = _data.courses.ToList();
@@ -21,7 +25,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             var images = _data.images.ToList();
             var pageNumber = page ?? 1;
             var pageSize = 10;
-            ViewBag.controller = "Course";
+            
             var adminView = new AdminViewModels()
             {
                 Courses = courses,

@@ -96,9 +96,6 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <div>
-                    Page @(Model.CoursesPagedList.PageCount < Model.CoursesPagedList.PageNumber ? 0 : Model.CoursesPagedList.PageNumber) of @Model.CoursesPagedList.PageCount
-                </div>
                 <div class="MenuPage">
                     @Html.PagedListPager(Model.CoursesPagedList, page => Url.Action("Index", new { page = page }))
                 </div>

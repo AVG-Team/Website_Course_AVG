@@ -1263,6 +1263,8 @@
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Register.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\UserParticial.cshtml" />
     <None Include="Areas\Admin\Views\Course\Insert.cshtml" />
     <Content Include="Areas\Admin\Views\Lesson\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Lesson\Insert.cshtml" />

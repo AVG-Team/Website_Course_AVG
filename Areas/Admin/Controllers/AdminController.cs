@@ -14,7 +14,11 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
     public class AdminController : Controller
     {
         private readonly MyDataDataContext _data = new MyDataDataContext();
-        
+
+        public AdminController()
+        {
+            ViewBag.controller = "Admin";
+        }
         // GET: Admin
         public ActionResult Index()
         {

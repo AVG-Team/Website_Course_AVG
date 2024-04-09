@@ -18,55 +18,55 @@
                     <div class="table-responsive">
                         <table class="table table-bordered m-0">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Quantity</th>
-                                    <th>Created</th>
-                                    <th>Updated</th>
-                                    <th>Deleted</th>
-                                    <th>Action</th>
-                                </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Deleted</th>
+                                <th>Action</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.CategoriesPagedList)
-                                {
-                                    <tr class="srow" data-id="@item.id">
-                                        <td class="item-row">@item.id</td>
-                                        <td class="item-row">
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                                @item.name
-                                            </span>
-                                        </td>
-                                        <td class="item-row">
-                                            @{
-                                                count = 0;
-                                                foreach (var course in Model.Courses)
+                            @foreach (var item in Model.CategoriesPagedList)
+                            {
+                                <tr class="srow" data-id="@item.id">
+                                    <td class="item-row">@item.id</td>
+                                    <td class="item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            @item.name
+                                        </span>
+                                    </td>
+                                    <td class="item-row">
+                                        @{
+                                            count = 0;
+                                            foreach (var course in Model.Courses)
+                                            {
+                                                if (course.category_id == @item.id)
                                                 {
-                                                    if (course.category_id == @item.id)
-                                                    {
-                                                        count++;
-                                                    }
+                                                    count++;
                                                 }
                                             }
-                                            @count
-                                        </td>
-                                        <td class="text-success item-row">@item.created_at</td>
-                                        <td class="text-warning item-row">@item.updated_at</td>
-                                        <td class="text-danger item-row">@item.deleted_at</td>
-                                        <td class="d-flex justify-content-center">
-                                            <button class="btn btn-info btn-sm me-1 border rounded-3 btn-update" data-id="@item.id">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete btn-open-modal" value="@count">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                        }
+                                        @count
+                                    </td>
+                                    <td class="text-success item-row">@item.created_at</td>
+                                    <td class="text-warning item-row">@item.updated_at</td>
+                                    <td class="text-danger item-row">@item.deleted_at</td>
+                                    <td class="d-flex justify-content-center">
+                                        <button class="btn btn-info btn-sm me-1 border rounded-3 btn-update" data-id="@item.id">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete btn-open-modal" value="@count">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
 
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
 
-                                }
+                            }
                             </tbody>
                         </table>
                     </div>
@@ -89,7 +89,7 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                 Close
                             </button>
-                            <button type="submit" class="btn btn-danger btn-submit">
+                            <button type="submit" class="btn btn-danger btn-submit-delete">
                                 Submit
                             </button>
                         </div>
@@ -118,9 +118,6 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <div>
-                    Page @(Model.CategoriesPagedList.PageCount < Model.CategoriesPagedList.PageNumber ? 0 : Model.CategoriesPagedList.PageNumber) of @Model.CategoriesPagedList.PageCount
-                </div>
                 <div class="MenuPage">
                     @Html.PagedListPager(Model.CategoriesPagedList, page => Url.Action("Index", new { page = page }))
                 </div>
@@ -214,7 +211,7 @@
             });
             $('.btn-submit-delete').click(function () {
                 $.ajax({
-                    url: '/Admin/Course/Delete',
+                    url: '/Admin/Category/Delete',
                     type: 'POST', // Hoặc 'GET' tùy vào phương thức của action
                     data: { id: idDelete },
                     success: function (response) {

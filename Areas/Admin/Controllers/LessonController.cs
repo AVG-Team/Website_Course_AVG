@@ -26,6 +26,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 10;
             var lessonsPageList = lessons.ToPagedList(pageNumber, pageSize);
+            ViewBag.controller = "Lesson";
             var adminView = new AdminViewModels()
             {
                 Lessons = lessons,

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Octokit;
 using PagedList;
 using Website_Course_AVG.Models;
 
@@ -7,6 +8,7 @@ namespace Website_Course_AVG.Areas.Admin.Data.ViewModels
     public class AdminViewModels
     {
         #region model
+        public account Account { get; set; }
         public course Course { get; set; }
         public category Category { get; set; }
         public user User { get; set; }
@@ -16,6 +18,7 @@ namespace Website_Course_AVG.Areas.Admin.Data.ViewModels
         public exercise Exercise { get; set; }
         public option Option { get; set; }
         public order Order { get; set; }
+        public user AUser { get; set; }
         public promotion Promotion { get; set; }
         public image Image { get; set; }
         public video Video { get; set; }
@@ -24,6 +27,7 @@ namespace Website_Course_AVG.Areas.Admin.Data.ViewModels
 
 
         #region List
+        public List<account> Accounts { get; set; }
         public List<course> Courses { get; set; }
         public List<category> Categories { get; set; }
         public List<user> Users { get; set; }
@@ -36,6 +40,7 @@ namespace Website_Course_AVG.Areas.Admin.Data.ViewModels
         public List<promotion> Promotions { get; set; }
         public List<image> Images { get; set; }
         public List<video> Videos { get; set; }
+        public IPagedList<account> AccountsPagedList { get; set; }
         public IPagedList<course> CoursesPagedList { get; set; }
         public IPagedList<category> CategoriesPagedList { get; set; }
         public IPagedList<user> UsersPagedList { get; set; }

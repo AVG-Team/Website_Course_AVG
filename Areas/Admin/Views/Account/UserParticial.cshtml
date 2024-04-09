@@ -1,0 +1,66 @@
+﻿@using PagedList.Mvc
+@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+
+<div class="col-xxl-12">
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered m-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fullname</th>
+                            <th>Email</th>
+                            <th>Birthday</th>
+                            <th>Gender</th>
+                            <th>Username</th>
+                            <th>Role/th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Deleted</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UsersPagedList)
+                        {
+                            <tr class="srow" data-id="@item.id">
+                                <td class="item-row">@item.id</td>
+                                <td class="item-row">@item.fullname</td>
+                                <td class="item-row">
+                                    <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                        @item.email
+                                    </span>
+                                </td>
+                                <td class="item-row">
+                                    <span class="d-inline-block text-truncate" style="max-width:150px;">
+                                        @item.birthday
+                                    </span>
+                                </td>
+                                <td class="item-row">@item.gender</td>
+                                <td class="item-row">@item.account.username</td>
+                                <td class="item-row">@item.role</td>
+                                <td class="text-success item-row">@item.created_at</td>
+                                <td class="text-warning item-row">@item.updated_at</td>
+                                <td class="text-danger item-row">@item.deleted_at</td>
+                                <td class="d-flex justify-content-center">
+                                    <button class="btn btn-info btn-sm me-1 border rounded-3 btn-update" data-id="@item.id">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete btn-open-modal">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="MenuPage">
+            @Html.PagedListPager(Model.UsersPagedList, page => Url.Action("UserParticial", new { page = page }))
+        </div>
+    </div>
+</div>

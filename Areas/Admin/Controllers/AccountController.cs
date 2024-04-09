@@ -6,8 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using Website_Course_AVG.Areas.Admin.Data.ViewModels;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
+using System.IO;
+using System.Web.Routing;
 
 namespace Website_Course_AVG.Areas.Admin.Controllers
 {
@@ -19,7 +23,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
 
         public AccountController()
         {
-            
+            ViewBag.Title = "Account";
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -54,9 +58,52 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
 
 
         // GET: Admin/Account
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View();
+            var account = _data.accounts.ToList();
+            var user = _data.users.ToList();
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+            var acountPageList = account.ToPagedList(pageNumber, pageSize);
+            var usePageList = user.ToPagedList(pageNumber, pageSize);
+
+            var viewModel = new AdminViewModels()
+            {
+                Accounts = account,
+                Users = user,
+                AccountsPagedList = acountPageList,
+                UsersPagedList = usePageList
+            };
+
+            return View(viewModel);
+        }
+
+        public JsonResult UserParticial(int? page)
+        {
+            try
+            {
+                var account = _data.accounts.ToList();
+                var user = _data.users.ToList();
+                var pageNumber = page ?? 1;
+                var pageSize = 5;
+                var acountPageList = account.ToPagedList(pageNumber, pageSize);
+                var usePageList = user.ToPagedList(pageNumber, pageSize);
+
+                var viewModel = new AdminViewModels()
+                {
+                    Accounts = account,
+                    Users = user,
+                    AccountsPagedList = acountPageList,
+                    UsersPagedList = usePageList
+                };
+                var view = RenderViewToString("Account", "UserParticial", viewModel);
+                return ResponseHelper.SuccessResponse("", view);
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper.ErrorResponse("");
+            }
+            
         }
 
         [AllowAnonymous]
@@ -158,6 +205,23 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
+            }
+        }
+
+        protected string RenderViewToString(string controllerName, string viewName, object viewData)
+        {
+            using (var writer = new StringWriter())
+            {
+                var routeData = new RouteData();
+                routeData.Values.Add("controller", controllerName);
+                var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://google.com", null), new HttpResponse(null))), routeData, new CourseController());
+                var razorViewEngine = new RazorViewEngine();
+                var razorViewResult = razorViewEngine.FindView(fakeControllerContext, viewName, "", false);
+
+                var viewContext = new ViewContext(fakeControllerContext, razorViewResult.View, new ViewDataDictionary(viewData), new TempDataDictionary(), writer);
+                razorViewResult.View.Render(viewContext, writer);
+                return writer.ToString();
+
             }
         }
     }

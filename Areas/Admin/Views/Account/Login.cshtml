@@ -1,10 +1,37 @@
 ﻿@model Website_Course_AVG.Models.LoginViewModel
 @{
-    Layout = "../Shared/_Layout.cshtml" ;
+    Layout = null;
 }
-    <!-- Container start -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AVG COURSE ADMIN</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Marketplace for Bootstrap Admin Dashboards" />
+    <meta name="author" content="Bootstrap Gallery" />
+    <link rel="canonical" href="https://www.bootstrap.gallery/">
+    <meta property="og:url" content="https://www.bootstrap.gallery">
+    <meta property="og:title" content="Admin Templates - Dashboard Templates | Bootstrap Gallery">
+    <meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
+    <meta property="og:type" content="Website">
+    <meta property="og:site_name" content="Bootstrap Gallery">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/logo/favicon.png">
+
+    <!-- *************
+        ************ CSS Files *************
+    ************* -->
+    @Styles.Render("~/Content/css/bootstrap.css")
+    @Styles.Render("~/Content/main.min.css")
+    @Styles.Render("~/Content/css/toastr.css")
+</head>
+
+<body class="bg-white">
     <div class="container bg-white">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center align-content-center">
             <div class="col-xl-4 col-lg-5 col-sm-6 col-12">
                 @using (Html.BeginForm())
                 {
@@ -14,7 +41,7 @@
                             <a href="@Url.Action("Index", "Admin")" class="mb-4 d-flex">
                                 <img src="~/Content/img/logo/AVG_admin.png" class="img-fluid login-logo" alt="Earth Admin Dashboard" />
                             </a>
-                            <h5 class="fw-light mb-5">Sign in to manage.</h5>
+                            <h5 class="fw-light mb-3">Sign in to manage.</h5>
                             <div class="mb-3">
                                 <label class="form-label">Username</label>
                                 <input type="text" name="username" class="form-control" placeholder="Enter your username" />
@@ -35,15 +62,6 @@
                                     Login
                                 </button>
                             </div>
-                            <div class="text-center py-3">or Login with</div>
-                            <div class="d-flex gap-2 justify-content-center">
-                                <button type="submit" class="btn btn-outline-danger">
-                                    <i class="bi bi-google me-2"></i>Gmail
-                                </button>
-                                <button type="submit" class="btn btn-outline-info">
-                                    <i class="bi bi-facebook me-2"></i>Facebook
-                                </button>
-                            </div>
                             <div class="text-center pt-4">
                                 <span>Not registered?</span>
                                 <a href="@Url.Action("Register", "Account")" class="text-blue text-decoration-underline ms-2">
@@ -52,9 +70,45 @@
                             </div>
                         </div>
                     </div>
-
                 }
             </div>
         </div>
     </div>
-   
+    @Scripts.Render("~/Scripts/toastr.js")
+
+    <script>
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var cookieNotify = getCookie('Notify');
+        if (cookieNotify !== "") {
+            toastr.success(cookieNotify, 'Notify')
+            console.log("ll")
+        }
+        var cookieError = getCookie('Error');
+        if (cookieError !== "") {
+            toastr.error(cookieError, 'Error')
+
+        }
+    })
+    </script>
+</body>
+
+</html>
+
+
+
