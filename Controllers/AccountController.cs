@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MimeKit;
 using Octokit;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 using Website_Course_AVG.Managers;
@@ -90,10 +92,10 @@ namespace Website_Course_AVG.Controllers
 				    Helpers.AddCookie("Error", "username and password are wrong !!!");
                     return View(model);
                 }
-
+                 
 
                 bool isVerify = await userManager.ValidatePasswordAsync(account, model.Password);
-
+                
                 user user = account.users.FirstOrDefault();
                 if(user == null)
                 {
@@ -185,10 +187,14 @@ namespace Website_Course_AVG.Controllers
 					// Send an email with this link
 					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-					Helpers.AddCookie("Notify", "Register Successful");
-					UserManager.login(model.userName);
-                    return RedirectToAction("Index", "Home");
+					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");					
+                    if(UserManager.SendEmailAsync(model.Email, "Verify Email", "Your code to verify email is: ", Helpers.GenerateRandomString(10), "Register", "verifyEmail").Result)
+                    {
+                        Helpers.AddCookie("Notify", "Access email to verify");
+                        TempData["EmailAddress"] = model.Email;
+                    }
+                    //UserManager.login(model.userName);
+                    return View(model);
                 }
                 AddErrors(result);
             }
@@ -247,7 +253,7 @@ namespace Website_Course_AVG.Controllers
 			String messageLast = Helpers.GenerateRandomString(10);
 			if (!userManager.IsAuthenticated())
 			{
-                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
+                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast,"ForgotPassword", "ResetPassword") == false)
                 {
 					return View();
 				}
@@ -561,6 +567,49 @@ namespace Website_Course_AVG.Controllers
         public ActionResult SendCode(string returnurl, bool rememberme)
         {
             throw new System.NotImplementedException();
+        }
+
+        public ActionResult verifyEmail()
+        {
+
+            verifyEmail model = new verifyEmail();
+
+            model.email = TempData["EmailAddress"] as string;
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult verifyEmail(verifyEmail model)
+        {
+            UserManager userManager = new UserManager();
+            user user = _context.users.Where(x=> x.email == model.email).FirstOrDefault();
+            if(user == null)
+            {
+                Helpers.AddCookie("Error", "Error Unknown");
+                return View(model);
+            }
+
+
+            int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
+
+            if (countForgotPassword > 3)
+            {
+                Helpers.AddCookie("Error", "We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you");
+                return View(model);
+            }
+
+            
+            if (!userManager.IsAuthenticated() && userManager.checkCode(model.email, model.code))
+            {
+                Helpers.AddCookie("Notify", "Check Email successfull");
+                account account = _context.accounts.Where(x => x.id == user.account_id).FirstOrDefault();
+                userManager.login(account.username);
+                Helpers.AddCookie("Notify", "Login successfull");
+                return View(model);
+            }
+            Helpers.AddCookie("Error", "Has Error");
+            return View(model);
         }
 	}
 }
