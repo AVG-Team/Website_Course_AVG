@@ -11,7 +11,7 @@ namespace VNPay
 {
     public class VNPayLibrary
     {
-        public const string VERSION = "2.1.0";
+        public const string VERSION = "2.1.1";
         private SortedList<String, String> _requestData = new SortedList<String, String>(new VnPayCompare());
         private SortedList<String, String> _responseData = new SortedList<String, String>(new VnPayCompare());
 

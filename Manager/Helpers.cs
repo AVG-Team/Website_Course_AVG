@@ -21,7 +21,7 @@ namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void AddCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 3)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);

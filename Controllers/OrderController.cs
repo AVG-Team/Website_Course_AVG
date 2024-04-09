@@ -244,7 +244,7 @@ namespace Website_Course_AVG.Controllers
             //}
             vnpay.AddRequestData("vnp_CreateDate", vnpayRequest.CreatedAt.ToString("yyyyMMddHHmmss"));
             vnpay.AddRequestData("vnp_CurrCode", "VND");
-            vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
+            vnpay.AddRequestData("vnp_IpAddr", "127.0.0.1");
             if (!string.IsNullOrEmpty(vnpayRequest.locale))
             {
                 vnpay.AddRequestData("vnp_Locale", vnpayRequest.locale);
@@ -254,10 +254,10 @@ namespace Website_Course_AVG.Controllers
                 vnpay.AddRequestData("vnp_Locale", "vn");
             }
             vnpay.AddRequestData("vnp_OrderInfo", vnpayRequest.OrderInfo);
-            vnpay.AddRequestData("vnp_OrderType", "190004");
+            vnpay.AddRequestData("vnp_OrderType", "topup");
             vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
             vnpay.AddRequestData("vnp_TxnRef", vnpayRequest.OrderCode);
-            vnpay.AddRequestData("vnp_ExpireDate", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_ExpireDate", DateTime.Now.AddMinutes(60).ToString("yyyyMMddHHmmss"));
             //Billing
             user user = Helpers.GetUserFromToken();
             string email = user.account.username;
@@ -265,11 +265,108 @@ namespace Website_Course_AVG.Controllers
             {
                 email = user.email.Trim();
             }
-            vnpay.AddRequestData("vnp_Bill_UserName", email);
 
             string paymentUrl = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
 
             return Redirect(paymentUrl);
+        }
+
+        public ActionResult ConfirmVNPayPaymentClient(object sender, EventArgs e)
+        {
+            if (Request.QueryString.Count > 0)
+            {
+                var itemCookie = Request.Cookies["Item"];
+                if (itemCookie == null)
+                {
+                    Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error");
+                    return RedirectToAction("Index", "Cart");
+                }
+
+                string vnp_HashSecret = Helpers.GetValueFromAppSetting("VNP_HASHSECRET");
+                var vnpayData = Request.QueryString;
+                VNPayLibrary vnpay = new VNPayLibrary();
+
+                foreach (string s in vnpayData)
+                {
+                    if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
+                    {
+                        vnpay.AddResponseData(s, vnpayData[s]);
+                    }
+                }
+                //vnp_TxnRef: Ma don hang merchant gui VNPAY tai command=pay    
+                //vnp_TransactionNo: Ma GD tai he thong VNPAY
+                //vnp_ResponseCode:Response code from VNPAY: 00: Thanh cong, Khac 00: Xem tai lieu
+                //vnp_SecureHash: HmacSHA512 cua du lieu tra ve
+
+                string orderId = vnpay.GetResponseData("vnp_TxnRef");
+                long vnpayTranId = Convert.ToInt64(vnpay.GetResponseData("vnp_TransactionNo"));
+                string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
+                string vnp_TransactionStatus = vnpay.GetResponseData("vnp_TransactionStatus");
+                String vnp_SecureHash = Request.QueryString["vnp_SecureHash"];
+                String TerminalID = Request.QueryString["vnp_TmnCode"];
+                long vnp_Amount = Convert.ToInt64(vnpay.GetResponseData("vnp_Amount")) / 100;
+                String bankCode = Request.QueryString["vnp_BankCode"];
+
+                bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
+                if (checkSignature)
+                {
+                    if (vnp_ResponseCode == "00" && vnp_TransactionStatus == "00")
+                    {
+                        order order = _data.orders.Where(x => x.code_order == orderId).FirstOrDefault();
+                        if (order == null)
+                        {
+                            Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error");
+                            return RedirectToAction("Index", "Cart");
+                        }
+
+
+                        var selectedCourseIds = Helpers.GetItem(itemCookie.Value);
+                        var coursesInCart = _data.courses.Where(c => selectedCourseIds.Contains(c.id)).ToList();
+
+                        user user = Helpers.GetUserFromToken();
+
+                        foreach (var course in coursesInCart)
+                        {
+                            var detailOrder = new detail_order
+                            {
+                                order_id = order.id,
+                                course_id = course.id,
+                                price = course.price,
+                                created_at = DateTime.Now,
+                                updated_at = DateTime.Now,
+                            };
+
+                            var detailCourse = new detail_course
+                            {
+                                type = 0,
+                                course_id = course.id,
+                                user_id = user.id,
+                                created_at = DateTime.Now,
+                                updated_at = DateTime.Now,
+                            };
+                            _data.detail_orders.InsertOnSubmit(detailOrder);
+                            _data.detail_courses.InsertOnSubmit(detailCourse);
+                        }
+
+                        order.status = 1;
+
+                        _data.SubmitChanges();
+
+                        Response.Cookies["Item"].Expires = DateTime.Now.AddDays(-1);
+                        TempData.Remove("promotionId");
+                        Helpers.AddCookie("Notify", "Payment success!");
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+
+                        Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error , Code Error : " + vnp_ResponseCode);
+                        return RedirectToAction("Index", "Cart");
+                    }
+                }
+            }
+            Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error");
+            return RedirectToAction("Index", "Home");
         }
 
         private string GenerateOrderCode()
