@@ -464,12 +464,12 @@
             let cookies = document.cookie;
 
             var cookieNotify = getCookie('Notify');
-            if (cookieNotify !== "")
-                toastr.success(cookieNotify, 'Notify')
-
+            if (cookieNotify !== "") {
+                toastr.success(cookieNotify, '@global_asax.Trans("Notify")')
+            }
             var cookieError = getCookie('Error');
             if (cookieError !== "")
-                toastr.error(cookieError, 'Error')
+                toastr.error(cookieError, '@global_asax.Trans("Error")')
         })
 
         // sticky-header

@@ -8,24 +8,24 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>PageNotFound</title>
+    <title>Page Error</title>
     <link href="@Url.Content("~/Content/css/error.css")" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="not-found">
         <h2 class="text-error">400</h2>
-        <h1 class="text-title">Yêu cầu không hợp lệ</h1>
+        <h1 class="text-title">@global_asax.Trans("Invalid Request")</h1>
         <ul class="text-suggestion">
             <li>
-                Yêu cầu của bạn không được xử lý do
-                <strong>thiếu thông tin </strong> hoặc <strong> thông tin không hợp lệ</strong>.
+                @global_asax.Trans("Your request could not be processed due to")
+                <strong>@global_asax.Trans("missing information")</strong> @global_asax.Trans("or") <strong>@global_asax.Trans("invalid information")</strong>.
             </li>
             <li>
-                <strong>Hãy kiểm tra lại thông tin và thử lại sau.</strong>
+                <strong>@global_asax.Trans("Please check your information and try again later.")</strong>
             </li>
         </ul>
-        <p><a class="btn_access" href="@Url.Action("Index","Home")">Truy cập trang chủ</a></p>
-        <p>👉 hoặc đi tới<a class="a_course" href="@Url.Action("Index","Course")">Khóa học của tôi</a></p>
+        <p><a class="btn_access" href="@Url.Action("Index","Home")">@global_asax.Trans("Go to Homepage")</a></p>
+        <p>👉 @global_asax.Trans("or visit") <a class="a_course" href="@Url.Action("Index","Course")">@global_asax.Trans("My Courses")</a></p>
     </div>
 </body>
 </html>

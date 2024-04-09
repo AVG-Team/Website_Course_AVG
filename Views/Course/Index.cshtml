@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Website_Course_AVG.Models.course> 
+﻿@model PagedList.IPagedList<Website_Course_AVG.Models.course>
 @using PagedList.Mvc
 @{
     ViewBag.Title = "Index";
@@ -14,21 +14,21 @@
                         <div class="form-group col-md-3 d-flex align-items-center">
                             @*@Html.DropDownList("CategoryID", null, "All Category", htmlAttributes: new { @class = "form-control form-select-md" })*@
                             <label class="text-black-75 fw-bold me-1">Cost</label>
-                            <button value="0"  type="button" class="btn-filter me-2 ms-1">Free</button>
+                            <button value="0" type="button" class="btn-filter me-2 ms-1">Free</button>
                             <button value="1" type="button" class="btn-filter me-2 ms-1">Pro</button>
                             <label id="filter" class="text-black-75 fw-bold me-1">Languages</label>
                             @foreach (var item in ViewBag.Categories)
                             {
-                                <button value="@item.id" type="button"  class="btn-cate btn-filter me-2 ms-1">@item.name</button>
+                                <button value="@item.id" type="button" class="btn-cate btn-filter me-2 ms-1">@item.name</button>
                             }
                         </div>
                         @*<div class="form-group col-md-3 d-flex align-items-center">
-                            $1$<button type="button" name="filterButton" class="btn-filter filter">
-                                <i class="fa fa-filter"></i>
-                                Filter
-                            </button>#1#
-                            <a asp-action="Index" class="btn-filter align-content-center text-decoration-none ms-3 w-25 text-center">Clear</a>#1#
-                        </div>*@
+                                $1$<button type="button" name="filterButton" class="btn-filter filter">
+                                    <i class="fa fa-filter"></i>
+                                    Filter
+                                </button>#1#
+                                <a asp-action="Index" class="btn-filter align-content-center text-decoration-none ms-3 w-25 text-center">Clear</a>#1#
+                            </div>*@
                     </div>
                 </div>
             </form>
@@ -60,16 +60,16 @@
                         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) /
                         @Model.PageCount
                     </div>
-     
+
                     <div class="MenuPage">
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
-    
+
 </main>
 
 <style>
@@ -105,26 +105,31 @@
     a:not([href]):not([class]) {
         &, &:hover
 
-        {
-            background-color: dodgerblue;
-            color:white;
-        }
+    {
+        background-color: dodgerblue;
+        color: white;
     }
-    .btn-filter{    
-       background-color: #007bff;
+
+    }
+
+    .btn-filter {
+        background-color: #007bff;
         color: white;
         border-radius: 10px;
         border-color: transparent;
         height: 100%;
     }
-    .btn-filter:hover{
-        background-color: #0056b3;
-        color:darkgray;
-    }
-    .btn-filter .clicked{
-        background-color: #0056b3;
-        color:darkgray;
-    }
+
+        .btn-filter:hover {
+            background-color: #0056b3;
+            color: darkgray;
+        }
+
+        .btn-filter .clicked {
+            background-color: #0056b3;
+            color: darkgray;
+        }
+
     .modal {
         top: 100%;
         transform: translateY(-100%);
