@@ -9,6 +9,10 @@ using Website_Course_AVG.Managers;
 using MoMo;
 using Org.BouncyCastle.Asn1.X9;
 using Website_Course_AVG.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Policy;
+using System.Net;
+using VNPay;
 
 namespace Website_Course_AVG.Controllers
 {
@@ -29,51 +33,64 @@ namespace Website_Course_AVG.Controllers
 
             if (itemCookie != null)
             {
-                if (paymentMethod == 1)
+                var selectedCourseIds = Helpers.GetItem(itemCookie.Value);
+                var coursesInCart = _data.courses.Where(c => selectedCourseIds.Contains(c.id)).ToList();
+                long total = coursesInCart.Sum(c => c.price) ?? 0;
+
+                long Amount = total;
+
+                int? promotionId = null;
+
+                if (discountCode != null)
                 {
-                    var selectedCourseIds = Helpers.GetItem(itemCookie.Value);
-                    var coursesInCart = _data.courses.Where(c => selectedCourseIds.Contains(c.id)).ToList();
-                    long total = coursesInCart.Sum(c => c.price) ?? 0;
-
-                    long Amount = total;
-
-                    int? promotionId = null;
-
-                    if (discountCode != null)
+                    promotion promotion = _data.promotions.Where(x => x.code_promotion == discountCode).FirstOrDefault();
+                    if (promotion != null)
                     {
-                        promotion promotion = _data.promotions.Where(x => x.code_promotion == discountCode).FirstOrDefault();
-                        if (promotion != null)
-                        {
-                            promotionId = promotion.id;
-                            Amount = total - (total * (promotion.percent ?? 0) / 100);
-                        }
-
-                        discountCode = ";" + discountCode;
+                        promotionId = promotion.id;
+                        Amount = total - (total * (promotion.percent ?? 0) / 100);
                     }
 
-                    string orderCode = GenerateOrderCode();
+                    discountCode = ";" + discountCode;
+                }
 
-                    var newOrder = new order
-                    {
-                        status = 0,
-                        total = total,
-                        type_payment = paymentMethod,
-                        code_order = orderCode,
-                        user_id = user.id,
-                        promotion_id = promotionId,
-                        created_at = DateTime.Now,
-                        updated_at = DateTime.Now,
-                    };
+                string orderCode = GenerateOrderCode();
 
-                    _data.orders.InsertOnSubmit(newOrder);
-                    _data.SubmitChanges();
+                var newOrder = new order
+                {
+                    status = 0,
+                    total = total,
+                    type_payment = paymentMethod,
+                    code_order = orderCode,
+                    user_id = user.id,
+                    promotion_id = promotionId,
+                    created_at = DateTime.Now,
+                    updated_at = DateTime.Now,
+                };
 
+                _data.orders.InsertOnSubmit(newOrder);
+                _data.SubmitChanges();
+
+
+                if (paymentMethod == 1)
+                {
                     return RedirectToAction("Momo", new MoMoRequest
                     {
                         OrderInfo = "Order Courses",
                         Amount = Amount,
                         OrderCode = orderCode,
                         ExtraData = user.email + discountCode
+                    });
+                }
+                else
+                {
+                    return RedirectToAction("VNPay", new VNPayRequest
+                    {
+                        OrderInfo = "Order Courses",
+                        Amount = Amount,
+                        OrderCode = orderCode,
+                        ExtraData = user.email + discountCode,
+                        CreatedAt = newOrder.created_at ?? DateTime.Now,
+                        locale = "vn",
                     });
                 }
 
@@ -138,7 +155,7 @@ namespace Website_Course_AVG.Controllers
             return Redirect(jmessage.GetValue("payUrl").ToString());
         }
 
-        public ActionResult ConfirmPaymentClient(MomoResult result)
+        public ActionResult ConfirmMoMoPaymentClient(MomoResult result)
         {
             string rMessage = result.message;
             string rOrderId = result.orderId;
@@ -200,6 +217,59 @@ namespace Website_Course_AVG.Controllers
             TempData.Remove("promotionId");
             Helpers.AddCookie("Notify", "Payment success!");
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult VNPay(VNPayRequest vnpayRequest)
+        {
+            //Get Config Info
+            string vnp_Returnurl = Helpers.GetRedirectUrlVNPay();
+            string vnp_Url = Helpers.GetValueFromAppSetting("VNP_URL");
+            string vnp_TmnCode = Helpers.GetValueFromAppSetting("VNP_TMPCODE"); //Ma website
+            string vnp_HashSecret = Helpers.GetValueFromAppSetting("VNP_HASHSECRET"); //Chuoi bi mat
+            if (string.IsNullOrEmpty(vnp_TmnCode) || string.IsNullOrEmpty(vnp_HashSecret))
+            {
+                Helpers.AddCookie("Error", "Error Unknown, Please Try Again");
+                return RedirectToAction("Index", "Home");
+            }
+            VNPayLibrary vnpay = new VNPayLibrary();
+
+            vnpay.AddRequestData("vnp_Version", VNPayLibrary.VERSION);
+            vnpay.AddRequestData("vnp_Command", "pay");
+            vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
+            vnpay.AddRequestData("vnp_Amount", (vnpayRequest.Amount * 100).ToString());
+
+            //if (cboBankCode.SelectedItem != null && !string.IsNullOrEmpty(cboBankCode.SelectedItem.Value))
+            //{
+            //    vnpay.AddRequestData("vnp_BankCode", cboBankCode.SelectedItem.Value);
+            //}
+            vnpay.AddRequestData("vnp_CreateDate", vnpayRequest.CreatedAt.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CurrCode", "VND");
+            vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
+            if (!string.IsNullOrEmpty(vnpayRequest.locale))
+            {
+                vnpay.AddRequestData("vnp_Locale", vnpayRequest.locale);
+            }
+            else
+            {
+                vnpay.AddRequestData("vnp_Locale", "vn");
+            }
+            vnpay.AddRequestData("vnp_OrderInfo", vnpayRequest.OrderInfo);
+            vnpay.AddRequestData("vnp_OrderType", "190004");
+            vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
+            vnpay.AddRequestData("vnp_TxnRef", vnpayRequest.OrderCode);
+            vnpay.AddRequestData("vnp_ExpireDate", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));
+            //Billing
+            user user = Helpers.GetUserFromToken();
+            string email = user.account.username;
+            if (user.email != null)
+            {
+                email = user.email.Trim();
+            }
+            vnpay.AddRequestData("vnp_Bill_UserName", email);
+
+            string paymentUrl = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
+
+            return Redirect(paymentUrl);
         }
 
         private string GenerateOrderCode()

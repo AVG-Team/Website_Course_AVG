@@ -70,7 +70,15 @@ namespace Website_Course_AVG.Managers
             HttpContext currentContext = HttpContext.Current;
             string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
 
-            return currentUrl + "/Order/ConfirmPaymentClient";
+            return currentUrl + "/Order/ConfirmMoMoPaymentClient";
+        }
+
+        public static string GetRedirectUrlVNPay()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Order/ConfirmVNPayPaymentClient";
         }
 
 

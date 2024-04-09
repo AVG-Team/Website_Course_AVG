@@ -11,9 +11,9 @@ namespace MoMo
         public PaymentRequest()
         {
         }
+
         public static string sendPaymentRequest(string endpoint, string postJsonString)
         {
-
             try
             {
                 HttpWebRequest httpWReq = (HttpWebRequest)WebRequest.Create(endpoint);
