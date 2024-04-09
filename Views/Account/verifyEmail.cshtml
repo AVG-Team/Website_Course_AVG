@@ -17,10 +17,6 @@
                     @Html.DisplayNameFor(m => m.email)
                 </label>
             </div>
-            <div class="col-md-4 mb-3">
-                @Html.TextBoxFor(m => m.email, new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
-            </div>
         </div>
         <div class="row d-flex justify-content-center">
             <div class="col-md-2 mb-3">

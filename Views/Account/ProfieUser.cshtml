@@ -1,0 +1,81 @@
+﻿@using Website_Course_AVG.Models
+@model ProfieUser
+@{
+    ViewBag.Title = "Profie";
+}
+
+<main aria-labelledby="title">
+    <div class="container-xl px-4 mt-4">
+        <hr class="mt-0 mb-4">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                        <!-- Profile picture help block-->
+                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                        <!-- Profile picture upload button-->
+                        <button class="btn btn-primary" type="button">Upload new image</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Account Details</div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("ProfieUser", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                        {
+                            var userManager = new Website_Course_AVG.Managers.UserManager();
+                            var currentUser = userManager.GetUserFromToken();
+
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputLastName">Full Name</label>
+
+                                    @Html.TextBoxFor(m => m.fullName, new { @id = "inputFullName", @class = "form-control", placeholder = "Enter your full name", Value = currentUser.fullname })
+                                </div>
+                                <!-- Form Group (last name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                    @Html.TextBoxFor(m => m.email, new { @id = "inputEmail", @class = "form-control", placeholder = "Enter your email", Value = currentUser.email })
+
+                                </div>
+                            </div>
+                            <!-- Form Row -->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (organization name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputGender">Gender</label>
+                                    @Html.DropDownListFor(m => m.gender, new SelectList(new[]
+                                    {
+                                        new SelectListItem { Value = "Male", Text = "Male" },
+                                        new SelectListItem { Value = "Female", Text = "Female" },
+
+                                    }, "Value", "Text"), new { @class = "form-control", Value = currentUser.email })
+                                </div>
+
+                                <!-- Form Group (location)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputLocation">Birth Day</label>
+                                    @Html.PasswordFor(m => m.birthday, new { @id = "inputBirthDay", @class = "form-control", placeholder = "Enter your birth day", Value = currentUser.birthday })
+                                </div>
+                            </div>
+
+                            <!-- Save changes button-->
+                            <button class="btn btn-primary" type="button">Save changes</button>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

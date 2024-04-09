@@ -599,8 +599,13 @@ namespace Website_Course_AVG.Controllers
                 return View(model);
             }
 
-            
-            if (!userManager.IsAuthenticated() && userManager.checkCode(model.email, model.code))
+            forgot_password _forgot = _data.forgot_passwords.Where(x => x.code == code).FirstOrDefault();
+            if (_forgot == null)
+            {
+                Helpers.AddCookie("Error", "You entered wrong code!!!");
+                return View(model);
+            }
+            if (!userManager.IsAuthenticated())
             {
                 Helpers.AddCookie("Notify", "Check Email successfull");
                 account account = _context.accounts.Where(x => x.id == user.account_id).FirstOrDefault();

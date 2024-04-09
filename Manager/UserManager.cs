@@ -289,23 +289,5 @@ namespace Website_Course_AVG.Managers
 
         }
 
-        public bool checkCode(String email, String code)
-        {
-            forgot_password _forgot = _data.forgot_passwords.Where(x=> x.code == code).FirstOrDefault();
-            if (_forgot == null)
-            {
-                Helpers.AddCookie("Error", "You entered wrong code!!!");
-                return false;
-            }
-
-            user user = _data.users.Where(x => x.id == _forgot.user_id).FirstOrDefault();
-
-            if(user == null || user.email != email )
-            {
-                return false;
-            }
-
-            return true;
-        }
     }
 }
