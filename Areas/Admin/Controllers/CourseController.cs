@@ -114,9 +114,9 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View("Index");
         }
         [HttpPost]
-        public ActionResult Delete(course model)
+        public ActionResult Delete(int? id)
         {
-            var course = _data.courses.FirstOrDefault(c => c.id == model.id);
+            var course = _data.courses.FirstOrDefault(c => c.id == id);
             if (course != null)
             {
                 course.deleted_at = DateTime.Now;
