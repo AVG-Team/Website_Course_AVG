@@ -276,84 +276,88 @@
                                 <span class="menu-text">Dashboard</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="@Url.Action("Index","Account")">
-                                <i class="bi bi-person-square"></i>
-                                <span class="menu-text">Account</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Blog")">
-                                <i class="bi bi-newspaper"></i>
-                                <span class="menu-text">Blog</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Category")">
-                                <i class="bi bi-archive"></i>
-                                <span class="menu-text">Category</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Comment")">
-                                <i class="bi bi-window"></i>
-                                <span class="menu-text">Comment</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Contact")">
-                                <i class="bi bi-person-lines-fill"></i>
-                                <span class="menu-text">Contact</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Course")">
-                                <i class="bi bi-window"></i>
-                                <span class="menu-text">Course</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Exercise")">
-                                <i class="bi bi-image"></i>
-                                <span class="menu-text">Exercise</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Image")">
-                                <i class="bi bi-image"></i>
-                                <span class="menu-text">Image</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Lesson")">
-                                <i class="bi bi-book"></i>
-                                <span class="menu-text">Lesson</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Notify")">
-                                <i class="bi bi-book"></i>
-                                <span class="menu-text">Notify</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Order")">
-                                <i class="bi bi-cart"></i>
-                                <span class="menu-text">Order</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Option")">
-                                <i class="bi bi-cart"></i>
-                                <span class="menu-text">Option</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Promotion")">
-                                <i class="bi bi-cart"></i>
-                                <span class="menu-text">Promotion</span>
-                            </a>
-                        </li>
+                        @if ( Helpers.IsAdmin())
+                        {
+                            <li>
+                                <a href="@Url.Action("Index","Account")">
+                                    <i class="bi bi-person-square"></i>
+                                    <span class="menu-text">Account</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Blog")">
+                                    <i class="bi bi-newspaper"></i>
+                                    <span class="menu-text">Blog</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Category")">
+                                    <i class="bi bi-archive"></i>
+                                    <span class="menu-text">Category</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Comment")">
+                                    <i class="bi bi-window"></i>
+                                    <span class="menu-text">Comment</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Contact")">
+                                    <i class="bi bi-person-lines-fill"></i>
+                                    <span class="menu-text">Contact</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Course")">
+                                    <i class="bi bi-window"></i>
+                                    <span class="menu-text">Course</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Exercise")">
+                                    <i class="bi bi-image"></i>
+                                    <span class="menu-text">Exercise</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Image")">
+                                    <i class="bi bi-image"></i>
+                                    <span class="menu-text">Image</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Lesson")">
+                                    <i class="bi bi-book"></i>
+                                    <span class="menu-text">Lesson</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Notify")">
+                                    <i class="bi bi-book"></i>
+                                    <span class="menu-text">Notify</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Order")">
+                                    <i class="bi bi-cart"></i>
+                                    <span class="menu-text">Order</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Option")">
+                                    <i class="bi bi-cart"></i>
+                                    <span class="menu-text">Option</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Promotion")">
+                                    <i class="bi bi-cart"></i>
+                                    <span class="menu-text">Promotion</span>
+                                </a>
+                            </li>
+
+                        }
                     </ul>
                 </div>
                 <!-- Sidebar menu ends -->

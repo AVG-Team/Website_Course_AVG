@@ -54,7 +54,7 @@ namespace Website_Course_AVG.Managers
 
         public static string GetValueFromAppSetting(string key)
         {
-            return global::System.Configuration.ConfigurationManager.AppSettings[key];
+            return MvcApplication.Configuration[key];
         }
 
         public static string GetRedirectUrlGH()
@@ -104,7 +104,7 @@ namespace Website_Course_AVG.Managers
         {
             if (exercise == null)
             {
-                throw new ArgumentNullException(nameof(video));
+                throw new ArgumentNullException(nameof(exercise));
             }
 
             string url = GetSignedUrl(exercise, fileJson, seconds);

@@ -11,7 +11,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div id="body" class="app-body">
+<div id="body" class="app-body overflow-hidden">
     <div class="row gx-3">
         <div class="col-xxl-12">
             <div class="card mb-3">
@@ -52,9 +52,21 @@
                                         }
                                         @count
                                     </td>
-                                    <td class="text-success item-row">@item.created_at</td>
-                                    <td class="text-warning item-row">@item.updated_at</td>
-                                    <td class="text-danger item-row">@item.deleted_at</td>
+                                    <td class="text-success item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                            @item.created_at
+                                        </span>
+                                    </td>
+                                    <td class="text-warning item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                            @item.updated_at
+                                        </span>
+                                    </td>
+                                    <td class="text-danger item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                            @item.deleted_at
+                                        </span>
+                                    </td>
                                     <td class="d-flex justify-content-center">
                                         <button class="btn btn-info btn-sm me-1 border rounded-3 btn-update" data-id="@item.id">
                                             <i class="bi bi-pencil"></i>
