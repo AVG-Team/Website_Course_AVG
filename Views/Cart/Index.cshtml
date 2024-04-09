@@ -3,14 +3,23 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     int courseCount = Model?.CourseCount ?? 0;
-    bool isLoggedIn = Helpers.IsUser();
+    bool isLoggedIn = Helpers.IsAuthenticated();
+}
+
+@section Styles {
+    <style>
+        @@media (max-width: 575px) {
+            .btn-back {
+                padding: 0.5rem 1rem !important;
+            }
+        }
+    </style>
 }
 
 <section class="h-100" style="background-color: #eee;">
     <div id="sp-container" class="container h-100 py-5">
-        <a href="@Url.Action("Index", "Courses")" class="btn btn-primary btn-back m-lg-2">Back</a>
+        <a href="@Url.Action("Index", "Course")" class="btn btn-primary btn-back">Back</a>
         @if (Model.CourseCount > 0)
         {
             <div class="row d-flex justify-content-center align-items-center h-100">

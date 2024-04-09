@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var header = $('.sticky-header-lesson');
     var footer = document.getElementById("footer_lesson");
 
-    let heightHeader = header[0].offsetHeight !== 0 ? header[0].offsetHeight  : header[1].offsetHeight;
+    let heightHeader = header[0].offsetHeight !== 0 ? header[0].offsetHeight : header[1].offsetHeight;
 
     var divTop = $(".to-top");
     divTop.css("margin-top", heightHeader + "px");
@@ -201,20 +201,20 @@ document.addEventListener("DOMContentLoaded", () => {
             var formData = new FormData($("#form_add_comment")[0]);
             formData.append("lessonId", lessonId);
 
-                $.ajax({
-                    url: $("#form_add_comment").attr('action'),
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        RequestVerificationToken: $('#form_add_comment input:hidden[name="__RequestVerificationToken"]').val(),
-                    },
-                    success: function (result) {
-                        console.log(result.data);
-                        if (result.data.type == 1) {
-                            let classCommentIcon = result.data.role == 2 ? "fa-user-shield" : "fa-user";
-                            let newCommentHtml = `
+            $.ajax({
+                url: $("#form_add_comment").attr('action'),
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    RequestVerificationToken: $('#form_add_comment input:hidden[name="__RequestVerificationToken"]').val(),
+                },
+                success: function (result) {
+                    console.log(result.data);
+                    if (result.data.type == 1) {
+                        let classCommentIcon = result.data.role == 2 ? "fa-user-shield" : "fa-user";
+                        let newCommentHtml = `
                         <div class="mb-3 d-flex comment-item justify-space-between" data-comment="${result.data.id}" data-ajax-delete="${result.data.ajax_delete}">
                             <div>
                                 <label for="text_comment" class="form-label me-3">
@@ -230,37 +230,37 @@ document.addEventListener("DOMContentLoaded", () => {
                             </button>
                         </div>`;
 
-                            $("#body_comments").prepend(newCommentHtml);
-                        }
-                        $("#text_comment").val("");
-                        toastr.success(result.message, "Notify");
+                        $("#body_comments").prepend(newCommentHtml);
+                    }
+                    $("#text_comment").val("");
+                    toastr.success(result.message, "Notify");
 
 
-                        $('.btn-delete-comment').click((e) => {
-                            let eTmp = e.target;
-                            let divParent = eTmp.closest(".comment-item");
+                    $('.btn-delete-comment').click((e) => {
+                        let eTmp = e.target;
+                        let divParent = eTmp.closest(".comment-item");
 
-                            let idComment = divParent.getAttribute("data-comment");
-                            let url = divParent.getAttribute("data-ajax-delete");
-                            $.ajax({
-                                url: url + "/" + idComment,
-                                type: "POST",
-                                headers: {
-                                    "X-HTTP-Method-Override": "DELETE"
-                                },
-                                success: function (result) {
-                                    divParent.remove();
-                                },
-                                error: function (xhr, status, error) {
-                                    toastr.error("Error Unknow, Please try again", "Error");
-                                }
-                            });
-                        })
-                    },
-                    error: function (xhr) {
-                        toastr.error(xhr.responseJSON.message, "Error");
-                    },
-                });
+                        let idComment = divParent.getAttribute("data-comment");
+                        let url = divParent.getAttribute("data-ajax-delete");
+                        $.ajax({
+                            url: url + "/" + idComment,
+                            type: "POST",
+                            headers: {
+                                "X-HTTP-Method-Override": "DELETE"
+                            },
+                            success: function (result) {
+                                divParent.remove();
+                            },
+                            error: function (xhr, status, error) {
+                                toastr.error("Error Unknow, Please try again", "Error");
+                            }
+                        });
+                    })
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.message, "Error");
+                },
+            });
         } else {
             toastr.error("Không được để trống nội dung", "Error");
         }
@@ -295,11 +295,13 @@ function setTimeVideo(second) {
 //Video
 document.addEventListener("DOMContentLoaded", () => {
     var lastLink = $('footer').find('a.last')[0];
-    lastLink.addEventListener("click", (e) => {
-        if (e.target.classList.contains("disable")) {
-            e.preventDefault();
-        }
-    })
+    if (lastLink != null) {
+        lastLink.addEventListener("click", (e) => {
+            if (e.target.classList.contains("disable")) {
+                e.preventDefault();
+            }
+        })
+    }
 
     var video = document.getElementById('video_lesson');
     let flag = false;
@@ -366,7 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
     $(".btn-save-down-exercise").click(() => {
         var urlParams = new URLSearchParams(window.location.search);
         var lessonId = urlParams.get('lessonId');
-        
+
         $.ajax({
             url: "/Exercise/GetExercise?lessonId=" + lessonId,
             type: "GET",

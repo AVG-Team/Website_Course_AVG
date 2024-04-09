@@ -107,7 +107,7 @@ namespace Website_Course_AVG.Managers
         public bool IsAuthenticated()
         {
             string authToken = HttpContext.Current.Request.Cookies["AuthToken"]?.Value;
-            return !string.IsNullOrEmpty(authToken);
+            return !string.IsNullOrEmpty(authToken) && GetUserFromToken() != null;
         }
 
         //role = 1 : user
@@ -141,6 +141,7 @@ namespace Website_Course_AVG.Managers
                     {
                         account.info = Helpers.GetDeviceFingerprint();
                         account.token = token;
+                        account.updated_at = DateTime.Now;
                         _data.SubmitChanges();
 
                         HttpCookie cookie = new HttpCookie("AuthToken", token);

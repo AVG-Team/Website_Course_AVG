@@ -1,5 +1,4 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
-
+﻿
 @{
     Layout = null;
 }
@@ -13,15 +12,17 @@
 </head>
 <body>
     <div class="not-found">
-        <h2 class="text-error">400</h2>
-        <h1 class="text-title">Yêu cầu không hợp lệ</h1>
+        <h2 class="text-error">@ViewBag.ErrorCode</h2>
+        <h1 class="text-title">Không tìm thấy nội dung 😓</h1>
         <ul class="text-suggestion">
             <li>
-                Yêu cầu của bạn không được xử lý do
-                <strong>thiếu thông tin </strong> hoặc <strong> thông tin không hợp lệ</strong>.
+                URL của nội dung này đã
+                <strong>bị thay đổi</strong> hoặc <strong>không còn tồn tại</strong>.
             </li>
             <li>
-                <strong>Hãy kiểm tra lại thông tin và thử lại sau.</strong>
+                Nếu bạn
+                <strong>đang lưu URL này</strong>, hãy thử
+                <strong>truy cập lại từ trang chủ</strong> thay vì dùng URL đã lưu.
             </li>
         </ul>
         <p><a class="btn_access" href="@Url.Action("Index","Home")">Truy cập trang chủ</a></p>
@@ -29,4 +30,3 @@
     </div>
 </body>
 </html>
-
