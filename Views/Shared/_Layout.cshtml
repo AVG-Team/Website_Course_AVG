@@ -41,9 +41,9 @@
 
 <body>
     <!-- Scroll-top -->
-    <button class="scroll-top scroll-to-target" data-target="html">
+    <a class="scroll-top scroll-to-target" href="#" style="bottom: 1rem; z-index: 99; right: 1rem;">
         <i class="fas fa-angle-up"></i>
-    </button>
+    </a>
     <!-- Scroll-top-end-->
     <!-- header-area -->
     <header>
@@ -479,8 +479,10 @@
 
             if (scrollTop > 100) {
                 header.classList.add('sticky-menu');
+                $(".scroll-top.scroll-to-target").css("opacity", 1);
             } else {
                 header.classList.remove('sticky-menu');
+                $(".scroll-top.scroll-to-target").css("opacity", 0);
             }
         });
 
