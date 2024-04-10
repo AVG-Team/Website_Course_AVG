@@ -21,7 +21,7 @@ namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void AddCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 3)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -70,7 +70,15 @@ namespace Website_Course_AVG.Managers
             HttpContext currentContext = HttpContext.Current;
             string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
 
-            return currentUrl + "/Order/ConfirmPaymentClient";
+            return currentUrl + "/Order/ConfirmMoMoPaymentClient";
+        }
+
+        public static string GetRedirectUrlVNPay()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Order/ConfirmVNPayPaymentClient";
         }
 
 

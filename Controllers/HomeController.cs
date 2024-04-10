@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Website_Course_AVG.Managers;
@@ -15,7 +16,6 @@ namespace Website_Course_AVG.Controllers
         public ActionResult Index()
         {
             var categories = _data.categories.ToList(); 
-
 
             List<CategoryCourseViewModels> categoryViewModels = new List<CategoryCourseViewModels>();
 

@@ -27,14 +27,14 @@ namespace Website_Course_AVG.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-		private readonly MyDataDataContext _context = new MyDataDataContext();
+        private readonly MyDataDataContext _context = new MyDataDataContext();
 
-		public AccountController()
-		{
-			
-		}
+        public AccountController()
+        {
 
-		public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        }
+
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -76,41 +76,46 @@ namespace Website_Course_AVG.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]  
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Website_Course_AVG.Attributes.AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-			var userManager = new Website_Course_AVG.Managers.UserManager();
-			if (userManager.IsAuthenticated())
-			{
-				Helpers.AddCookie("Error", "You are logging in !!!");
+            var userManager = new Website_Course_AVG.Managers.UserManager();
+            if (userManager.IsAuthenticated())
+            {
+                Helpers.AddCookie("Error", "You are logging in !!!");
                 return View(model);
-			}
-			if (ModelState.IsValid)
+            }
+            if (ModelState.IsValid)
             {
                 account account = _context.accounts.Where(x => x.username == model.userName).FirstOrDefault();
-                
-                if(account == null)
-                {
-				    Helpers.AddCookie("Error", "username and password are wrong !!!");
-                    return View(model);
-                }
 
-
-                bool isVerify = await userManager.ValidatePasswordAsync(account, model.Password);
-
-                user user = account.users.FirstOrDefault();
-                if(user == null)
+                if (account == null)
                 {
                     Helpers.AddCookie("Error", "username and password are wrong !!!");
                     return View(model);
                 }
 
-				userManager.login(account.username);
-                Helpers.AddCookie("Notify", "Login Successfull");
-				return RedirectToAction("Index", "Home");
-			}
+
+                bool isVerify = await userManager.ValidatePasswordAsync(account, model.Password);
+                if (isVerify)
+                {
+                    user user = account.users.FirstOrDefault();
+                    if (user == null)
+                    {
+                        Helpers.AddCookie("Error", "username and password are wrong !!!");
+                        return View(model);
+                    }
+
+                    userManager.login(account.username);
+                    Helpers.AddCookie("Notify", "Login Successfull");
+                    return RedirectToAction("Index", "Home");
+                }
+
+                Helpers.AddCookie("Error", "username and password are wrong !!!");
+                return View(model);
+            }
 
             Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
             return View(model);
@@ -166,8 +171,8 @@ namespace Website_Course_AVG.Controllers
         [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult Register()
         {
-			return View();
-		}
+            return View();
+        }
 
         //
         // POST: /Account/Register
@@ -176,24 +181,24 @@ namespace Website_Course_AVG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-			var UserManager = new Website_Course_AVG.Managers.UserManager();
-			if (ModelState.IsValid)
+            var UserManager = new Website_Course_AVG.Managers.UserManager();
+            if (ModelState.IsValid)
             {
 
-				//if user have not ever register before
-				account account = new account();
-				account.username = model.userName;
-				account.password = model.Password;
-				var result = await UserManager.CreateAccountUserAsync(model.userName, account, model.Email);
-				if (result.Succeeded)
+                //if user have not ever register before
+                account account = new account();
+                account.username = model.userName;
+                account.password = model.Password;
+                var result = await UserManager.CreateAccountUserAsync(model.userName, account, model.Email);
+                if (result.Succeeded)
                 {
-					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-					// Send an email with this link
-					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-					Helpers.AddCookie("Notify", "Register Successful");
-					UserManager.login(model.userName);
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    Helpers.AddCookie("Notify", "Register Successful");
+                    UserManager.login(model.userName);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -224,17 +229,18 @@ namespace Website_Course_AVG.Controllers
             return View();
         }
 
-		//
-		// POST: /Account/ForgotPassword
+        //
+        // POST: /Account/ForgotPassword
 
-		[HttpPost]
+        [HttpPost]
         [Website_Course_AVG.Attributes.AllowAnonymous]
-		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
-		{
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
+        {
             user user = _context.users.Where(x => x.email == forgotPassword.Email).FirstOrDefault();
 
-            if (user == null) {
+            if (user == null)
+            {
                 Helpers.AddCookie("Error", "Error Unknown");
                 return RedirectToAction("Index", "Home");
             }
@@ -246,26 +252,26 @@ namespace Website_Course_AVG.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-			var userManager = new UserManager();
-			var subject = "AVG Courses - Reset Password";
+            var userManager = new UserManager();
+            var subject = "AVG Courses - Reset Password";
 
             String messageHead = "Mã khôi phục pass của bạn là ";
-			String messageLast = Helpers.GenerateRandomString(10);
-			if (!userManager.IsAuthenticated())
-			{
+            String messageLast = Helpers.GenerateRandomString(10);
+            if (!userManager.IsAuthenticated())
+            {
                 if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
                 {
-					return View();
-				}
-				return RedirectToAction("ForgotPasswordConfirmation", "Account");
-			}
-			Helpers.AddCookie("Error", "Has Error");
+                    return View();
+                }
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            }
+            Helpers.AddCookie("Error", "Has Error");
             return RedirectToAction("Index", "Home");
         }
 
-		//
-		// GET: /Account/ForgotPasswordConfirmation
-		[Website_Course_AVG.Attributes.AllowAnonymous]
+        //
+        // GET: /Account/ForgotPasswordConfirmation
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -342,7 +348,7 @@ namespace Website_Course_AVG.Controllers
             else if (UserManager.CheckUsername(loginInfo.Email))
             {
                 user user = _context.users.Where(x => x.email == loginInfo.Email).FirstOrDefault();
-                
+
                 Helpers.AddCookie("Notify", "Login Successful With Gmail");
                 UserManager.login(user.account.username);
                 return RedirectToAction("Index", "Home");
@@ -400,7 +406,7 @@ namespace Website_Course_AVG.Controllers
                         userAccount.username = info.DefaultUserName;
                     }
                     else
-                    userAccount.username = info.Email;
+                        userAccount.username = info.Email;
                     userAccount.provide = info.Login.LoginProvider;
                     userAccount.provide_id = info.Login.ProviderKey;
 
@@ -569,55 +575,55 @@ namespace Website_Course_AVG.Controllers
             throw new System.NotImplementedException();
         }
 
-		private string RemoveChar(string text)
-		{
-			string word = text.Normalize(NormalizationForm.FormD);
-			StringBuilder ketQua = new StringBuilder();
+        private string RemoveChar(string text)
+        {
+            string word = text.Normalize(NormalizationForm.FormD);
+            StringBuilder ketQua = new StringBuilder();
 
-			foreach (char letter in word)
-			{
-				UnicodeCategory theLoai = CharUnicodeInfo.GetUnicodeCategory(letter);
-				if (theLoai != UnicodeCategory.NonSpacingMark)
-				{
-					ketQua.Append(letter);
-				}
-			}
+            foreach (char letter in word)
+            {
+                UnicodeCategory theLoai = CharUnicodeInfo.GetUnicodeCategory(letter);
+                if (theLoai != UnicodeCategory.NonSpacingMark)
+                {
+                    ketQua.Append(letter);
+                }
+            }
 
-			return ketQua.ToString().Normalize(NormalizationForm.FormC);
-		}
+            return ketQua.ToString().Normalize(NormalizationForm.FormC);
+        }
 
-		public ActionResult Autocomplete(string keyword)
-		{
-			string keywordWithoutDiacritics = RemoveChar(keyword).ToLower();
+        public ActionResult Autocomplete(string keyword)
+        {
+            string keywordWithoutDiacritics = RemoveChar(keyword).ToLower();
 
-			Dictionary<string, string> wordDictionary = new Dictionary<string, string>();
+            Dictionary<string, string> wordDictionary = new Dictionary<string, string>();
 
-			// Thử lấy dữ liệu từ cache trước
-			var cachedData = MemoryCache.Default.Get("cachedData_" + keywordWithoutDiacritics);
-			if (cachedData != null)
-			{
-				return Json((List<string>)cachedData, JsonRequestBehavior.AllowGet);
-			}
+            // Thử lấy dữ liệu từ cache trước
+            var cachedData = MemoryCache.Default.Get("cachedData_" + keywordWithoutDiacritics);
+            if (cachedData != null)
+            {
+                return Json((List<string>)cachedData, JsonRequestBehavior.AllowGet);
+            }
 
-			foreach (var sach in _context.courses)
-			{
-				string tensachWithoutDiacritics = RemoveChar(sach.title).ToLower();
-				if (!wordDictionary.ContainsKey(tensachWithoutDiacritics))
-				{
-					wordDictionary.Add(tensachWithoutDiacritics, sach.title);
-				}
-			}
+            foreach (var sach in _context.courses)
+            {
+                string tensachWithoutDiacritics = RemoveChar(sach.title).ToLower();
+                if (!wordDictionary.ContainsKey(tensachWithoutDiacritics))
+                {
+                    wordDictionary.Add(tensachWithoutDiacritics, sach.title);
+                }
+            }
 
-			var suggestions = wordDictionary
-								.Where(entry => entry.Key.Contains(keywordWithoutDiacritics) || entry.Value.Contains(keyword))
-								.Select(entry => entry.Value)
-								.Take(5)
-								.ToList();
+            var suggestions = wordDictionary
+                                .Where(entry => entry.Key.Contains(keywordWithoutDiacritics) || entry.Value.Contains(keyword))
+                                .Select(entry => entry.Value)
+                                .Take(5)
+                                .ToList();
 
-			// Lưu dữ liệu vào cache
-			MemoryCache.Default.Add("cachedData_" + keywordWithoutDiacritics, suggestions, DateTimeOffset.Now.AddMinutes(10));
+            // Lưu dữ liệu vào cache
+            MemoryCache.Default.Add("cachedData_" + keywordWithoutDiacritics, suggestions, DateTimeOffset.Now.AddMinutes(10));
 
-			return Json(suggestions, JsonRequestBehavior.AllowGet);
-		}
-	}
+            return Json(suggestions, JsonRequestBehavior.AllowGet);
+        }
+    }
 }
