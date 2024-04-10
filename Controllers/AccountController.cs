@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Newtonsoft.Json.Linq;
+using MimeKit;
 using Octokit;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Razor.Tokenizer.Symbols;
 using System.Web.Services.Description;
@@ -98,7 +100,7 @@ namespace Website_Course_AVG.Controllers
                     Helpers.AddCookie("Error", "you enter username or password, something wrong !!!");
                     return View(model);
                 }
-
+                 
 
                 bool isVerify = await userManager.ValidatePasswordAsync(account, model.Password);
                 if (isVerify)
@@ -194,14 +196,18 @@ namespace Website_Course_AVG.Controllers
                 var result = await UserManager.CreateAccountUserAsync(model.userName, account, model.Email);
                 if (result.Succeeded)
                 {
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    Helpers.AddCookie("Notify", "Register Successful");
-                    UserManager.login(model.userName);
-                    return RedirectToAction("Index", "Home");
+					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+					// Send an email with this link
+					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");					
+                    if(UserManager.SendEmailAsync(model.Email, "Verify Email", "Your code to verify email is: ", Helpers.GenerateRandomString(10), "Register", "verifyEmail").Result)
+                    {
+                        Helpers.AddCookie("Notify", "Access email to verify");
+                        TempData["EmailAddress"] = model.Email;
+                    }
+                    //UserManager.login(model.userName);
+                    return View(model);
                 }
                 AddErrors(result);
             }
@@ -258,10 +264,10 @@ namespace Website_Course_AVG.Controllers
             var subject = "AVG Courses - Reset Password";
 
             String messageHead = "Mã khôi phục pass của bạn là ";
-            String messageLast = Helpers.GenerateRandomString(10);
-            if (!userManager.IsAuthenticated())
-            {
-                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
+			String messageLast = Helpers.GenerateRandomString(10);
+			if (!userManager.IsAuthenticated())
+			{
+                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast,"ForgotPassword", "ResetPassword") == false)
                 {
                     return View();
                 }
@@ -576,6 +582,55 @@ namespace Website_Course_AVG.Controllers
         {
             throw new System.NotImplementedException();
         }
+
+        public ActionResult verifyEmail()
+        {
+
+            verifyEmail model = new verifyEmail();
+
+            model.email = TempData["EmailAddress"] as string;
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult verifyEmail(verifyEmail model)
+        {
+            UserManager userManager = new UserManager();
+            user user = _context.users.Where(x=> x.email == model.email).FirstOrDefault();
+            if(user == null)
+            {
+                Helpers.AddCookie("Error", "Error Unknown");
+                return View(model);
+            }
+
+
+            int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
+
+            if (countForgotPassword > 3)
+            {
+                Helpers.AddCookie("Error", "We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you");
+                return View(model);
+            }
+
+            forgot_password _forgot = _data.forgot_passwords.Where(x => x.code == code).FirstOrDefault();
+            if (_forgot == null)
+            {
+                Helpers.AddCookie("Error", "You entered wrong code!!!");
+                return View(model);
+            }
+            if (!userManager.IsAuthenticated())
+            {
+                Helpers.AddCookie("Notify", "Check Email successfull");
+                account account = _context.accounts.Where(x => x.id == user.account_id).FirstOrDefault();
+                userManager.login(account.username);
+                Helpers.AddCookie("Notify", "Login successfull");
+                return View(model);
+            }
+            Helpers.AddCookie("Error", "Has Error");
+            return View(model);
+        }
+	}
 
         private string RemoveChar(string text)
         {

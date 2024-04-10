@@ -1,0 +1,84 @@
+﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-body">
+    <div id="form" class="card mb-3">
+        @using (Html.BeginForm("Insert","Exercise",FormMethod.Post,new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10">
+                        <h5 class="card-title">Insert Exercise</h5>
+                    </div>
+                    <div class="col-2 float-end">
+                        <a href=@Url.Action("Index", "Exercise") type="button" class="btn btn-outline-info btn-insert float-end">
+                            <i class="bi bi-arrow-left-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row gx-3">
+                    <div class="col-xl-6 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="Exercise.title" class="form-control" placeholder="Title" />
+                                    @Html.ValidationMessageFor(m => m.Exercise.title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Content</label>
+                                    <input type="text" name="Exercise.content" class="form-control" placeholder="Description" />
+                                    @Html.ValidationMessageFor(m => m.Exercise.content, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Select Lesson </label>
+                                    <select class="form-select" aria-label="Default select example" name="Exercise.lesson_id">
+                                        <option selected="">Open this select menu</option>
+                                        @foreach (var item in Model.Lessons)
+                                        {
+                                            <option value=@item.id>@item.title</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <label class="form-label">Upload File</label>
+                                    <input name="file"  class="form-control" type="file" multiple/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    @*<button type="button" class="btn btn-outline-secondary">Cancel</button>*@
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

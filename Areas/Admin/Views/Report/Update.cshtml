@@ -1,0 +1,106 @@
+﻿
+@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-body">
+    <div id="form" class="card mb-3">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <h5 class="card-title">Update report</h5>
+            </div>
+            <div class="card-body">
+                <div class="row gx-3">
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" name="Report.fullname" class="form-control" placeholder="Title" value="@Model.Report.fullname" readonly/>
+                                    @Html.ValidationMessage(@Model.Report.fullname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" name="Report.email" class="form-control" placeholder="Description" value="@Model.Report.email" readonly/>
+                                    @Html.ValidationMessage(@Model.Report.email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Phone</label>
+                                    <input text="text" name="Report.phone" class="form-control" placeholder="Author" value="@Model.Report.phone" readonly/>
+                                    @Html.ValidationMessage(@Model.Report.phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Subject</label>
+                                    <input text="text" name="Report.subject" class="form-control" placeholder="Author" value="@Model.Report.subject" readonly/>
+                                    @Html.ValidationMessage(@Model.Report.subject, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Message</label>
+                                    <input text="text" name="Report.message" class="form-control" placeholder="Author" value="@Model.Report.message" readonly/>
+                                    @Html.ValidationMessage(@Model.Report.message, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Status</label>
+                                    <select name="Report.status" class="form-select">
+                                        <option value="True" @if (Model.Report.status == true) { <text> selected</text> }>1</option>
+                                        <option value="False" @if (Model.Report.status == false) { <text> selected</text> }>0</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.Report.status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btn-cancel').click(function () {
+                window.location.href = '/Admin/Report';
+            })
+        })
+    </script>
+}
