@@ -146,11 +146,11 @@
   </Table>
   <Table Name="dbo.images" Member="images">
     <Type Name="image">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="image" Member="image1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="type" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="category" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="code" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="code" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.lessons" Member="lessons">
@@ -217,7 +217,7 @@
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="total" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="type_payment" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="type_payment" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="code_order" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="promotion_id" Type="System.Int32" DbType="Int" CanBeNull="true" />

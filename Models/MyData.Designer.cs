@@ -95,7 +95,7 @@ namespace Website_Course_AVG.Models
     partial void Deletevideo(video instance);
         #endregion
         public MyDataDataContext() :
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["AVG_Website_CourseConnectionString"].ConnectionString, mappingSource)
+			base(MvcApplication.Configuration["ConnectionStrings:AVG_Website_CourseConnectionString"], mappingSource)
         {
             OnCreated();
         }
@@ -3356,7 +3356,7 @@ namespace Website_Course_AVG.Models
 		
 		private System.Nullable<bool> _category;
 		
-		private System.Nullable<int> _code;
+		private string _code;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3370,7 +3370,7 @@ namespace Website_Course_AVG.Models
     partial void OntypeChanged();
     partial void OncategoryChanging(System.Nullable<bool> value);
     partial void OncategoryChanged();
-    partial void OncodeChanging(System.Nullable<int> value);
+    partial void OncodeChanging(string value);
     partial void OncodeChanged();
     #endregion
 		
@@ -3379,7 +3379,7 @@ namespace Website_Course_AVG.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int id
 		{
 			get
@@ -3459,8 +3459,8 @@ namespace Website_Course_AVG.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_code", DbType="Int")]
-		public System.Nullable<int> code
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_code", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string code
 		{
 			get
 			{
@@ -4797,7 +4797,7 @@ namespace Website_Course_AVG.Models
 		
 		private System.Nullable<long> _total;
 		
-		private string _type_payment;
+		private System.Nullable<int> _type_payment;
 		
 		private string _code_order;
 		
@@ -4827,7 +4827,7 @@ namespace Website_Course_AVG.Models
     partial void OnstatusChanged();
     partial void OntotalChanging(System.Nullable<long> value);
     partial void OntotalChanged();
-    partial void Ontype_paymentChanging(string value);
+    partial void Ontype_paymentChanging(System.Nullable<int> value);
     partial void Ontype_paymentChanged();
     partial void Oncode_orderChanging(string value);
     partial void Oncode_orderChanged();
@@ -4911,8 +4911,8 @@ namespace Website_Course_AVG.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type_payment", DbType="NVarChar(100)")]
-		public string type_payment
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type_payment", DbType="Int")]
+		public System.Nullable<int> type_payment
 		{
 			get
 			{

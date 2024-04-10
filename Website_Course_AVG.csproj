@@ -310,6 +310,7 @@
     <Compile Include="Areas\Admin\Controllers\OptionController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\PromotionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Attributes\AdminAttribute.cs" />
     <Compile Include="Attributes\UserAttribute.cs" />
@@ -1295,7 +1296,10 @@
     <Content Include="Areas\Admin\Views\Category\Insert.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="appsettings.json" />
+    <Content Include="Areas\Admin\Views\Contact\Index.cshtml" />
     <None Include="Areas\Admin\Views\Course\Insert.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\Update.cshtml" />
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
     </None>
@@ -1382,7 +1386,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Blog\" />
     <Folder Include="Areas\Admin\Views\Comment\" />
-    <Folder Include="Areas\Admin\Views\Contact\" />
     <Folder Include="Areas\Admin\Views\Exercise\" />
     <Folder Include="Areas\Admin\Views\Image\" />
     <Folder Include="Areas\Admin\Views\Lesson\" />
