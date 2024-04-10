@@ -1,0 +1,36 @@
+﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-body">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <button type="button" id="browseButton" class="btn btn-success">Browse Server</button>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            // Gắn sự kiện click cho nút browseButton
+            $('#browseButton').click(function () {
+                BrowseServer();
+            });
+        });
+        function BrowseServer() {
+            var finder = new CKFinder();
+            finder.selectActionFunction = SetFileField;
+            //finder.resourceType = 'Images'; // Thiết lập loại tài nguyên bạn muốn tìm kiếm, ở đây là hình ảnh
+            finder.startupPath = '/'; // Thiết lập đường dẫn ban đầu khi mở CKFinder
+            finder.selectActionData = 'url'; // Đặt dữ liệu sẽ được trả về khi một tệp được chọn
+            finder.popup(); // Mở CKFinder trong cùng một trang
+        }
+        function SetFileField(fileUrl) {
+            $("input[name='Course.image_code']").val(fileUrl)
+            $('#demoImage').attr("src", fileUrl);
+        }
+    </script>
+}
+

@@ -67,7 +67,7 @@
                             <nav class="menu-nav show justify-content-between">
                                 <div class="logo me-5">
                                     <a href="@Url.Action("Index", "Home")">
-                                        <img src="~/Content/img/logo/AVG_Course.png" alt="Logo">
+                                        <img src="~/Content/img/logo/AVG_course.png" alt="Logo">
                                     </a>
                                 </div>
                                 <div class="navbar-wrap main-menu d-none d-lg-flex">
@@ -246,15 +246,33 @@
                         <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="searchModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form>
-                                        <input type="text" value="" placeholder="Search here..." name="query" style="max-width:none !important">
+                                    @using (Html.BeginForm("AutoComplete", "Account", FormMethod.Get, new { @class = "search-form" }))
+                                    {
+                                        <input id="searchInput" type="text" value="" placeholder="Search here..." name="query" style="max-width:none !important" autocomplete="on" a>
                                         <button onclick="search(controller);">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  style="width: 40px; height: 40px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                             </svg>
                                         </button>
-                                    </form>
+                                        <div id="suggestions" class="autocomplete-suggestions list-group"></div>
+                                        <style>
+                                            .suggestion {
+                                                padding: 1px;
+                                                margin-bottom: 1px; /* Khoảng cách giữa các mục gợi ý */
+                                                cursor: pointer;
+                                            }
+
+                                            .autocomplete-suggestions {
+                                                width: 300px; /* Thiết lập chiều rộng tùy chỉnh */
+                                            }
+
+                                                .autocomplete-suggestions .suggestion:hover {
+                                                    background-color: #0D6EFD;
+                                                }
+                                        </style>
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -270,27 +288,6 @@
         <div class="pb-5 to-top">
             @RenderBody()
         </div>
-        <!-- newsletter-area -->
-        <section class="newsletter-area newsletter-bg" data-background="~/Content/img/bg/newsletter_footer_bg">
-            <div class="container">
-                <div class="newsletter-inner-wrap">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <div class="newsletter-content">
-                                <h4 class="text-white">Trial Start First 30 Days.</h4>
-                                <p class="text-white">Enter your email to create or restart your membership.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <form action="#" class="newsletter-form">
-                                <input type="email" required placeholder="Enter your email">
-                                <button class="btn">get started</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer>
@@ -427,29 +424,6 @@
             var cookieError = getCookie('Error');
             if (cookieError !== "")
                 toastr.error(cookieError, 'Error')
-
-
-            // menu
-            let body = document.getElementsByTagName("body");
-            let iconMenu = document.querySelector(".mobile-nav-toggler");
-            iconMenu.addEventListener("click", () => {
-                console.log(body[0]);
-                body[0].classList.add("mobile-menu-visible");
-            })
-
-            let btnCloseMenuMobile = document.querySelector(".mobile-menu .close-btn");
-            btnCloseMenuMobile.addEventListener("click", () => {
-                body[0].classList.remove("mobile-menu-visible");
-            })
-
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest(".mobile-menu")
-                    && body[0].classList.contains("mobile-menu-visible")
-                    && !e.target.closest(".mobile-nav-toggler")
-                ) {
-                    body[0].classList.remove("mobile-menu-visible");
-                }
-            });
         })
 
         // sticky-header
@@ -466,7 +440,7 @@
 
         // mobile-menu
         let body = document.getElementsByTagName("body");
-        let iconMenu = document.querySelector(".mobile-nav-toggler");
+        let iconMenu = document.querySelector(".mobile-nav-toggler .fas.fa-bars");
         iconMenu.addEventListener("click", () => {
             console.log(body[0]);
             body[0].classList.add("mobile-menu-visible");
@@ -522,6 +496,47 @@
                 divTop.css("margin-top", heightHeader + "px");
             }
         });
+
+        $(document).ready(function () {
+            $('#searchInput').keyup(function () {
+                var keyword = $(this).val();
+                if (keyword.length >= 1) {
+                    $.ajax({
+                        url: '/Account/AutoComplete',
+                        type: 'GET',
+                        data: { keyword: keyword },
+                        success: function (data) {
+                            $('#suggestions').empty();
+                            $.each(data, function (index, value) {
+                                $('#suggestions').append('<div class="suggestion">' + value + '</div>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#suggestions').empty();
+                }
+            });
+
+            document.getElementById('searchInput').addEventListener('keydown', function (event) {
+                // Kiểm tra xem người dùng đã nhấn phím Tab chưa
+                if (event.keyCode === 9) { // 9 là mã phím Tab
+                    var suggestions = document.querySelectorAll('.suggestion'); // Lấy tất cả các gợi ý
+                    if (suggestions.length > 0) { // Kiểm tra xem có gợi ý nào không
+                        var suggestionText = suggestions[0].innerText; // Lấy dữ liệu của gợi ý đầu tiên
+                        document.getElementById('searchInput').value = suggestionText; // Điền dữ liệu vào ô tìm kiếm
+                    }
+                }
+            });
+
+            // Xử lý khi người dùng chọn một gợi ý từ danh sách
+            $(document).on('click', '.suggestion', function () {
+                var selectedSuggestion = $(this).text(); // Lấy giá trị của gợi ý được chọn
+                $('#keyword').val(selectedSuggestion); // Điền giá trị của gợi ý vào thanh tìm kiếm
+                $('#suggestions').empty(); // Xóa danh sách gợi ý
+            });
+        });
+
+
 
     </script>
 </body>

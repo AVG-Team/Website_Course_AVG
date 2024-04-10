@@ -107,7 +107,7 @@ namespace Website_Course_AVG.Managers
         public bool IsAuthenticated()
         {
             string authToken = HttpContext.Current.Request.Cookies["AuthToken"]?.Value;
-            return !string.IsNullOrEmpty(authToken);
+            return !string.IsNullOrEmpty(authToken) && GetUserFromToken() != null;
         }
 
         //role = 1 : user
@@ -122,10 +122,10 @@ namespace Website_Course_AVG.Managers
         // role = 2 : admin
         public bool IsAdmin()
         {
-            if (!IsUser())
+            if (!IsAuthenticated())
                 return false;
             user user = GetUserFromToken();
-            return user.role > 1;
+            return user != null && user.role > 1;
         }
 
         public void login(string username)
@@ -141,6 +141,7 @@ namespace Website_Course_AVG.Managers
                     {
                         account.info = Helpers.GetDeviceFingerprint();
                         account.token = token;
+                        account.updated_at = DateTime.Now;
                         _data.SubmitChanges();
 
                         HttpCookie cookie = new HttpCookie("AuthToken", token);
@@ -172,9 +173,7 @@ namespace Website_Course_AVG.Managers
                 return false;
             }
 
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            return BCrypt.Net.BCrypt.Verify(hashedPassword, account.password);
+            return BCrypt.Net.BCrypt.Verify(password, account.password);
         }
 
 
@@ -198,6 +197,9 @@ namespace Website_Course_AVG.Managers
         {
             string ourMail = Helpers.GetValueFromAppSetting("OurMail");
             string password = Helpers.GetValueFromAppSetting("Password");
+
+            if (ourMail == null || password == null)
+                return false;
 
             user user = _data.users.Where(x => x.email == toEmail).FirstOrDefault();
             if (user == null)

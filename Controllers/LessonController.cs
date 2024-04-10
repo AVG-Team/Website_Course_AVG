@@ -9,12 +9,13 @@ using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Controllers
 {
+    [Website_Course_AVG.Attributes.Authorize]
     public class LessonController : Controller
     {
         MyDataDataContext _data = new MyDataDataContext();
 
         //Todo : Set lại redirect to action về course detail
-        public ActionResult Index(int courseId, int lessonId = 1)
+        public ActionResult Index(int courseId, int? lessonId)
         {
             var lessonsCourse = from ff in _data.lessons.Where(x => x.course_id == courseId) select ff;
 
@@ -22,6 +23,28 @@ namespace Website_Course_AVG.Controllers
             {
                 Helpers.AddCookie("Error", "The course is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.");
                 return RedirectToAction("Index", "Home");
+            }
+
+            user user = Helpers.GetUserFromToken();
+            int userId = user.id;
+            detail_course detailCourse = _data.detail_courses.Where(x => x.user_id == userId && x.course_id == courseId).FirstOrDefault();
+            if (detailCourse == null)
+            {
+                Helpers.AddCookie("Error", "It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you.");
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (lessonId == null)
+            {
+                int lessonLearnedIdTmp = detailCourse.lesson_learned_id ?? 0;
+                if (lessonLearnedIdTmp == 0)
+                {
+                    lessonId = lessonsCourse.OrderBy(x => x.index).First().id;
+                }
+                else
+                {
+                    lessonId = lessonLearnedIdTmp;
+                }
             }
 
             lesson lesson = lessonsCourse.Where(x => x.id == lessonId).FirstOrDefault();
@@ -38,15 +61,6 @@ namespace Website_Course_AVG.Controllers
             string courseTitle = lesson.course.title;
             ViewBag.CourseTitle = courseTitle;
 
-            user user = Helpers.GetUserFromToken();
-            int userId = user.id;
-            detail_course detailCourse = _data.detail_courses.Where(x => x.user_id == userId && x.course_id == courseId).FirstOrDefault();
-            if(detailCourse == null)
-            {
-                Helpers.AddCookie("Error", "It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you.");
-                return RedirectToAction("Index", "Home");
-            }
-
             int lessonLearnedId = detailCourse.lesson_learned_id ?? idLessonFirstOfCourse - 1;
             ViewBag.LessonLearnedId = lessonLearnedId;
             ViewBag.Lessons = lessons;
@@ -54,7 +68,7 @@ namespace Website_Course_AVG.Controllers
             Identity identity = Helpers.GetIdentity(lesson, lessons);
             ViewBag.Identity = identity;
 
-            if(lessonLearnedId + 1 < lesson.id && user.role != 2)
+            if (lessonLearnedId + 1 < lesson.id && user.role != 2)
             {
                 Helpers.AddCookie("Error", "You have not finished studying the previous lesson, please return to the previous lesson");
                 return RedirectToAction("Detail", "Course");
@@ -94,10 +108,11 @@ namespace Website_Course_AVG.Controllers
                     detail_course.lesson_learned_id = lessonId;
                     _data.SubmitChanges();
                     return ResponseHelper.SuccessResponse("Success");
-                } 
+                }
 
                 return ResponseHelper.SuccessResponse("");
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return ResponseHelper.ErrorResponse("Error Unknown");
             }

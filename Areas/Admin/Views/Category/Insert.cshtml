@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "InsertCategory";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+
+<div class="app-body">
+    <div id="form" class="card mb-3">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10">
+                        <h5 class="card-title">Insert Category</h5>
+                    </div>
+                    <div class="col-2 float-end">
+                        <a href=@Url.Action("Index", "Category") type="button" class="btn btn-outline-info btn-insert float-end">
+                            <i class="bi bi-arrow-left-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body ">
+                <div class="row gx-3 d-flex justify-content-center">
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3 ">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="Category.name" class="form-control" placeholder="Name Category" />
+                                    @Html.ValidationMessageFor(m => m.Category.name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

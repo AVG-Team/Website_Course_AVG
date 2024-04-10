@@ -21,7 +21,7 @@ namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void AddCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 3)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -54,7 +54,7 @@ namespace Website_Course_AVG.Managers
 
         public static string GetValueFromAppSetting(string key)
         {
-            return global::System.Configuration.ConfigurationManager.AppSettings[key];
+            return MvcApplication.Configuration[key];
         }
 
         public static string GetRedirectUrlGH()
@@ -64,6 +64,23 @@ namespace Website_Course_AVG.Managers
 
             return currentUrl + "/Account/GithubLogin";
         }
+
+        public static string GetRedirectUrlMoMo()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Order/ConfirmMoMoPaymentClient";
+        }
+
+        public static string GetRedirectUrlVNPay()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Order/ConfirmVNPayPaymentClient";
+        }
+
 
         public static string UrlGithubLogin()
         {
@@ -104,7 +121,7 @@ namespace Website_Course_AVG.Managers
         {
             if (exercise == null)
             {
-                throw new ArgumentNullException(nameof(video));
+                throw new ArgumentNullException(nameof(exercise));
             }
 
             string url = GetSignedUrl(exercise, fileJson, seconds);
@@ -220,8 +237,8 @@ namespace Website_Course_AVG.Managers
 
             if (indexCurrentLesson >= 1)
             {
-                lesson previous = lessons.Where(x => x.index == ( indexCurrentLesson - 1) ).FirstOrDefault();
-                if(previous != null)
+                lesson previous = lessons.Where(x => x.index == (indexCurrentLesson - 1)).FirstOrDefault();
+                if (previous != null)
                 {
                     identityPrevious = previous.id;
                 }
@@ -246,20 +263,20 @@ namespace Website_Course_AVG.Managers
 
         public static List<string> ReadJsonFromFile(string filePath)
         {
-            List<string> sensitiveWords = new List<string>();
+            List<string> listString = new List<string>();
 
             try
             {
                 string jsonText = File.ReadAllText(filePath);
 
-                sensitiveWords = JsonSerializer.Deserialize<List<string>>(jsonText);
+                listString = JsonSerializer.Deserialize<List<string>>(jsonText);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error reading json file: " + ex.Message);
             }
 
-            return sensitiveWords;
+            return listString;
         }
 
         //public static string SanitizeInput(string input)
@@ -317,13 +334,17 @@ namespace Website_Course_AVG.Managers
             string screenWidth = context.Request.Browser.ScreenPixelsWidth.ToString();
             string screenHeight = context.Request.Browser.ScreenPixelsHeight.ToString();
             string timeZone = TimeZoneInfo.Local.DisplayName;
-
-            // Tạo dấu vân tay bằng cách kết hợp các thuộc tính
             string deviceFingerprint = $"{userAgent}_{ipAddress}_{screenWidth}_{screenHeight}_{timeZone}";
 
-            // Lưu hoặc xử lý dấu vân tay ở đây (ví dụ: lưu vào CSDL, so sánh với dấu vân tay đã lưu, ...)
-
             return deviceFingerprint;
+        }
+
+        // get item in cart
+        public static List<int> GetItem(string base64String)
+        {
+            byte[] data = Convert.FromBase64String(base64String);
+            string decodedString = Encoding.UTF8.GetString(data);
+            return decodedString.Split(';').Select(int.Parse).ToList();
         }
     }
 }

@@ -84,6 +84,9 @@ namespace Website_Course_AVG.Models
         partial void Insertpromotion(promotion instance);
         partial void Updatepromotion(promotion instance);
         partial void Deletepromotion(promotion instance);
+        partial void Insertreport(report instance);
+        partial void Updatereport(report instance);
+        partial void Deletereport(report instance);
         partial void Insertuser(user instance);
         partial void Updateuser(user instance);
         partial void Deleteuser(user instance);
@@ -93,13 +96,7 @@ namespace Website_Course_AVG.Models
         #endregion
 
         public MyDataDataContext() :
-                base(global::System.Configuration.ConfigurationManager.ConnectionStrings["AVG_Website_CourseConnectionString"].ConnectionString, mappingSource)
-        {
-            OnCreated();
-        }
-
-        public MyDataDataContext(string connection) :
-                base(connection, mappingSource)
+			base(MvcApplication.Configuration["ConnectionStrings:AVG_Website_CourseConnectionString"], mappingSource)
         {
             OnCreated();
         }
@@ -263,6 +260,14 @@ namespace Website_Course_AVG.Models
             get
             {
                 return this.GetTable<promotion>();
+            }
+        }
+
+        public System.Data.Linq.Table<report> reports
+        {
+            get
+            {
+                return this.GetTable<report>();
             }
         }
 
@@ -3346,7 +3351,7 @@ namespace Website_Course_AVG.Models
 
         private System.Nullable<bool> _category;
 
-        private System.Nullable<int> _code;
+        private string _code;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -3360,7 +3365,7 @@ namespace Website_Course_AVG.Models
         partial void OntypeChanged();
         partial void OncategoryChanging(System.Nullable<bool> value);
         partial void OncategoryChanged();
-        partial void OncodeChanging(System.Nullable<int> value);
+        partial void OncodeChanging(string value);
         partial void OncodeChanged();
         #endregion
 
@@ -3369,7 +3374,7 @@ namespace Website_Course_AVG.Models
             OnCreated();
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_id", DbType = "Int NOT NULL", IsPrimaryKey = true)]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_id", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
         public int id
         {
             get
@@ -3449,8 +3454,8 @@ namespace Website_Course_AVG.Models
             }
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_code", DbType = "Int")]
-        public System.Nullable<int> code
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_code", DbType = "VarChar(MAX)")]
+        public string code
         {
             get
             {
@@ -4787,7 +4792,7 @@ namespace Website_Course_AVG.Models
 
         private System.Nullable<long> _total;
 
-        private string _type_payment;
+        private System.Nullable<int> _type_payment;
 
         private string _code_order;
 
@@ -4817,7 +4822,7 @@ namespace Website_Course_AVG.Models
         partial void OnstatusChanged();
         partial void OntotalChanging(System.Nullable<long> value);
         partial void OntotalChanged();
-        partial void Ontype_paymentChanging(string value);
+        partial void Ontype_paymentChanging(System.Nullable<int> value);
         partial void Ontype_paymentChanged();
         partial void Oncode_orderChanging(string value);
         partial void Oncode_orderChanged();
@@ -4901,8 +4906,8 @@ namespace Website_Course_AVG.Models
             }
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_type_payment", DbType = "NVarChar(100)")]
-        public string type_payment
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_type_payment", DbType = "Int")]
+        public System.Nullable<int> type_payment
         {
             get
             {
@@ -5531,6 +5536,284 @@ namespace Website_Course_AVG.Models
         {
             this.SendPropertyChanging();
             entity.promotion = null;
+        }
+    }
+
+    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.reports")]
+    public partial class report : INotifyPropertyChanging, INotifyPropertyChanged
+    {
+
+        private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+        private int _id;
+
+        private string _fullname;
+
+        private string _email;
+
+        private string _phone;
+
+        private string _subject;
+
+        private string _message;
+
+        private System.Nullable<bool> _status;
+
+        private System.Nullable<System.DateTime> _created_at;
+
+        private System.Nullable<System.DateTime> _deleted_at;
+
+        private System.Nullable<System.DateTime> _updated_at;
+
+        #region Extensibility Method Definitions
+        partial void OnLoaded();
+        partial void OnValidate(System.Data.Linq.ChangeAction action);
+        partial void OnCreated();
+        partial void OnidChanging(int value);
+        partial void OnidChanged();
+        partial void OnfullnameChanging(string value);
+        partial void OnfullnameChanged();
+        partial void OnemailChanging(string value);
+        partial void OnemailChanged();
+        partial void OnphoneChanging(string value);
+        partial void OnphoneChanged();
+        partial void OnsubjectChanging(string value);
+        partial void OnsubjectChanged();
+        partial void OnmessageChanging(string value);
+        partial void OnmessageChanged();
+        partial void OnstatusChanging(System.Nullable<bool> value);
+        partial void OnstatusChanged();
+        partial void Oncreated_atChanging(System.Nullable<System.DateTime> value);
+        partial void Oncreated_atChanged();
+        partial void Ondeleted_atChanging(System.Nullable<System.DateTime> value);
+        partial void Ondeleted_atChanged();
+        partial void Onupdated_atChanging(System.Nullable<System.DateTime> value);
+        partial void Onupdated_atChanged();
+        #endregion
+
+        public report()
+        {
+            OnCreated();
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_id", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
+        public int id
+        {
+            get
+            {
+                return this._id;
+            }
+            set
+            {
+                if ((this._id != value))
+                {
+                    this.OnidChanging(value);
+                    this.SendPropertyChanging();
+                    this._id = value;
+                    this.SendPropertyChanged("id");
+                    this.OnidChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_fullname", DbType = "NVarChar(500)")]
+        public string fullname
+        {
+            get
+            {
+                return this._fullname;
+            }
+            set
+            {
+                if ((this._fullname != value))
+                {
+                    this.OnfullnameChanging(value);
+                    this.SendPropertyChanging();
+                    this._fullname = value;
+                    this.SendPropertyChanged("fullname");
+                    this.OnfullnameChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_email", DbType = "VarChar(200)")]
+        public string email
+        {
+            get
+            {
+                return this._email;
+            }
+            set
+            {
+                if ((this._email != value))
+                {
+                    this.OnemailChanging(value);
+                    this.SendPropertyChanging();
+                    this._email = value;
+                    this.SendPropertyChanged("email");
+                    this.OnemailChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_phone", DbType = "VarChar(10)")]
+        public string phone
+        {
+            get
+            {
+                return this._phone;
+            }
+            set
+            {
+                if ((this._phone != value))
+                {
+                    this.OnphoneChanging(value);
+                    this.SendPropertyChanging();
+                    this._phone = value;
+                    this.SendPropertyChanged("phone");
+                    this.OnphoneChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_subject", DbType = "NVarChar(200)")]
+        public string subject
+        {
+            get
+            {
+                return this._subject;
+            }
+            set
+            {
+                if ((this._subject != value))
+                {
+                    this.OnsubjectChanging(value);
+                    this.SendPropertyChanging();
+                    this._subject = value;
+                    this.SendPropertyChanged("subject");
+                    this.OnsubjectChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_message", DbType = "NVarChar(MAX)")]
+        public string message
+        {
+            get
+            {
+                return this._message;
+            }
+            set
+            {
+                if ((this._message != value))
+                {
+                    this.OnmessageChanging(value);
+                    this.SendPropertyChanging();
+                    this._message = value;
+                    this.SendPropertyChanged("message");
+                    this.OnmessageChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_status", DbType = "Bit")]
+        public System.Nullable<bool> status
+        {
+            get
+            {
+                return this._status;
+            }
+            set
+            {
+                if ((this._status != value))
+                {
+                    this.OnstatusChanging(value);
+                    this.SendPropertyChanging();
+                    this._status = value;
+                    this.SendPropertyChanged("status");
+                    this.OnstatusChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_created_at", DbType = "DateTime")]
+        public System.Nullable<System.DateTime> created_at
+        {
+            get
+            {
+                return this._created_at;
+            }
+            set
+            {
+                if ((this._created_at != value))
+                {
+                    this.Oncreated_atChanging(value);
+                    this.SendPropertyChanging();
+                    this._created_at = value;
+                    this.SendPropertyChanged("created_at");
+                    this.Oncreated_atChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_deleted_at", DbType = "DateTime")]
+        public System.Nullable<System.DateTime> deleted_at
+        {
+            get
+            {
+                return this._deleted_at;
+            }
+            set
+            {
+                if ((this._deleted_at != value))
+                {
+                    this.Ondeleted_atChanging(value);
+                    this.SendPropertyChanging();
+                    this._deleted_at = value;
+                    this.SendPropertyChanged("deleted_at");
+                    this.Ondeleted_atChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_updated_at", DbType = "DateTime")]
+        public System.Nullable<System.DateTime> updated_at
+        {
+            get
+            {
+                return this._updated_at;
+            }
+            set
+            {
+                if ((this._updated_at != value))
+                {
+                    this.Onupdated_atChanging(value);
+                    this.SendPropertyChanging();
+                    this._updated_at = value;
+                    this.SendPropertyChanged("updated_at");
+                    this.Onupdated_atChanged();
+                }
+            }
+        }
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void SendPropertyChanging()
+        {
+            if ((this.PropertyChanging != null))
+            {
+                this.PropertyChanging(this, emptyChangingEventArgs);
+            }
+        }
+
+        protected virtual void SendPropertyChanged(String propertyName)
+        {
+            if ((this.PropertyChanged != null))
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 

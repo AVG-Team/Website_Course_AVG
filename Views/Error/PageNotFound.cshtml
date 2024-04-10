@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PageNotFound</title>
+    <link href="@Url.Content("~/Content/css/error.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="not-found">
+        <h2 class="text-error">@ViewBag.ErrorCode</h2>
+        <h1 class="text-title">Không tìm thấy nội dung 😓</h1>
+        <ul class="text-suggestion">
+            <li>
+                URL của nội dung này đã
+                <strong>bị thay đổi</strong> hoặc <strong>không còn tồn tại</strong>.
+            </li>
+            <li>
+                Nếu bạn
+                <strong>đang lưu URL này</strong>, hãy thử
+                <strong>truy cập lại từ trang chủ</strong> thay vì dùng URL đã lưu.
+            </li>
+        </ul>
+        <p><a class="btn_access" href="@Url.Action("Index","Home")">Truy cập trang chủ</a></p>
+        <p>👉 hoặc đi tới<a class="a_course" href="@Url.Action("Index","Course")">Khóa học của tôi</a></p>
+    </div>
+</body>
+</html>

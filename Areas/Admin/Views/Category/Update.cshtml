@@ -1,0 +1,71 @@
+﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@functions {
+    public int count { get; set; }
+
+}
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-body overflow-hidden">
+    <div id="form" class="card mb-2">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <h5 class="card-title">Update Category</h5>
+            </div>
+            <div class="card-body ">
+                <div class="row gx-3 d-flex justify-content-center">
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3 ">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="Category.name" class="form-control" placeholder="Name Category" value="@Model.Category.name" />
+                                    @Html.ValidationMessageFor(m => m.Category.name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3 ">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    @{
+                                        count = 0;
+                                        foreach (var course in Model.Courses)
+                                        {
+                                            if (course.category_id == Model.Category.id)
+                                            {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    <label class="form-label">Quantity</label>
+                                    <input type="text" name="Category.quantity" class="form-control" style="background-color:lightgray" placeholder="Quanity" value="@count" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary btn-cancel" aria-controls="@Url.Action("Index","Category")">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btn-cancel').click(function () {
+                window.location.href = '/Admin/Category';
+            })
+        })
+    </script>
+}
+
+

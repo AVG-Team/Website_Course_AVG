@@ -16,9 +16,9 @@ namespace Website_Course_AVG
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "Website_Course_AVG.Controllers" }
             );
-
             /*routes.MapRoute(
                 name: "Cart",
                 url: "Cart/{action}/{id}",

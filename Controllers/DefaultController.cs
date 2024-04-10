@@ -30,7 +30,8 @@ namespace Website_Course_AVG.Controllers
             try
             {
                 var bucket = storageClient.GetBucket(bucketName);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 var bucket = storageClient.CreateBucket(projectId, bucketName);
             }
