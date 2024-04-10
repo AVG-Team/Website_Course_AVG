@@ -23,7 +23,7 @@ namespace Website_Course_AVG.Controllers
                 user user = Helpers.GetUserFromToken();
                 List<note> notes = _data.notes.Where(x => x.lesson_id == lessonId && x.user_id == user.id).OrderBy(x => x.time).ToList();
 
-                string view = RenderViewToString("Note","notes", notes);
+                string view = RenderViewToString("Note", "notes", notes);
                 return ResponseHelper.SuccessResponse("", view);
             }
             catch (Exception ex)
@@ -48,7 +48,8 @@ namespace Website_Course_AVG.Controllers
                     note.content = content;
                     note.time = time;
                     note.updated_at = DateTime.Now;
-                } else
+                }
+                else
                 {
                     note.lesson_id = lessonId;
                     note.user_id = user.id;
@@ -61,7 +62,7 @@ namespace Website_Course_AVG.Controllers
 
                 _data.SubmitChanges();
 
-                return ResponseHelper.SuccessResponse("Add Note Successful");
+                return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Add Note Successful"));
             }
             catch (Exception ex)
             {
@@ -85,7 +86,7 @@ namespace Website_Course_AVG.Controllers
                 }
                 else
                 {
-                    return ResponseHelper.ErrorResponse("Not find note");
+                    return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Not find note"));
                 }
 
                 _data.SubmitChanges();
@@ -111,10 +112,10 @@ namespace Website_Course_AVG.Controllers
                     _data.notes.DeleteOnSubmit(note);
                     _data.SubmitChanges();
 
-                    return ResponseHelper.SuccessResponse("Delete successful");
+                    return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Delete successful"));
                 }
 
-                return ResponseHelper.ErrorResponse("Error Unknown, Please Try Again");
+                return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Error Unknown, Please Try Again"));
             }
         }
 

@@ -95,7 +95,7 @@ namespace Website_Course_AVG.Controllers
                 }
 
             }
-            Helpers.AddCookie("Error", "No course in your cart");
+            Helpers.AddCookie("Error", ResourceHelper.GetResource("No course in your cart"));
             return RedirectToAction("Index", "Cart");
         }
 
@@ -162,14 +162,14 @@ namespace Website_Course_AVG.Controllers
             string rErrorCode = result.errorCode;
             if (rErrorCode != "0")
             {
-                Helpers.AddCookie("Error", "Momo payment failed");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("Momo payment failed"));
                 return RedirectToAction("Index", "Cart");
             }
 
             var itemCookie = Request.Cookies["Item"];
             if (itemCookie == null)
             {
-                Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("Unknown error, please contact admin to fix the error"));
                 return RedirectToAction("Index", "Cart");
             }
 
@@ -177,7 +177,7 @@ namespace Website_Course_AVG.Controllers
             order order = _data.orders.Where(x => x.code_order == orderCode).FirstOrDefault();
             if (order == null)
             {
-                Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("Unknown error, please contact admin to fix the error"));
                 return RedirectToAction("Index", "Cart");
             }
 
@@ -215,7 +215,7 @@ namespace Website_Course_AVG.Controllers
 
             Response.Cookies["Item"].Expires = DateTime.Now.AddDays(-1);
             TempData.Remove("promotionId");
-            Helpers.AddCookie("Notify", "Payment success!");
+            Helpers.AddCookie("Notify", ResourceHelper.GetResource("Payment success!"));
             return RedirectToAction("Index", "Home");
         }
 
@@ -228,7 +228,7 @@ namespace Website_Course_AVG.Controllers
             string vnp_HashSecret = Helpers.GetValueFromAppSetting("VNP_HASHSECRET"); //Chuoi bi mat
             if (string.IsNullOrEmpty(vnp_TmnCode) || string.IsNullOrEmpty(vnp_HashSecret))
             {
-                Helpers.AddCookie("Error", "Error Unknown, Please Try Again");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("Error Unknown, Please Try Again"));
                 return RedirectToAction("Index", "Home");
             }
             VNPayLibrary vnpay = new VNPayLibrary();
@@ -278,7 +278,7 @@ namespace Website_Course_AVG.Controllers
                 var itemCookie = Request.Cookies["Item"];
                 if (itemCookie == null)
                 {
-                    Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error");
+                    Helpers.AddCookie("Error", ResourceHelper.GetResource("Unknown error, please contact admin to fix the error"));
                     return RedirectToAction("Index", "Cart");
                 }
 
@@ -315,7 +315,7 @@ namespace Website_Course_AVG.Controllers
                         order order = _data.orders.Where(x => x.code_order == orderId).FirstOrDefault();
                         if (order == null)
                         {
-                            Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error");
+                            Helpers.AddCookie("Error", ResourceHelper.GetResource("Unknown error, please contact admin to fix the error"));
                             return RedirectToAction("Index", "Cart");
                         }
 
@@ -360,12 +360,12 @@ namespace Website_Course_AVG.Controllers
                     else
                     {
 
-                        Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error , Code Error : " + vnp_ResponseCode);
+                        Helpers.AddCookie("Error", ResourceHelper.GetResource("Unknown error, please contact admin to fix the error , Code Error : ") + vnp_ResponseCode);
                         return RedirectToAction("Index", "Cart");
                     }
                 }
             }
-            Helpers.AddCookie("Error", "Unknown error, please contact admin to fix the error");
+            Helpers.AddCookie("Error", ResourceHelper.GetResource("Unknown error, please contact admin to fix the error"));
             return RedirectToAction("Index", "Home");
         }
 

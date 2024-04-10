@@ -15,7 +15,6 @@ using Website_Course_AVG.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using System.Reflection;
-using Website_Course_AVG.Manager;
 
 namespace Website_Course_AVG
 {

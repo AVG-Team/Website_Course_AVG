@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Website_Course_AVG.Manager;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
@@ -43,7 +42,7 @@ namespace Website_Course_AVG.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = ResourceHelper.GetResource("Your contact page.");
 
             return View();
         }

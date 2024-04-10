@@ -1,9 +1,9 @@
 ﻿@model List<Website_Course_AVG.Models.note>
 
-@{ 
+@{
     Layout = "";
 }
-@foreach(var item in Model)
+@foreach (var item in Model)
 {
     <div class="note-item mt-2" data-note="@item.id"
          data-ajax-delete="@Url.Action("Delete", "Note")">
@@ -20,15 +20,15 @@
                 </button>
             </div>
         </div>
-        @using (Html.BeginForm("Edit", "Note", FormMethod.Post, new { @class = "form", onsubmit = "return false;" } ))
+        @using (Html.BeginForm("Edit", "Note", FormMethod.Post, new { @class = "form", onsubmit = "return false;" }))
         {
 
             @Html.AntiForgeryToken()
-            <input type="text" name="content" class="form-control input-content-note hidden"/>
+            <input type="text" name="content" class="form-control input-content-note hidden" />
             <div class="note-item-content mt-3">
                 @item.content
             </div>
-            <p class="text-danger hidden">Nhấp Enter Để Lưu Thay Đổi</p>
+            <p class="text-danger hidden">@global_asax.Trans("Press Enter Save Changes")</p>
         }
     </div>
 

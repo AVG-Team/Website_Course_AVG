@@ -30,7 +30,7 @@
                 </div>
                 <h4 class="title">@ViewBag.CourseTitle</h4>
             </div>
-            <button class="d-flex header-note btn_open_notes" data-ajax="@Url.Action("Index", "Note")" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">Notes</p></button>
+            <button class="d-flex header-note btn_open_notes" data-ajax="@Url.Action("Index", "Note")" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">@global_asax.Trans("Notes")</p></button>
         </div>
     </header>
     <header class="d-block d-lg-none">
@@ -44,7 +44,7 @@
                 </div>
                 <h5 class="title ms-sm-2 d-sm-flex align-items-sm-center">@ViewBag.CourseTitle</h5>
             </div>
-            <button class="d-flex header-note btn_open_notes" data-ajax="@Url.Action("Index", "Note")" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">Notes</p></button>
+            <button class="d-flex header-note btn_open_notes" data-ajax="@Url.Action("Index", "Note")" data-bs-toggle="modal" data-bs-target="#modal_note"><i class="fas fa-sticky-note fs-5 me-2"></i> <p class="fs-5 mb-0 me-2">@global_asax.Trans("Notes")</p></button>
         </div>
     </header>
 }
@@ -65,16 +65,16 @@
                 <div class="title d-flex justify-content-around align-items-lg-center align-items-start">
                     <div class="mt-2">
                         <p class="fs-3 text-dark title-lesson">@Model.title</p>
-                        <p class="date-update">Cập Nhật Ngày @((Convert.ToDateTime(Model.updated_at)).ToString("dd - MM - yyyy"))</p>
+                        <p class="date-update">@global_asax.Trans("Update Date") @((Convert.ToDateTime(Model.updated_at)).ToString("dd - MM - yyyy"))</p>
                     </div>
                     <div>
                         <button type="button" class="border-0 rounded pc-1 btn-add-note" data-bs-toggle="modal" data-bs-target="#modal_add_note">
                             <i class="fas fa-plus"></i>
-                            <span>Thêm ghi chú</span>
+                            <span>@global_asax.Trans("Add Note")</span>
                         </button>
                         <button type="button" class="border-0 rounded pc-1 btn-down-exercise mt-lg-3 mt-1" data-bs-toggle="modal" data-bs-target="#modal_down_exercise">
                             <i class="fas fa-plus"></i>
-                            <span>Tải Bài Tập</span>
+                            <span>@global_asax.Trans("Download Exercises")</span>
                         </button>
                     </div>
                 </div>
@@ -86,14 +86,14 @@
                 <div class="col-9 position-relative">
                     <button class="btn-comment" data-bs-toggle="modal" data-bs-target="#modal_comment" data-ajax="@Url.Action("Index", "Comment")">
                         <i class="far fa-comments fs-5" style="color: #ff5800; margin-top:3px"></i>
-                        <p class="ms-3 mb-0 text-dark" style="font-family: 'PoppinsVH'; font-weight: bold; color: #ff5800 !important; font-size: 1rem;">Hỏi Đáp</p>
+                        <p class="ms-3 mb-0 text-dark" style="font-family: 'PoppinsVH'; font-weight: bold; color: #ff5800 !important; font-size: 1rem;">@global_asax.Trans("Questions")</p>
                     </button>
                 </div>
             </div>
         </div>
         <div class="d-none d-lg-block col-lg-3 position-fixed position-lg-unset end-0 top-0 bottom-0 to-top to-bottom pt-2 px-0 overflowY-scroll">
             <div class="mt-3">
-                <h4 class="text-dark ms-3">Nội Dung Khóa Học</h4>
+                <h4 class="text-dark ms-3">@global_asax.Trans("Content Lesson")</h4>
             </div>
             @foreach (var item in ViewBag.Lessons)
             {
@@ -153,7 +153,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title text-dark">Ghi Chú Của Tôi</h3>
+                    <h3 class="modal-title text-dark">@global_asax.Trans("My Notes")</h3>
                     <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2"
                             data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
@@ -162,7 +162,7 @@
                 <div class="modal-body px-5" id="body_notes">
                     <div class="loading">
                         <div class="loadingspinner">
-                            <h3 class="text-spinner">Loading</h3>
+                            <h3 class="text-spinner">@global_asax.Trans("Loading")</h3>
                             <div class="square1"></div>
                             <div class="square2"></div>
                             <div class="square3"></div>
@@ -179,7 +179,7 @@
         <div class="modal-dialog row" role="document">
             <div class="modal-content col-9 col-lg-12" style="border-top: 1px #c7b8b8 solid;">
                 <div class="modal-header" style="justify-content: unset;">
-                    <h5 class="modal-title text-dark">Thêm Ghi Chú Tại</h5>
+                    <h5 class="modal-title text-dark">@global_asax.Trans("Add Note At")</h5>
                     <span class="note-time ms-2">00:00</span>
                 </div>
                 <div class="modal-body">
@@ -187,14 +187,14 @@
                         @using (Html.BeginForm("Create", "Note", FormMethod.Post, new { id = "form_add_note" }))
                         {
                             @Html.AntiForgeryToken()
-                            <label for="inp_note" class="control-label">Content</label>
+                            <label for="inp_note" class="control-label">@global_asax.Trans("Content")</label>
                             <textarea class="form-control" cols="20" id="inp_note" name="content" rows="3"></textarea>
                         }
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-note-close" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary btn-note-save" id="btn_submit_add_note">Save changes</button>
+                    <button type="button" class="btn-note-close" data-bs-dismiss="modal">@global_asax.Trans("Close")</button>
+                    <button type="button" class="btn btn-primary btn-note-save" id="btn_submit_add_note">@global_asax.Trans("Save changes")</button>
                 </div>
             </div>
         </div>
@@ -205,9 +205,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div>
-                        <h3 class="modal-title text-dark">Hỏi Đáp</h3>
+                        <h3 class="modal-title text-dark">@global_asax.Trans("Questions")</h3>
                         <div>
-                            <p>( Please do not comment spam or use vulgar or regionally discriminatory words, Comment once every 30 minutes )</p>
+                            <p>@global_asax.Trans("( Please do not comment spam or use vulgar or regionally discriminatory words, Comment once every 30 minutes )")</p>
                         </div>
                     </div>
                     <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2 top-0 mt-3" data-bs-dismiss="modal" aria-label="Close">
@@ -223,16 +223,16 @@
                             <label for="text_comment" class="form-label me-3">
                                 <i class="fas fa-user fs-5 mt-1"></i>
                             </label>
-                            <textarea class="form-control" name="content" id="text_comment" rows="3" placeholder="Do you have any questions about this lesson?"></textarea>
+                            <textarea class="form-control" name="content" id="text_comment" rows="3" placeholder="@global_asax.Trans("Do you have any questions about this lesson?")"></textarea>
                         </div>
                     }
                     <div style="text-align: end;">
-                        <button type="button" class="btn-save-comment">Save Changes</button>
+                        <button type="button" class="btn-save-comment">@global_asax.Trans("Save Changes")</button>
                     </div>
                     <div id="body_comments">
                         <div class="loading">
                             <div class="loadingspinner">
-                                <h3 class="text-spinner">Loading</h3>
+                                <h3 class="text-spinner">@global_asax.Trans("Loading")</h3>
                                 <div class="square1"></div>
                                 <div class="square2"></div>
                                 <div class="square3"></div>
@@ -251,7 +251,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-dark">Nội Dung Khóa Học</h4>
+                    <h4 class="modal-title text-dark">@global_asax.Trans("Nội Dung Khóa Học")</h4>
                     <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2 top-0 mt-3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
                     </button>
@@ -292,15 +292,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Download Exercise</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">@global_asax.Trans("Download Exercise")</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to download the exercise?
+                    @global_asax.Trans("Are you sure you want to download the exercise?")
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary btn-save-down-exercise">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@global_asax.Trans("Close")</button>
+                    <button type="button" class="btn btn-primary btn-save-down-exercise">@global_asax.Trans("Save changes")</button>
                 </div>
             </div>
         </div>

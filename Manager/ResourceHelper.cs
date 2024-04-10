@@ -5,7 +5,7 @@ using System.Web;
 using System.Globalization;
 using System.Resources;
 
-namespace Website_Course_AVG.Manager
+namespace Website_Course_AVG.Managers
 {
 
     public static class ResourceHelper
