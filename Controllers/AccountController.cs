@@ -1,34 +1,41 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json.Linq;
 using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Razor.Tokenizer.Symbols;
 using System.Web.Services.Description;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
+using System.Runtime.Caching;
+using Website_Course_AVG.Managers;
+
 namespace Website_Course_AVG.Controllers
 {
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-		private readonly MyDataDataContext _context = new MyDataDataContext();
+        private readonly MyDataDataContext _context = new MyDataDataContext();
 
-		public AccountController()
-		{
-			
-		}
+        public AccountController()
+        {
 
-		public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        }
+
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -70,43 +77,48 @@ namespace Website_Course_AVG.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]  
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Website_Course_AVG.Attributes.AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-			var userManager = new Website_Course_AVG.Managers.UserManager();
-			if (userManager.IsAuthenticated())
-			{
-				Helpers.AddCookie("Error", "You are logging in !!!");
+            var userManager = new Website_Course_AVG.Managers.UserManager();
+            if (userManager.IsAuthenticated())
+            {
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("You are logging in !!!"));
                 return View(model);
-			}
-			if (ModelState.IsValid)
+            }
+            if (ModelState.IsValid)
             {
                 account account = _context.accounts.Where(x => x.username == model.userName).FirstOrDefault();
-                
-                if(account == null)
+
+                if (account == null)
                 {
-				    Helpers.AddCookie("Error", "username and password are wrong !!!");
+                    Helpers.AddCookie("Error", ResourceHelper.GetResource("username and password are wrong !!!"));
                     return View(model);
                 }
 
 
                 bool isVerify = await userManager.ValidatePasswordAsync(account, model.Password);
-
-                user user = account.users.FirstOrDefault();
-                if(user == null)
+                if (isVerify)
                 {
-                    Helpers.AddCookie("Error", "username and password are wrong !!!");
-                    return View(model);
+                    user user = account.users.FirstOrDefault();
+                    if (user == null)
+                    {
+                        Helpers.AddCookie("Error", ResourceHelper.GetResource("username and password are wrong !!!"));
+                        return View(model);
+                    }
+
+                    userManager.login(account.username);
+                    Helpers.AddCookie("Notify", ResourceHelper.GetResource("Login Successfull"));
+                    return RedirectToAction("Index", "Home");
                 }
 
-				userManager.login(account.username);
-                Helpers.AddCookie("Notify", "Login Successfull");
-				return RedirectToAction("Index", "Home");
-			}
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("username and password are wrong !!!"));
+                return View(model);
+            }
 
-            Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
+            Helpers.AddCookie("Error", ResourceHelper.GetResource("Error Unknow, Please Try Again"));
             return View(model);
         }
 
@@ -160,8 +172,8 @@ namespace Website_Course_AVG.Controllers
         [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult Register()
         {
-			return View();
-		}
+            return View();
+        }
 
         //
         // POST: /Account/Register
@@ -170,24 +182,24 @@ namespace Website_Course_AVG.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-			var UserManager = new Website_Course_AVG.Managers.UserManager();
-			if (ModelState.IsValid)
+            var UserManager = new Website_Course_AVG.Managers.UserManager();
+            if (ModelState.IsValid)
             {
 
-				//if user have not ever register before
-				account account = new account();
-				account.username = model.userName;
-				account.password = model.Password;
-				var result = await UserManager.CreateAccountUserAsync(model.userName, account, model.Email);
-				if (result.Succeeded)
+                //if user have not ever register before
+                account account = new account();
+                account.username = model.userName;
+                account.password = model.Password;
+                var result = await UserManager.CreateAccountUserAsync(model.userName, account, model.Email);
+                if (result.Succeeded)
                 {
-					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-					// Send an email with this link
-					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-					Helpers.AddCookie("Notify", "Register Successful");
-					UserManager.login(model.userName);
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    Helpers.AddCookie("Notify", ResourceHelper.GetResource("Register Successful"));
+                    UserManager.login(model.userName);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -218,48 +230,49 @@ namespace Website_Course_AVG.Controllers
             return View();
         }
 
-		//
-		// POST: /Account/ForgotPassword
+        //
+        // POST: /Account/ForgotPassword
 
-		[HttpPost]
+        [HttpPost]
         [Website_Course_AVG.Attributes.AllowAnonymous]
-		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
-		{
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword, String returnUrl)
+        {
             user user = _context.users.Where(x => x.email == forgotPassword.Email).FirstOrDefault();
 
-            if (user == null) {
-                Helpers.AddCookie("Error", "Error Unknown");
+            if (user == null)
+            {
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("Error Unknown"));
                 return RedirectToAction("Index", "Home");
             }
             int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
 
             if (countForgotPassword > 3)
             {
-                Helpers.AddCookie("Error", "We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you"));
                 return RedirectToAction("Index", "Home");
             }
 
-			var userManager = new UserManager();
-			var subject = "AVG Courses - Reset Password";
+            var userManager = new UserManager();
+            var subject = ResourceHelper.GetResource("AVG Courses - Reset Password");
 
-            String messageHead = "Mã khôi phục pass của bạn là ";
-			String messageLast = Helpers.GenerateRandomString(10);
-			if (!userManager.IsAuthenticated())
-			{
+            String messageHead = ResourceHelper.GetResource("Your password recovery code is");
+            String messageLast = Helpers.GenerateRandomString(10);
+            if (!userManager.IsAuthenticated())
+            {
                 if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
                 {
-					return View();
-				}
-				return RedirectToAction("ForgotPasswordConfirmation", "Account");
-			}
-			Helpers.AddCookie("Error", "Has Error");
+                    return View();
+                }
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            }
+            Helpers.AddCookie("Error", ResourceHelper.GetResource("Has Error"));
             return RedirectToAction("Index", "Home");
         }
 
-		//
-		// GET: /Account/ForgotPasswordConfirmation
-		[Website_Course_AVG.Attributes.AllowAnonymous]
+        //
+        // GET: /Account/ForgotPasswordConfirmation
+        [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -280,13 +293,12 @@ namespace Website_Course_AVG.Controllers
             UserManager userManager = new UserManager();
             if (ModelState.IsValid)
             {
-                Helpers.AddCookie("Error", "You enter error Code or Re-password");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("You enter error Code or Re-password"));
                 return View();
             }
             if (!userManager.ResetPassword(model.Password, model.Email, model.Code)) return View(model);
-            Helpers.AddCookie("Notify", "Reset Password Successful");
+            Helpers.AddCookie("Notify", ResourceHelper.GetResource("Reset Password Successful"));
             return RedirectToAction("ResetPasswordConfirmation", "Account");
-
         }
 
 
@@ -321,7 +333,7 @@ namespace Website_Course_AVG.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("Error Unknow, Please Try Again"));
                 return RedirectToAction("Login");
             }
 
@@ -329,15 +341,15 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.CheckUsername(loginInfo.DefaultUserName))
             {
-                Helpers.AddCookie("Notify", "Login Successful");
+                Helpers.AddCookie("Notify", ResourceHelper.GetResource("Login Successful"));
                 UserManager.login(loginInfo.DefaultUserName);
                 return RedirectToAction("Index", "Home");
             }
             else if (UserManager.CheckUsername(loginInfo.Email))
             {
                 user user = _context.users.Where(x => x.email == loginInfo.Email).FirstOrDefault();
-                
-                Helpers.AddCookie("Notify", "Login Successful With Gmail");
+
+                Helpers.AddCookie("Notify", ResourceHelper.GetResource("Login Successful With Gmail"));
                 UserManager.login(user.account.username);
                 return RedirectToAction("Index", "Home");
             }
@@ -360,7 +372,7 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.IsAuthenticated())
             {
-                Helpers.AddCookie("Error", "You are logging in.");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("You are logging in."));
                 return RedirectToAction("Index", "Manage");
             }
 
@@ -379,7 +391,7 @@ namespace Website_Course_AVG.Controllers
 
                 if (info == null && loginProvider != "Github")
                 {
-                    Helpers.AddCookie("Error", "Error Unknow, Please Try Again");
+                    Helpers.AddCookie("Error", ResourceHelper.GetResource("Error Unknow, Please Try Again"));
                     return View("ExternalLoginFailure");
                 }
 
@@ -394,7 +406,7 @@ namespace Website_Course_AVG.Controllers
                         userAccount.username = info.DefaultUserName;
                     }
                     else
-                    userAccount.username = info.Email;
+                        userAccount.username = info.Email;
                     userAccount.provide = info.Login.LoginProvider;
                     userAccount.provide_id = info.Login.ProviderKey;
 
@@ -403,11 +415,11 @@ namespace Website_Course_AVG.Controllers
                     if (result.Succeeded)
                     {
                         UserManager.login(info.Email);
-                        Helpers.AddCookie("Notify", "Login Successful");
+                        Helpers.AddCookie("Notify", ResourceHelper.GetResource("Login Successful"));
                         return RedirectToLocal(returnUrl);
                     }
                     AddErrors(result);
-                    Helpers.AddCookie("Error", "Error Unknow, Please Try Again", 30);
+                    Helpers.AddCookie("Error", ResourceHelper.GetResource("Error Unknow, Please Try Again"), 30);
                 }
             }
 
@@ -422,7 +434,7 @@ namespace Website_Course_AVG.Controllers
             var UserManager = new Website_Course_AVG.Managers.UserManager();
             UserManager.logout();
 
-            Helpers.AddCookie("Notify", "Logout Successful", 5);
+            Helpers.AddCookie("Notify", ResourceHelper.GetResource("Logout Successful"), 5);
             return RedirectToAction("Index", "Home");
         }
 
@@ -544,7 +556,7 @@ namespace Website_Course_AVG.Controllers
 
             if (UserManager.CheckUsername(login))
             {
-                Helpers.AddCookie("Notify", "Login Successful");
+                Helpers.AddCookie("Notify", ResourceHelper.GetResource("Login Successful"));
                 UserManager.login(login);
                 return RedirectToAction("Index", "Home");
             }
@@ -562,5 +574,56 @@ namespace Website_Course_AVG.Controllers
         {
             throw new System.NotImplementedException();
         }
-	}
+
+        private string RemoveChar(string text)
+        {
+            string word = text.Normalize(NormalizationForm.FormD);
+            StringBuilder ketQua = new StringBuilder();
+
+            foreach (char letter in word)
+            {
+                UnicodeCategory theLoai = CharUnicodeInfo.GetUnicodeCategory(letter);
+                if (theLoai != UnicodeCategory.NonSpacingMark)
+                {
+                    ketQua.Append(letter);
+                }
+            }
+
+            return ketQua.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        public ActionResult Autocomplete(string keyword)
+        {
+            string keywordWithoutDiacritics = RemoveChar(keyword).ToLower();
+
+            Dictionary<string, string> wordDictionary = new Dictionary<string, string>();
+
+            // Thử lấy dữ liệu từ cache trước
+            var cachedData = MemoryCache.Default.Get("cachedData_" + keywordWithoutDiacritics);
+            if (cachedData != null)
+            {
+                return Json((List<string>)cachedData, JsonRequestBehavior.AllowGet);
+            }
+
+            foreach (var sach in _context.courses)
+            {
+                string tensachWithoutDiacritics = RemoveChar(sach.title).ToLower();
+                if (!wordDictionary.ContainsKey(tensachWithoutDiacritics))
+                {
+                    wordDictionary.Add(tensachWithoutDiacritics, sach.title);
+                }
+            }
+
+            var suggestions = wordDictionary
+                                .Where(entry => entry.Key.Contains(keywordWithoutDiacritics) || entry.Value.Contains(keyword))
+                                .Select(entry => entry.Value)
+                                .Take(5)
+                                .ToList();
+
+            // Lưu dữ liệu vào cache
+            MemoryCache.Default.Add("cachedData_" + keywordWithoutDiacritics, suggestions, DateTimeOffset.Now.AddMinutes(10));
+
+            return Json(suggestions, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

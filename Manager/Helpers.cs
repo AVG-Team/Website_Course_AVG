@@ -8,20 +8,20 @@ using System.Net.Http;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.Json;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 using Website_Course_AVG.Models;
 using System.IO;
 using System.Text.RegularExpressions;
-using Website_Course_AVG.Models;
+using System.Globalization;
+using System.Threading;
+using System.Web.Mvc;
 
 namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void AddCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 3)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -54,7 +54,7 @@ namespace Website_Course_AVG.Managers
 
         public static string GetValueFromAppSetting(string key)
         {
-            return global::System.Configuration.ConfigurationManager.AppSettings[key];
+            return MvcApplication.Configuration[key];
         }
 
         public static string GetRedirectUrlGH()
@@ -70,7 +70,15 @@ namespace Website_Course_AVG.Managers
             HttpContext currentContext = HttpContext.Current;
             string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
 
-            return currentUrl + "/Order/ConfirmPaymentClient";
+            return currentUrl + "/Order/ConfirmMoMoPaymentClient";
+        }
+
+        public static string GetRedirectUrlVNPay()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Order/ConfirmVNPayPaymentClient";
         }
 
 
@@ -255,20 +263,20 @@ namespace Website_Course_AVG.Managers
 
         public static List<string> ReadJsonFromFile(string filePath)
         {
-            List<string> sensitiveWords = new List<string>();
+            List<string> listString = new List<string>();
 
             try
             {
                 string jsonText = File.ReadAllText(filePath);
 
-                sensitiveWords = JsonSerializer.Deserialize<List<string>>(jsonText);
+                listString = JsonSerializer.Deserialize<List<string>>(jsonText);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error reading json file: " + ex.Message);
             }
 
-            return sensitiveWords;
+            return listString;
         }
 
         //public static string SanitizeInput(string input)
@@ -337,6 +345,34 @@ namespace Website_Course_AVG.Managers
             byte[] data = Convert.FromBase64String(base64String);
             string decodedString = Encoding.UTF8.GetString(data);
             return decodedString.Split(';').Select(int.Parse).ToList();
+        }
+
+        private static HashSet<SelectListItem> GetLanguageSelectListItem()
+        {
+            return (new HashSet<SelectListItem>
+            {
+                new SelectListItem { Text = "English", Value = "EN"},
+                new SelectListItem { Text = "Vietnamese", Value = "VI"}
+            });
+        }
+
+        public static SelectList GetLanguageDictionaryElement()
+        {
+            int previouslySelectedLanguageIndex = 1;
+            HttpCookie languageCookie = HttpContext.Current.Request.Cookies["Language"];
+
+            HashSet<SelectListItem> list = GetLanguageSelectListItem();
+
+            if (languageCookie?.Value != null)
+            {
+                foreach (var item in list.Where(item => item.Text == languageCookie.Value))
+                {
+                    previouslySelectedLanguageIndex = Int32.Parse(item.Value);
+                    break;
+                }
+            }
+
+            return new SelectList(list, "Value", "Text", previouslySelectedLanguageIndex);
         }
     }
 }

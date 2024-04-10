@@ -19,7 +19,8 @@ namespace Website_Course_AVG.Attributes
         {
             if (!UserManager.IsAdmin())
             {
-                Helpers.AddCookie("Error", "You do not have permission to enter here!!!");
+                string message = ResourceHelper.GetResource("You do not have permission to enter here!!!");
+                Helpers.AddCookie("Error", message);
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new { controller = "Home", action = "Index" }));
                 return;

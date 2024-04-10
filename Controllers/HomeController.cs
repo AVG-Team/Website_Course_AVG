@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Website_Course_AVG.Managers;
@@ -14,8 +15,7 @@ namespace Website_Course_AVG.Controllers
         private readonly MyDataDataContext data = new MyDataDataContext();
         public ActionResult Index()
         {
-            var categories = data.categories.ToList(); 
-
+            var categories = data.categories.ToList();
 
             List<CategoryCourseViewModels> categoryViewModels = new List<CategoryCourseViewModels>();
 
@@ -35,14 +35,14 @@ namespace Website_Course_AVG.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = ResourceHelper.GetResource("Your application description page.");
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = ResourceHelper.GetResource("Your contact page.");
 
             return View();
         }

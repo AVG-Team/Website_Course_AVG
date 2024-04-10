@@ -1,13 +1,22 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course AVG</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Trang web cung cấp các khóa học chuyên về Công nghệ Thông tin, bao gồm lập trình, hệ thống mạng, bảo mật thông tin và nhiều lĩnh vực khác. Học viên sẽ được trang bị kiến thức và kỹ năng cần thiết để thành công trong ngành IT.">
+    <meta name="keywords" content="khóa học IT, lập trình, hệ thống mạng, bảo mật thông tin, khoá học công nghệ thông tin,react, html css, css, js , c#, php, laravel, wordpress, java,spring, spring boot, c++, c, python, ai">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="AVG Courses">
+    <meta property="og:title" content="AVG COURSES">
+    <meta property="og:description" content="Trang web cung cấp các khóa học chuyên về Công nghệ Thông tin, bao gồm lập trình, hệ thống mạng, bảo mật thông tin và nhiều lĩnh vực khác. Học viên sẽ được trang bị kiến thức và kỹ năng cần thiết để thành công trong ngành IT.">
+    <meta property="og:image" content="https://github.com/AVG-Team/Website_Course_AVG/blob/master/Content/img/logo/AVG_Course.png?raw=true">
 
-    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/logo/favicon.png">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://github.com/AVG-Team/Website_Course_AVG/blob/master/Content/img/logo/favicon.png?raw=true">
 
     <!-- Place favicon.ico in the root directory -->
     <!-- CSS here -->
@@ -32,9 +41,9 @@
 
 <body>
     <!-- Scroll-top -->
-    <button class="scroll-top scroll-to-target" data-target="html">
+    <a class="scroll-top scroll-to-target" href="#" style="bottom: 1rem; z-index: 99; right: 1rem;">
         <i class="fas fa-angle-up"></i>
-    </button>
+    </a>
     <!-- Scroll-top-end-->
     <!-- header-area -->
     <header>
@@ -73,11 +82,11 @@
                                 <div class="navbar-wrap main-menu d-none d-lg-flex">
                                     <ul class="navigation">
                                         <li class="active menu-item-has-children">
-                                            <a href="@Url.Action("Index","Home")">Home</a>
+                                            <a href="@Url.Action("Index","Home")">@global_asax.Trans("Home")</a>
                                         </li>
-                                        <li class="menu-item-has-children"><a href="@Url.Action("Index","Course")">Course</a></li>
-                                        <li class="menu-item-has-children"><a href="@Url.Action("Index","Blog")">blog</a></li>
-                                        <li><a href="@Url.Action("Contact","Home")">contacts</a></li>
+                                        <li class="menu-item-has-children"><a href="@Url.Action("Index","Course")">@global_asax.Trans("Course")</a></li>
+                                        <li class="menu-item-has-children"><a href="@Url.Action("Index","Blog")">@global_asax.Trans("Blog")</a></li>
+                                        <li><a href="@Url.Action("Contact","Home")">@global_asax.Trans("Contact")</a></li>
                                     </ul>
                                 </div>
                                 <div class="header-action d-none d-md-block">
@@ -105,19 +114,14 @@
                                             </a>
                                         </li>
                                         <li class="header-lang">
-                                            <form action="#">
-                                                <select id="lang-dropdown">
-                                                    <option value="">En</option>
-                                                    <option value="">Au</option>
-                                                    <option value="">AR</option>
-                                                    <option value="">TU</option>
-                                                </select>
+                                            <form action="/Language/Change" id="form-change-lang">
+                                                @Html.DropDownList("languageAbbreviation", Website_Course_AVG.Managers.Helpers.GetLanguageDictionaryElement(), new { @class = "form-control", id = "lang-dropdown" })
                                             </form>
                                         </li>
                                         @if (!Website_Course_AVG.Managers.Helpers.IsAuthenticated())
                                         {
-                                            <li class="header-btn d-flex align-items-center"><a href="@Url.Action("Login", "Account")" class="btn">Sign In</a></li>
-                                            <li class="header-btn d-flex align-items-center"><a href="@Url.Action("Register", "Account")" class="btn">Sign Up</a></li>
+                                            <li class="header-btn d-flex align-items-center"><a href="@Url.Action("Login", "Account")" class="btn">@global_asax.Trans("Sign In")</a></li>
+                                            <li class="header-btn d-flex align-items-center"><a href="@Url.Action("Register", "Account")" class="btn">@global_asax.Trans("Sign Up")</a></li>
                                         }
                                         else
                                         {
@@ -159,7 +163,7 @@
                                                                     </a>
                                                                 </li>
                                                             }
-                                                            <li><a href="@Url.Action("LogOff","Account")"><span class="fa fa-sign-out me-3"></span>Sign out</a></li>
+                                                            <li><a href="@Url.Action("LogOff","Account")"><span class="fa fa-sign-out me-3"></span>@global_asax.Trans("Sign out")</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -208,27 +212,27 @@
 
                                     <ul class="navigation">
                                         <li class="active menu-item-has-children">
-                                            <a href="@Url.Action("Index","Home")">Home</a>
+                                            <a href="@Url.Action("Index","Home")">@global_asax.Trans("Home")</a>
                                         </li>
 
                                         <li class="menu-item-has-children">
-                                            <a href="@Url.Action("Index","Course")">Course</a>
+                                            <a href="@Url.Action("Index","Course")">@global_asax.Trans("Course")</a>
                                         </li>
 
                                         <li class="menu-item-has-children">
-                                            <a href="@Url.Action("Index","Blog")">blog</a>
+                                            <a href="@Url.Action("Index","Blog")">@global_asax.Trans("Blog")</a>
                                         </li>
 
-                                        <li><a href="@Url.Action("Contact","Home")">contacts</a></li>
+                                        <li><a href="@Url.Action("Contact","Home")">@global_asax.Trans("Contact")</a></li>
 
                                         @if (!Website_Course_AVG.Managers.Helpers.IsAuthenticated())
                                         {
-                                            <li><a href="@Url.Action("Login","Account")"><span class="fa fa-sign-in me-2"></span>Sign in</a></li>
-                                            <li><a href="@Url.Action("Register","Account")"><span class="fa-regular fa-registered me-2"></span>Sign up</a></li>
+                                            <li><a href="@Url.Action("Login","Account")"><span class="fa fa-sign-in me-2"></span>@global_asax.Trans("Sign in")</a></li>
+                                            <li><a href="@Url.Action("Register","Account")"><span class="fa-regular fa-registered me-2"></span>@global_asax.Trans("Sign up")</a></li>
                                         }
                                         else
                                         {
-                                            <li><a href="@Url.Action("LogOff","Account")"><span class="fa fa-sign-out me-2"></span>Sign out</a></li>
+                                            <li><a href="@Url.Action("LogOff","Account")"><span class="fa fa-sign-out me-2"></span>@global_asax.Trans("Sign out")</a></li>
                                         }
                                     </ul>
                                 </div>
@@ -246,15 +250,33 @@
                         <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="searchModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form>
-                                        <input type="text" value="" placeholder="Search here..." name="query" style="max-width:none !important">
+                                    @using (Html.BeginForm("AutoComplete", "Account", FormMethod.Get, new { @class = "search-form" }))
+                                    {
+                                        <input id="searchInput" type="text" value="" placeholder="Search here..." name="query" style="max-width:none !important" autocomplete="on" a>
                                         <button onclick="search(controller);">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  style="width: 40px; height: 40px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                             </svg>
                                         </button>
-                                    </form>
+                                        <div id="suggestions" class="autocomplete-suggestions list-group"></div>
+                                        <style>
+                                            .suggestion {
+                                                padding: 1px;
+                                                margin-bottom: 1px; /* Khoảng cách giữa các mục gợi ý */
+                                                cursor: pointer;
+                                            }
+
+                                            .autocomplete-suggestions {
+                                                width: 300px; /* Thiết lập chiều rộng tùy chỉnh */
+                                            }
+
+                                                .autocomplete-suggestions .suggestion:hover {
+                                                    background-color: #0D6EFD;
+                                                }
+                                        </style>
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -270,28 +292,25 @@
         <div class="pb-5 to-top">
             @RenderBody()
         </div>
-        <!-- newsletter-area -->
-        <section class="newsletter-area newsletter-bg" data-background="~/Content/img/bg/newsletter_footer_bg">
-            <div class="container">
-                <div class="newsletter-inner-wrap">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <div class="newsletter-content">
-                                <h4 class="text-white">Trial Start First 30 Days.</h4>
-                                <p class="text-white">Enter your email to create or restart your membership.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <form action="#" class="newsletter-form">
-                                <input type="email" required placeholder="Enter your email">
-                                <button class="btn">get started</button>
-                            </form>
-                        </div>
-                    </div>
+    </main>
+
+    @RenderSection("modal", required: false)
+    <!-- Modal -->
+    <div class="modal fade" id="cookieModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="cookieModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-4 text-black" id="cookieModalLabel"><i class="fas fa-cookie-bite" style="color: #e7b353"></i> @global_asax.Trans("Our website uses cookies")</h5>
+                </div>
+                <div class="modal-body" style="color: #808080; ">
+                    @global_asax.Trans("Our website use cookies. By Approve, we assume your permission to deploy cookies as detailed in our Privacy Policy.")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="setCookie('Approve_Cookie', '1')">@global_asax.Trans("Approve")</button>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-top-wrap">
@@ -307,14 +326,14 @@
                             <div class="footer-menu">
                                 <nav>
                                     <ul class="navigation">
-                                        <li><a href="@Url.Action("Index","Home")">Home</a></li>
-                                        <li><a href="@Url.Action("Index","Course")">Course</a></li>
-                                        <li><a href="@Url.Action("Index","Blog")">Blog</a></li>
-                                        <li><a href="@Url.Action("Contact","Home")">Contacts</a></li>
+                                        <li><a href="@Url.Action("Index","Home")">@global_asax.Trans("Home")</a></li>
+                                        <li><a href="@Url.Action("Index","Course")">@global_asax.Trans("Course")</a></li>
+                                        <li><a href="@Url.Action("Index","Blog")">@global_asax.Trans("Blog")</a></li>
+                                        <li><a href="@Url.Action("Contact","Home")">@global_asax.Trans("Contact")</a></li>
                                     </ul>
                                     <div class="footer-search">
                                         <form action="#">
-                                            <input type="text" placeholder="Find Favorite Movie">
+                                            <input type="text" placeholder="@global_asax.Trans("Find Favorite Movie")">
                                             <button><i class="fas fa-search"></i></button>
                                         </form>
                                     </div>
@@ -329,9 +348,9 @@
                             <div class="quick-link-list">
                                 <ul>
                                     <li><a href="#">FAQ</a></li>
-                                    <li><a href="#">Help Center</a></li>
-                                    <li><a href="#">Terms of Use</a></li>
-                                    <li><a href="#">Privacy</a></li>
+                                    <li><a href="#">@global_asax.Trans("Help Center")</a></li>
+                                    <li><a href="#">@global_asax.Trans("Terms of Use")</a></li>
+                                    <li><a href="#">@global_asax.Trans("Privacy")</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -372,11 +391,9 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/toastr.js")
     @RenderSection("scripts", required: false)
-    @{
-        string currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
-    }
 
     <script>
+        // cookie
         function getCookie(cookieName) {
             var name = cookieName + "=";
             var decodedCookie = decodeURIComponent(document.cookie);
@@ -416,17 +433,17 @@
             document.cookie = updatedCookie;
         }
 
-
+        // toastr
         document.addEventListener("DOMContentLoaded", () => {
             let cookies = document.cookie;
 
             var cookieNotify = getCookie('Notify');
-            if (cookieNotify !== "")
-                toastr.success(cookieNotify, 'Notify')
-
+            if (cookieNotify !== "") {
+                toastr.success(cookieNotify, '@global_asax.Trans("Notify")')
+            }
             var cookieError = getCookie('Error');
             if (cookieError !== "")
-                toastr.error(cookieError, 'Error')
+                toastr.error(cookieError, '@global_asax.Trans("Error")')
         })
 
         // sticky-header
@@ -436,8 +453,10 @@
 
             if (scrollTop > 100) {
                 header.classList.add('sticky-menu');
+                $(".scroll-top.scroll-to-target").css("opacity", 1);
             } else {
                 header.classList.remove('sticky-menu');
+                $(".scroll-top.scroll-to-target").css("opacity", 0);
             }
         });
 
@@ -498,8 +517,53 @@
                 var divTop = $(".to-top");
                 divTop.css("margin-top", heightHeader + "px");
             }
+
+            if (!getCookie("Approve_Cookie")) {
+                let modalCookie = new bootstrap.Modal(document.getElementById('cookieModal'))
+                modalCookie.show()
+            }
+
+            $("#lang-dropdown").change(() => {
+                $("#form-change-lang").submit();
+            })
         });
 
+        $(document).ready(function () {
+            $('#searchInput').keyup(function () {
+                var keyword = $(this).val();
+                if (keyword.length >= 1) {
+                    $.ajax({
+                        url: '/Account/AutoComplete',
+                        type: 'GET',
+                        data: { keyword: keyword },
+                        success: function (data) {
+                            $('#suggestions').empty();
+                            $.each(data, function (index, value) {
+                                $('#suggestions').append('<div class="suggestion">' + value + '</div>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#suggestions').empty();
+                }
+            });
+
+            document.getElementById('searchInput').addEventListener('keydown', function (event) {
+                if (event.keyCode === 9) {
+                    var suggestions = document.querySelectorAll('.suggestion');
+                    if (suggestions.length > 0) {
+                        var suggestionText = suggestions[0].innerText;
+                        document.getElementById('searchInput').value = suggestionText;
+                    }
+                }
+            });
+
+            $(document).on('click', '.suggestion', function () {
+                var selectedSuggestion = $(this).text();
+                $('#keyword').val(selectedSuggestion);
+                $('#suggestions').empty();
+            });
+        });
     </script>
 </body>
 </html>

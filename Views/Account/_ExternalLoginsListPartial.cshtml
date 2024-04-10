@@ -4,29 +4,32 @@
 
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
-    if (loginProviders.Count() == 0) {
+    if (loginProviders.Count() == 0)
+    {
         <div>
             <p>
-                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support logging in via external services.
+                @global_asax.Trans("There are no external authentication services configured. See") <a href="https://go.microsoft.com/fwlink/?LinkId=403804">@global_asax.Trans("this article")</a>
+                @global_asax.Trans("for details on setting up this ASP.NET application to support logging in via external services.")
             </p>
         </div>
     }
-    else {
-        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form" })) {
+    else
+    {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+        {
             @Html.AntiForgeryToken()
             <div id="socialLoginList">
                 <div class="row row-cols-2">
                     <div class="col-lg-3 col-sm-12 d-flex justify-content-center">
                         <a href="@Website_Course_AVG.Managers.Helpers.UrlGithubLogin()" class="d-flex justify-content-center text-decoration-none btn btn-sm btn-light fs-6 w-25 d-flex justify-content-center mt-1 mb-1">
                             <i class="fab fa-github align-self-center text-white" style="margin-right: 0 "></i>
-                         </a>
+                        </a>
                     </div>
-                    
+
                     @foreach (AuthenticationDescription p in loginProviders)
                     {
                         <div class="col-lg-3 col-sm-12  d-flex justify-content-center ">
-                            <button type="submit" class="btn btn-sm btn-light fs-6 w-25 d-flex justify-content-center mt-1 mb-1" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
+                            <button type="submit" class="btn btn-sm btn-light fs-6 w-25 d-flex justify-content-center mt-1 mb-1" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@global_asax.Trans("Log in using your") @p.Caption @global_asax.Trans("account")">
                                 @if (@p.AuthenticationType == "Google")
                                 {
                                     <i class="fa-brands fa-google align-self-center" style="margin-right : 0;"></i>
@@ -45,5 +48,5 @@
                 </div>
             </div>
         }
-     }
+    }
 }
