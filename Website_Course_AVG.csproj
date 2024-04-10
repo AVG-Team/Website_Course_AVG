@@ -350,6 +350,7 @@
       <DependentUpon>MyData.dbml</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Payment\MoMoResult.cs" />
     <Compile Include="Payment\MoMoRequest.cs" />
     <Compile Include="Payment\MoMoSecurity.cs" />
