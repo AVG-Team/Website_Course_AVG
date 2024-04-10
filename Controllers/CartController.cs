@@ -52,7 +52,7 @@ namespace Website_Course_AVG.Controllers
                         if (coursesTmp.Count() == 0)
                         {
                             Helpers.AddCookie("Item", "", -30 * 24 * 60 * 60);
-                            Helpers.AddCookie("Error", ResourceHelper.GetResource("The course has been purchased And No course in your cart"));
+                            Helpers.AddCookie("Error", ResourceHelper.GetResource("No course in your cart!"));
                             return RedirectToAction("Index", "Cart");
                         }
                     }
@@ -72,7 +72,7 @@ namespace Website_Course_AVG.Controllers
                 }
                 return View(coursesTmp);
             }
-            Helpers.AddCookie("Error", ResourceHelper.GetResource("No course in your cart"));
+            Helpers.AddCookie("Error", ResourceHelper.GetResource("No course in your cart!"));
             return RedirectToAction("Index", "Course");
         }
 

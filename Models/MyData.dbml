@@ -7,17 +7,6 @@
       <Column Name="ProductVersion" Type="System.String" DbType="NVarChar(32) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.videos" Member="videos">
-    <Type Name="video">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="link" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="video_lesson" Member="lessons" ThisKey="id" OtherKey="video_id" Type="lesson" />
-    </Type>
-  </Table>
   <Table Name="dbo.accounts" Member="accounts">
     <Type Name="account">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -157,11 +146,11 @@
   </Table>
   <Table Name="dbo.images" Member="images">
     <Type Name="image">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="image" Member="image1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="type" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="category" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="code" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="code" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.lessons" Member="lessons">
@@ -223,13 +212,30 @@
       <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.orders" Member="orders">
+    <Type Name="order">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="total" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="type_payment" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="code_order" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="promotion_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="order_detail_order" Member="detail_orders" ThisKey="id" OtherKey="order_id" Type="detail_order" />
+      <Association Name="promotion_order" Member="promotion" ThisKey="promotion_id" OtherKey="id" Type="promotion" IsForeignKey="true" />
+      <Association Name="user_order" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.promotions" Member="promotions">
     <Type Name="promotion">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="code_promotion" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="max_time" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="[percent]" Member="percent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="max_time" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="out_of_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -238,6 +244,20 @@
       <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="promotion_order" Member="orders" ThisKey="id" OtherKey="promotion_id" Type="order" />
       <Association Name="user_promotion" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.reports" Member="reports">
+    <Type Name="report">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fullname" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="subject" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="message" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.users" Member="users">
@@ -258,26 +278,20 @@
       <Association Name="user_forgot_password" Member="forgot_passwords" ThisKey="id" OtherKey="user_id" Type="forgot_password" />
       <Association Name="user_note" Member="notes" ThisKey="id" OtherKey="user_id" Type="note" />
       <Association Name="user_notification" Member="notifications" ThisKey="id" OtherKey="user_id" Type="notification" />
-      <Association Name="user_promotion" Member="promotions" ThisKey="id" OtherKey="user_id" Type="promotion" />
       <Association Name="user_order" Member="orders" ThisKey="id" OtherKey="user_id" Type="order" />
+      <Association Name="user_promotion" Member="promotions" ThisKey="id" OtherKey="user_id" Type="promotion" />
       <Association Name="account_user" Member="account" ThisKey="account_id" OtherKey="id" Type="account" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.orders" Member="orders">
-    <Type Name="order">
+  <Table Name="dbo.videos" Member="videos">
+    <Type Name="video">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="total" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="type_payment" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="code_order" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="user_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="promotion_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="order_detail_order" Member="detail_orders" ThisKey="id" OtherKey="order_id" Type="detail_order" />
-      <Association Name="promotion_order" Member="promotion" ThisKey="promotion_id" OtherKey="id" Type="promotion" IsForeignKey="true" />
-      <Association Name="user_order" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" />
+      <Association Name="video_lesson" Member="lessons" ThisKey="id" OtherKey="video_id" Type="lesson" />
     </Type>
   </Table>
 </Database>

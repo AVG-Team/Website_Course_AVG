@@ -115,7 +115,7 @@ namespace Website_Course_AVG.Controllers
                     return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Delete successful"));
                 }
 
-                return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Error Unknown, Please Try Again"));
+                return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Error Unknown, Please Try Again!"));
             }
         }
 

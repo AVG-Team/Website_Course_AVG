@@ -99,7 +99,7 @@ namespace Website_Course_AVG.Controllers
                 detail_course detail_course = _data.detail_courses.Where(x => x.course_id == courseId && x.user_id == user.id).FirstOrDefault();
                 if (detail_course == null)
                 {
-                    string errorMessage = ResourceHelper.GetResource("No courses found, please try again");
+                    string errorMessage = ResourceHelper.GetResource("No courses found, please try again!");
                     return ResponseHelper.ErrorResponse(errorMessage);
                 }
 
@@ -107,7 +107,7 @@ namespace Website_Course_AVG.Controllers
                 {
                     detail_course.lesson_learned_id = lessonId;
                     _data.SubmitChanges();
-                    return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Success"));
+                    return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Success!"));
                 }
 
                 return ResponseHelper.SuccessResponse("");

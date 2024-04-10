@@ -74,7 +74,7 @@ namespace Website_Course_AVG.Controllers
                 _data.SubmitChanges();
 
 
-                return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Add Comment Successful"), new
+                return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Add Comment Successful!"), new
                 {
                     id = comment.id,
                     content = comment.content,
@@ -103,10 +103,10 @@ namespace Website_Course_AVG.Controllers
                     _data.comments.DeleteOnSubmit(comment);
                     _data.SubmitChanges();
 
-                    return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Delete successful"));
+                    return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Delete successful!"));
                 }
 
-                return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Error Unknown, Please Try Again"));
+                return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Error Unknown, Please Try Again!"));
             }
         }
 

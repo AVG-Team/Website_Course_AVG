@@ -26,7 +26,7 @@ namespace Website_Course_AVG.Controllers
 
                 string url = Helpers.GetExerciseUrl(exercise, fileJson);
 
-                return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Get Exercise Successful"), url);
+                return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Get Exercise Successful!"), url);
             }
             catch (Exception ex)
             {

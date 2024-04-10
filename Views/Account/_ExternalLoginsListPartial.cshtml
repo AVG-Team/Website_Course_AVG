@@ -29,7 +29,7 @@
                     @foreach (AuthenticationDescription p in loginProviders)
                     {
                         <div class="col-lg-3 col-sm-12  d-flex justify-content-center ">
-                            <button type="submit" class="btn btn-sm btn-light fs-6 w-25 d-flex justify-content-center mt-1 mb-1" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@global_asax.Trans("Log in using your") @p.Caption @global_asax.Trans("account")">
+                            <button type="submit" class="btn btn-sm btn-light fs-6 w-25 d-flex justify-content-center mt-1 mb-1" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@global_asax.Trans("Log in using your") @p.Caption @global_asax.Trans("account.")">
                                 @if (@p.AuthenticationType == "Google")
                                 {
                                     <i class="fa-brands fa-google align-self-center" style="margin-right : 0;"></i>

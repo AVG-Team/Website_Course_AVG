@@ -26,7 +26,7 @@ namespace Website_Course_AVG.Controllers
             };
 
             Response.Cookies.Add(cookie);
-            Helpers.AddCookie("Notify", ResourceHelper.GetResource("Change Language Successful"));
+            Helpers.AddCookie("Notify", ResourceHelper.GetResource("Change Language Successful!"));
             return Redirect(Request.UrlReferrer?.ToString());
         }
     }

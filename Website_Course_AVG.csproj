@@ -358,12 +358,12 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Areas\Admin\Data\ViewModels\AdminViewModels.cs" />
     <Compile Include="Manager\UserManager.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Models\MyData.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MyData.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Payment\VNPayLibrary.cs" />
     <Compile Include="Payment\VNPayRequest.cs" />
     <Compile Include="Payment\MoMoResult.cs" />
@@ -1311,11 +1311,6 @@
     <Content Include="Content\fonts\DesignerVN-Poppins\DesignerVN-Poppins-Regular.ttf" />
     <Content Include="ltweb-avg-b91359369629.json" />
     <Content Include="bad_words.json" />
-    <Content Include="Models\MyData.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>MyData.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Course\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
@@ -1324,6 +1319,11 @@
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="appsettings.json" />
     <None Include="Areas\Admin\Views\Course\Insert.cshtml" />
+    <Content Include="Models\MyData.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>MyData.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Models\MyData.dbml.layout">
       <DependentUpon>MyData.dbml</DependentUpon>
     </None>

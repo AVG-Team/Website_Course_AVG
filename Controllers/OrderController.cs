@@ -95,7 +95,7 @@ namespace Website_Course_AVG.Controllers
                 }
 
             }
-            Helpers.AddCookie("Error", ResourceHelper.GetResource("No course in your cart"));
+            Helpers.AddCookie("Error", ResourceHelper.GetResource("No course in your cart!"));
             return RedirectToAction("Index", "Cart");
         }
 
@@ -228,7 +228,7 @@ namespace Website_Course_AVG.Controllers
             string vnp_HashSecret = Helpers.GetValueFromAppSetting("VNP_HASHSECRET"); //Chuoi bi mat
             if (string.IsNullOrEmpty(vnp_TmnCode) || string.IsNullOrEmpty(vnp_HashSecret))
             {
-                Helpers.AddCookie("Error", ResourceHelper.GetResource("Error Unknown, Please Try Again"));
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("Error Unknown, Please Try Again!"));
                 return RedirectToAction("Index", "Home");
             }
             VNPayLibrary vnpay = new VNPayLibrary();
