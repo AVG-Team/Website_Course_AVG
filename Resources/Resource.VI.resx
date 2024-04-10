@@ -120,6 +120,12 @@
   <data name="Add" xml:space="preserve">
     <value>Thêm</value>
   </data>
+  <data name="Add Note" xml:space="preserve">
+    <value>Thêm ghi chú</value>
+  </data>
+  <data name="Add Note At" xml:space="preserve">
+    <value>Thêm ghi chú tại </value>
+  </data>
   <data name="Add to Cart" xml:space="preserve">
     <value>Thêm vào giỏ hàng</value>
   </data>
@@ -144,8 +150,17 @@
   <data name="Checkout" xml:space="preserve">
     <value>Thanh toán</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Liên Hệ</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="Content Lesson" xml:space="preserve">
+    <value>Nội dung bài học </value>
   </data>
   <data name="Cost" xml:space="preserve">
     <value>Cost</value>
@@ -156,8 +171,14 @@
   <data name="Courses" xml:space="preserve">
     <value>Khoá Học</value>
   </data>
+  <data name="Download Exercises" xml:space="preserve">
+    <value>Tải xuống bài tập</value>
+  </data>
   <data name="Free" xml:space="preserve">
     <value>Miễn phí</value>
+  </data>
+  <data name="from basic to advanced. from basic" xml:space="preserve">
+    <value>từ cơ bản đến nâng cao</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Trang Chủ</value>
@@ -165,23 +186,38 @@
   <data name="Languages" xml:space="preserve">
     <value>Ngôn ngữ</value>
   </data>
+  <data name="Learn HTML CSS for beginners" xml:space="preserve">
+    <value>Khoá học HTML CSS cho người mới bắt đầu</value>
+  </data>
   <data name="Lesson" xml:space="preserve">
     <value>Bài Học</value>
   </data>
   <data name="lessons" xml:space="preserve">
     <value>bài giảng</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Đang tải</value>
+  </data>
   <data name="Marketing" xml:space="preserve">
     <value>Quảng cáo</value>
   </data>
+  <data name="min" xml:space="preserve">
+    <value>phút</value>
+  </data>
   <data name="minutes total length" xml:space="preserve">
     <value>phút</value>
+  </data>
+  <data name="My Notes" xml:space="preserve">
+    <value>Ghi chú của tôi</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Sau</value>
   </data>
   <data name="No courses in your cart" xml:space="preserve">
     <value>Không có khoá học nào trong giỏ hàng của bạn</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Ghi chú</value>
   </data>
   <data name="Page" xml:space="preserve">
     <value>Trang</value>
@@ -201,14 +237,26 @@
   <data name="Proceed to Pay" xml:space="preserve">
     <value>Tiếp tục thanh toán</value>
   </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Câu hỏi</value>
+  </data>
+  <data name="ReactJS course" xml:space="preserve">
+    <value>Khoá học ReactJS</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>Đăng ký</value>
+  </data>
+  <data name="Save changes" xml:space="preserve">
+    <value>Lưu thay đổi </value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>Hỗ trợ</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>Tổng cộng</value>
+  </data>
+  <data name="Update Date" xml:space="preserve">
+    <value>Cập nhật ngày tháng</value>
   </data>
   <data name="Watch Course" xml:space="preserve">
     <value>Xem khoá học</value>

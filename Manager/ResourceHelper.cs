@@ -21,7 +21,7 @@ namespace Website_Course_AVG.Managers
         {
             string value = resourceManager.GetString(key, CultureInfo.CurrentCulture);
 
-            return value ?? $"[{key}]";
+            return value ?? $"{key}";
         }
     }
 

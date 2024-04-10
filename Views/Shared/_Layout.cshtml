@@ -114,11 +114,8 @@
                                             </a>
                                         </li>
                                         <li class="header-lang">
-                                            <form action="/Language/Change">
-                                                <select id="lang-dropdown" name="languageAbbreviation">
-                                                    <option value="VI">@global_asax.Trans("Vietnamese")</option>
-                                                    <option value="EN">@global_asax.Trans("English")</option>
-                                                </select>
+                                            <form action="/Language/Change" id="form-change-lang">
+                                                @Html.DropDownList("languageAbbreviation", Website_Course_AVG.Managers.Helpers.GetLanguageDictionaryElement(), new { @class = "form-control", id = "lang-dropdown" })
                                             </form>
                                         </li>
                                         @if (!Website_Course_AVG.Managers.Helpers.IsAuthenticated())
@@ -525,6 +522,10 @@
                 let modalCookie = new bootstrap.Modal(document.getElementById('cookieModal'))
                 modalCookie.show()
             }
+
+            $("#lang-dropdown").change(() => {
+                $("#form-change-lang").submit();
+            })
         });
 
         $(document).ready(function () {
@@ -563,9 +564,6 @@
                 $('#suggestions').empty();
             });
         });
-
-
-
     </script>
 </body>
 </html>

@@ -70,6 +70,24 @@ namespace Website_Course_AVG.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Note.
+        /// </summary>
+        public static string Add_Note {
+            get {
+                return ResourceManager.GetString("Add Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Note At.
+        /// </summary>
+        public static string Add_Note_At {
+            get {
+                return ResourceManager.GetString("Add Note At", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to Cart.
         /// </summary>
         public static string Add_to_Cart {
@@ -142,11 +160,38 @@ namespace Website_Course_AVG.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact.
         /// </summary>
         public static string Contact {
             get {
                 return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        public static string Content {
+            get {
+                return ResourceManager.GetString("Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content Lesson.
+        /// </summary>
+        public static string Content_Lesson {
+            get {
+                return ResourceManager.GetString("Content Lesson", resourceCulture);
             }
         }
         
@@ -178,11 +223,29 @@ namespace Website_Course_AVG.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Exercises.
+        /// </summary>
+        public static string Download_Exercises {
+            get {
+                return ResourceManager.GetString("Download Exercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Free.
         /// </summary>
         public static string Free {
             get {
                 return ResourceManager.GetString("Free", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to from basic to advanced. from basic.
+        /// </summary>
+        public static string from_basic_to_advanced__from_basic {
+            get {
+                return ResourceManager.GetString("from basic to advanced. from basic", resourceCulture);
             }
         }
         
@@ -201,6 +264,15 @@ namespace Website_Course_AVG.Resources {
         public static string Languages {
             get {
                 return ResourceManager.GetString("Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn HTML CSS for beginners.
+        /// </summary>
+        public static string Learn_HTML_CSS_for_beginners {
+            get {
+                return ResourceManager.GetString("Learn HTML CSS for beginners", resourceCulture);
             }
         }
         
@@ -232,11 +304,29 @@ namespace Website_Course_AVG.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to min.
+        /// </summary>
+        public static string min {
+            get {
+                return ResourceManager.GetString("min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to minutes total length.
         /// </summary>
         public static string minutes_total_length {
             get {
                 return ResourceManager.GetString("minutes total length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Notes.
+        /// </summary>
+        public static string My_Notes {
+            get {
+                return ResourceManager.GetString("My Notes", resourceCulture);
             }
         }
         
@@ -255,6 +345,15 @@ namespace Website_Course_AVG.Resources {
         public static string No_courses_in_your_cart {
             get {
                 return ResourceManager.GetString("No courses in your cart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
             }
         }
         
@@ -313,11 +412,38 @@ namespace Website_Course_AVG.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Questions.
+        /// </summary>
+        public static string Questions {
+            get {
+                return ResourceManager.GetString("Questions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReactJS course.
+        /// </summary>
+        public static string ReactJS_course {
+            get {
+                return ResourceManager.GetString("ReactJS course", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes.
+        /// </summary>
+        public static string Save_changes {
+            get {
+                return ResourceManager.GetString("Save changes", resourceCulture);
             }
         }
         
@@ -336,6 +462,15 @@ namespace Website_Course_AVG.Resources {
         public static string Total {
             get {
                 return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Date.
+        /// </summary>
+        public static string Update_Date {
+            get {
+                return ResourceManager.GetString("Update Date", resourceCulture);
             }
         }
         

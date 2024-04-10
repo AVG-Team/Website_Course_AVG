@@ -55,7 +55,7 @@
             <div class="col-12 bg-black text-center h-75 video">
                 <video id="video_lesson" controls controlsList="nodownload" class="w-100 h-100">
                     <source src="@ViewBag.Url" type="video/mp4">
-                </video>
+                </video>e
                 @using (Html.BeginForm("SetLessonLearnedId", "Lesson", FormMethod.Post, new { @class = "hidden", id = "form_video_lesson" }))
                 {
                     @Html.AntiForgeryToken();
@@ -123,7 +123,7 @@
     </section>
 </main>
 
-@section Footer {
+@section Footer {dddddddđ
     <footer>
         <div class="footer-in-lesson" id="footer_lesson">
             <div>
@@ -210,7 +210,7 @@
                             <p>@global_asax.Trans("( Please do not comment spam or use vulgar or regionally discriminatory words, Comment once every 30 minutes )")</p>
                         </div>
                     </div>
-                    <button type="button" class="close position-absolute btn-none end-0 fs-5 me-2 top-0 mt-3" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close position-absolute btn-none end-0  me-2 top-0 mt-3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fas fa-times close-modal-note"></i></span>
                     </button>
                 </div>
@@ -233,7 +233,7 @@
                         <div class="loading">
                             <div class="loadingspinner">
                                 <h3 class="text-spinner">@global_asax.Trans("Loading")</h3>
-                                <div class="square1"></div>
+                                <div class="square1"></div>fs-5
                                 <div class="square2"></div>
                                 <div class="square3"></div>
                                 <div class="square4"></div>

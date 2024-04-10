@@ -8,14 +8,11 @@ using System.Net.Http;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.Json;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 using Website_Course_AVG.Models;
 using System.IO;
 using System.Text.RegularExpressions;
-using Website_Course_AVG.Models;
 using System.Globalization;
 using System.Threading;
 using System.Web.Mvc;
@@ -354,14 +351,14 @@ namespace Website_Course_AVG.Managers
         {
             return (new HashSet<SelectListItem>
             {
-                new SelectListItem { Text = "EN", Value = "0"},
-                new SelectListItem { Text = "VI", Value = "1"}
+                new SelectListItem { Text = "English", Value = "EN"},
+                new SelectListItem { Text = "Vietnamese", Value = "VI"}
             });
         }
 
         public static SelectList GetLanguageDictionaryElement()
         {
-            int previouslySelectedLanguageIndex = 0;
+            int previouslySelectedLanguageIndex = 1;
             HttpCookie languageCookie = HttpContext.Current.Request.Cookies["Language"];
 
             HashSet<SelectListItem> list = GetLanguageSelectListItem();
