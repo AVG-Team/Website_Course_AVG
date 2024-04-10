@@ -100,20 +100,18 @@
                         @*<img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />*@
                         <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
                             <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                @for (int i = 0; i < Model.Images.Count; i++)
+                                {
+                                    <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="@i" @(i == 0 ? "class=active" : "") aria-current="true" aria-label="Slide @i"></button>
+                                }
                             </div>
                             <div class="carousel-inner rounded-4">
-                                <div class="carousel-item active">
-                                    <img src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" class="d-block w-100" alt="..." loading="lazy">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://files.fullstack.edu.vn/f8-prod/courses/27/64e184ee5d7a2.png" class="d-block w-100" alt="..." loading="lazy">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://files.fullstack.edu.vn/f8-prod/courses/21/63e1bcbaed1dd.png" class="d-block w-100" alt="..." loading="lazy">
-                                </div>
+                                @for (int i = 0; i < Model.Images.Count; i++)
+                                {
+                                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                                        <img src="@Model.Images[i].image1" class="d-block w-100" alt="..." loading="lazy">
+                                    </div>
+                                }
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#sliderCourse" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
