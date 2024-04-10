@@ -31,7 +31,7 @@
 
     <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
     <style>
-        html,body{
+        html, body {
             overflow: hidden;
         }
     </style>
@@ -247,7 +247,7 @@
                                 <a href="@Url.Action("Register","Account")" class="btn btn-primary btn-sm rounded-2">Register</a>
                             </div>
                         </div>
-        
+
                     }
                 </div>
             </div>
@@ -345,6 +345,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="@Url.Action("Index","Report")">
+                                    <i class="bi bi-flag-fill"></i>
+                                    <span class="menu-text">Report</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="@Url.Action("Index","Option")">
                                     <i class="bi bi-gear"></i>
                                     <span class="menu-text">Option</span>
@@ -409,83 +415,82 @@
         <!-- Main container end -->
 
     </div>
-@Scripts.Render("~/Scripts/js/jquery.min.js")
-@Scripts.Render("~/Scripts/js/bootstrap.bundle.min.js")
-@Scripts.Render("~/Content/vendor/overlay-scroll/jquery.overlayScrollbars.min.js")
-@Scripts.Render("~/Content/vendor/overlay-scroll/custom-scrollbar.js")
-@Scripts.Render("~/Scripts/toastr.js")
-@Scripts.Render("~/Scripts/js/custom.js")
-@Scripts.Render("~/Scripts/js/todays-date.js")
-@Scripts.Render("~/Scripts/js/moment.min.js")
-@RenderSection("scripts", required: false)
+    @Scripts.Render("~/Scripts/js/jquery.min.js")
+    @Scripts.Render("~/Scripts/js/bootstrap.bundle.min.js")
+    @Scripts.Render("~/Content/vendor/overlay-scroll/jquery.overlayScrollbars.min.js")
+    @Scripts.Render("~/Content/vendor/overlay-scroll/custom-scrollbar.js")
+    @Scripts.Render("~/Scripts/toastr.js")
+    @Scripts.Render("~/Scripts/js/custom.js")
+    @Scripts.Render("~/Scripts/js/todays-date.js")
+    @Scripts.Render("~/Scripts/js/moment.min.js")
+    @RenderSection("scripts", required: false)
 
 
-<script>
-    function getCookie(cookieName) {
-        var name = cookieName + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
+    <script>
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
             }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
+            return "";
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            var cookieNotify = getCookie('Notify');
+            if (cookieNotify !== "") {
+                toastr.success(cookieNotify, 'Notify')
             }
-        }
-        return "";
-    }
-    document.addEventListener("DOMContentLoaded", function () {
-        var cookieNotify = getCookie('Notify');
-        if (cookieNotify !== "") {
-            toastr.success(cookieNotify, 'Notify')
-        }
-        var cookieError = getCookie('Error');
-        if (cookieError !== "") {
-            toastr.error(cookieError, 'Error')
+            var cookieError = getCookie('Error');
+            if (cookieError !== "") {
+                toastr.error(cookieError, 'Error')
 
-        }
-
-
-        var menuItems = document.querySelectorAll(".sidebar-menu li");
-
-
-        menuItems.forEach(function (item) {
-
-            var href = item.querySelector("a").getAttribute("href");
-            var path = window.location.pathname;
-
-
-            if (path.startsWith(href)) {
-                item.classList.add("active", "current-page");
             }
 
-           
-            item.addEventListener("click", function () {
-                
-                menuItems.forEach(function (menuItem) {
-                    menuItem.classList.remove("active", "current-page");
+
+            var menuItems = document.querySelectorAll(".sidebar-menu li");
+
+
+            menuItems.forEach(function (item) {
+
+                var href = item.querySelector("a").getAttribute("href");
+                var path = window.location.pathname;
+
+
+                if (path.startsWith(href)) {
+                    item.classList.add("active", "current-page");
+                }
+
+
+                item.addEventListener("click", function () {
+
+                    menuItems.forEach(function (menuItem) {
+                        menuItem.classList.remove("active", "current-page");
+                    });
+
+
+                    this.classList.add("active", "current-page");
                 });
-
-               
-                this.classList.add("active", "current-page");
             });
         });
-    });
 
-    $(".btn-insert").click(function () {
-        var controller = $(this).data("controller");
+        $(".btn-insert").click(function () {
+            var controller = $(this).data("controller");
 
-        if (controller === "admin") {
-            $(this).prop("disabled", true);
-            return;
-        }
-        window.location.href = '/Admin/' + controller + '/Insert'; // Đảm bảo chèn dấu gạch chéo trước tên controller
-    });
-</script>
+            if (controller === "admin") {
+                $(this).prop("disabled", true);
+                return;
+            }
+            window.location.href = '/Admin/' + controller + '/Insert'; // Đảm bảo chèn dấu gạch chéo trước tên controller
+        });
+    </script>
 </body>
 </html>
 
 
-    

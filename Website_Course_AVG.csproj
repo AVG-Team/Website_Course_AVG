@@ -327,6 +327,7 @@
     <Compile Include="Areas\Admin\Controllers\OptionController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\PromotionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Attributes\AdminAttribute.cs" />
     <Compile Include="Attributes\UserAttribute.cs" />
@@ -367,6 +368,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyData.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Payment\VNPayLibrary.cs" />
     <Compile Include="Payment\VNPayRequest.cs" />
     <Compile Include="Payment\MoMoResult.cs" />
@@ -1886,6 +1889,7 @@
     <Content Include="Areas\Admin\Views\Account\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\UserParticial.cshtml" />
     <Content Include="appsettings.json" />
+    <Content Include="Areas\Admin\Views\Contact\Index.cshtml" />
     <None Include="Areas\Admin\Views\Course\Insert.cshtml" />
     <Content Include="Areas\Admin\Views\Lesson\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Lesson\Insert.cshtml" />
