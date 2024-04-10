@@ -82,7 +82,7 @@
                                             </button>
                                             @if (item.deleted_at == null)
                                             {
-                                                <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete btn-open-modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete btn-open-modal" data-bs-toggle="modal" data-bs-target="#ConfirmModal">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             }
@@ -106,12 +106,12 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-success" id="ConfirmModalLabel">
-                                Confirm Remove Category
+                                Confirm Remove Exercise
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-success">
-                            Are you sure you want to remove this order?
+                            Are you sure you want to remove this exercise?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -202,7 +202,7 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            var idDelete, idApprove;
+            var idDelete;
             $('.btn-update').add('.item-row').click(function () {
                 var id = $(this).closest('.srow').data('id')  // Sử dụng thuộc tính data-id để lấy giá trị id
                 console.log(id);
@@ -213,20 +213,6 @@
                 idDelete = $(this).closest('.srow').data('id');
                 console.log(idDelete);
             });
-            $(".btn-approve").click(function () {
-                idApprove = $(this).closest('.srow').data('id');
-                $('#ApproveModal').modal('show');
-            });
-
-            $(".btn-open-modal").click(function () {
-                var status = $(this).data("status");
-                if (status == 0) {
-                    $('#ConfirmModal').modal('show');
-                } else {
-                    $('#ErrorModal').modal('show');
-                }
-            });
-
             $('.btn-submit-delete').click(function () {
                 $.ajax({
                     url: '/Admin/Exercise/Delete',
@@ -235,25 +221,6 @@
                     success: function (response) {
                         console.log(response);
                         window.location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        // Xử lý lỗi nếu có
-                        console.error(error);
-                        // Hiển thị thông báo lỗi hoặc thực hiện các hành động khác nếu cần
-                    }
-                });
-            });
-
-            $('.btn-submit-approve').click(function () {
-                $.ajax({
-                    url: '/Admin/Order/Approve',
-                    type: 'POST', // Hoặc 'GET' tùy vào phương thức của action
-                    data: { id: idApprove },
-                    success: function (response) {
-                        // Xử lý kết quả trả về nếu cần
-                        console.log(response);
-                        // Reload trang hoặc thực hiện các hành động khác sau khi xóa thành công
-                        window.location.reload(); // Ví dụ: reload trang sau khi xóa thành công
                     },
                     error: function (xhr, status, error) {
                         // Xử lý lỗi nếu có

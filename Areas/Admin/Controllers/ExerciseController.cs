@@ -125,11 +125,13 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(model);
         }
 
-        public ActionResult Update()
+        public ActionResult Update(int? id)
         {
+            var exercise = _data.exercises.FirstOrDefault(e => e.id == id);
             var lesson = _data.lessons.Where(l => l.deleted_at == null).ToList();
             var adminView = new AdminViewModels()
             {
+                Exercise = exercise,
                 Lessons = lesson
             };
             return View(adminView);
@@ -137,9 +139,10 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(HttpPostedFileBase file,int? id)
+        public ActionResult Update(FormCollection form,HttpPostedFileBase file)
         {
-            var exercise = _data.exercises.FirstOrDefault(e => e.id == id);
+            var idCurrent = int.Parse(form["Exercise.id"]);
+            var exercise = _data.exercises.FirstOrDefault(e => e.id == idCurrent);
             if (exercise != null)
             {
                 if (ModelState.IsValid)
@@ -162,11 +165,29 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
                     var path = Path.Combine(uploadFolderPath, fileName);
                     file.SaveAs(path);
 
+                    var bucketName = "exercise-lesson";
 
-                    exercise.title = Request["Exercise.title"];
-                    exercise.content = Request["Exercise.content"];
+                    try
+                    {
+                        var bucket = storageClient.GetBucket(bucketName);
+                    }
+                    catch (Exception ex)
+                    {
+                        var bucket = storageClient.CreateBucket(projectId, bucketName);
+                    }
+
+
+                    using (var fileStream = new FileStream(path, FileMode.Open))
+                    {
+                        storageClient.UploadObject(bucketName, fileName, null, fileStream);
+                    }
+
+                    exercise.title = form["Exercise.title"];
+                    exercise.content = form["Exercise.content"];
                     exercise.name = fileName;
-                    exercise.lesson_id = int.Parse(Request["Exercise.lesson_id"]);
+                    exercise.link = Helpers.GetExerciseUrl(exercise, fileJson);
+                    exercise.time = DateTime.Now.AddMonths(1);
+                    exercise.lesson_id = int.Parse(form["Exercise.lesson_id"]);
                     exercise.updated_at = DateTime.Now;
 
 
