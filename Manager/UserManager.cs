@@ -11,6 +11,8 @@ using System.IO;
 using System.Web.Routing;
 using Website_Course_AVG.Controllers;
 using System.Configuration;
+using Octokit;
+using System.Web.Helpers;
 
 namespace Website_Course_AVG.Managers
 {
