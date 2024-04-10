@@ -316,7 +316,7 @@
                             </li>
                             <li>
                                 <a href="@Url.Action("Index","Exercise")">
-                                    <i class="bi bi-image"></i>
+                                    <i class="bi bi-body-text"></i>
                                     <span class="menu-text">Exercise</span>
                                 </a>
                             </li>
@@ -334,7 +334,7 @@
                             </li>
                             <li>
                                 <a href="@Url.Action("Index","Notify")">
-                                    <i class="bi bi-book"></i>
+                                    <i class="bi bi-bell"></i>
                                     <span class="menu-text">Notify</span>
                                 </a>
                             </li>
@@ -346,13 +346,13 @@
                             </li>
                             <li>
                                 <a href="@Url.Action("Index","Option")">
-                                    <i class="bi bi-cart"></i>
+                                    <i class="bi bi-gear"></i>
                                     <span class="menu-text">Option</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Index","Promotion")">
-                                    <i class="bi bi-cart"></i>
+                                    <i class="bi bi-postcard-heart"></i>
                                     <span class="menu-text">Promotion</span>
                                 </a>
                             </li>
@@ -437,51 +437,48 @@
         return "";
     }
     document.addEventListener("DOMContentLoaded", function () {
-        // Lấy tất cả các phần tử <li> trong sidebar menu
-        var menuItems = document.querySelectorAll(".sidebar-menu li");
-
-        // Lặp qua từng phần tử <li>
-        menuItems.forEach(function (item) {
-            // Lấy đường dẫn từ thuộc tính href của thẻ <a>
-            var href = item.querySelector("a").getAttribute("href");
-
-            // Kiểm tra xem URL hiện tại có khớp với đường dẫn của thẻ <a> không
-            if (window.location.pathname === href) {
-                // Thêm lớp "active current-page" vào thẻ <li> nếu URL khớp
-                item.classList.add("active", "current-page");
-            }
-
-            // Lắng nghe sự kiện click cho mỗi phần tử <li>
-            item.addEventListener("click", function () {
-                // Xóa lớp "active current-page" khỏi tất cả các phần tử <li>
-                menuItems.forEach(function (menuItem) {
-                    menuItem.classList.remove("active", "current-page");
-                });
-
-                // Thêm lớp "active current-page" vào phần tử <li> được click
-                this.classList.add("active", "current-page");
-            });
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
         var cookieNotify = getCookie('Notify');
         if (cookieNotify !== "") {
             toastr.success(cookieNotify, 'Notify')
-            console.log("ll")
         }
         var cookieError = getCookie('Error');
         if (cookieError !== "") {
             toastr.error(cookieError, 'Error')
 
         }
-    })
+
+
+        var menuItems = document.querySelectorAll(".sidebar-menu li");
+
+
+        menuItems.forEach(function (item) {
+
+            var href = item.querySelector("a").getAttribute("href");
+            var path = window.location.pathname;
+
+
+            if (path.startsWith(href)) {
+                item.classList.add("active", "current-page");
+            }
+
+           
+            item.addEventListener("click", function () {
+                
+                menuItems.forEach(function (menuItem) {
+                    menuItem.classList.remove("active", "current-page");
+                });
+
+               
+                this.classList.add("active", "current-page");
+            });
+        });
+    });
 
     $(".btn-insert").click(function () {
         var controller = $(this).data("controller");
 
         if (controller === "admin") {
-            $(this).prop("disabled", true); // Vô hiệu hóa nút nếu controller là admin và action không phải index
+            $(this).prop("disabled", true);
             return;
         }
         window.location.href = '/Admin/' + controller + '/Insert'; // Đảm bảo chèn dấu gạch chéo trước tên controller

@@ -8,9 +8,18 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            <div class="card-header">
-                <h5 class="card-title">@ViewBag.Title</h5>
+        <div class="card-header">
+            <div class="row">
+                <div class="col-10">
+                    <h5 class="card-title">Insert Course</h5>
+                </div>
+                <div class="col-2 float-end">
+                    <a href=@Url.Action("Index", "Course") type="button" class="btn btn-outline-info btn-insert float-end">
+                        <i class="bi bi-arrow-left-square"></i>
+                    </a>
+                </div>
             </div>
+        </div>
             <div class="card-body">
                 <div class="row gx-3">
                     <div class="col-xl-4 col-sm-6 col-12">
