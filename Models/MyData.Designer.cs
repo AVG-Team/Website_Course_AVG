@@ -94,9 +94,14 @@ namespace Website_Course_AVG.Models
         partial void Updatevideo(video instance);
         partial void Deletevideo(video instance);
         #endregion
-
         public MyDataDataContext() :
-			base(MvcApplication.Configuration["ConnectionStrings:AVG_Website_CourseConnectionString"], mappingSource)
+            base(MvcApplication.Configuration["ConnectionStrings:AVG_Website_CourseConnectionString"], mappingSource)
+        {
+            OnCreated();
+        }
+
+        public MyDataDataContext(string connection) :
+                base(connection, mappingSource)
         {
             OnCreated();
         }
@@ -3454,7 +3459,7 @@ namespace Website_Course_AVG.Models
             }
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_code", DbType = "VarChar(MAX)")]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_code", DbType = "VarChar(MAX) NOT NULL", CanBeNull = false)]
         public string code
         {
             get

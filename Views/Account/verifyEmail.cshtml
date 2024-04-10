@@ -1,6 +1,6 @@
 ﻿@model Website_Course_AVG.Models.verifyEmail
- @{  
-     ViewBag.Title = "verify code";
+@{
+    ViewBag.Title = "verify code";
 }
 
 <main aria-labelledby="title">
@@ -14,7 +14,7 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-2 mb-3">
                 <label class="fs-4 fw-bold d-flex justify-content-end" style="font-family: Arial, sans-serif;">
-                    @Html.DisplayNameFor(m => m.email)
+                    @Website_Course_AVG.Managers.Helpers.GetUserFromToken().email
                 </label>
             </div>
         </div>
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        
+
 
         <div class="row d-flex justify-content-center">
             <div class=" col-md-10 d-flex justify-content-center">

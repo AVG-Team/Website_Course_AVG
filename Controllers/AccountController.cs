@@ -100,7 +100,7 @@ namespace Website_Course_AVG.Controllers
                     Helpers.AddCookie("Error", "you enter username or password, something wrong !!!");
                     return View(model);
                 }
-                 
+
 
                 bool isVerify = await userManager.ValidatePasswordAsync(account, model.Password);
                 if (isVerify)
@@ -196,12 +196,12 @@ namespace Website_Course_AVG.Controllers
                 var result = await UserManager.CreateAccountUserAsync(model.userName, account, model.Email);
                 if (result.Succeeded)
                 {
-					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-					// Send an email with this link
-					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");					
-                    if(UserManager.SendEmailAsync(model.Email, "Verify Email", "Your code to verify email is: ", Helpers.GenerateRandomString(10), "Register", "verifyEmail").Result)
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");					
+                    if (UserManager.SendEmailAsync(model.Email, "Verify Email", "Your code to verify email is: ", Helpers.GenerateRandomString(10), "Register", "verifyEmail").Result)
                     {
                         Helpers.AddCookie("Notify", "Access email to verify");
                         TempData["EmailAddress"] = model.Email;
@@ -264,10 +264,10 @@ namespace Website_Course_AVG.Controllers
             var subject = "AVG Courses - Reset Password";
 
             String messageHead = "Mã khôi phục pass của bạn là ";
-			String messageLast = Helpers.GenerateRandomString(10);
-			if (!userManager.IsAuthenticated())
-			{
-                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast,"ForgotPassword", "ResetPassword") == false)
+            String messageLast = Helpers.GenerateRandomString(10);
+            if (!userManager.IsAuthenticated())
+            {
+                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast, "ForgotPassword", "ResetPassword") == false)
                 {
                     return View();
                 }
@@ -454,26 +454,6 @@ namespace Website_Course_AVG.Controllers
             return View();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
-
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -583,29 +563,21 @@ namespace Website_Course_AVG.Controllers
             throw new System.NotImplementedException();
         }
 
+        [Website_Course_AVG.Attributes.Authorize]
         public ActionResult verifyEmail()
         {
-
-            verifyEmail model = new verifyEmail();
-
-            model.email = TempData["EmailAddress"] as string;
-            
-            return View(model);
+            return View();
         }
 
         [HttpPost]
+        [Website_Course_AVG.Attributes.Authorize]
         public ActionResult verifyEmail(verifyEmail model)
         {
             UserManager userManager = new UserManager();
-            user user = _context.users.Where(x=> x.email == model.email).FirstOrDefault();
-            if(user == null)
-            {
-                Helpers.AddCookie("Error", "Error Unknown");
-                return View(model);
-            }
+            user user = Helpers.GetUserFromToken();
 
-
-            int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
+            _context.DeferredLoadingEnabled = false;
+            int countForgotPassword = _context.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
 
             if (countForgotPassword > 3)
             {
@@ -613,7 +585,7 @@ namespace Website_Course_AVG.Controllers
                 return View(model);
             }
 
-            forgot_password _forgot = _data.forgot_passwords.Where(x => x.code == code).FirstOrDefault();
+            forgot_password _forgot = _context.forgot_passwords.Where(x => x.code == model.code).FirstOrDefault();
             if (_forgot == null)
             {
                 Helpers.AddCookie("Error", "You entered wrong code!!!");
@@ -630,7 +602,6 @@ namespace Website_Course_AVG.Controllers
             Helpers.AddCookie("Error", "Has Error");
             return View(model);
         }
-	}
 
         private string RemoveChar(string text)
         {
@@ -683,13 +654,13 @@ namespace Website_Course_AVG.Controllers
             return Json(suggestions, JsonRequestBehavior.AllowGet);
         }
 
-        
+
         public ActionResult ProfieUser()
         {
             user user = Helpers.GetUserFromToken();
             ProfieUser model = new ProfieUser()
             {
-                gender = user.gender == true ? "female":" male",
+                gender = user.gender == true ? "female" : " male",
                 birthday = user.birthday,
                 fullName = user.fullname,
                 Password = "",
@@ -726,13 +697,13 @@ namespace Website_Course_AVG.Controllers
             }
 
             if (model.birthday >= DateTime.Now)
-            {     
+            {
                 Helpers.AddCookie("Error", "Your birthday must smaller nowaday!!");
-                return View(model);   
+                return View(model);
             }
 
             user.fullname = model.fullName;
-            if(!Regex.IsMatch(model.fullName, @"^.{6,30}$"))
+            if (!Regex.IsMatch(model.fullName, @"^.{6,30}$"))
             {
                 Helpers.AddCookie("Error", "Your email is not valid!!");
                 return View(model);
@@ -745,7 +716,7 @@ namespace Website_Course_AVG.Controllers
             if (model.Password.Length > 0)
             {
                 //VALIDATE
-                if(Regex.IsMatch(model.Password.ToString(), @"^.{6,30}$"))
+                if (Regex.IsMatch(model.Password.ToString(), @"^.{6,30}$"))
                 {
                     user.account.password = BCrypt.Net.BCrypt.HashPassword(model.Password);
                     isChange = true;
@@ -760,8 +731,30 @@ namespace Website_Course_AVG.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Helpers.AddCookie("Error","Has Error", 5);
+            Helpers.AddCookie("Error", "Has Error", 5);
             return View(model);
+        }
+
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+
+                if (_signInManager != null)
+                {
+                    _signInManager.Dispose();
+                    _signInManager = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }
