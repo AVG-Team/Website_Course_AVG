@@ -42,6 +42,15 @@ namespace Website_Course_AVG.Controllers
 
         public ActionResult Contact()
         {
+            var contact = _data.contacts.FirstOrDefault();
+            if (contact != null)
+            {
+                ReportViewModel reportView = new ReportViewModel()
+                {
+                    contact = contact
+                };
+                return View(reportView);
+            }
             return View();
         }
 
@@ -79,6 +88,7 @@ namespace Website_Course_AVG.Controllers
                         phone = model.Phone,
                         subject = model.Subject,
                         message = model.Message,
+                        status = false,
                         created_at = DateTime.Now,
                         updated_at = DateTime.Now
                     };

@@ -48,7 +48,16 @@
                                             </td>*@
                                         <td class="item-row">@item.subject</td>
                                         <td class="item-row">@item.message</td>
-                                        <td class="item-row">@item.status</td>
+                                        <td class="item-row text-center">
+                                            @if (item.status != true)
+                                            {
+                                                <i class="fa-solid fa-xmark text-danger"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa-solid fa-check text-primary"></i>
+                                            }
+                                        </td>
                                         @*<td>
                                                 <span class="badge border border-success text-success">High</span>
                                             </td>*@
