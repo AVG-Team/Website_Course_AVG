@@ -21,7 +21,7 @@ namespace Website_Course_AVG.Managers
 {
     public partial class Helpers
     {
-        public static void AddCookie(string key, string value, int second = 10)
+        public static void AddCookie(string key, string value, int second = 3)
         {
             HttpCookie cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddSeconds(second);
@@ -54,7 +54,7 @@ namespace Website_Course_AVG.Managers
 
         public static string GetValueFromAppSetting(string key)
         {
-            return global::System.Configuration.ConfigurationManager.AppSettings[key];
+            return MvcApplication.Configuration[key];
         }
 
         public static string GetRedirectUrlGH()
@@ -70,7 +70,15 @@ namespace Website_Course_AVG.Managers
             HttpContext currentContext = HttpContext.Current;
             string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
 
-            return currentUrl + "/Order/ConfirmPaymentClient";
+            return currentUrl + "/Order/ConfirmMoMoPaymentClient";
+        }
+
+        public static string GetRedirectUrlVNPay()
+        {
+            HttpContext currentContext = HttpContext.Current;
+            string currentUrl = currentContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            return currentUrl + "/Order/ConfirmVNPayPaymentClient";
         }
 
 
@@ -255,20 +263,20 @@ namespace Website_Course_AVG.Managers
 
         public static List<string> ReadJsonFromFile(string filePath)
         {
-            List<string> sensitiveWords = new List<string>();
+            List<string> listString = new List<string>();
 
             try
             {
                 string jsonText = File.ReadAllText(filePath);
 
-                sensitiveWords = JsonSerializer.Deserialize<List<string>>(jsonText);
+                listString = JsonSerializer.Deserialize<List<string>>(jsonText);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error reading json file: " + ex.Message);
             }
 
-            return sensitiveWords;
+            return listString;
         }
 
         //public static string SanitizeInput(string input)

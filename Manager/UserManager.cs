@@ -122,10 +122,10 @@ namespace Website_Course_AVG.Managers
         // role = 2 : admin
         public bool IsAdmin()
         {
-            if (!IsUser())
+            if (!IsAuthenticated())
                 return false;
             user user = GetUserFromToken();
-            return user.role > 1;
+            return user != null && user.role > 1;
         }
 
         public void login(string username)
@@ -173,9 +173,7 @@ namespace Website_Course_AVG.Managers
                 return false;
             }
 
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            return BCrypt.Net.BCrypt.Verify(hashedPassword, account.password);
+            return BCrypt.Net.BCrypt.Verify(password, account.password);
         }
 
 
@@ -197,8 +195,11 @@ namespace Website_Course_AVG.Managers
         }
         public async Task<bool> SendEmailAsync(string toEmail, string subject, string message, string messageLast)
         {
-            string ourMail = ConfigurationManager.AppSettings["OurMail"];
-            string password = ConfigurationManager.AppSettings["Password"];
+            string ourMail = Helpers.GetValueFromAppSetting("OurMail");
+            string password = Helpers.GetValueFromAppSetting("Password");
+
+            if (ourMail == null || password == null)
+                return false;
 
             user user = _data.users.Where(x => x.email == toEmail).FirstOrDefault();
             if (user == null)

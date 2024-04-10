@@ -1,5 +1,8 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Policy;
 using System.Web;
@@ -8,13 +11,22 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Website_Course_AVG
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static IConfiguration Configuration { get; private set; }
+
         protected void Application_Start()
         {
+            var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
+               .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            Configuration = builder.Build();
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

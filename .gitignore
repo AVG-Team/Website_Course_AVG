@@ -361,12 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Web.config
-/Web.Debug.config
-/Web.Release.config
-/Models/MyData.dbml
-/Models/MyData.dbml.layout
-/Models/MyData.designer.cs
 /ltweb-avg-b91359369629.json
 Content/test.mp4
 ltweb-avg-b91359369629.json
+appsettings.json
