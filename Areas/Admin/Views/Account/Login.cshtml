@@ -1,0 +1,114 @@
+﻿@model Website_Course_AVG.Models.LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AVG COURSE ADMIN</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Marketplace for Bootstrap Admin Dashboards" />
+    <meta name="author" content="Bootstrap Gallery" />
+    <link rel="canonical" href="https://www.bootstrap.gallery/">
+    <meta property="og:url" content="https://www.bootstrap.gallery">
+    <meta property="og:title" content="Admin Templates - Dashboard Templates | Bootstrap Gallery">
+    <meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
+    <meta property="og:type" content="Website">
+    <meta property="og:site_name" content="Bootstrap Gallery">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/logo/favicon.png">
+
+    <!-- *************
+        ************ CSS Files *************
+    ************* -->
+    @Styles.Render("~/Content/css/bootstrap.css")
+    @Styles.Render("~/Content/main.min.css")
+    @Styles.Render("~/Content/css/toastr.css")
+</head>
+
+<body class="bg-white">
+    <div class="container bg-white">
+        <div class="row justify-content-center align-content-center">
+            <div class="col-xl-4 col-lg-5 col-sm-6 col-12">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="border rounded-2 p-4 mt-5 shadow-lg mb-5">
+                        <div class="login-form">
+                            <a href="@Url.Action("Index", "Admin")" class="mb-4 d-flex">
+                                <img src="~/Content/img/logo/AVG_admin.png" class="img-fluid login-logo" alt="Earth Admin Dashboard" />
+                            </a>
+                            <h5 class="fw-light mb-3">Sign in to manage.</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" name="username" class="form-control" placeholder="Enter your username" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control" placeholder="Enter password" />
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="form-check m-0">
+                                    <input class="form-check-input" type="checkbox" value="" id="rememberPassword" />
+                                    <label class="form-check-label" for="rememberPassword">Remember</label>
+                                </div>
+                                <a href="@Url.Action("ForgotPassword", "Account")" class="text-blue text-decoration-underline">Lost password?</a>
+                            </div>
+                            <div class="d-grid py-3 mt-4">
+                                <button type="submit" class="btn btn-lg btn-primary">
+                                    Login
+                                </button>
+                            </div>
+                            <div class="text-center pt-4">
+                                <span>Not registered?</span>
+                                <a href="@Url.Action("Register", "Account")" class="text-blue text-decoration-underline ms-2">
+                                    SignUp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/Scripts/toastr.js")
+
+    <script>
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var cookieNotify = getCookie('Notify');
+        if (cookieNotify !== "") {
+            toastr.success(cookieNotify, 'Notify')
+            console.log("ll")
+        }
+        var cookieError = getCookie('Error');
+        if (cookieError !== "") {
+            toastr.error(cookieError, 'Error')
+
+        }
+    })
+    </script>
+</body>
+
+</html>
+
+
+

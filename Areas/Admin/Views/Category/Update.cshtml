@@ -1,9 +1,13 @@
 ﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@functions {
+    public int count { get; set; }
+
+}
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<div class="app-body">
-    <div id="form" class="card mb-3">
+<div class="app-body overflow-hidden">
+    <div id="form" class="card mb-2">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -19,6 +23,26 @@
                                     <label class="form-label">Name</label>
                                     <input type="text" name="Category.name" class="form-control" placeholder="Name Category" value="@Model.Category.name" />
                                     @Html.ValidationMessageFor(m => m.Category.name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3 ">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    @{
+                                        count = 0;
+                                        foreach (var course in Model.Courses)
+                                        {
+                                            if (course.category_id == Model.Category.id)
+                                            {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    <label class="form-label">Quantity</label>
+                                    <input type="text" name="Category.quantity" class="form-control" style="background-color:lightgray" placeholder="Quanity" value="@count" readonly/>
                                 </div>
                             </div>
                         </div>

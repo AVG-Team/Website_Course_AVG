@@ -31,6 +31,7 @@ $.sidebarMenu = function (menu) {
 				//Add the class active to the parent li
 				checkElement.addClass("menu-open");
 				parent.find("li.active").removeClass("active");
+				console.log("11");
 				parent_li.addClass("active");
 			});
 		}

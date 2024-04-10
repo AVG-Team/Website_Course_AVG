@@ -1,0 +1,97 @@
+﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-body">
+    <div id="form" class="card mb-3">
+        @using (Html.BeginForm("Update","Exercise",FormMethod.Post,new {enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <h5 class="card-title">Update Exercise</h5>
+            </div>
+            <div class="card-body">
+                <div class="row gx-3">
+                    <div class="col-xl-4 col-sm-6 col-12 visually-hidden">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Id</label>
+                                    <input type="text" name="Exercise.id" class="form-control" placeholder="Title" value="@Model.Exercise.id" />
+                                    @Html.ValidationMessage(@Model.Exercise.id.ToString(), "", new { @class = "text-danger" }) <!-- Sửa lại đối số truyền vào hàm ValidationMessage -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="Exercise.title" class="form-control" placeholder="Title" value="@Model.Exercise.title"/>
+                                    @Html.ValidationMessage(@Model.Exercise.title, "", new { @class = "text-danger" }) <!-- Sửa lại đối số truyền vào hàm ValidationMessage -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Content</label>
+                                    <input type="text" name="Exercise.content" class="form-control" placeholder="Description" value="@Model.Exercise.content"/>
+                                    @Html.ValidationMessage(@Model.Exercise.content, "", new { @class = "text-danger" }) <!-- Sửa lại đối số truyền vào hàm ValidationMessage -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Select Lesson </label>
+                                    <select class="form-select" aria-label="Default select example" name="Exercise.lesson_id">
+                                        <option selected="">Open this select menu</option>
+                                        @foreach (var item in Model.Lessons)
+                                        {
+                                            <option value="@item.id" name="Exercise.lesson_id" @(item.id == @Model.Exercise.lesson_id ? "selected" : "")>@item.title</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <label class="form-label">Upload File</label>
+                                    <input name="file" class="form-control" type="file" multiple/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btn-cancel').click(function () {
+                window.location.href = '/Admin/Course';
+            })
+        })
+    </script>
+}

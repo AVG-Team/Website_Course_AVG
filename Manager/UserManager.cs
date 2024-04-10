@@ -173,9 +173,7 @@ namespace Website_Course_AVG.Managers
                 return false;
             }
 
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            return BCrypt.Net.BCrypt.Verify(hashedPassword, account.password);
+            return BCrypt.Net.BCrypt.Verify(password, account.password);
         }
 
 
@@ -199,6 +197,9 @@ namespace Website_Course_AVG.Managers
         {
             string ourMail = Helpers.GetValueFromAppSetting("OurMail");
             string password = Helpers.GetValueFromAppSetting("Password");
+
+            if (ourMail == null || password == null)
+                return false;
 
             user user = _data.users.Where(x => x.email == toEmail).FirstOrDefault();
             if (user == null)
