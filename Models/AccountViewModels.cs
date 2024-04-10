@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace Website_Course_AVG.Models
 {
@@ -135,4 +136,14 @@ namespace Website_Course_AVG.Models
 		public string RedirectURL { get; set; }
 		public string UrlWebsite { get; set; }
 	}
+
+    public class verifyEmail
+    {
+        
+
+        [Display(Name ="Enter code: ")]
+        /*code just only have 10 character */
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{10}$", ErrorMessage = "Invalid Code")]
+        public string code { get; set; }
+    }
 }

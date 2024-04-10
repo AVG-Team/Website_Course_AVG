@@ -193,7 +193,7 @@ namespace Website_Course_AVG.Managers
 
             }
         }
-        public async Task<bool> SendEmailAsync(string toEmail, string subject, string message, string messageLast)
+        public async Task<bool> SendEmailAsync(string toEmail, string subject, string message, string messageLast, string fromModel, string toModel)
         {
             string ourMail = Helpers.GetValueFromAppSetting("OurMail");
             string password = Helpers.GetValueFromAppSetting("Password");
@@ -227,7 +227,7 @@ namespace Website_Course_AVG.Managers
             emailConfirmation.Code = messageLast;
             string currentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
             string urlWebsite = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-            emailConfirmation.RedirectURL = currentUrl.Replace("ForgotPassword", "ResetPassword");
+            emailConfirmation.RedirectURL = currentUrl.Replace(fromModel, toModel);
             emailConfirmation.UrlWebsite = urlWebsite;
             emailConfirmation.Name = user.fullname;
 
@@ -290,5 +290,6 @@ namespace Website_Course_AVG.Managers
             }
 
         }
+
     }
 }
