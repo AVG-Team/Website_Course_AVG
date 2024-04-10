@@ -11,6 +11,8 @@ using System.IO;
 using System.Web.Routing;
 using Website_Course_AVG.Controllers;
 using System.Configuration;
+using Octokit;
+using System.Web.Helpers;
 
 namespace Website_Course_AVG.Managers
 {
@@ -173,9 +175,7 @@ namespace Website_Course_AVG.Managers
                 return false;
             }
 
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            return BCrypt.Net.BCrypt.Verify(hashedPassword, account.password);
+            return BCrypt.Net.BCrypt.Verify(password, account.password);
         }
 
 
@@ -289,5 +289,7 @@ namespace Website_Course_AVG.Managers
             }
 
         }
+
+       
     }
 }

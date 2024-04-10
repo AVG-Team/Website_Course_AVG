@@ -20,6 +20,8 @@ using System.Web.Services.Description;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 using System.Runtime.Caching;
+using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace Website_Course_AVG.Controllers
 {
@@ -93,7 +95,7 @@ namespace Website_Course_AVG.Controllers
 
                 if (account == null)
                 {
-                    Helpers.AddCookie("Error", "username and password are wrong !!!");
+                    Helpers.AddCookie("Error", "you enter username or password, something wrong !!!");
                     return View(model);
                 }
 
@@ -104,7 +106,7 @@ namespace Website_Course_AVG.Controllers
                     user user = account.users.FirstOrDefault();
                     if (user == null)
                     {
-                        Helpers.AddCookie("Error", "username and password are wrong !!!");
+                        Helpers.AddCookie("Error", "Not have user!!!");
                         return View(model);
                     }
 
@@ -624,6 +626,87 @@ namespace Website_Course_AVG.Controllers
             MemoryCache.Default.Add("cachedData_" + keywordWithoutDiacritics, suggestions, DateTimeOffset.Now.AddMinutes(10));
 
             return Json(suggestions, JsonRequestBehavior.AllowGet);
+        }
+
+        
+        public ActionResult ProfieUser()
+        {
+            user user = Helpers.GetUserFromToken();
+            ProfieUser model = new ProfieUser()
+            {
+                gender = user.gender == true ? "female":" male",
+                birthday = user.birthday,
+                fullName = user.fullname,
+                Password = "",
+                ConfirmPassword = "",
+                email = user.email
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Website_Course_AVG.Attributes.User]
+        public ActionResult ProfieUser(ProfieUser model)
+        {
+            UserManager userManager = new UserManager();
+            user userFromToken = Helpers.GetUserFromToken();
+            user user = _context.users.Where(x => x.email == userFromToken.email).First();
+            //if (user != null)
+            //{
+            //    Helpers.AddCookie("Error", "Has Error");
+            //    userManager.logout();
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+            //if (model.Password != User && model.Password.Length != 0)
+            //{
+            //    Helpers.AddCookie("Invalid", "Invalid Password");
+            //    return View(model); 
+            //}
+
+            if (model.ConfirmPassword != model.Password)
+            {
+                Helpers.AddCookie("invalid", "Confirm Password is not equal Password");
+                return View(model);
+            }
+
+            if (model.birthday >= DateTime.Now)
+            {     
+                Helpers.AddCookie("Error", "Your birthday must smaller nowaday!!");
+                return View(model);   
+            }
+
+            user.fullname = model.fullName;
+            if(!Regex.IsMatch(model.fullName, @"^.{6,30}$"))
+            {
+                Helpers.AddCookie("Error", "Your email is not valid!!");
+                return View(model);
+            }
+            user.account.username = model.fullName;
+            user.birthday = model.birthday;
+            user.gender = model.gender == "Male" ? false : true;
+            bool isChange = false;
+
+            if (model.Password.Length > 0)
+            {
+                //VALIDATE
+                if(Regex.IsMatch(model.Password.ToString(), @"^.{6,30}$"))
+                {
+                    user.account.password = BCrypt.Net.BCrypt.HashPassword(model.Password);
+                    isChange = true;
+                }
+            }
+
+            _context.SubmitChanges();
+            if (isChange)
+            {
+                userManager.logout();
+                Helpers.AddCookie("Notify", "Logout Successful", 5);
+                return RedirectToAction("Index", "Home");
+            }
+
+            Helpers.AddCookie("Error","Has Error", 5);
+            return View(model);
         }
     }
 }
