@@ -1,9 +1,11 @@
 ﻿@using System.Web.UI.WebControls
+@using Website_Course_AVG.Managers
 @{
     Layout = null;
     string currentController = ViewContext.RouteData.Values["controller"].ToString();
     string currentAction = ViewContext.RouteData.Values["action"].ToString();
 }
+
 
 <!DOCTYPE html>
 
@@ -20,18 +22,22 @@
 
     <!-- CSS here -->
 
-    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/css/bootstrap.css")
     @Styles.Render("~/Content/fonts/bootstrap/bootstrap-icons.css")
     @Styles.Render("~/Content/main.min.css")
     @Styles.Render("~/Content/vendor/overlay-scroll/OverlayScrollbars.min.css")
-    @Styles.Render("~/Content/vendor/toastify/toastify.css")
+    @Styles.Render("~/Content/css/toastr.css")
     @RenderSection("styles", required: false)
 
     <script src="https://kit.fontawesome.com/d30a7cc1f2.js" crossorigin="anonymous"></script>
+    <style>
+        html,body{
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
     <div class="page-wrapper">
-
         <!-- App header starts -->
         <div class="app-header d-flex align-items-center">
 
@@ -58,33 +64,6 @@
             <!-- App header actions start -->
             <div class="header-actions col">
                 <div class="d-lg-flex d-none">
-                    <div class="dropdown">
-                        <a class="dropdown-toggle d-flex px-3 py-4 position-relative" href="#!" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-grid fs-4 lh-1 text-secondary"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end shadow-lg">
-                            <!-- Row start -->
-                            <div class="d-flex gap-2 m-2">
-                                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
-                                    <img src="~/Content/imagesAdmin/brand-behance.svg" class="img-3x" alt="Admin Themes" />
-                                </a>
-                                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
-                                    <img src="~/Content/imagesAdmin/brand-gatsby.svg" class="img-3x" alt="Admin Themes" />
-                                </a>
-                                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
-                                    <img src="~/Content/imagesAdmin/brand-google.svg" class="img-3x" alt="Admin Themes" />
-                                </a>
-                                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
-                                    <img src="~/Content/imagesAdmin/brand-bitcoin.svg" class="img-3x" alt="Admin Themes" />
-                                </a>
-                                <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
-                                    <img src="~/Content/imagesAdmin/brand-dribbble.svg" class="img-3x" alt="Admin Themes" />
-                                </a>
-                            </div>
-                            <!-- Row end -->
-                        </div>
-                    </div>
                     <div class="dropdown border-start">
                         <a class="dropdown-toggle d-flex px-3 py-4 position-relative" href="#!" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
@@ -242,21 +221,34 @@
                     </div>
                 </div>
                 <div class="dropdown ms-2">
-                    <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="~/Content/imagesAdmin/user.png" class="rounded-2 img-3x" alt="Bootstrap Gallery" />
-                        <span class="ms-2 text-truncate d-lg-block d-none">Anne Santiago</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end shadow-lg">
-                        <div class="header-action-links mx-3 gap-2">
-                            <a class="dropdown-item" href="profile.html"><i class="bi bi-person text-primary"></i>Profile</a>
-                            <a class="dropdown-item" href="settings.html"><i class="bi bi-gear text-danger"></i>Settings</a>
-                            <a class="dropdown-item" href="widgets.html"><i class="bi bi-box text-success"></i>Widgets</a>
+                    @if (Helpers.IsAuthenticated())
+                    {
+                        <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <span class="ms-2 text-truncate d-lg-block d-none fw-semibold text-info">@Helpers.GetUserFromToken().fullname</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                            <div class="mx-3 mt-2 d-grid">
+                                <a href="@Url.Action("Logout","Account")" class="btn btn-primary btn-sm">Logout</a>
+                            </div>
                         </div>
-                        <div class="mx-3 mt-2 d-grid">
-                            <a href="login.html" class="btn btn-primary btn-sm">Logout</a>
+                    }
+                    else
+                    {
+                        <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i>
+                            <span class="ms-2 text-truncate d-lg-block d-none fw-semibold text-info">Username</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                            <div class="mx-3 mt-2 d-grid">
+                                <a href="@Url.Action("Login","Account")" class="btn btn-primary btn-sm mb-1 rounded-2">Login</a>
+                                <a href="@Url.Action("Register","Account")" class="btn btn-primary btn-sm rounded-2">Register</a>
+                            </div>
                         </div>
-                    </div>
+        
+                    }
                 </div>
             </div>
             <!-- App header actions end -->
@@ -278,158 +270,94 @@
                 <!-- Sidebar menu starts -->
                 <div class="sidebarMenuScroll">
                     <ul class="sidebar-menu">
-                        <li class="active current-page">
+                        <li>
                             <a href="@Url.Action("Index","Admin")">
                                 <i class="bi bi-pie-chart"></i>
                                 <span class="menu-text">Dashboard</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="analytics.html">
-                                <i class="bi bi-person-square"></i>
-                                <span class="menu-text">Account</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="widgets.html">
-                                <i class="bi bi-newspaper"></i>
-                                <span class="menu-text">Blog</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#!">
-                                <i class="bi bi-window-sidebar"></i>
-                                <span class="menu-text">Category</span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <a href="@Url.Action("Index","Category")">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Insert","Category")">Insert</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="calendar.html">
-                                <i class="bi bi-person-lines-fill"></i>
-                                <span class="menu-text">Contact</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#!">
-                                <i class="bi bi-window-sidebar"></i>
-                                <span class="menu-text">Course</span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <a href="@Url.Action("Index","Course")">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Insert","Course")">Insert</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @*<li>
-                                <a href="@Url.Action("Exercise","Course")">
-                                    <i class="bi bi-wallet2"></i>
+                        @if (Helpers.IsAdmin())
+                        {
+                            <li>
+                                <a href="@Url.Action("Index","Account")">
+                                    <i class="bi bi-person-square"></i>
+                                    <span class="menu-text">Account</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Blog")">
+                                    <i class="bi bi-newspaper"></i>
+                                    <span class="menu-text">Blog</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Category")">
+                                    <i class="bi bi-archive"></i>
+                                    <span class="menu-text">Category</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Comment")">
+                                    <i class="bi bi-window"></i>
+                                    <span class="menu-text">Comment</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Contact")">
+                                    <i class="bi bi-person-lines-fill"></i>
+                                    <span class="menu-text">Contact</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Course")">
+                                    <i class="bi bi-window"></i>
+                                    <span class="menu-text">Course</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Exercise")">
+                                    <i class="bi bi-image"></i>
                                     <span class="menu-text">Exercise</span>
                                 </a>
-                            </li>*@
-                        <li class="treeview">
-                            <a href="#!">
-                                <i class="bi bi-window-sidebar"></i>
-                                <span class="menu-text">Image</span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <a href="@Url.Action("Index","Image")">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Insert","Image")">Insert</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @*<li>
+                            </li>
+                            <li>
                                 <a href="@Url.Action("Index","Image")">
                                     <i class="bi bi-image"></i>
                                     <span class="menu-text">Image</span>
                                 </a>
-                            </li>*@
-                        <li>
-                            <a href="@Url.Action("Order","Admin")">
-                                <i class="bi bi-cart"></i>
-                                <span class="menu-text">Order</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Lesson","Admin")">
-                                <i class="bi bi-journal-text"></i>
-                                <span class="menu-text">Lesson</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#!">
-                                <i class="bi bi-upc-scan"></i>
-                                <span class="menu-text">Login/Signup</span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <a href="@Url.Action("Login","Account")">Login</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Register","Account")">Signup</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("ForgotPassword","Account")">Forgot Password</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="page-not-found.html">
-                                <i class="bi bi-exclamation-diamond"></i>
-                                <span class="menu-text">Page Not Found</span>
-                            </a>
-                        </li>
-                        @*<li class="treeview">
-                                <a href="#!">
-                                    <i class="bi bi-code-square"></i>
-                                    <span class="menu-text">Multi Level</span>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Lesson")">
+                                    <i class="bi bi-book"></i>
+                                    <span class="menu-text">Lesson</span>
                                 </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a href="#!">Level One Link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">
-                                            Level One Menu
-                                            <i class="bi bi-chevron-right"></i>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                <a href="#!">Level Two Link</a>
-                                            </li>
-                                            <li>
-                                                <a href="#!">
-                                                    Level Two Menu
-                                                    <i class="bi bi-chevron-right"></i>
-                                                </a>
-                                                <ul class="treeview-menu">
-                                                    <li>
-                                                        <a href="#!">Level Three Link</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#!">Level Three Link</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#!">Level One Link</a>
-                                    </li>
-                                </ul>
-                            </li>*@
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Notify")">
+                                    <i class="bi bi-book"></i>
+                                    <span class="menu-text">Notify</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Order")">
+                                    <i class="bi bi-cart"></i>
+                                    <span class="menu-text">Order</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Option")">
+                                    <i class="bi bi-cart"></i>
+                                    <span class="menu-text">Option</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Promotion")">
+                                    <i class="bi bi-cart"></i>
+                                    <span class="menu-text">Promotion</span>
+                                </a>
+                            </li>
+
+                        }
                     </ul>
                 </div>
                 <!-- Sidebar menu ends -->
@@ -444,39 +372,33 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <i class="bi bi-house lh-1 pe-3 me-3 border-end border-dark"></i>
-                            <a href="#" class="text-decoration-none">Admin</a>
+                            <a href="@Url.Action("Index","Admin")" class="text-decoration-none">Admin</a>
                         </li>
                         <li class="breadcrumb-item text-secondary" aria-current="page">
-                            Dashboard
+                            @ViewBag.controller
                         </li>
                     </ol>
                     <!-- Breadcrumb end -->
                     <!-- Sales stats start -->
                     <div class="ms-auto d-lg-flex d-none flex-row">
                         <div class="d-flex flex-row gap-2">
-                            <button class="btn-day btn btn-sm btn-primary">Today</button>
-                            <button class="btn-day btn btn-sm btn-white">7d</button>
-                            <button class="btn-day btn btn-sm btn-white">2w</button>
-                            <button class="btn-day btn btn-sm btn-white">1m</button>
-                            <button class="btn-day btn btn-sm btn-white">3m</button>
-                            <button class="btn-day btn btn-sm btn-white">6m</button>
-                            <button class="btn-day btn btn-sm btn-white">1y</button>
-                            <button id="create" class="btn btn-lg btn-primary visually-hidden">Create</button>
+                            <button type="button" class="btn btn-outline-info btn-insert" data-controller="@ViewBag.controller">
+                                <i class="bi bi-plus-square"></i>
+                            </button>
                         </div>
-
                     </div>
                     <!-- Sales stats end -->
 
                 </div>
                 <!-- App Hero header ends -->
                 <!-- App body starts -->
-                <div class="body-render">
+                <div class="render-body">
                     @RenderBody()
                 </div>
                 <!-- App body ends -->
                 <!-- App footer start -->
                 <div class="app-footer">
-                    <span>© Bootstrap Gallery 2023</span>
+                    <span>© AVG TEAM 2023</span>
                 </div>
                 <!-- App footer end -->
 
@@ -487,41 +409,86 @@
         <!-- Main container end -->
 
     </div>
+@Scripts.Render("~/Scripts/js/jquery.min.js")
+@Scripts.Render("~/Scripts/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/vendor/overlay-scroll/jquery.overlayScrollbars.min.js")
+@Scripts.Render("~/Content/vendor/overlay-scroll/custom-scrollbar.js")
+@Scripts.Render("~/Scripts/toastr.js")
+@Scripts.Render("~/Scripts/js/custom.js")
+@Scripts.Render("~/Scripts/js/todays-date.js")
+@Scripts.Render("~/Scripts/js/moment.min.js")
+@RenderSection("scripts", required: false)
 
 
-    @Scripts.Render("~/Scripts/js/jquery.min.js")
-    @Scripts.Render("~/Scripts/js/bootstrap.bundle.min.js")
-    @Scripts.Render("~/Content/vendor/overlay-scroll/jquery.overlayScrollbars.min.js")
-    @Scripts.Render("~/Content/vendor/overlay-scroll/custom-scrollbar.js")
-    @Scripts.Render("~/Content/vendor/toastify/toastify.js")
-    @Scripts.Render("~/Content/vendor/toastify/custom.js")
+<script>
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy tất cả các phần tử <li> trong sidebar menu
+        var menuItems = document.querySelectorAll(".sidebar-menu li");
 
+        // Lặp qua từng phần tử <li>
+        menuItems.forEach(function (item) {
+            // Lấy đường dẫn từ thuộc tính href của thẻ <a>
+            var href = item.querySelector("a").getAttribute("href");
 
-    @Scripts.Render("~/Scripts/js/custom.js")
-    @Scripts.Render("~/Scripts/js/todays-date.js")
-    @Scripts.Render("~/Scripts/js/moment.min.js")
-    @RenderSection("scripts", required: false)
-    <script src="~/Content/ckfinder/ckfinder.js"></script>
+            // Kiểm tra xem URL hiện tại có khớp với đường dẫn của thẻ <a> không
+            if (window.location.pathname === href) {
+                // Thêm lớp "active current-page" vào thẻ <li> nếu URL khớp
+                item.classList.add("active", "current-page");
+            }
+
+            // Lắng nghe sự kiện click cho mỗi phần tử <li>
+            item.addEventListener("click", function () {
+                // Xóa lớp "active current-page" khỏi tất cả các phần tử <li>
+                menuItems.forEach(function (menuItem) {
+                    menuItem.classList.remove("active", "current-page");
+                });
+
+                // Thêm lớp "active current-page" vào phần tử <li> được click
+                this.classList.add("active", "current-page");
+            });
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var cookieNotify = getCookie('Notify');
+        if (cookieNotify !== "") {
+            toastr.success(cookieNotify, 'Notify')
+            console.log("ll")
+        }
+        var cookieError = getCookie('Error');
+        if (cookieError !== "") {
+            toastr.error(cookieError, 'Error')
+
+        }
+    })
+
+    $(".btn-insert").click(function () {
+        var controller = $(this).data("controller");
+
+        if (controller === "admin") {
+            $(this).prop("disabled", true); // Vô hiệu hóa nút nếu controller là admin và action không phải index
+            return;
+        }
+        window.location.href = '/Admin/' + controller + '/Insert'; // Đảm bảo chèn dấu gạch chéo trước tên controller
+    });
+</script>
 </body>
 </html>
 
-@section scripts{
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const controller = "@currentController".toLowerCase();
-            const action = "@currentAction".toLowerCase();
-            console.log("ddd");
-            if (controller === "admin" && action !== "index") {
-                console.log("dd");
-                document.getElementById("create").classList.remove("visually-hidden");
 
-                // Chuyển đổi HTMLCollection thành một mảng
-                const buttons = Array.from(document.getElementsByClassName("btn-day"));
-                buttons.forEach((btn) => {
-                    btn.classList.add("visually-hidden");
-                });
-            }
-        });
-
-    </script>
-}
+    

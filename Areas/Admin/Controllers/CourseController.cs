@@ -21,6 +21,10 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
     {
         private readonly MyDataDataContext _data = new MyDataDataContext();
 
+        public CourseController()
+        {
+            ViewBag.controller = "Course";
+        }
         public ActionResult Index(int? page)
         {
             var courses = _data.courses.ToList();
@@ -28,6 +32,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             var images = _data.images.ToList();
             var pageNumber = page ?? 1;
             var pageSize = 10;
+            
             var adminView = new AdminViewModels()
             {
                 Courses = courses,
@@ -149,7 +154,6 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Insert(AdminViewModels models)
         {
-
             if (ModelState.IsValid)
             {
                 var course = new course()
@@ -161,6 +165,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
                     category_id = models.Course.category_id,
                     image_code = models.Course.image_code,
                     created_at = DateTime.Now,
+                    updated_at = DateTime.Now
                 };
                 _data.courses.InsertOnSubmit(course);
                 _data.SubmitChanges();
@@ -209,9 +214,9 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View("Index");
         }
         [HttpPost]
-        public ActionResult Delete(course model)
+        public ActionResult Delete(int? id)
         {
-            var course = _data.courses.FirstOrDefault(c => c.id == model.id);
+            var course = _data.courses.FirstOrDefault(c => c.id == id);
             if (course != null)
             {
                 course.deleted_at = DateTime.Now;

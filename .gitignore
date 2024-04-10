@@ -365,3 +365,7 @@ FodyWeavers.xsd
 Content/test.mp4
 ltweb-avg-b91359369629.json
 appsettings.json
+/Models/MyData.dbml
+/Models/MyData.dbml.layout
+/Models/MyData.designer.cs
+/Models/MyData.designer.cs

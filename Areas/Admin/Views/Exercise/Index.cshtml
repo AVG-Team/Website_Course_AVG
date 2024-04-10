@@ -1,26 +1,25 @@
 ﻿@using PagedList.Mvc
 @model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
 @{
-    ViewBag.Title = "Course";
+    ViewBag.Title = "Exercise";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
 <div class="app-body">
     <div class="row gx-3">
         <div class="col-xxl-12">
             <div class="card mb-3">
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive pb-2 pe-2">
                         <table class="table table-bordered m-0">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Author</th>
-                                    <th>Image code</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
+                                    <th>Content</th>
+                                    <th>Name</th>
+                                    <th>Link</th>
+                                    <th>Time</th>
+                                    <th>Lesson</th>
                                     <th>Created</th>
                                     <th>Updated</th>
                                     <th>Deleted</th>
@@ -28,34 +27,40 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.CoursesPagedList)
+                                @foreach (var item in Model.ExercisesPagedList)
                                 {
                                     <tr class="srow" data-id="@item.id">
                                         <td class="item-row">@item.id</td>
                                         <td class="item-row">
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            <span class="d-inline-block text-truncate" style="max-width: 200px;">
                                                 @item.title
                                             </span>
                                         </td>
                                         <td class="item-row">
                                             <span class="d-inline-block text-truncate" style="max-width: 200px;">
-                                                @item.description
+                                                @item.content
                                             </span>
                                         </td>
-                                        <td class="item-row">@item.author</td>
-                                        @*<td>
-                                                <span class="badge border border-danger text-danger">Open</span>
-                                            </td>*@
-                                    <!--<td class="item-row">-->
-                                        @*<img id="image-@item.id" alt="Course Image" style="max-width: 100px; max-height: 100px;" />*@
-                                    
-                                    <!--</td>-->
-                                        <td class="item-row">@item.image_code</td>
-                                        <td class="item-row">@item.category.name</td>
-                                        <td class="item-row">@item.price</td>
-                                        @*<td>
-                                                <span class="badge border border-success text-success">High</span>
-                                            </td>*@
+                                        <td class="item-row">
+                                            <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                                @item.name
+                                            </span>
+                                        </td>
+                                        <td class="item-row">
+                                            <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                                @item.link
+                                            </span>
+                                        </td>
+                                        <td class="item-row">
+                                            <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                                @item.time
+                                            </span>
+                                        </td>
+                                        <td class="item-row">
+                                            <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                                @item.lesson.title
+                                            </span>
+                                        </td>
                                         <td class="text-success item-row">
                                             <span class="d-inline-block text-truncate" style="max-width: 200px;">
                                                 @item.created_at
@@ -77,37 +82,36 @@
                                             </button>
                                             @if (item.deleted_at == null)
                                             {
-                                                <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete btn-open-modal" data-bs-toggle="modal" data-bs-target="#ConfirmModal">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             }
                                             else
                                             {
-                                                <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:lightgray!important;" disabled>
+                                                <button class="btn btn-danger btn-sm ms-1 border rounded-3 btn-delete" style="background-color:lightgray!important;" disabled>
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             }
                                         </td>
                                     </tr>
-
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
-                                Confirm Remove Course
+                            <h5 class="modal-title text-success" id="ConfirmModalLabel">
+                                Confirm Remove Exercise
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            Are you sure you want to remove this course?
+                        <div class="modal-body text-success">
+                            Are you sure you want to remove this exercise?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -122,7 +126,7 @@
             </div>
             <div class="panel-footer">
                 <div class="MenuPage">
-                    @Html.PagedListPager(Model.CoursesPagedList, page => Url.Action("Index", new { page = page }))
+                    @Html.PagedListPager(Model.ExercisesPagedList, page => Url.Action("Index", new { page = page }))
                 </div>
             </div>
         </div>
@@ -202,7 +206,7 @@
             $('.btn-update').add('.item-row').click(function () {
                 var id = $(this).closest('.srow').data('id')  // Sử dụng thuộc tính data-id để lấy giá trị id
                 console.log(id);
-                window.location.href = '/Admin/Course/Update?id=' + id;
+                window.location.href = '/Admin/Exercise/Update?id=' + id;
             });
 
             $('.btn-delete').click(function () {
@@ -211,14 +215,12 @@
             });
             $('.btn-submit-delete').click(function () {
                 $.ajax({
-                    url: '/Admin/Course/Delete',
-                    type: 'POST', // Hoặc 'GET' tùy vào phương thức của action
+                    url: '/Admin/Exercise/Delete',
+                    type: 'POST',
                     data: { id: idDelete },
                     success: function (response) {
-                        // Xử lý kết quả trả về nếu cần
                         console.log(response);
-                        // Reload trang hoặc thực hiện các hành động khác sau khi xóa thành công
-                        window.location.reload(); // Ví dụ: reload trang sau khi xóa thành công
+                        window.location.reload();
                     },
                     error: function (xhr, status, error) {
                         // Xử lý lỗi nếu có
