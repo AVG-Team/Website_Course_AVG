@@ -110,7 +110,7 @@ namespace Website_Course_AVG.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Helpers.AddCookie("Error", "Error Unknown, Please Try Again!!!");
                 return RedirectToAction("Index", "Home");
@@ -129,6 +129,6 @@ namespace Website_Course_AVG.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-        
+
     }
 }

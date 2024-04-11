@@ -37,6 +37,22 @@
 
 
     @Scripts.Render("~/Scripts/d30a7cc1f2.js")
+    <style>
+        .suggestion {
+            padding: 1px;
+            margin-bottom: 1px; /* Khoảng cách giữa các mục gợi ý */
+            cursor: pointer;
+            font-size: 25px;
+        }
+
+        .autocomplete-suggestions {
+            width: 550px; /* Thiết lập chiều rộng tùy chỉnh */
+        }
+
+            .autocomplete-suggestions .suggestion:hover {
+                background-color: #0D6EFD;
+            }
+    </style>
 </head>
 
 <body>
@@ -263,7 +279,7 @@
                                 <div class="modal-content">
                                     @using (Html.BeginForm("SearchCourses", "Home", FormMethod.Post, new { @class = "form" }))
                                     {
-                                       
+
                                         <input id="searchInput" type="text" value="" placeholder="Search here..." name="query" style="max-width:none !important" autocomplete="on" a>
                                         <button type="submit" id="searchBtn">
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -389,25 +405,6 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/toastr.js")
     @RenderSection("scripts", required: false)
-    @{
-        string currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
-        <style>
-            .suggestion {
-                padding: 1px;
-                margin-bottom: 1px; /* Khoảng cách giữa các mục gợi ý */
-                cursor: pointer;
-                font-size: 25px;
-            }
-
-            .autocomplete-suggestions {
-                width: 550px; /* Thiết lập chiều rộng tùy chỉnh */
-            }
-
-                .autocomplete-suggestions .suggestion:hover {
-                    background-color: #0D6EFD;
-                }
-        </style>
-    }
 
     <script>
         // cookie
