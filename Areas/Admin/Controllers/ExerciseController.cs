@@ -11,6 +11,7 @@ using Website_Course_AVG.Areas.Admin.Data.ViewModels;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 using System.Net;
+using Website_Course_AVG.Attributes;
 
 namespace Website_Course_AVG.Areas.Admin.Controllers
 {
@@ -24,6 +25,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         }
 
         // GET: Admin/Exercise
+
+        [Admin]
         public ActionResult Index(int? page)
         {
             var exercises = _data.exercises.ToList();
@@ -40,6 +43,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(adminView);
         }
 
+        [Admin]
         public ActionResult Insert()
         {
             var lesson = _data.lessons.Where(l => l.deleted_at == null).ToList();
@@ -50,6 +54,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(adminView);
         }
 
+        [Admin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Insert(HttpPostedFileBase file,AdminViewModels model)
@@ -125,6 +130,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(model);
         }
 
+        [Admin]
         public ActionResult Update(int? id)
         {
             var exercise = _data.exercises.FirstOrDefault(e => e.id == id);
@@ -138,6 +144,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Admin]
         [ValidateAntiForgeryToken]
         public ActionResult Update(FormCollection form,HttpPostedFileBase file)
         {
@@ -206,6 +213,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Admin]
         public ActionResult Delete(int? id)
         {
             var exercise = _data.exercises.FirstOrDefault(e => e.id == id);

@@ -22,7 +22,11 @@ namespace Website_Course_AVG.Attributes
                 string message = ResourceHelper.GetResource("You do not have permission to enter here!!!");
                 Helpers.AddCookie("Error", message);
                 filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary(new { controller = "Home", action = "Index" }));
+                    new System.Web.Routing.RouteValueDictionary {
+                        { "area", "" },
+                        { "controller", "Home" },
+                        { "action", "Index" }
+                    }); ;
                 return;
             }
 

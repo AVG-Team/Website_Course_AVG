@@ -12,6 +12,7 @@ using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 using System.IO;
 using System.Web.Routing;
+using Website_Course_AVG.Attributes;
 
 namespace Website_Course_AVG.Areas.Admin.Controllers
 {
@@ -58,6 +59,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
 
 
         // GET: Admin/Account
+        [Attributes.Authorize]
+        [Admin]
         public ActionResult Index(int? page)
         {
             var account = _data.accounts.ToList();
@@ -77,6 +80,39 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
 
             return View(viewModel);
         }
+        [Admin]
+        public ActionResult Update(int? id)
+        {
+            var user = _data.users.FirstOrDefault(c => c.id == id);
+            var viewModel = new AdminViewModels()
+            {
+                User = user
+            };
+            return View(viewModel);
+
+        }
+        [Admin]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(FormCollection form, int? id)
+        {
+            var user = _data.users.FirstOrDefault(c => c.id == id);
+            if (user != null)
+            {
+                user.fullname = form["User.fullname"];
+                user.birthday = DateTime.Parse(form["User.birthday"]);
+                user.gender = bool.Parse(form["User.gender"]);
+                user.role = int.Parse(form["User.role"]);
+
+                user.updated_at = DateTime.Now;
+
+                _data.SubmitChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        
 
         public JsonResult UserParticial(int? page)
         {
@@ -106,13 +142,13 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             
         }
 
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel viewModel)
@@ -156,14 +192,14 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult>  Register(RegisterViewModel viewModel)
         {

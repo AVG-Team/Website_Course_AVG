@@ -1,0 +1,87 @@
+﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-body">
+    <div id="form" class="card mb-3">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <h5 class="card-title">Update course</h5>
+            </div>
+            <div class="card-body">
+                <div class="row gx-3">
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Full name</label>
+                                    <input type="text" name="User.fullname" class="form-control" placeholder="Title" value="@Model.User.fullname" />
+                                    @Html.ValidationMessage(@Model.User.fullname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Birthday</label>
+                                    <input type="datetime-local" name="User.birthday" class="form-control" placeholder="Description" value="@Model.User.birthday" />
+                                    @Html.ValidationMessage(@Model.User.birthday.ToString(), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Gender </label>
+                                    <select class="form-select" aria-label="Default select example" name="User.gender">
+                                        <option selected="">Open this select menu</option>
+                                        <option value="TRUE" name="User.gender">Male</option>
+                                        <option value="FALSE" name="User.gender">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Role</label>
+                                    <select class="form-select" aria-label="Default select example" name="User.role">
+                                        <option selected="">Open this select menu</option>
+                                        <option value="1" name="User.role">User</option>
+                                        <option value="2" name="User.role">Employee</option>
+                                        <option value="3" name="User.role">Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btn-cancel').click(function () {
+                window.location.href = '/Admin/Course';
+            })
+        })
+    </script>
+}
