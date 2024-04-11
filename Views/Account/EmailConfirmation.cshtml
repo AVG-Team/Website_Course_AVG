@@ -1,6 +1,6 @@
 ﻿@model Website_Course_AVG.Models.EmailConfirmation
 @{
-    Layout = null; 
+    Layout = null;
 }
 
 <div class="width:100%; height: 100%">
@@ -17,19 +17,18 @@
         <tr>
             <td style="padding:0 35px; justify-content:left;">
                 <p style=" font-weight:bold; margin-bottom:10;font-family:'Rubik',sans-serif; ">
-                    xin chào @Model.Name,
+                    Hello @Model.Name,
                     <br>
                     <br>
-                    Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu ở trang web của chúng tôi.
+                    @global_asax.Trans("We have received a password reset request on our website.")
                     <br>
-                    Nhập mã đặt lại mật khẩu sau đây:
-
+                    @global_asax.Trans("Enter the following password reset code:")
                 </p>
                 <div style="background-color: #e7f3ff; border: 2px solid #c4ddfb; border-radius: 5px; padding: 20px; width: 100px; margin-bottom: 26px;">
                     <p style="color:black; font-size: 16px; line-height: 1.5; margin: 0;">@Model.Code</p>
-                  </div>
+                </div>
                 <a href="@Model.RedirectURL" id="redirectUrl"
-                   style="width:400px; text-align:center;background:#1878f3;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff; font-size:14px;padding:10px 24px;display:inline-block;border-radius:10px;">Nhấn vào đây để đổi mật khẩu</a>
+                   style="width:400px; text-align:center;background:#1878f3;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff; font-size:14px;padding:10px 24px;display:inline-block;border-radius:10px;">@global_asax.Trans("Click here to change password")</a>
 
             </td>
         </tr>
@@ -43,5 +42,5 @@
         myURL.href = currentURL + "/Account/ResetPassword";
         Request
     }
-    
+
 </script>

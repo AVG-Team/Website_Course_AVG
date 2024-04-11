@@ -1,21 +1,20 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
-using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.AccessControl;
 using System.Text;
 using System.Text.Json;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 using Website_Course_AVG.Models;
 using System.IO;
 using System.Text.RegularExpressions;
-using Website_Course_AVG.Models;
+using System.Globalization;
+using System.Threading;
+using System.Web.Mvc;
+using Microsoft.IdentityModel.Logging;
 
 namespace Website_Course_AVG.Managers
 {
@@ -345,6 +344,57 @@ namespace Website_Course_AVG.Managers
             byte[] data = Convert.FromBase64String(base64String);
             string decodedString = Encoding.UTF8.GetString(data);
             return decodedString.Split(';').Select(int.Parse).ToList();
+        }
+
+
+
+        public static string SlugToString(string slug)
+        {
+            if (string.IsNullOrEmpty(slug))
+                return "";
+            string result = slug.Replace("-", " ");
+            result = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(result);
+            return result.ToLower().Trim();
+        }
+
+        public static string StringToSlug(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return "";
+            string slug = input.ToLower().Trim();
+            slug = Regex.Replace(slug, @"[^a-z0-9\s-+#]", "");
+            slug = Regex.Replace(slug, @"\s+", "-");
+            slug = Regex.Replace(slug, @"-+", "-");
+            return slug;
+        }
+
+
+        private static HashSet<SelectListItem> GetLanguageSelectListItem()
+        {
+            return (new HashSet<SelectListItem>
+            {
+                new SelectListItem { Text = "English", Value = "EN"},
+                new SelectListItem { Text = "Vietnamese", Value = "VI"}
+            });
+        }
+
+        public static SelectList GetLanguageDictionaryElement()
+        {
+            int previouslySelectedLanguageIndex = 1;
+            HttpCookie languageCookie = HttpContext.Current.Request.Cookies["Language"];
+
+            HashSet<SelectListItem> list = GetLanguageSelectListItem();
+
+            if (languageCookie?.Value != null)
+            {
+                foreach (var item in list.Where(item => item.Text == languageCookie.Value))
+                {
+                    previouslySelectedLanguageIndex = Int32.Parse(item.Value);
+                    break;
+                }
+            }
+
+            return new SelectList(list, "Value", "Text", previouslySelectedLanguageIndex);
         }
     }
 }

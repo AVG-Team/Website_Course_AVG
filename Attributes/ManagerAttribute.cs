@@ -12,15 +12,14 @@ using System.Web.Routing;
 
 namespace Website_Course_AVG.Attributes
 {
-    public class AdminAttribute : ActionFilterAttribute
+    public class ManagerAttribute : ActionFilterAttribute
     {
         UserManager UserManager = new UserManager();
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!UserManager.IsAdmin())
+            if (!UserManager.IsManager())
             {
-                string message = ResourceHelper.GetResource("You do not have permission to enter here!!!");
-                Helpers.AddCookie("Error", message);
+                Helpers.AddCookie("Error", "You do not have permission to enter here!!!");
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new { controller = "Home", action = "Index" }));
                 return;

@@ -55,20 +55,16 @@ namespace Website_Course_AVG.Controllers
             ViewBag.Categories = category;
             int pageNumber = (page ?? 1);
 
-            // Lấy danh sách mã code của ảnh từ các course
             var imageCodes = courses.Select(c => c.image_code).Distinct().ToList();
 
-            // Truy vấn ảnh từ bảng images dựa trên mã code
             var images = _data.images.Where(i => imageCodes.Contains(i.code) && i.category == false).ToList();
 
-            // Nạp thông tin ảnh vào mỗi đối tượng course
             foreach (var course in courses)
             {
                 var image = images.FirstOrDefault(i => i.code == course.image_code);
-                // Kiểm tra xem có ảnh tương ứng không trước khi gán
                 if (image != null)
                 {
-                    course.image_code = image.image1; // Giả sử image1 là cột chứa đường dẫn ảnh
+                    course.image_code = image.image1;
                 }
             }
             var list = courses.ToPagedList(pageNumber, 12);
@@ -136,7 +132,7 @@ namespace Website_Course_AVG.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(int id)
+        public ActionResult Details(string slug, int id)
         {
             if (id == null)
                 return HttpNotFound();
