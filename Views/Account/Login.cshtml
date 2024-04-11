@@ -28,8 +28,8 @@
                 <div class="right-box" style="padding: 20px 15px 20px 20px;">
                     <div class="row align-items-center">
                         <div class="header-text mb-4">
-                            <h2 class="text-info">Hello,Again</h2>
-                            <p>We are happy to have you back.</p>
+                            <h2 class="text-info">@global_asax.Trans("Hello,Again")</h2>
+                            <p>@global_asax.Trans("We are happy to have you back.")</p>
                         </div>
                         <section id="loginForm">
                             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
@@ -59,7 +59,7 @@
                                                 @Html.LabelFor(m => m.RememberMe)*@
                                         </div>
                                         <div class="row">
-                                            <small><a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a></small>
+                                            <small><a href="@Url.Action("ForgotPassword", "Account")">@global_asax.Trans("Forgot Password?")</a></small>
                                             @*<section id="forgotPasswordForm">
                                                     @Html.ActionLinkl()
                                                 </section>*@
@@ -79,7 +79,7 @@
                             </section>
                         </div>
                         <div class="row">
-                            <small>Don't have account? <a href="@Url.Action("Register", "Account")">Sign Up</a></small>
+                            <small>@global_asax.Trans("Don't have account?") <a href="@Url.Action("Register", "Account")">@global_asax.Trans("Sign Up")</a></small>
                         </div>
                     </div>
                 </div>
