@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="account" xml:space="preserve">
+    <value>của bạn</value>
+  </data>
+  <data name="account." xml:space="preserve">
+    <value>của bạn.</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Thêm</value>
+  </data>
+  <data name="Add Comment Successful!" xml:space="preserve">
+    <value>Thêm bình luận thành công!</value>
+  </data>
+  <data name="Add Note" xml:space="preserve">
+    <value>Thêm ghi chú</value>
+  </data>
+  <data name="Add Note At" xml:space="preserve">
+    <value>Thêm ghi chú tại </value>
+  </data>
+  <data name="Add Note Successful" xml:space="preserve">
+    <value>Thêm ghi chú thành công</value>
+  </data>
+  <data name="Add to Cart" xml:space="preserve">
+    <value>Thêm vào giỏ hàng</value>
+  </data>
+  <data name="After 30 minutes you will be able to comment again" xml:space="preserve">
+    <value>Bạn không thể bình luận trong vòng 30 phút</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Áp dụng</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Cho phép</value>
+  </data>
+  <data name="Are you sure you want to download the exercise?" xml:space="preserve">
+    <value>Bạn chắc chắn muốn tải bài tập?</value>
+  </data>
+  <data name="Associate your" xml:space="preserve">
+    <value>Liên kết với tài khoản </value>
+  </data>
+  <data name="Association Form" xml:space="preserve">
+    <value>Mẫu liên kết</value>
+  </data>
+  <data name="AVG Courses - Reset Password" xml:space="preserve">
+    <value>AVG Courses - Khôi phục mật khẩu</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Quay lại</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Cơ bản</value>
+  </data>
+  <data name="be sent again" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="Card details" xml:space="preserve">
+    <value>Chi tiết giỏ hàng</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Giỏ hàng</value>
+  </data>
+  <data name="Change Language Successful!" xml:space="preserve">
+    <value>Thay đổi ngôn ngữ thành công!</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Thanh toán</value>
+  </data>
+  <data name="Click here to change password" xml:space="preserve">
+    <value>Nhấn vào đây để thay đổi mật khẩu</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Liên Hệ</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="Content Lesson" xml:space="preserve">
+    <value>Nội dung bài học </value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="Course content" xml:space="preserve">
+    <value>Nội dung khoá học</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Khoá Học</value>
+  </data>
+  <data name="Create Account" xml:space="preserve">
+    <value>Tạo tài khoản</value>
+  </data>
+  <data name="Delete successful" xml:space="preserve">
+    <value>Xóa ghi chú thành công</value>
+  </data>
+  <data name="Delete successful!" xml:space="preserve">
+    <value>Xóa bình luận thành công!</value>
+  </data>
+  <data name="Do you have any questions about this lesson?" xml:space="preserve">
+    <value>Bạn có câu hỏi nào cho bài tập bài học này?</value>
+  </data>
+  <data name="Don't have account?" xml:space="preserve">
+    <value>Bạn không có tài khoản?</value>
+  </data>
+  <data name="Download Exercises" xml:space="preserve">
+    <value>Tải xuống bài tập</value>
+  </data>
+  <data name="Enter the following password reset code:" xml:space="preserve">
+    <value>Vui lòng nhập mã khôi phục mật khẩu sau đây:</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="Error Unknown" xml:space="preserve">
+    <value>Lỗi không xác định</value>
+  </data>
+  <data name="Error Unknown, Please Try Again!" xml:space="preserve">
+    <value>Lỗi không xác định! Vui lòng đăng nhập lại!</value>
+  </data>
+  <data name="Exercise is null" xml:space="preserve">
+    <value>Hiện tại không có bài tập nào</value>
+  </data>
+  <data name="Find Favorite Course" xml:space="preserve">
+    <value>Tìm khóa học yêu thích</value>
+  </data>
+  <data name="for details on setting up this ASP.NET application to support logging in via external services." xml:space="preserve">
+    <value>để biết thêm chi tiết về cách thiết lập ứng dụng ASP.NET để hỗ trợ đăng nhập thông qua các dịch vụ ngoài.</value>
+  </data>
+  <data name="for details on setting up this ASP.NET application to support two-factor authentication." xml:space="preserve">
+    <value>để biết chi tiết về cách thiết lập ứng dụng ASP.NET để hỗ trợ xác thực hai yếu tố.</value>
+  </data>
+  <data name="Forgot Password?" xml:space="preserve">
+    <value>Quên mật khẩu?</value>
+  </data>
+  <data name="Free" xml:space="preserve">
+    <value>Miễn phí</value>
+  </data>
+  <data name="from basic to advanced. from basic" xml:space="preserve">
+    <value>từ cơ bản đến nâng cao</value>
+  </data>
+  <data name="Get Comment Success" xml:space="preserve">
+    <value>Tải bình luận thành công</value>
+  </data>
+  <data name="Get Exercise Successful!" xml:space="preserve">
+    <value>Tải bài tập thành công!</value>
+  </data>
+  <data name="Go to Homepage" xml:space="preserve">
+    <value>Đi đến trang chủ</value>
+  </data>
+  <data name="Has Error" xml:space="preserve">
+    <value>Đã xảy ra lỗi</value>
+  </data>
+  <data name="Hello,Again" xml:space="preserve">
+    <value>Xin chào</value>
+  </data>
+  <data name="Help Center" xml:space="preserve">
+    <value>Trung tâm hỗ trợ</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang Chủ</value>
+  </data>
+  <data name="Home Page" xml:space="preserve">
+    <value>Trang Chủ</value>
+  </data>
+  <data name="invalid information" xml:space="preserve">
+    <value>thông tin không hợp lệ</value>
+  </data>
+  <data name="Invalid Request" xml:space="preserve">
+    <value>Yêu cầu không hợp lệ</value>
+  </data>
+  <data name="It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you." xml:space="preserve">
+    <value>Có vẻ như bạn chưa đăng ký khóa học, vui lòng thử lại sau. Nếu bạn vẫn gặp lỗi, vui lòng báo cáo với quản trị viên. XIn cảm ơn.</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="Learn HTML CSS for beginners" xml:space="preserve">
+    <value>Khoá học HTML CSS cho người mới bắt đầu</value>
+  </data>
+  <data name="Lesson" xml:space="preserve">
+    <value>Bài Học</value>
+  </data>
+  <data name="lessons" xml:space="preserve">
+    <value>bài giảng</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Đang tải</value>
+  </data>
+  <data name="Locked out." xml:space="preserve">
+    <value>Bị khóa.</value>
+  </data>
+  <data name="Log in using your" xml:space="preserve">
+    <value>Đăng nhập bằng tài khoản</value>
+  </data>
+  <data name="Log off" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="Login Successfull!" xml:space="preserve">
+    <value>Đăng nhập thành công!</value>
+  </data>
+  <data name="Login with Gmail Successful!" xml:space="preserve">
+    <value>Đăng nhập bằng Gmail thành công!</value>
+  </data>
+  <data name="Logout Successful!" xml:space="preserve">
+    <value>Đăng xuất thành công!</value>
+  </data>
+  <data name="Marketing" xml:space="preserve">
+    <value>Quảng cáo</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>phút</value>
+  </data>
+  <data name="minutes total length" xml:space="preserve">
+    <value>phút</value>
+  </data>
+  <data name="missing information" xml:space="preserve">
+    <value>thiếu thông tin</value>
+  </data>
+  <data name="Momo payment failed" xml:space="preserve">
+    <value>Thanh toán Momo thất bại</value>
+  </data>
+  <data name="My Courses" xml:space="preserve">
+    <value>Khóa học của tôi</value>
+  </data>
+  <data name="My Notes" xml:space="preserve">
+    <value>Ghi chú của tôi</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Sau</value>
+  </data>
+  <data name="No course in your cart!" xml:space="preserve">
+    <value>Giỏ hàng trống!</value>
+  </data>
+  <data name="No courses found, please try again!" xml:space="preserve">
+    <value>Không khóa học nào được tìm thấy, vui lòng thử lại!</value>
+  </data>
+  <data name="No courses in your cart" xml:space="preserve">
+    <value>Không có khoá học nào trong giỏ hàng của bạn</value>
+  </data>
+  <data name="Not find note" xml:space="preserve">
+    <value>Không tìm thấy ghi chú nào</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Notify" xml:space="preserve">
+    <value>Thông báo</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>hoặc</value>
+  </data>
+  <data name="or visit" xml:space="preserve">
+    <value>hoặc đi tới</value>
+  </data>
+  <data name="Our website use cookies. By Approve, we assume your permission to deploy cookies as detailed in our Privacy Policy." xml:space="preserve">
+    <value>Trang web của chúng tôi có sử dụng cookie. Bằng việc phê duyệt, chúng tôi thừa nhận sự cho phép của bạn để triển khai cookie như được nêu chi tiết trong Chính sách quyền riêng tư của chúng tôi.</value>
+  </data>
+  <data name="Our website uses cookies" xml:space="preserve">
+    <value>Trang web của chúng tôi có sử dụng cookie</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Trang</value>
+  </data>
+  <data name="Payment Method" xml:space="preserve">
+    <value>Phương thức thanh toán</value>
+  </data>
+  <data name="Payment success!" xml:space="preserve">
+    <value>Thanh toán thành công!</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Di động</value>
+  </data>
+  <data name="Please check your email" xml:space="preserve">
+    <value>Vui lòng kiểm tra Email của bạn</value>
+  </data>
+  <data name="Please check your information and try again later." xml:space="preserve">
+    <value>Vui lòng kiểm tra thông tin của bạn và thử lại sau.</value>
+  </data>
+  <data name="Please do not comment spam or use vulgar or regionally discriminatory words, Comment once every 30 minutes" xml:space="preserve">
+    <value>Vui lòng không spam hay sử dụng các từ ngữ thô tục, phân biệt vùng miền. Bình luận 30 phút một lần.</value>
+  </data>
+  <data name="Please enter a user name for this site below and click the Register button to finish logging in" xml:space="preserve">
+    <value>Vui lòng nhập tên người dùng và nhấp nút Đăng ký để hoàn tất đăng nhập</value>
+  </data>
+  <data name="Practice projects with Figma, hundreds of exercises and challenges, 100% instruction by Son Dang, included flashcards, and more." xml:space="preserve">
+    <value />
+  </data>
+  <data name="Press Save Changes" xml:space="preserve">
+    <value>Nhấn lưu thay đổi</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Trước</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Bảo mật</value>
+  </data>
+  <data name="Pro" xml:space="preserve">
+    <value>Pro</value>
+  </data>
+  <data name="Proceed to Pay" xml:space="preserve">
+    <value>Tiếp tục thanh toán</value>
+  </data>
+  <data name="Promotion code does not exist." xml:space="preserve">
+    <value>Mã khuyến mãi không tồn tại.</value>
+  </data>
+  <data name="Promotion code has been used up." xml:space="preserve">
+    <value>Mã khuyến mãi đã được sử dụng hết.</value>
+  </data>
+  <data name="Promotion code has expired." xml:space="preserve">
+    <value>Mã khuyến mãi đã hết hạn.</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Câu hỏi</value>
+  </data>
+  <data name="ReactJS course" xml:space="preserve">
+    <value>Khoá học ReactJS</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Đăng ký</value>
+  </data>
+  <data name="Register Successful!" xml:space="preserve">
+    <value>Đăng ký tài khoản thành công!</value>
+  </data>
+  <data name="Reset Password" xml:space="preserve">
+    <value>Khôi phục mật khẩu</value>
+  </data>
+  <data name="Reset Password Successful!" xml:space="preserve">
+    <value>Khôi phục mật khẩu thành công!</value>
+  </data>
+  <data name="Save changes" xml:space="preserve">
+    <value>Lưu thay đổi </value>
+  </data>
+  <data name="Send verification code" xml:space="preserve">
+    <value>Gửi mã xác minh</value>
+  </data>
+  <data name="Sent Email Successfully" xml:space="preserve">
+    <value>Gửi Email thành công</value>
+  </data>
+  <data name="Sign In" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="Sign out" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>Đăng ký</value>
+  </data>
+  <data name="Success!" xml:space="preserve">
+    <value>Thành công!</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Hỗ trợ</value>
+  </data>
+  <data name="Terms of Use" xml:space="preserve">
+    <value>Điều khoản sử dụng</value>
+  </data>
+  <data name="The course has been purchased" xml:space="preserve">
+    <value>Khóa học đã được mua</value>
+  </data>
+  <data name="The course is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you." xml:space="preserve">
+    <value>Không tìm thấy khóa học, vui lòng thử lại sau. Nếu bạn vẫn gặp lỗi này, xin hãy báo cáo với quản trị viên để chúng tôi có thể giải quyết. Xin cảm ơn!</value>
+  </data>
+  <data name="The lesson is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you." xml:space="preserve">
+    <value>Không tìm thấy bài học, vui lòng thử lại sau. Nếu bạn vẫn gặp lỗi này, xin hãy báo cáo với quản trị viên để chúng tôi có thể giải quyết. Xin cảm ơn!</value>
+  </data>
+  <data name="There are no external authentication services configured. See" xml:space="preserve">
+    <value> Không có dịch vụ xác thực ngoài nào được cấu hình. Xem</value>
+  </data>
+  <data name="There are no two-factor authentication providers configured. See" xml:space="preserve">
+    <value>Không có nhà cung cấp xác thực hai yếu tố nào được định cấu hình. Vui lòng xem thêm</value>
+  </data>
+  <data name="This account has been locked out, please try again later." xml:space="preserve">
+    <value>Tài khoản này đã bị khóa. Vui lòng thử lai sau!</value>
+  </data>
+  <data name="this article" xml:space="preserve">
+    <value> bài viết này </value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Tổng cộng</value>
+  </data>
+  <data name="Two-Factor Authentication:" xml:space="preserve">
+    <value>Xác thực hai yếu tố:</value>
+  </data>
+  <data name="Unknown error, please contact admin to fix the error" xml:space="preserve">
+    <value>Lỗi không xác định! Vui lòng liên hệ với quản trị viên để được giúp đỡ.</value>
+  </data>
+  <data name="Unknown error, please contact admin to fix the error , Code Error :" xml:space="preserve">
+    <value>Lỗi không xác định! Vui lòng liên hệ với quản trị viên để được giúp đỡ. Mã lỗi: </value>
+  </data>
+  <data name="Unsuccessful login with service." xml:space="preserve">
+    <value>Đăng nhập bằng dịch vụ không thành công.</value>
+  </data>
+  <data name="Update Date" xml:space="preserve">
+    <value>Cập nhật ngày tháng</value>
+  </data>
+  <data name="Username and password are wrong !!!" xml:space="preserve">
+    <value>Sai tên đăng nhập hoặc mật khẩu!!!</value>
+  </data>
+  <data name="Watch Course" xml:space="preserve">
+    <value>Xem khoá học</value>
+  </data>
+  <data name="We are happy to have you back." xml:space="preserve">
+    <value>Rất vui khi thấy bạn quay lại.</value>
+  </data>
+  <data name="We have received a password reset request on our website." xml:space="preserve">
+    <value>Chúng tôi đã nhận được yêu cầu khôi phục mật khẩu từ trang web.</value>
+  </data>
+  <data name="We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you" xml:space="preserve">
+    <value>Cảnh báo! Bạn đã nhấn Quên mật khẩu quá nhiều! Vui lòng thực hiện lại sau 30 phút. Xin cảm ơn!</value>
+  </data>
+  <data name="What will you learn?" xml:space="preserve">
+    <value>Những gì bạn sẽ học?</value>
+  </data>
+  <data name="You are logging in !!!" xml:space="preserve">
+    <value>Bạn đã đăng nhập !!!</value>
+  </data>
+  <data name="You are using too many words that violate community rules" xml:space="preserve">
+    <value>Bạn đang sử dụng quá nhiều từ ngữ vi phạm quy tắc cộng đồng</value>
+  </data>
+  <data name="You do not have permission to enter here!!!" xml:space="preserve">
+    <value>Bạn không quyền truy cập trang này!!!</value>
+  </data>
+  <data name="You enter error Code or Re-password" xml:space="preserve">
+    <value>Bạn đã nhập sai mã</value>
+  </data>
+  <data name="You have not finished studying the previous lesson, please return to the previous lesson" xml:space="preserve">
+    <value>Bạn vẫn chưa hoàn thành bài học trước đó, vui lòng quay lại bài giảng trước đó.</value>
+  </data>
+  <data name="You've successfully authenticated with" xml:space="preserve">
+    <value>Bạn đã xác thực thành công với tài khoản</value>
+  </data>
+  <data name="Your application description page." xml:space="preserve">
+    <value>Trang mô tả ứng dụng của bạn.</value>
+  </data>
+  <data name="Your contact page." xml:space="preserve">
+    <value>Trang liên hệ của bạn.</value>
+  </data>
+  <data name="Your password has been reset. Please" xml:space="preserve">
+    <value>Mật khẩu của bạn đã được đặt lại. Vui lòng nhấn vào đây để đăng nhập</value>
+  </data>
+  <data name="Your password recovery code is" xml:space="preserve">
+    <value>Mã khôi phục mật khẩu của bạn là</value>
+  </data>
+  <data name="Your request could not be processed due to" xml:space="preserve">
+    <value>Yêu cầu của bạn không thể được xử lý do</value>
+  </data>
+  <data name="Your time remain is" xml:space="preserve">
+    <value>Số lần còn lại của bạn là</value>
+  </data>
+</root>

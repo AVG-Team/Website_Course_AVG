@@ -35,7 +35,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             var images = _data.images.ToList();
             var pageNumber = page ?? 1;
             var pageSize = 10;
-            
+
             var adminView = new AdminViewModels()
             {
                 Courses = courses,
@@ -252,7 +252,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
                 var view = RenderViewToString("Admin/Course", "GetCourseById", model);
                 return ResponseHelper.SuccessResponse("", view);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return ResponseHelper.ErrorResponse("");
             }

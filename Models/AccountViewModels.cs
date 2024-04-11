@@ -140,6 +140,11 @@ namespace Website_Course_AVG.Models
 
     public class verifyEmail
     {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Enter email: ")]
+        public string Email { get; set; }
+
         [Display(Name = "Enter code: ")]
         /*code just only have 10 character */
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{10}$", ErrorMessage = "Invalid Code")]
