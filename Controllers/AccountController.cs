@@ -204,7 +204,7 @@ namespace Website_Course_AVG.Controllers
                     if (UserManager.SendEmailAsync(model.Email, "Verify Email", "Your code to verify email is: ", Helpers.GenerateRandomString(10), "Register", "verifyEmail").Result)
                     {
                         Helpers.AddCookie("Notify", "Access email to verify");
-                        TempData["EmailAddress"] = model.Email;
+                        
                     }
                     //UserManager.login(model.userName);
                     return View(model);
@@ -563,25 +563,22 @@ namespace Website_Course_AVG.Controllers
             throw new System.NotImplementedException();
         }
 
-        [Website_Course_AVG.Attributes.Authorize]
         public ActionResult verifyEmail()
         {
             return View();
         }
 
         [HttpPost]
-        [Website_Course_AVG.Attributes.Authorize]
         public ActionResult verifyEmail(verifyEmail model)
         {
             UserManager userManager = new UserManager();
-            user user = Helpers.GetUserFromToken();
-
-            _context.DeferredLoadingEnabled = false;
-            int countForgotPassword = _context.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
+            user user = _context.users.Where(x => x.email == model.Email).First();
+            //_context.DeferredLoadingEnabled = false;
+            int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
 
             if (countForgotPassword > 3)
             {
-                Helpers.AddCookie("Error", "We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you");
+                Helpers.AddCookie("Error", "We noticed that you received code too many times in one day, please try again after 30 minutes, thank you");
                 return View(model);
             }
 
@@ -597,7 +594,7 @@ namespace Website_Course_AVG.Controllers
                 account account = _context.accounts.Where(x => x.id == user.account_id).FirstOrDefault();
                 userManager.login(account.username);
                 Helpers.AddCookie("Notify", "Login successfull");
-                return View(model);
+                return RedirectToAction("Index", "Home");
             }
             Helpers.AddCookie("Error", "Has Error");
             return View(model);
@@ -677,18 +674,7 @@ namespace Website_Course_AVG.Controllers
             UserManager userManager = new UserManager();
             user userFromToken = Helpers.GetUserFromToken();
             user user = _context.users.Where(x => x.email == userFromToken.email).First();
-            //if (user != null)
-            //{
-            //    Helpers.AddCookie("Error", "Has Error");
-            //    userManager.logout();
-            //    return RedirectToAction("Index", "Home");
-            //}
 
-            //if (model.Password != User && model.Password.Length != 0)
-            //{
-            //    Helpers.AddCookie("Invalid", "Invalid Password");
-            //    return View(model); 
-            //}
 
             if (model.ConfirmPassword != model.Password)
             {
