@@ -1,0 +1,139 @@
+﻿@model Website_Course_AVG.Models.contact
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section styles
+{
+    <style>
+        .input-row {
+            border: none;
+            width: 100%;
+            text-align:center;
+        }
+
+            .input-row:focus-visible {
+                outline: none;
+            }
+
+            .table-responsive.active .input-row {
+                border: 1px black solid;
+                border-radius: 5px
+            }
+    </style>
+}
+
+<div class="app-body">
+    <div class="position-relative" style="height:2rem">
+        <button class="btn btn-info btn-sm me-1 border rounded-3 btn-update position-absolute" style="right: 0">
+            <i class="bi bi-pencil"></i>
+        </button>
+    </div>
+    @using (Html.BeginForm("Update", "Contact", FormMethod.Post, new { @class = "row gx-3" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-xxl-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered m-0 text-center">
+                            <thead>
+                                <tr>
+                                    <th class="col-1">#</th>
+                                    <th class="col-3">Key</th>
+                                    <th class="col-6">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="srow" data-id="1">
+                                    <td class="item-row">1</td>
+                                    <td class="item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            Name
+                                        </span>
+                                    </td>
+                                    <td class="item-row">
+                                        <input class="d-inline-block text-truncate input-row" name="name" value="@(Model.name == null ? "" : Model.name)" readonly />
+                                    </td>
+                                </tr>
+                                <tr class="srow" data-id="2">
+                                    <td class="item-row">2</td>
+                                    <td class="item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            Email
+                                        </span>
+                                    </td>
+                                    <td class="item-row">
+                                        <input class="d-inline-block text-truncate input-row" name="email" value="@(Model.email == null ? "" : Model.email)" readonly />
+                                    </td>
+                                </tr>
+                                <tr class="srow" data-id="3">
+                                    <td class="item-row">3</td>
+                                    <td class="item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            Address
+                                        </span>
+                                    </td>
+                                    <td class="item-row">
+                                        <input class="d-inline-block text-truncate input-row" name="address" value="@(Model.address == null ? "" : Model.address)" readonly />
+                                    </td> 
+                                </tr>
+                                <tr class="srow" data-id="4">
+                                    <td class="item-row">4</td>
+                                    <td class="item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            Phone
+                                        </span>
+                                    </td>
+                                    <td class="item-row">
+                                        <input class="d-inline-block text-truncate input-row" name="phone" value="@(Model.phone == null ? "" : Model.phone)" readonly />
+                                    </td>
+                                </tr>
+                                <tr class="srow" data-id="5">
+                                    <td class="item-row">5</td>
+                                    <td class="item-row">
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            Link Facebook
+                                        </span>
+                                    </td>
+                                    <td class="item-row">
+                                        <input class="d-inline-block text-truncate input-row" name="link_facebook" value="@(Model.link_facebook == null ? "" : Model.link_facebook)" readonly />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary" type="submit">Submit Changes</button>
+            </div>
+
+            @*<div class="panel-footer">
+                    <div>
+                        Page @(Model.CoursesPagedList.PageCount < Model.CoursesPagedList.PageNumber ? 0 : Model.CoursesPagedList.PageNumber) of @Model.CoursesPagedList.PageCount
+                    </div>
+                    <div class="MenuPage">
+                        @Html.PagedListPager(Model.CoursesPagedList, page => Url.Action("Index", new { page = page }))
+                    </div>
+                </div>*@
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script>
+        $(".btn-update").click((e) => {
+            var readonly = $(".input-row").prop("readonly");
+            if (readonly) {
+                $(".input-row").prop("readonly", false);
+                var inputElement = document.querySelector(".input-row");
+                inputElement.focus();
+            } else {
+                $(".input-row").prop("readonly", true);
+            }
+        })
+    </script>
+}

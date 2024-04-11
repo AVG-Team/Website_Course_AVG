@@ -1,5 +1,6 @@
 ﻿using PagedList;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Website_Course_AVG.Controllers
     {
         private readonly MyDataDataContext _data = new MyDataDataContext();
 
-        public ActionResult Index(int? page)
+        /*public ActionResult Index(int? page)
         {
             ViewBag.page = page;
             PopulateDropList();
@@ -28,12 +29,51 @@ namespace Website_Course_AVG.Controllers
                     .Include(m => m.category)
                     .Where(m => m.deleted_at == null)
                           select c;
+
             var category = _data.categories.ToList();
             ViewBag.Categories = category;
             int pageNumber = (page ?? 1);
             var list = courses.ToPagedList(pageNumber, 12);
             return View(list);
+        }*/
+        public ActionResult Index(int? page)
+        {
+            ViewBag.page = page;
+            PopulateDropList();
+            if (page == null)
+            {
+                page = 1;
+            }
+
+            var courses = from c in _data.courses
+                            .Include(m => m.category)
+                            .Where(m => m.deleted_at == null)
+                          select c;
+
+            var category = _data.categories.ToList();
+            ViewBag.Categories = category;
+            int pageNumber = (page ?? 1);
+
+            // Lấy danh sách mã code của ảnh từ các course
+            var imageCodes = courses.Select(c => c.image_code).Distinct().ToList();
+
+            // Truy vấn ảnh từ bảng images dựa trên mã code
+            var images = _data.images.Where(i => imageCodes.Contains(i.code) && i.category == false).ToList();
+
+            // Nạp thông tin ảnh vào mỗi đối tượng course
+            foreach (var course in courses)
+            {
+                var image = images.FirstOrDefault(i => i.code == course.image_code);
+                // Kiểm tra xem có ảnh tương ứng không trước khi gán
+                if (image != null)
+                {
+                    course.image_code = image.image1; // Giả sử image1 là cột chứa đường dẫn ảnh
+                }
+            }
+            var list = courses.ToPagedList(pageNumber, 12);
+            return View(list);
         }
+
         // GET: Courses
         public JsonResult GetCourse(int? page, int? categoryId, int? index)
         {
@@ -101,7 +141,7 @@ namespace Website_Course_AVG.Controllers
                 return HttpNotFound();
             else
             {
-                var imageCode = "";
+                /*var imageCode = "";
                 var course = _data.courses.Where(c => c.id == id).ToList();
                 foreach (var item in course)
                 {
@@ -110,10 +150,17 @@ namespace Website_Course_AVG.Controllers
 
                 var images = _data.images.Where(i => i.code.Equals(imageCode)).ToList();
                 var lessons = _data.lessons.Where(l => l.course_id == id).ToList();
+                var detailCourses = _data.detail_courses.Where(d => d.course_id == id).ToList();*/
+                var course = _data.courses.FirstOrDefault(c => c.id == id);
+                if (course == null)
+                    return HttpNotFound();
+
+                var images = _data.images.Where(i => i.code.Equals(course.image_code) && i.category == true).ToList();
+                var lessons = _data.lessons.Where(l => l.course_id == id).ToList();
                 var detailCourses = _data.detail_courses.Where(d => d.course_id == id).ToList();
                 var viewModel = new CoursesViewModel()
                 {
-                    Courses = course,
+                    Courses = new List<course>() { course },
                     Images = images,
                     Lessons = lessons,
                     DetailCourses = detailCourses
@@ -161,5 +208,7 @@ namespace Website_Course_AVG.Controllers
             return courses;
         }
 
+
+      
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace Website_Course_AVG.Models
 {
@@ -134,5 +136,44 @@ namespace Website_Course_AVG.Models
 
         public string RedirectURL { get; set; }
         public string UrlWebsite { get; set; }
+    }
+
+    public class verifyEmail
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Enter email: ")]
+        public string Email { get; set; }
+
+        [Display(Name = "Enter code: ")]
+        /*code just only have 10 character */
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{10}$", ErrorMessage = "Invalid Code")]
+        public string code { get; set; }
+    }
+
+    public class ProfieUser
+    {
+
+        [RegularExpression(@"^.{6,30}$", ErrorMessage = "Must contain at least 6 characters and at least one character.")]
+        public string fullName { get; set; }
+
+        [EmailAddress]
+        public string email { get; set; }
+
+        [RegularExpression(@"^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[0-2])/\d{4}$", ErrorMessage = "Invalid, dd/mm/yyyy")]
+        public DateTime? birthday { get; set; }
+
+
+        public String gender { get; set; }
+
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 }

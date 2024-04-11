@@ -11,6 +11,8 @@ using System.IO;
 using System.Web.Routing;
 using Website_Course_AVG.Controllers;
 using System.Configuration;
+using Octokit;
+using System.Web.Helpers;
 
 namespace Website_Course_AVG.Managers
 {
@@ -173,9 +175,7 @@ namespace Website_Course_AVG.Managers
                 return false;
             }
 
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            return BCrypt.Net.BCrypt.Verify(hashedPassword, account.password);
+            return BCrypt.Net.BCrypt.Verify(password, account.password);
         }
 
 
@@ -195,10 +195,13 @@ namespace Website_Course_AVG.Managers
 
             }
         }
-        public async Task<bool> SendEmailAsync(string toEmail, string subject, string message, string messageLast)
+        public async Task<bool> SendEmailAsync(string toEmail, string subject, string message, string messageLast, string fromModel, string toModel)
         {
-            string ourMail = ConfigurationManager.AppSettings["OurMail"];
-            string password = ConfigurationManager.AppSettings["Password"];
+            string ourMail = Helpers.GetValueFromAppSetting("OurMail");
+            string password = Helpers.GetValueFromAppSetting("Password");
+
+            if (ourMail == null || password == null)
+                return false;
 
             user user = _data.users.Where(x => x.email == toEmail).FirstOrDefault();
             if (user == null)
@@ -226,7 +229,7 @@ namespace Website_Course_AVG.Managers
             emailConfirmation.Code = messageLast;
             string currentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
             string urlWebsite = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-            emailConfirmation.RedirectURL = currentUrl.Replace("ForgotPassword", "ResetPassword");
+            emailConfirmation.RedirectURL = currentUrl.Replace(fromModel, toModel);
             emailConfirmation.UrlWebsite = urlWebsite;
             emailConfirmation.Name = user.fullname;
 
@@ -289,5 +292,6 @@ namespace Website_Course_AVG.Managers
             }
 
         }
+
     }
 }

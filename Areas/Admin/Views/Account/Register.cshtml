@@ -1,0 +1,128 @@
+﻿@model Website_Course_AVG.Models.RegisterViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AVG COURSE ADMIN</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Marketplace for Bootstrap Admin Dashboards" />
+    <meta name="author" content="Bootstrap Gallery" />
+    <link rel="canonical" href="https://www.bootstrap.gallery/">
+    <meta property="og:url" content="https://www.bootstrap.gallery">
+    <meta property="og:title" content="Admin Templates - Dashboard Templates | Bootstrap Gallery">
+    <meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
+    <meta property="og:type" content="Website">
+    <meta property="og:site_name" content="Bootstrap Gallery">
+    <link rel="shortcut icon" href="assets/images/favicon.svg" />
+
+    <!-- *************
+        ************ CSS Files *************
+    ************* -->
+    @Styles.Render("~/Content/css/bootstrap.css")
+    @Styles.Render("~/Content/main.min.css")
+    @Styles.Render("~/Content/css/toastr.css")
+</head>
+
+<!-- Container start -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-4 col-lg-5 col-sm-6 col-12">
+            <div class="border rounded-2 p-4 mt-1 shadow-lg mb-4">
+                <div class="login-form">
+                    <a href="#" class="mb-4 d-flex">
+                        <img src="~/Content/img/logo/AVG_admin.png" class="img-fluid login-logo" alt="Earth Admin Dashboard" />
+                    </a>
+                    <h5 class="fw-light mb-5">Create your admin account.</h5>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="mb-2">
+                            <div class="mb-1">
+                                <label class="form-label">Username</label>
+                                @Html.TextBoxFor(m => m.userName, new { @class = "form-control form-control-lg bg-light fs-6  rounded-end", placeholder = "UserName" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger ms-3" })
+                        </div>
+                        <div class="mb-2">
+                            <div class="mb-1">
+                                <label class="form-label">Email</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg bg-light fs-6  rounded-end", placeholder = "Email Address" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Email,"",new { @class = "text-danger ms-3"})
+                        </div>
+                        <div class="mb-2">
+                            <div class="mb-1">
+                                <label class="form-label">Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end ", placeholder = "Password" })
+                                <span id="firstEyeSpan" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
+                                    <i class="fa fa-eye-slash" id="firstEyeIcon"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger ms-3" })
+                        </div>
+                        <div class="mb-2">
+                            <div class="mb-1">
+                                <label class="form-label">Confirm Passwords</label>
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @id = "RepasswordField", style = "z-index: 1;", @class = "form-control form-control-lg bg-light fs-6 rounded-end", placeholder = "Repassword" })
+                                <span id="firstEyeSpan" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
+                                    <i class="fa fa-eye-slash" id="firstEyeIcon"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger ms-3" })
+                        </div>
+                        <div class="d-grid col-12 mx-auto mb-4 mt-2 d-flex justify-content-center">
+                            <button class="btn btn-lg btn-primary rounded-3 " type="submit"><span></span> Sign up</button>
+                        </div>
+                        <div class="row">
+                            <small>Do you have account? <a href="@Url.Action("Login", "Account")">Sign In</a></small>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Scripts/toastr.js")
+
+<script>
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var cookieNotify = getCookie('Notify');
+        if (cookieNotify !== "") {
+            toastr.success(cookieNotify, 'Notify')
+            console.log("ll")
+        }
+        var cookieError = getCookie('Error');
+        if (cookieError !== "") {
+            toastr.error(cookieError, 'Error')
+
+        }
+    })
+</script>
+</body>
+
+</html>
+
+
+

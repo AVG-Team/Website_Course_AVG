@@ -1,0 +1,166 @@
+﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@{
+    ViewBag.Title = "Insert Lesson";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-body">
+    <div id="form" class="card mb-3">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10">
+                        <h5 class="card-title">Insert Lesson</h5>
+                    </div>
+                    <div class="col-2 float-end">
+                        <a href=@Url.Action("Index", "Lesson") type="button" class="btn btn-outline-info btn-insert float-end">
+                            <i class="bi bi-arrow-left-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row gx-3">
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="Lesson.title" class="form-control" placeholder="Title" />
+                                    @Html.ValidationMessageFor(m => m.Lesson.title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" name="Lesson.description" class="form-control" placeholder="Description" />
+                                    @Html.ValidationMessageFor(m => m.Lesson.description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Index</label>
+                                    <input text="text" name="Lesson.index" class="form-control" placeholder="Index" />
+                                    @Html.ValidationMessageFor(m => m.Lesson.index, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Video</label>
+                                    <input text="text" name="Lesson.video_id" class="form-control" placeholder="video id" />
+                                    @Html.ValidationMessageFor(m => m.Lesson.video_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <label class="form-label">Video</label>
+                                <div class="m-0">
+                                    <button type="button" class="btn btn-primary ms-1 border rounded-3" id="btn-video-modal">
+                                        Upload video
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Select Course </label>
+                                    <select class="form-select" aria-label="Default select example" name="Lesson.course_id">
+                                        <option selected="">Open this select menu</option>
+                                        @foreach (var item in Model.Courses)
+                                        {
+                                            <option value=@item.id>@item.title</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="VideoModal" tabindex="-1" aria-labelledby="VideoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-success" id="VideoModalLabel">List Videos of Lesson</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                @foreach (var item in Model.Videos){
+                                    <div class="col-md-4 col-sm-12 mb-3 item-video" style="cursor:pointer;">
+                                        <div class="card card-video">
+                                            <div class="card-body d-flex justify-content-center">
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <video class="embed-responsive-item" controls>
+                                                        <source src="@item.link" type="video/mp4">
+                                                    </video>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <h5 class="text-black-75">@item.name</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger btn-submit-delete">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    @*<button type="button" class="btn btn-outline-secondary">Cancel</button>*@
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section styles
+{
+    <style>
+        .card-video:hover{
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $("#btn-video-modal").click(function () {
+            $('#VideoModal').modal('show');
+        });
+        $(document).ready(function () {
+           
+        });
+    </script>
+}
+```

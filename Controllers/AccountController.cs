@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Newtonsoft.Json.Linq;
+using MimeKit;
 using Octokit;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,15 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Razor.Tokenizer.Symbols;
 using System.Web.Services.Description;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 using System.Runtime.Caching;
+using System.Xml.Linq;
+using System.Text.RegularExpressions;
 using Website_Course_AVG.Managers;
 
 namespace Website_Course_AVG.Controllers
@@ -94,7 +98,7 @@ namespace Website_Course_AVG.Controllers
 
                 if (account == null)
                 {
-                    Helpers.AddCookie("Error", ResourceHelper.GetResource("Username and password are wrong !!!"));
+                    Helpers.AddCookie("Error", "username and password are wrong !!!");
                     return View(model);
                 }
 
@@ -105,7 +109,7 @@ namespace Website_Course_AVG.Controllers
                     user user = account.users.FirstOrDefault();
                     if (user == null)
                     {
-                        Helpers.AddCookie("Error", ResourceHelper.GetResource("Username and password are wrong !!!"));
+                        Helpers.AddCookie("Error", "username and password are wrong !!!");
                         return View(model);
                     }
 
@@ -197,10 +201,14 @@ namespace Website_Course_AVG.Controllers
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    Helpers.AddCookie("Notify", ResourceHelper.GetResource("Register Successful!"));
-                    UserManager.login(model.userName);
-                    return RedirectToAction("Index", "Home");
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");					
+                    if (UserManager.SendEmailAsync(model.Email, "Verify Email", "Your code to verify email is: ", Helpers.GenerateRandomString(10), "Register", "verifyEmail").Result)
+                    {
+                        Helpers.AddCookie("Notify", "Access email to verify");
+                        
+                    }
+                    //UserManager.login(model.userName);
+                    return View(model);
                 }
                 AddErrors(result);
             }
@@ -260,7 +268,7 @@ namespace Website_Course_AVG.Controllers
             String messageLast = Helpers.GenerateRandomString(10);
             if (!userManager.IsAuthenticated())
             {
-                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast) == false)
+                if (await userManager.SendEmailAsync(forgotPassword.Email, subject, messageHead + messageLast, messageLast, "ForgotPassword", "ResetPassword") == false)
                 {
                     return View();
                 }
@@ -446,26 +454,6 @@ namespace Website_Course_AVG.Controllers
             return View();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
-
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -575,6 +563,43 @@ namespace Website_Course_AVG.Controllers
             throw new System.NotImplementedException();
         }
 
+        public ActionResult verifyEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult verifyEmail(verifyEmail model)
+        {
+            UserManager userManager = new UserManager();
+            user user = _context.users.Where(x => x.email == model.Email).First();
+            //_context.DeferredLoadingEnabled = false;
+            int countForgotPassword = user.forgot_passwords.Where(x => x.created_at >= DateTime.Now.AddMinutes(-30)).Count();
+
+            if (countForgotPassword > 3)
+            {
+                Helpers.AddCookie("Error", "We noticed that you received code too many times in one day, please try again after 30 minutes, thank you");
+                return View(model);
+            }
+
+            forgot_password _forgot = _context.forgot_passwords.Where(x => x.code == model.code).FirstOrDefault();
+            if (_forgot == null)
+            {
+                Helpers.AddCookie("Error", "You entered wrong code!!!");
+                return View(model);
+            }
+            if (!userManager.IsAuthenticated())
+            {
+                Helpers.AddCookie("Notify", "Check Email successfull");
+                account account = _context.accounts.Where(x => x.id == user.account_id).FirstOrDefault();
+                userManager.login(account.username);
+                Helpers.AddCookie("Notify", "Login successfull");
+                return RedirectToAction("Index", "Home");
+            }
+            Helpers.AddCookie("Error", "Has Error");
+            return View(model);
+        }
+
         private string RemoveChar(string text)
         {
             string word = text.Normalize(NormalizationForm.FormD);
@@ -624,6 +649,98 @@ namespace Website_Course_AVG.Controllers
             MemoryCache.Default.Add("cachedData_" + keywordWithoutDiacritics, suggestions, DateTimeOffset.Now.AddMinutes(10));
 
             return Json(suggestions, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult ProfieUser()
+        {
+            user user = Helpers.GetUserFromToken();
+            ProfieUser model = new ProfieUser()
+            {
+                gender = user.gender == true ? "female" : " male",
+                birthday = user.birthday,
+                fullName = user.fullname,
+                Password = "",
+                ConfirmPassword = "",
+                email = user.email
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Website_Course_AVG.Attributes.User]
+        public ActionResult ProfieUser(ProfieUser model)
+        {
+            UserManager userManager = new UserManager();
+            user userFromToken = Helpers.GetUserFromToken();
+            user user = _context.users.Where(x => x.email == userFromToken.email).First();
+
+
+            if (model.ConfirmPassword != model.Password)
+            {
+                Helpers.AddCookie("invalid", "Confirm Password is not equal Password");
+                return View(model);
+            }
+
+            if (model.birthday >= DateTime.Now)
+            {
+                Helpers.AddCookie("Error", "Your birthday must smaller nowaday!!");
+                return View(model);
+            }
+
+            user.fullname = model.fullName;
+            if (!Regex.IsMatch(model.fullName, @"^.{6,30}$"))
+            {
+                Helpers.AddCookie("Error", "Your email is not valid!!");
+                return View(model);
+            }
+            user.account.username = model.fullName;
+            user.birthday = model.birthday;
+            user.gender = model.gender == "Male" ? false : true;
+            bool isChange = false;
+
+            if (model.Password.Length > 0)
+            {
+                //VALIDATE
+                if (Regex.IsMatch(model.Password.ToString(), @"^.{6,30}$"))
+                {
+                    user.account.password = BCrypt.Net.BCrypt.HashPassword(model.Password);
+                    isChange = true;
+                }
+            }
+
+            _context.SubmitChanges();
+            if (isChange)
+            {
+                userManager.logout();
+                Helpers.AddCookie("Notify", "Logout Successful", 5);
+                return RedirectToAction("Index", "Home");
+            }
+
+            Helpers.AddCookie("Error", "Has Error", 5);
+            return View(model);
+        }
+
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+
+                if (_signInManager != null)
+                {
+                    _signInManager.Dispose();
+                    _signInManager = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

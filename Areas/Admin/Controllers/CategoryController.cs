@@ -13,6 +13,12 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly MyDataDataContext _data = new MyDataDataContext();
+
+        public CategoryController()
+        {
+            ViewBag.controller = "Category";
+        }
+
         public ActionResult Index(int? page)
         {
             var categories = _data.categories.ToList();
@@ -20,7 +26,6 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 10;
             var categoriesListPage = categories.ToPagedList(pageNumber, pageSize);
-
             var viewModel = new AdminViewModels()
             {
                 Categories = categories,
@@ -51,7 +56,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
                 var category = new category()
                 {
                     name = model.Category.name,
-                    created_at = DateTime.Now
+                    created_at = DateTime.Now,
+                    updated_at = DateTime.Now
                 };
                 _data.categories.InsertOnSubmit(category);
                 _data.SubmitChanges();
@@ -91,24 +97,16 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View("Index");
         }
         [HttpPost]
-        public JsonResult Delete(category model)
+        public ActionResult Delete(category model)
         {
-            try
+            var category = _data.categories.FirstOrDefault(c => c.id == model.id);
+            if (category != null)
             {
-                var category = _data.categories.FirstOrDefault(c => c.id == model.id);
-                if (category != null)
-                {
-                    category.deleted_at = DateTime.Now;
-                    _data.SubmitChanges();
-                }
-                var categories = _data.categories.ToList();
-                var view = RenderViewToString("Admin", "Category", categories);
-                return ResponseHelper.SuccessResponse("", view);
+                category.deleted_at = DateTime.Now;
+                _data.SubmitChanges();
+                return RedirectToAction("Index");
             }
-            catch (Exception ex)
-            {
-                return ResponseHelper.ErrorResponse("Don't delete category !");
-            }
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public JsonResult GetCategoryById(int? id)

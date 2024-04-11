@@ -121,7 +121,7 @@ namespace Website_Course_AVG.Managers
         {
             if (exercise == null)
             {
-                throw new ArgumentNullException(nameof(video));
+                throw new ArgumentNullException(nameof(exercise));
             }
 
             string url = GetSignedUrl(exercise, fileJson, seconds);

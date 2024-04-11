@@ -1,0 +1,110 @@
+﻿@model Website_Course_AVG.Areas.Admin.Data.ViewModels.AdminViewModels
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-body">
+    <div id="form" class="card mb-3">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header">
+                <h5 class="card-title">Update Order</h5>
+            </div>
+            <div class="card-body">
+                <div class="row gx-3">
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <label class="form-label">Code Order</label>
+                                <div class="input-group">
+                                    <input type="text" name="Order.code_order" class="form-control" style="background-color: lightgray" placeholder="Code Order" value="@Model.Order.code_order" readonly/>
+                                    @Html.ValidationMessage(@Model.Order.code_order, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <label class="form-label">Username</label>
+                                <div class="input-group">
+                                    <input type="text" name="Oder.user.fullname" class="form-control" style="background-color: lightgray" placeholder="Fullname" value="@Model.Order.user.fullname" readonly/>
+                                    @Html.ValidationMessage(@Model.Order.user.fullname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Type Payment</label>
+                                    <input text="text" name="Order.type_payment" class="form-control" style="background-color: lightgray" placeholder="Type Payment" value="@Model.Order.type_payment" readonly/>
+                                    @Html.ValidationMessage(@Model.Order.type_payment, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <label class="form-label">Total</label>
+                                <div class="input-group">
+                                    <input type="text" name="Order.total" class="form-control" style="background-color: lightgray" placeholder="Total Price (VND)" value="@Model.Order.total" readonly/>
+                                    <span class="input-group-text">VND</span>
+                                    @Html.ValidationMessage(@Model.Order.total.ToString(), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <label class="form-label">Promotion</label>
+                                <div class="input-group">
+                                    @if (Model.Order.promotion_id == null)
+                                    {
+                                        <input type="text" name="Order.promotion.code_promotion" class="form-control" style="background-color:lightgray;" placeholder="No Promotion" readonly/>
+                                    }
+                                    else
+                                    {
+                                        <input type="text" name="Oder.promotion.code_promotion" class="form-control" style="background-color: lightgray" placeholder="Promotion" value="@Model.Order.promotion.code_promotion" readonly/>
+                                        @Html.ValidationMessage(@Model.Order.promotion.code_promotion, "", new { @class = "text-danger" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="m-0">
+                                    <label class="form-label">Status</label>
+                                    <input type="text" name="Order.status" class="form-control" placeholder="Status ( 1 - On , 2 - OFF ) " value="@Model.Order.status"/>
+                                    @Html.ValidationMessage(@Model.Order.status.ToString(), "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btn-cancel').click(function () {
+                window.location.href = '/Admin/Order';
+            })
+        })
+    </script>
+}

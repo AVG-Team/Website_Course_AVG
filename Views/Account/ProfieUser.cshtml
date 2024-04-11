@@ -1,0 +1,195 @@
+﻿@using Website_Course_AVG.Models
+@model ProfieUser
+@{
+    ViewBag.Title = "Profie";
+}
+<style>
+    .jVzlaU {
+        border: 0px;
+        outline: 0px;
+        cursor: pointer;
+        color: rgb(60, 66, 87);
+        background-color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(60, 66, 87, 0.08) 0px 2px 5px 0px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 5px 16px;
+        display: inline-block;
+        min-height: 28px;
+        transition: background-color 0.24s ease 0s, box-shadow 0.24s ease 0s;
+    }
+</style>
+<main aria-labelledby="title">
+    <!----------------------- Main Container -------------------------->
+    <div class="container mt-130 d-flex justify-content-center align-items-center min-h-100">
+        <!----------------------- Login Container -------------------------->
+        <div class="row border rounded-5 p-3 bg-white shadow box-area" style="width: 930px;">
+            <!--------------------------- Left Box ----------------------------->
+            <div class="col-md-4 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #103cbe;">
+                <div class="featured-image mb-3">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                         alt="Avatar" class="img-fluid my-5" style="width: 100px;" />
+                </div>
+
+                <h5 class="">Marie Horwitz</h5>
+                <p class="fw-bold" style="color: #ffff">User</p>
+
+            </div>
+            <!-------------------- ------ Right Box ---------------------------->
+
+            <div class="col-md-8 ">
+                <div class="right-box" style="padding: 20px 15px 20px 20px;">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h4 class="m-0" style="color: black">Information</h4>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <button type="button" class="jVzlaU" id="jVzlaU">Edit</button>
+                        </div>
+                        <hr class="mt-3 mb-4" style="border-color: black;">
+
+                        <section>
+                            @using (Html.BeginForm("ProfieUser", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group mb-3">
+                                    <h6 style="color: black">Email</h6>
+                                    <p class="text-muted" style="color: black">@Model.email</p>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.email, new { @class = "form-control", style = "display: none;", placeholder = "Enter your email", @readonly = "readonly" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <h6 style="color: black">Full Name</h6>
+                                    <p class="text-muted" style="color: black">@Model.fullName</p>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.fullName, new { @class = "form-control", style = "display: none;", placeholder = "Enter your fullname" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.fullName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <h6 style="color: black">Password</h6>
+                                            <p class="text-muted" style="color: black">******</p>
+                                            <div class="input-group">
+                                                @Html.PasswordFor(m => m.Password, new { @id = "passwordField", style = "display: none;", @class = "form-control ", placeholder = "Enter your password" })
+                                                <span id="firstEyeSpan" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100 " style="z-index: 2; background-color: transparent ">
+                                                    <i class="fa fa-eye-slash" id="firstEyeIcon"></i>
+                                                </span>
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <!-- Form Group (last name)-->
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <h6 id="h6_confirm" style="color: black; display: none;">Corfirm Password</h6>
+                                            <p class="text-muted" style="color: black"></p>
+                                            <div class="input-group">
+                                                @Html.PasswordFor(m => m.ConfirmPassword, new { @id = "ConfirmpasswordField", @class = "form-control", style = "display: none;", placeholder = "Enter your password" })
+                                                <span id="secondEyeSpan" class="visually-hidden input-group-text border-0 position-absolute end-0 h-100" style="z-index:2; background-color: transparent">
+                                                    <i class="fa fa-eye-slash" id="secondEyeIcon"></i>
+                                                </span>
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6 style="color: black">Gender</h6>
+                                        <p class="text-muted" style="color: black">@Model.gender</p>
+
+                                        @Html.DropDownListFor(m => m.gender, new SelectList(new[]
+                                        {
+                                                new SelectListItem { Value = "0", Text = "Male" },
+                                                new SelectListItem { Value = "1", Text = "Female" },
+
+                                            }, "Value", "Text"), new { @class = "form-control", @id = "genderDropdown", style = "display: none;" })
+
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6 style="color: black">BirthDay</h6>
+                                        <p class="text-muted" style="color: black">@Model.birthday.ToString()</p>
+                                        @Html.TextBoxFor(m => m.birthday, new { @class = "form-control ", style = "display: none;", placeholder = "Enter your birthday" })
+                                    </div>
+
+                                    <!-- Form Group (location)-->
+                                    @*<div class="col-md-6">
+                                        <label class="small mb-1" for="inputLocation">Birth Day</label>
+
+                                        @Html.TextBoxFor(m => m.birthday, new { @id = "inputBirthDay", @class = "form-control", placeholder = "Enter your birth day", Value = currentUser.birthday })
+                                    </div>
+                                    <div class="row col-md-6 align-items-center">
+                                        <button type="submit" class="jVzlaU" style="display: none;" id="btnsubmit">Submit</button>
+                                    </div>*@
+
+                                    <!-- Save changes button-->
+                                    <button class="btn btn-primary" type="submit">Save changes</button>
+
+                                    </div>
+                                    
+                                 }
+                          </section>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    @section Scripts
+{
+        <script>
+            // Function to toggle visibility of elements
+            function toggleVisibility() {
+                // Select all <p> elements inside the right box
+                var paragraphs = document.querySelectorAll('.right-box p.text-muted');
+
+                // Select all <input> elements inside the right box
+                var inputs = document.querySelectorAll('.right-box input[type="text"]');
+
+                // Select h6 for Confirm Password
+                var h6Confirm = document.getElementById('h6_confirm');
+
+                var passwordField = document.getElementById('passwordField');
+                var ConfirmpasswordField = document.getElementById('ConfirmpasswordField');
+
+                var buttonSave = document.getElementById('btnsubmit');
+
+                // Toggle visibility of <p> elements
+                paragraphs.forEach(function (p) {
+                    p.style.display = p.style.display === 'none' ? 'block' : 'none';
+                });
+
+                // Toggle visibility of <input> elements
+                inputs.forEach(function (input) {
+                    input.style.display = input.style.display === 'none' ? 'block' : 'none';
+                });
+
+                // Toggle visibility of h6 for Confirm Password
+                h6Confirm.style.display = h6Confirm.style.display === 'none' ? 'block' : 'none';
+                passwordField.style.display = passwordField.style.display === 'none' ? 'block' : 'none';
+                ConfirmpasswordField.style.display = ConfirmpasswordField.style.display === 'none' ? 'block' : 'none';
+                buttonSave.style.display = buttonSave.style.display === 'none' ? 'block' : 'none';
+                // Toggle visibility of dropdown
+                var dropdown = document.getElementById('genderDropdown');
+                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            }
+
+            //// Add click event listener to the button
+            document.getElementById('jVzlaU').addEventListener('click', toggleVisibility);
+        </script>
+
+
+
+    }

@@ -1,0 +1,75 @@
+﻿@model Website_Course_AVG.Models.verifyEmail
+@{
+    ViewBag.Title = "verify code";
+}
+
+<main aria-labelledby="title">
+    <div class="container d-inline mt-180 min-vh-100">
+        @using (Html.BeginForm("verifyEmail", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="row d-flex justify-content-center">
+
+                <div class="col-md-2 mb-3">
+                    <label class="fs-4 fw-bold d-flex justify-content-end" style="font-family: Arial, sans-serif;">
+                        @Html.DisplayNameFor(m => m.Email)
+                    </label>
+                </div>
+                <div class="col-md-4 mb-3">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-2 mb-3">
+                    <label class="fs-4 fw-bold d-flex justify-content-end" style="font-family: Arial, sans-serif;">
+                        @Html.DisplayNameFor(m => m.code)
+                    </label>
+                </div>
+                <div class="col-md-4 mb-3">
+                    @Html.TextBoxFor(m => m.code, new { @class = "form-control", })
+                    @Html.ValidationMessageFor(m => m.code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="row d-flex justify-content-center">
+                <div class=" col-md-10 d-flex justify-content-center">
+                    <input id="emailLinkBtn" type="submit" class="btn btn-outline-dark" value="Verify" />
+                </div>
+            </div>
+        }
+    </div>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        var lastClickTime = 0;
+
+        var clickInterval = 1 * 60 * 1000;
+
+
+        document.getElementById("emailLinkBtn").addEventListener("click", function (event) {
+
+            var currentTime = new Date().getTime();
+
+
+            if (currentTime - lastClickTime < clickInterval) {
+
+                event.preventDefault();
+
+
+                alert("Your time remain is " + Math.ceil((clickInterval - (currentTime - lastClickTime)) / 60000) + " be sent again");
+            } else {
+
+                lastClickTime = currentTime;
+            }
+        });
+    </script>
+}
