@@ -90,6 +90,7 @@ namespace Website_Course_AVG.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult SetLessonLearnedId(int courseId, int lessonId)
         {
             try

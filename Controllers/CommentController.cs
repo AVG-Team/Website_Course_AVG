@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Website_Course_AVG.Attributes;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
@@ -16,6 +17,7 @@ namespace Website_Course_AVG.Controllers
         MyDataDataContext _data = new MyDataDataContext();
 
         // GET: Comment
+        [Website_Course_AVG.Attributes.Authorize]
         public ActionResult Index(int lessonId)
         {
             try
@@ -35,6 +37,7 @@ namespace Website_Course_AVG.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult Create(int lessonId, string content)
         {
             string fileJson = Server.MapPath("~/bad_words.json");
@@ -53,27 +56,27 @@ namespace Website_Course_AVG.Controllers
                 if (commentTmp != null && user.role != 2)
                 {
                     DateTime created_at = commentTmp.created_at ?? DateTime.Now;
-                    if(DateTime.Now < created_at.AddMinutes(30) )
+                    if (DateTime.Now < created_at.AddMinutes(30))
                     {
                         return ResponseHelper.ErrorResponse("After 30 minutes you will be able to comment again");
                     }
                 }
-                    comment.content = content;
-                    comment.lesson_id = lessonId;
-                    comment.user_id = user.id;
-                    comment.type = 0;
-                    comment.created_at = DateTime.Now;
-                    comment.updated_at = DateTime.Now;
-                    if(user.role == 2)
-                    {
-                        comment.type = 1;
-                    }
+                comment.content = content;
+                comment.lesson_id = lessonId;
+                comment.user_id = user.id;
+                comment.type = 0;
+                comment.created_at = DateTime.Now;
+                comment.updated_at = DateTime.Now;
+                if (user.role == 2)
+                {
+                    comment.type = 1;
+                }
 
-                    _data.comments.InsertOnSubmit(comment);
+                _data.comments.InsertOnSubmit(comment);
 
                 _data.SubmitChanges();
 
-                
+
                 return ResponseHelper.SuccessResponse("Add Comment Successful", new
                 {
                     id = comment.id,
@@ -92,6 +95,7 @@ namespace Website_Course_AVG.Controllers
         }
 
         [HttpDelete]
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult Delete(int id)
         {
             using (MyDataDataContext _data = new MyDataDataContext())

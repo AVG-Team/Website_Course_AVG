@@ -11,6 +11,7 @@ namespace Website_Course_AVG.Controllers
     public class ExerciseController : Controller
     {
         // GET: Exercise
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult GetExercise(int lessonId)
         {
             try
@@ -27,7 +28,8 @@ namespace Website_Course_AVG.Controllers
                 string url = Helpers.GetExerciseUrl(exercise, fileJson);
 
                 return ResponseHelper.SuccessResponse("Get Exercise Successful", url);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 string errorMessage = ex.Message;
                 return ResponseHelper.ErrorResponse(errorMessage);

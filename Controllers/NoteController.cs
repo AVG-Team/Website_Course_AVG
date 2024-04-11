@@ -16,6 +16,7 @@ namespace Website_Course_AVG.Controllers
     {
         MyDataDataContext _data = new MyDataDataContext();
         // GET: Note
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult Index(int lessonId)
         {
             try
@@ -23,7 +24,7 @@ namespace Website_Course_AVG.Controllers
                 user user = Helpers.GetUserFromToken();
                 List<note> notes = _data.notes.Where(x => x.lesson_id == lessonId && x.user_id == user.id).OrderBy(x => x.time).ToList();
 
-                string view = RenderViewToString("Note","notes", notes);
+                string view = RenderViewToString("Note", "notes", notes);
                 return ResponseHelper.SuccessResponse("", view);
             }
             catch (Exception ex)
@@ -35,6 +36,7 @@ namespace Website_Course_AVG.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult Create(int lessonId, string content, int time)
         {
             try
@@ -48,7 +50,8 @@ namespace Website_Course_AVG.Controllers
                     note.content = content;
                     note.time = time;
                     note.updated_at = DateTime.Now;
-                } else
+                }
+                else
                 {
                     note.lesson_id = lessonId;
                     note.user_id = user.id;
@@ -72,6 +75,7 @@ namespace Website_Course_AVG.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult Edit(int id, string content)
         {
             try
@@ -100,6 +104,7 @@ namespace Website_Course_AVG.Controllers
         }
 
         [HttpDelete]
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult Delete(int id)
         {
             using (MyDataDataContext _data = new MyDataDataContext())

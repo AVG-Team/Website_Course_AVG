@@ -15,7 +15,7 @@ namespace Website_Course_AVG.Controllers
         private readonly MyDataDataContext _data = new MyDataDataContext();
         public ActionResult Index()
         {
-            var categories = _data.categories.ToList(); 
+            var categories = _data.categories.ToList();
 
             List<CategoryCourseViewModels> categoryViewModels = new List<CategoryCourseViewModels>();
 
@@ -59,7 +59,7 @@ namespace Website_Course_AVG.Controllers
         [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult Report(ReportViewModel model)
         {
-            if(model.Phone.Length > 10)
+            if (model.Phone.Length > 10)
             {
                 Helpers.AddCookie("Error", "Phone Input Error, Length <= 10");
                 return RedirectToAction("Contact");
@@ -97,7 +97,8 @@ namespace Website_Course_AVG.Controllers
                     Helpers.AddCookie("Notify", "Thank you, Report has been sent");
                     return RedirectToAction("Index", "Home");
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Helpers.AddCookie("Error", "Error Unknown, Please Try Again!!!");
                 return RedirectToAction("Index", "Home");
