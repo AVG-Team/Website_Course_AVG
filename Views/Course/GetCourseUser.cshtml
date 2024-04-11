@@ -1,0 +1,94 @@
+﻿@model List<Website_Course_AVG.Models.CourseUserViewModel>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "GetCourseUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="container pt-lg-100 pt-md-60 pt-sm-110 pt-sx-110 " aria-labelledby="title">
+    <div class="row">
+        <div class="title">
+            <h2>My Course</h2>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div id="courses" class="row d-flex">
+            <div class="row list-course d-flex">
+                @foreach (var item in Model)
+                {
+                    <section class="col-lg-3 ps-2 pe-2">
+                        <div class="mb-3 w-100 h-100 overflow-auto">
+                            <a class="rounded-4 d-block object-fit-cover overflow-hidden w-100 a_course mb-3" title="HTML CSS Pro" target="_self">
+                                <button class="btn_course text-dark rounded-5 p-2" onclick="redirectToDetail(@item.course.id)">
+                                    Watch Course
+                                </button>
+                                <img src="@item.course.image_code" alt=".." class="object-fit-cover border-0 rounded-4 w-100 h-100" />
+                            </a>
+                            <div class="course_title">
+                                <span class="text-black-75 fs-6">@item.course.title</span>
+                            </div>
+                            <div class="price-new mt-2">
+                                <span class="courseItem_old_price">@item.course.price</span>
+                                <span class="courseItem_main_price"></span>
+                            </div>
+                        </div>
+                    </section>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+
+<style type="text/css">
+    .title h2{
+        color: #000 !important;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    a:not([href]):not([class]) {
+        &, &:hover
+
+    {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    }
+
+    .btn-filter {
+        background-color: #007bff;
+        color: white;
+        border-radius: 10px;
+        border-color: transparent;
+        height: 100%;
+    }
+
+        .btn-filter:hover {
+            background-color: #0056b3;
+            color: darkgray;
+        }
+
+        .btn-filter .clicked {
+            background-color: #0056b3;
+            color: darkgray;
+        }
+
+    .modal {
+        top: 100%;
+        transform: translateY(-100%);
+    }
+</style>
+@section scripts
+{
+    <script>
+        function redirectToDetail(courseId) {
+            var path = window.location.pathname;
+            if (path.includes("/Course/Index")) {
+                window.location.href = "Details?id=" + courseId;
+            } else {
+                window.location.href = "/Course/Details?id=" + courseId;
+            }
+        }
+    </script>
+}

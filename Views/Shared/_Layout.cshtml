@@ -134,7 +134,7 @@
                                                         }
                                                         else if (Website_Course_AVG.Managers.Helpers.IsUser())
                                                         {
-                                                            <a href=#"">
+                                                            <a href="#">
                                                                 <i class="fa-solid fa-user"></i>
                                                             </a>
                                                         }
@@ -156,6 +156,12 @@
                                                                     <a href="@Url.Action("ProfieUser", "Account")">
                                                                         <i class="fa-solid fa-user me-2"></i>
                                                                         <span>@currentUser.fullname</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="@Url.Action("GetCourseUser", "Course")">
+                                                                        <i class="fa-solid fa-book me-2"></i>
+                                                                        <span>My course</span>
                                                                     </a>
                                                                 </li>
                                                             }
@@ -220,6 +226,11 @@
                                         </li>
 
                                         <li><a href="@Url.Action("Contact","Home")">contacts</a></li>
+
+                                        @if (Website_Course_AVG.Managers.Helpers.IsUser())
+                                        {
+                                            <li><a href="@Url.Action("GetCourseUser","Course")"><i class="fa-solid fa-book me-2"></i>My course</a></li>
+                                        }
 
                                         @if (!Website_Course_AVG.Managers.Helpers.IsAuthenticated())
                                         {
@@ -442,7 +453,6 @@
         let body = document.getElementsByTagName("body");
         let iconMenu = document.querySelector(".mobile-nav-toggler .fas.fa-bars");
         iconMenu.addEventListener("click", () => {
-            console.log(body[0]);
             body[0].classList.add("mobile-menu-visible");
         })
 

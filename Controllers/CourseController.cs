@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Controllers
@@ -208,5 +209,29 @@ namespace Website_Course_AVG.Controllers
             return courses;
         }
 
-    }
+        [Authorize]
+        [HttpGet]
+        public ActionResult GetCourseUser()
+        {
+            try
+            {
+                user currentUser = Helpers.GetUserFromToken();
+                if (currentUser != null)
+                {
+                    var userCourses = _data.detail_courses.Where(dc => dc.user_id == currentUser.id).Select(dc => new CourseUserViewModel()
+                    {
+                        course = dc.course,
+                        user = currentUser
+                    }).ToList();
+                    return View(userCourses);
+                }
+                return View();
+            }
+            catch(Exception ex)
+            {
+                Helpers.AddCookie("Error", "Error Unkown");
+                return RedirectToAction("Index", "Home");
+            }
+        }
+    } 
 }
