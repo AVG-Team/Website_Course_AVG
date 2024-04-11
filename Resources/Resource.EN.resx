@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="account" xml:space="preserve">
+    <value>account</value>
+  </data>
+  <data name="account." xml:space="preserve">
+    <value>account.</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Add Comment Successful!" xml:space="preserve">
+    <value>Add Comment Successful!</value>
+  </data>
+  <data name="Add Note" xml:space="preserve">
+    <value>Add Note</value>
+  </data>
+  <data name="Add Note At" xml:space="preserve">
+    <value>Add Note At</value>
+  </data>
+  <data name="Add Note Successful" xml:space="preserve">
+    <value>Add Note Successful</value>
+  </data>
+  <data name="Add to Cart" xml:space="preserve">
+    <value>Add to Cart</value>
+  </data>
+  <data name="After 30 minutes you will be able to comment again" xml:space="preserve">
+    <value>After 30 minutes you will be able to comment again</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="Are you sure you want to download the exercise?" xml:space="preserve">
+    <value>Are you sure you want to download the exercise?</value>
+  </data>
+  <data name="Associate your" xml:space="preserve">
+    <value>Associate your</value>
+  </data>
+  <data name="Association Form" xml:space="preserve">
+    <value>Association Form</value>
+  </data>
+  <data name="AVG Courses - Reset Password" xml:space="preserve">
+    <value>AVG Courses - Reset Password</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="be sent again" xml:space="preserve">
+    <value>be sent again</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="Card details" xml:space="preserve">
+    <value>Card details</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Cart</value>
+  </data>
+  <data name="Change Language Successful!" xml:space="preserve">
+    <value>Change Language Successful!</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Checkout</value>
+  </data>
+  <data name="Click here to change password" xml:space="preserve">
+    <value>Click here to change password</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="Content Lesson" xml:space="preserve">
+    <value>Content Lesson</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="Course content" xml:space="preserve">
+    <value>Course content</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Courses</value>
+  </data>
+  <data name="Create Account" xml:space="preserve">
+    <value>Create Account</value>
+  </data>
+  <data name="Delete successful" xml:space="preserve">
+    <value>Delete successful</value>
+  </data>
+  <data name="Delete successful!" xml:space="preserve">
+    <value>Delete successful!</value>
+  </data>
+  <data name="Do you have any questions about this lesson?" xml:space="preserve">
+    <value>Do you have any questions about this lesson?</value>
+  </data>
+  <data name="Don't have account?" xml:space="preserve">
+    <value>Don't have account?</value>
+  </data>
+  <data name="Download Exercises" xml:space="preserve">
+    <value>Download Exercises</value>
+  </data>
+  <data name="Enter the following password reset code:" xml:space="preserve">
+    <value>Enter the following password reset code:</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Error Unknown" xml:space="preserve">
+    <value>Error Unknown</value>
+  </data>
+  <data name="Error Unknown, Please Try Again!" xml:space="preserve">
+    <value>Error Unknown, Please Try Again!</value>
+  </data>
+  <data name="Exercise is null" xml:space="preserve">
+    <value>Exercise is null</value>
+  </data>
+  <data name="Find Favorite Course" xml:space="preserve">
+    <value>Find Favorite Course</value>
+  </data>
+  <data name="for details on setting up this ASP.NET application to support logging in via external services." xml:space="preserve">
+    <value>for details on setting up this ASP.NET application to support logging in via external services.</value>
+  </data>
+  <data name="for details on setting up this ASP.NET application to support two-factor authentication." xml:space="preserve">
+    <value>for details on setting up this ASP.NET application to support two-factor authentication.</value>
+  </data>
+  <data name="Forgot Password?" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
+  <data name="Free" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="from basic to advanced. from basic" xml:space="preserve">
+    <value>from basic to advanced. from basic</value>
+  </data>
+  <data name="Get Comment Success" xml:space="preserve">
+    <value>Get Comment Success</value>
+  </data>
+  <data name="Get Exercise Successful!" xml:space="preserve">
+    <value>Get Exercise Successful!</value>
+  </data>
+  <data name="Go to Homepage" xml:space="preserve">
+    <value>Go to Homepage</value>
+  </data>
+  <data name="Has Error" xml:space="preserve">
+    <value>Has Error</value>
+  </data>
+  <data name="Hello,Again" xml:space="preserve">
+    <value>Hello,Again</value>
+  </data>
+  <data name="Help Center" xml:space="preserve">
+    <value>Help Center</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Home Page" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="invalid information" xml:space="preserve">
+    <value>invalid information</value>
+  </data>
+  <data name="Invalid Request" xml:space="preserve">
+    <value>Invalid Request</value>
+  </data>
+  <data name="It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you." xml:space="preserve">
+    <value>It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you.</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="Learn HTML CSS for beginners" xml:space="preserve">
+    <value>Learn HTML CSS for beginners</value>
+  </data>
+  <data name="Lesson" xml:space="preserve">
+    <value>Lesson</value>
+  </data>
+  <data name="lessons" xml:space="preserve">
+    <value>lessons</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="Locked out." xml:space="preserve">
+    <value>Locked out.</value>
+  </data>
+  <data name="Log in using your" xml:space="preserve">
+    <value>Log in using your</value>
+  </data>
+  <data name="Log off" xml:space="preserve">
+    <value>Log off</value>
+  </data>
+  <data name="Login Successfull!" xml:space="preserve">
+    <value>Login Successfull!</value>
+  </data>
+  <data name="Login with Gmail Successful!" xml:space="preserve">
+    <value>Login with Gmail Successful!</value>
+  </data>
+  <data name="Logout Successful!" xml:space="preserve">
+    <value>Logout Successful!</value>
+  </data>
+  <data name="Marketing" xml:space="preserve">
+    <value>Marketing</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="minutes total length" xml:space="preserve">
+    <value>minutes total length</value>
+  </data>
+  <data name="missing information" xml:space="preserve">
+    <value>missing information</value>
+  </data>
+  <data name="Momo payment failed" xml:space="preserve">
+    <value>Momo payment failed</value>
+  </data>
+  <data name="My Courses" xml:space="preserve">
+    <value>My Courses</value>
+  </data>
+  <data name="My Notes" xml:space="preserve">
+    <value>My Notes</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="No course in your cart!" xml:space="preserve">
+    <value>No course in your cart!</value>
+  </data>
+  <data name="No courses found, please try again!" xml:space="preserve">
+    <value>No courses found, please try again!</value>
+  </data>
+  <data name="No courses in your cart" xml:space="preserve">
+    <value>No courses in your cart</value>
+  </data>
+  <data name="Not find note" xml:space="preserve">
+    <value>Not find note</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Notify" xml:space="preserve">
+    <value>Notify</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>or</value>
+  </data>
+  <data name="or visit" xml:space="preserve">
+    <value>or visit</value>
+  </data>
+  <data name="Our website use cookies. By Approve, we assume your permission to deploy cookies as detailed in our Privacy Policy." xml:space="preserve">
+    <value>Our website use cookies. By Approve, we assume your permission to deploy cookies as detailed in our Privacy Policy.</value>
+  </data>
+  <data name="Our website uses cookies" xml:space="preserve">
+    <value>Our website uses cookies</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="Payment Method" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="Payment success!" xml:space="preserve">
+    <value>Payment success!</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Please check your email" xml:space="preserve">
+    <value>Please check your email</value>
+  </data>
+  <data name="Please check your information and try again later." xml:space="preserve">
+    <value>Please check your information and try again later.</value>
+  </data>
+  <data name="Please do not comment spam or use vulgar or regionally discriminatory words, Comment once every 30 minutes" xml:space="preserve">
+    <value>Please do not comment spam or use vulgar or regionally discriminatory words, Comment once every 30 minutes</value>
+  </data>
+  <data name="Please enter a user name for this site below and click the Register button to finish logging in" xml:space="preserve">
+    <value>Please enter a user name for this site below and click the Register button to finish logging in</value>
+  </data>
+  <data name="Practice projects with Figma, hundreds of exercises and challenges, 100% instruction by Son Dang, included flashcards, and more." xml:space="preserve">
+    <value>Practice projects with Figma, hundreds of exercises and challenges, 100% instruction by Son Dang, included flashcards, and more.</value>
+  </data>
+  <data name="Press Save Changes" xml:space="preserve">
+    <value>Press Save Changes</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Pro" xml:space="preserve">
+    <value>Pro</value>
+  </data>
+  <data name="Proceed to Pay" xml:space="preserve">
+    <value>Proceed to Pay</value>
+  </data>
+  <data name="Promotion code does not exist." xml:space="preserve">
+    <value>Promotion code does not exist.</value>
+  </data>
+  <data name="Promotion code has been used up." xml:space="preserve">
+    <value>Promotion code has been used up.</value>
+  </data>
+  <data name="Promotion code has expired." xml:space="preserve">
+    <value>Promotion code has expired.</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Questions</value>
+  </data>
+  <data name="ReactJS course" xml:space="preserve">
+    <value>ReactJS course</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Register Successful!" xml:space="preserve">
+    <value>Register Successful!</value>
+  </data>
+  <data name="Reset Password" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="Reset Password Successful!" xml:space="preserve">
+    <value>Reset Password Successful!</value>
+  </data>
+  <data name="Save changes" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="Send verification code" xml:space="preserve">
+    <value>Send verification code</value>
+  </data>
+  <data name="Sent Email Successfully" xml:space="preserve">
+    <value>Sent Email Successfully</value>
+  </data>
+  <data name="Sign In" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="Sign out" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="Success!" xml:space="preserve">
+    <value>Success!</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="Terms of Use" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="The course has been purchased" xml:space="preserve">
+    <value>The course has been purchased</value>
+  </data>
+  <data name="The course is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you." xml:space="preserve">
+    <value>The course is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.</value>
+  </data>
+  <data name="The lesson is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you." xml:space="preserve">
+    <value>The lesson is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.</value>
+  </data>
+  <data name="There are no external authentication services configured. See" xml:space="preserve">
+    <value>There are no external authentication services configured. See</value>
+  </data>
+  <data name="There are no two-factor authentication providers configured. See" xml:space="preserve">
+    <value>There are no two-factor authentication providers configured. See</value>
+  </data>
+  <data name="This account has been locked out, please try again later." xml:space="preserve">
+    <value>This account has been locked out, please try again later.</value>
+  </data>
+  <data name="this article" xml:space="preserve">
+    <value>this article</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Toal</value>
+  </data>
+  <data name="Two-Factor Authentication:" xml:space="preserve">
+    <value>Two-Factor Authentication:</value>
+  </data>
+  <data name="Unknown error, please contact admin to fix the error" xml:space="preserve">
+    <value>Unknown error, please contact admin to fix the error</value>
+  </data>
+  <data name="Unknown error, please contact admin to fix the error , Code Error :" xml:space="preserve">
+    <value>Unknown error, please contact admin to fix the error , Code Error :</value>
+  </data>
+  <data name="Unsuccessful login with service." xml:space="preserve">
+    <value>Unsuccessful login with service.</value>
+  </data>
+  <data name="Update Date" xml:space="preserve">
+    <value>Update Date</value>
+  </data>
+  <data name="Username and password are wrong !!!" xml:space="preserve">
+    <value>Username and password are wrong !!!</value>
+  </data>
+  <data name="Watch Course" xml:space="preserve">
+    <value>Watch Course</value>
+  </data>
+  <data name="We are happy to have you back." xml:space="preserve">
+    <value>We are happy to have you back.</value>
+  </data>
+  <data name="We have received a password reset request on our website." xml:space="preserve">
+    <value>We have received a password reset request on our website.</value>
+  </data>
+  <data name="We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you" xml:space="preserve">
+    <value>We noticed that you pressed forgot password too many times in one day, please try again after 30 minutes, thank you</value>
+  </data>
+  <data name="What will you learn?" xml:space="preserve">
+    <value>What will you learn?</value>
+  </data>
+  <data name="You are logging in !!!" xml:space="preserve">
+    <value>You are logging in !!!</value>
+  </data>
+  <data name="You are using too many words that violate community rules" xml:space="preserve">
+    <value>You are using too many words that violate community rules</value>
+  </data>
+  <data name="You do not have permission to enter here!!!" xml:space="preserve">
+    <value>You do not have permission to enter here!!!</value>
+  </data>
+  <data name="You enter error Code or Re-password" xml:space="preserve">
+    <value>You enter error Code or Re-password</value>
+  </data>
+  <data name="You have not finished studying the previous lesson, please return to the previous lesson" xml:space="preserve">
+    <value>You have not finished studying the previous lesson, please return to the previous lesson</value>
+  </data>
+  <data name="You've successfully authenticated with" xml:space="preserve">
+    <value>You've successfully authenticated with</value>
+  </data>
+  <data name="Your application description page." xml:space="preserve">
+    <value>Your application description page.</value>
+  </data>
+  <data name="Your contact page." xml:space="preserve">
+    <value>Your contact page.</value>
+  </data>
+  <data name="Your password has been reset. Please" xml:space="preserve">
+    <value>Your password has been reset. Please</value>
+  </data>
+  <data name="Your password recovery code is" xml:space="preserve">
+    <value>Your password recovery code is</value>
+  </data>
+  <data name="Your request could not be processed due to" xml:space="preserve">
+    <value>Your request could not be processed due to</value>
+  </data>
+  <data name="Your time remain is" xml:space="preserve">
+    <value>Your time remain is</value>
+  </data>
+</root>

@@ -96,7 +96,7 @@ namespace Website_Course_AVG.Models
         #endregion
 
         public MyDataDataContext() :
-                base(global::System.Configuration.ConfigurationManager.ConnectionStrings["AVGConnectionString"].ConnectionString, mappingSource)
+                base(global::System.Configuration.ConfigurationManager.ConnectionStrings["AVG_Website_CourseConnectionString"].ConnectionString, mappingSource)
         {
             OnCreated();
         }

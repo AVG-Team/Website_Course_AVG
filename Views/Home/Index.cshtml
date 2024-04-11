@@ -1,6 +1,6 @@
 ﻿@model List<Website_Course_AVG.Models.CategoryCourseViewModels>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = Website_Course_AVG.Managers.ResourceHelper.GetResource("Home Page");
 }
 
 <style>
@@ -105,11 +105,11 @@
             padding-bottom: 23.75rem !important;
         }
 
-        .banner-content h2,
-        .banner-content ul li a {
-            font-size: 40px !important;
+            .banner-content h2,
+            .banner-content ul li a {
+                font-size: 40px !important;
+            }
         }
-    }
 </style>
 
 <main>
@@ -213,7 +213,7 @@
                             }
                             else
                             {
-                                <span class="courseItem_old_price">Miễn phí</span>
+                                <span class="courseItem_old_price">@global_asax.Trans("Free")</span>
                             }
                             <span class="courseItem_main_price"></span>
                         </div>

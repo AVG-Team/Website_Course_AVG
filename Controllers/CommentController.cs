@@ -24,7 +24,7 @@ namespace Website_Course_AVG.Controllers
                 List<comment> comments = _data.comments.Where(x => x.lesson_id == lessonId && x.type == 1).OrderBy(x => x.created_at).ToList();
 
                 string view = RenderViewToString("Comment", "comments", comments);
-                return ResponseHelper.SuccessResponse("Get Comment Success", view);
+                return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Get Comment Success"), view);
             }
             catch (Exception ex)
             {
@@ -41,7 +41,7 @@ namespace Website_Course_AVG.Controllers
 
             if (Helpers.isBadWord(content, fileJson))
             {
-                return ResponseHelper.ErrorResponse("You are using too many words that violate community rules");
+                return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("You are using too many words that violate community rules"));
             }
 
             try
@@ -53,28 +53,28 @@ namespace Website_Course_AVG.Controllers
                 if (commentTmp != null && user.role != 2)
                 {
                     DateTime created_at = commentTmp.created_at ?? DateTime.Now;
-                    if(DateTime.Now < created_at.AddMinutes(30) )
+                    if (DateTime.Now < created_at.AddMinutes(30))
                     {
-                        return ResponseHelper.ErrorResponse("After 30 minutes you will be able to comment again");
+                        return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("After 30 minutes you will be able to comment again"));
                     }
                 }
-                    comment.content = content;
-                    comment.lesson_id = lessonId;
-                    comment.user_id = user.id;
-                    comment.type = 0;
-                    comment.created_at = DateTime.Now;
-                    comment.updated_at = DateTime.Now;
-                    if(user.role == 2)
-                    {
-                        comment.type = 1;
-                    }
+                comment.content = content;
+                comment.lesson_id = lessonId;
+                comment.user_id = user.id;
+                comment.type = 0;
+                comment.created_at = DateTime.Now;
+                comment.updated_at = DateTime.Now;
+                if (user.role == 2)
+                {
+                    comment.type = 1;
+                }
 
-                    _data.comments.InsertOnSubmit(comment);
+                _data.comments.InsertOnSubmit(comment);
 
                 _data.SubmitChanges();
 
-                
-                return ResponseHelper.SuccessResponse("Add Comment Successful", new
+
+                return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Add Comment Successful!"), new
                 {
                     id = comment.id,
                     content = comment.content,
@@ -103,10 +103,10 @@ namespace Website_Course_AVG.Controllers
                     _data.comments.DeleteOnSubmit(comment);
                     _data.SubmitChanges();
 
-                    return ResponseHelper.SuccessResponse("Delete successful");
+                    return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Delete successful!"));
                 }
 
-                return ResponseHelper.ErrorResponse("Error Unknown, Please Try Again");
+                return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Error Unknown, Please Try Again!"));
             }
         }
 
