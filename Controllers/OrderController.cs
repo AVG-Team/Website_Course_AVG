@@ -13,9 +13,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Policy;
 using System.Net;
 using VNPay;
+using Website_Course_AVG.Attributes;
 
 namespace Website_Course_AVG.Controllers
 {
+    [Website_Course_AVG.Attributes.Authorize]
     public class OrderController : Controller
     {
         MyDataDataContext _data = new MyDataDataContext();

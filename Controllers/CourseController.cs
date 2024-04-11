@@ -131,7 +131,7 @@ namespace Website_Course_AVG.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(int id)
+        public ActionResult Details(string slug, int id)
         {
             if (id == null)
                 return HttpNotFound();

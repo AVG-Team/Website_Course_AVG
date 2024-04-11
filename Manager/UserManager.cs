@@ -122,12 +122,21 @@ namespace Website_Course_AVG.Managers
         }
 
         // role = 2 : admin
-        public bool IsAdmin()
+        public bool IsManager()
         {
             if (!IsAuthenticated())
                 return false;
             user user = GetUserFromToken();
             return user != null && user.role > 1;
+        }
+
+        // role = 3 : admin
+        public bool IsAdmin()
+        {
+            if (!IsAuthenticated())
+                return false;
+            user user = GetUserFromToken();
+            return user != null && user.role == 3;
         }
 
         public void login(string username)

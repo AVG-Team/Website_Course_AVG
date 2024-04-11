@@ -11,6 +11,7 @@ namespace Website_Course_AVG.Controllers
     public class ExerciseController : Controller
     {
         // GET: Exercise
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult GetExercise(int lessonId)
         {
             try
