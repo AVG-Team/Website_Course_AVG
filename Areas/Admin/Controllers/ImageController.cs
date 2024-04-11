@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Website_Course_AVG.Models;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Areas.Admin.Data.ViewModels;
+using Website_Course_AVG.Attributes;
 
 namespace Website_Course_AVG.Areas.Admin.Controllers
 {
@@ -20,17 +21,22 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
     {
         MyDataDataContext _data = new MyDataDataContext();
         // GET: Admin/Image
+
+
+        [Admin]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Admin]
         public ActionResult Insert()
         {
             return View();
         }
 
-        //csrf + upload image to DB + upload image code + try catch
+
+        [Admin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Insert(IEnumerable<HttpPostedFileBase> files, string CategorySelection, bool? Category)

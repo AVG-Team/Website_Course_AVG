@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using PagedList;
 using Website_Course_AVG.Areas.Admin.Data.ViewModels;
+using Website_Course_AVG.Attributes;
 using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Areas.Admin.Controllers
@@ -19,6 +20,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             ViewBag.controller = "Category";
         }
 
+        [Admin]
         public ActionResult Index(int? page)
         {
             var categories = _data.categories.ToList();
@@ -35,6 +37,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [Admin]
         public ActionResult Insert()
         {
             var course = _data.courses.ToList();
@@ -47,6 +50,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(adminView);
         }
 
+        [Admin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Insert(AdminViewModels model)
@@ -66,6 +70,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [Admin]
         public ActionResult Update(int? id)
         {
             var category = _data.categories.FirstOrDefault(c => c.id == id);
@@ -78,6 +83,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(adminView);
         }
 
+        [Admin]
         [HttpPost]
         public ActionResult Update(FormCollection form, category model)
         {
@@ -97,6 +103,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View("Index");
         }
         [HttpPost]
+        [Admin]
         public ActionResult Delete(category model)
         {
             var category = _data.categories.FirstOrDefault(c => c.id == model.id);

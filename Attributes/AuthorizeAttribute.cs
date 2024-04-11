@@ -19,9 +19,22 @@ namespace Website_Course_AVG.Attributes
         {
             if (!UserManager.IsAuthenticated())
             {
-                Helpers.AddCookie("Error", "You are't login!!!");
+                string currentArea = (string)filterContext.RouteData.DataTokens["area"];
+
+                if (currentArea.Equals("Admin"))
+                {
+                    Helpers.AddCookie("Error", "You don't have permission to access the admin page");
+                }
+                else
+                {
+                    Helpers.AddCookie("Error", "You aren't login!!!");
+                }
                 filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary(new { controller = "Home", action = "Index" }));
+                    new System.Web.Routing.RouteValueDictionary {
+                        { "area", "" }, 
+                        { "controller", "Home" }, 
+                        { "action", "Index" } 
+                    }); ;
                 return;
             }
 

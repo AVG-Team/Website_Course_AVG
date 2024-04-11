@@ -12,6 +12,7 @@ using Imgur.API.Endpoints;
 using Imgur.API.Models;
 using PagedList;
 using Website_Course_AVG.Areas.Admin.Data.ViewModels;
+using Website_Course_AVG.Attributes;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
@@ -25,6 +26,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         {
             ViewBag.controller = "Course";
         }
+
+        [Admin]
         public ActionResult Index(int? page)
         {
             var courses = _data.courses.ToList();
@@ -44,6 +47,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(adminView);
         }
 
+        [Admin]
         public ActionResult Insert()
         {
             var course = _data.courses.ToList();
@@ -57,6 +61,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Admin]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Insert(IEnumerable<HttpPostedFileBase> files, HttpPostedFileBase file, AdminViewModels models)
         {
@@ -175,6 +180,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }*/
 
+        [Admin]
         public ActionResult Update(int? id)
         {
             var course = _data.courses.FirstOrDefault(c => c.id == id);
@@ -188,6 +194,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Admin]
         [ValidateAntiForgeryToken]
         public ActionResult Update(FormCollection form, int? id)
         {
@@ -213,7 +220,9 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         {
             return View("Index");
         }
+
         [HttpPost]
+        [Admin]
         public ActionResult Delete(int? id)
         {
             var course = _data.courses.FirstOrDefault(c => c.id == id);
@@ -228,6 +237,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
 
 
         [HttpGet]
+        [Admin]
         public JsonResult GetCourseById(int? id)
         {
             try

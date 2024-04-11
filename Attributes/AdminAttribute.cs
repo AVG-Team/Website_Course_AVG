@@ -21,7 +21,11 @@ namespace Website_Course_AVG.Attributes
             {
                 Helpers.AddCookie("Error", "You do not have permission to enter here!!!");
                 filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary(new { controller = "Home", action = "Index" }));
+                    new System.Web.Routing.RouteValueDictionary {
+                        { "area", "" },
+                        { "controller", "Home" },
+                        { "action", "Index" }
+                    }); ;
                 return;
             }
 
