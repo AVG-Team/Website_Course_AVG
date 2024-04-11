@@ -6,10 +6,11 @@
 <main aria-labelledby="title">
     <h2 id="title">@ViewBag.Title.</h2>
 
-    @using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form" })) {
+    @using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+    {
         @Html.AntiForgeryToken()
         @Html.Hidden("rememberMe", @Model.RememberMe)
-        <h4>Send verification code</h4>
+        <h4>@global_asax.Trans("Send verification code")</h4>
         <hr />
         <div class="row">
             <div class="col-md-8">

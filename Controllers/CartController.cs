@@ -52,7 +52,7 @@ namespace Website_Course_AVG.Controllers
                         if (coursesTmp.Count() == 0)
                         {
                             Helpers.AddCookie("Item", "", -30 * 24 * 60 * 60);
-                            Helpers.AddCookie("Error", "The course has been purchased And No course in your cart");
+                            Helpers.AddCookie("Error", ResourceHelper.GetResource("No course in your cart!"));
                             return RedirectToAction("Index", "Cart");
                         }
                     }
@@ -67,12 +67,12 @@ namespace Website_Course_AVG.Controllers
                     string result = string.Join(";", ids);
                     byte[] bytes = Encoding.UTF8.GetBytes(result);
                     string base64String = Convert.ToBase64String(bytes);
-                    Helpers.AddCookie("Error", "The course has been purchased");
+                    Helpers.AddCookie("Error", ResourceHelper.GetResource("The course has been purchased"));
                     Helpers.AddCookie("Item", base64String, 30 * 24 * 60 * 60);
                 }
                 return View(coursesTmp);
             }
-            Helpers.AddCookie("Error", "No course in your cart");
+            Helpers.AddCookie("Error", ResourceHelper.GetResource("No course in your cart!"));
             return RedirectToAction("Index", "Course");
         }
 
@@ -88,15 +88,18 @@ namespace Website_Course_AVG.Controllers
                 var percent = promo.percent;
                 if (promo.active == false)
                 {
-                    return ResponseHelper.ErrorResponse("Promotion code does not exist.");
+                    string message = ResourceHelper.GetResource("Promotion code does not exist.");
+                    return ResponseHelper.ErrorResponse(message);
                 }
                 if (promo.out_of_date < DateTime.Now)
                 {
-                    return ResponseHelper.ErrorResponse("Promotion code has expired.");
+                    string message = ResourceHelper.GetResource("Promotion code has expired.");
+                    return ResponseHelper.ErrorResponse(message);
                 }
                 if (countPromo >= promo.max_time)
                 {
-                    return ResponseHelper.ErrorResponse("Promotion code has been used up.");
+                    string message = ResourceHelper.GetResource("Promotion code has been used up.");
+                    return ResponseHelper.ErrorResponse(message);
                 }
                 if (percent > 100)
                 {
@@ -117,7 +120,8 @@ namespace Website_Course_AVG.Controllers
                     return ResponseHelper.SuccessResponse(message, new { newTotalAmount = newTotal, discount = percent, promotionId = promo.id });
                 }
             }
-            return ResponseHelper.ErrorResponse("Promotion code does not exist.");
+
+            return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Promotion code does not exist."));
         }
     }
 }

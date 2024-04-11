@@ -35,7 +35,7 @@ namespace Website_Course_AVG.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = ResourceHelper.GetResource("Your application description page.");
 
             return View();
         }
@@ -104,5 +104,19 @@ namespace Website_Course_AVG.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        [HttpPost]
+        [Website_Course_AVG.Attributes.AllowAnonymous]
+        public ActionResult SearchCourses(FormCollection form)
+        {
+            var query = form["query"];
+            var course = _data.courses.FirstOrDefault(x => x.title == query);
+            if (course != null)
+            {
+                return RedirectToAction("Details", "Course", new { id = course.id });
+            }
+            return RedirectToAction("Index", "Home");
+        }
+        
     }
 }

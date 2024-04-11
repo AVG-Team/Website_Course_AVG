@@ -11,6 +11,9 @@ using System.Web.UI.WebControls;
 using Website_Course_AVG.Models;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Globalization;
+using System.Threading;
+using System.Web.Mvc;
 using Microsoft.IdentityModel.Logging;
 
 namespace Website_Course_AVG.Managers
@@ -365,5 +368,33 @@ namespace Website_Course_AVG.Managers
             return slug;
         }
 
+
+        private static HashSet<SelectListItem> GetLanguageSelectListItem()
+        {
+            return (new HashSet<SelectListItem>
+            {
+                new SelectListItem { Text = "English", Value = "EN"},
+                new SelectListItem { Text = "Vietnamese", Value = "VI"}
+            });
+        }
+
+        public static SelectList GetLanguageDictionaryElement()
+        {
+            int previouslySelectedLanguageIndex = 1;
+            HttpCookie languageCookie = HttpContext.Current.Request.Cookies["Language"];
+
+            HashSet<SelectListItem> list = GetLanguageSelectListItem();
+
+            if (languageCookie?.Value != null)
+            {
+                foreach (var item in list.Where(item => item.Text == languageCookie.Value))
+                {
+                    previouslySelectedLanguageIndex = Int32.Parse(item.Value);
+                    break;
+                }
+            }
+
+            return new SelectList(list, "Value", "Text", previouslySelectedLanguageIndex);
+        }
     }
 }

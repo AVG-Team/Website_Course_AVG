@@ -1,17 +1,20 @@
 ﻿@model List<Website_Course_AVG.Models.CategoryCourseViewModels>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = Website_Course_AVG.Managers.ResourceHelper.GetResource("Home Page");
 }
 
-<style>
-    body {
-        overscroll-behavior: none; 
-    }
-    .course_title{
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1;
-    }
+@section styles {
+
+    <style>
+        body {
+            overscroll-behavior: none;
+        }
+
+        .course_title {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
 
         .carousel-caption {
             text-align: unset !important;
@@ -109,70 +112,74 @@
                 font-size: 40px !important;
             }
         }
-</style>
+    </style>
+}
 
-    <main>
-        <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="0" class="active d-none" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="1" class="d-none" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="2" class="d-none" aria-label="Slide 3"></button>
+<main>
+    <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="0" class="active d-none" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="1" class="d-none" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="2" class="d-none" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner rounded-0">
+            <div class="carousel-item active">
+                <img src="~/Content/img/banner/layout_main_2.jpg" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>@global_asax.Trans("ReactJS course")</span> @global_asax.Trans("from basic to advanced. from basic") </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 @global_asax.Trans("min")</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="carousel-inner rounded-0">
-                <div class="carousel-item active">
-                    <img src="~/Content/img/banner/layout_main_2.jpg" class="d-block w-100" alt="..." loading="lazy">
-                    <div class="carousel-caption">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2024</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
+            <div class="carousel-item">
+                <img src="~/Content/img/banner/layout_main_3.jpg" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>@global_asax.Trans("Learn HTML CSS for beginners")</span> @global_asax.Trans("Practice projects with Figma, hundreds of exercises and challenges, 100% instruction by Son Dang, included flashcards, and more.") </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 @global_asax.Trans("min")</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="~/Content/img/banner/layout_main_3.jpg" class="d-block w-100" alt="..." loading="lazy">
-                    <div class="carousel-caption">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2024</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="~/Content/img/banner/layout_main_4.jpg" class="d-block w-100" alt="..." loading="lazy">
-                    <div class="carousel-caption">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2024</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/img/banner/layout_main_4.jpg" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> @global_asax.Trans("from basic to advanced. from basic") </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 @global_asax.Trans("min")</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+    <h1 class="fs-2 text-danger">
+        @global_asax.Trans("Home")
+    </h1>
+</main>
 
 
 <div class="container custom-container">
@@ -212,7 +219,7 @@
                             }
                             else
                             {
-                                <span class="courseItem_old_price">Miễn phí</span>
+                                <span class="courseItem_old_price">@global_asax.Trans("Free")</span>
                             }
                             <span class="courseItem_main_price"></span>
                         </div>
