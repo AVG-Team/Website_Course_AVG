@@ -16,26 +16,6 @@ namespace Website_Course_AVG.Controllers
     {
         private readonly MyDataDataContext _data = new MyDataDataContext();
 
-        /*public ActionResult Index(int? page)
-        {
-            ViewBag.page = page;
-            PopulateDropList();
-            if (page == null)
-            {
-                page = 1;
-            }
-
-            var courses = from c in _data.courses
-                    .Include(m => m.category)
-                    .Where(m => m.deleted_at == null)
-                          select c;
-
-            var category = _data.categories.ToList();
-            ViewBag.Categories = category;
-            int pageNumber = (page ?? 1);
-            var list = courses.ToPagedList(pageNumber, 12);
-            return View(list);
-        }*/
         public ActionResult Index(int? page)
         {
             ViewBag.page = page;
@@ -131,43 +111,40 @@ namespace Website_Course_AVG.Controllers
 
         public ActionResult Details()
         {
-            return View();
+            var courses = _data.courses.Where(c => c.deleted_at == null).ToList();
+            var lessons = _data.lessons.Where(l => l.deleted_at == null).ToList();
+            var detailCourses = _data.detail_courses.Where(d => d.deleted_at == null).ToList();
+            var viewmodel = new CoursesViewModel()
+            {
+                Courses = courses,
+                Lessons = lessons,
+                DetailCourses = detailCourses
+            };
+            return View(viewmodel);
         }
 
         [HttpGet]
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            if (id == null)
-                return HttpNotFound();
-            else
+            var course = _data.courses.FirstOrDefault(c => c.id == id);
+            if(course != null)
             {
-                /*var imageCode = "";
-                var course = _data.courses.Where(c => c.id == id).ToList();
-                foreach (var item in course)
-                {
-                    imageCode = item.image_code;
-                }
-
-                var images = _data.images.Where(i => i.code.Equals(imageCode)).ToList();
-                var lessons = _data.lessons.Where(l => l.course_id == id).ToList();
-                var detailCourses = _data.detail_courses.Where(d => d.course_id == id).ToList();*/
-                var course = _data.courses.FirstOrDefault(c => c.id == id);
-                if (course == null)
-                    return HttpNotFound();
-
+                var courses = _data.courses.Where(c => c.deleted_at == null).ToList();
                 var images = _data.images.Where(i => i.code.Equals(course.image_code) && i.category == true).ToList();
                 var lessons = _data.lessons.Where(l => l.course_id == id).ToList();
                 var detailCourses = _data.detail_courses.Where(d => d.course_id == id).ToList();
                 var viewModel = new CoursesViewModel()
                 {
-                    Courses = new List<course>() { course },
+                    Courses = courses,
                     Images = images,
                     Lessons = lessons,
+                    Course = course,
                     DetailCourses = detailCourses
                 };
-
                 return View(viewModel);
             }
+
+            return RedirectToAction("Index");
         }
         protected string RenderViewToString(string controllerName, string viewName, object viewData)
         {
