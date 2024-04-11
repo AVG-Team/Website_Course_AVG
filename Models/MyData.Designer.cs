@@ -22,7 +22,7 @@ namespace Website_Course_AVG.Models
     using System;
 
 
-    [global::System.Data.Linq.Mapping.DatabaseAttribute(Name = "AVG_Website_Course")]
+    [global::System.Data.Linq.Mapping.DatabaseAttribute(Name = "AVG")]
     public partial class MyDataDataContext : System.Data.Linq.DataContext
     {
 
@@ -94,14 +94,9 @@ namespace Website_Course_AVG.Models
         partial void Updatevideo(video instance);
         partial void Deletevideo(video instance);
         #endregion
-        public MyDataDataContext() :
-            base(MvcApplication.Configuration["ConnectionStrings:AVG_Website_CourseConnectionString"], mappingSource)
-        {
-            OnCreated();
-        }
 
-        public MyDataDataContext(string connection) :
-                base(connection, mappingSource)
+        public MyDataDataContext() :
+                base(global::System.Configuration.ConfigurationManager.ConnectionStrings["AVGConnectionString"].ConnectionString, mappingSource)
         {
             OnCreated();
         }

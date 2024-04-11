@@ -5,174 +5,175 @@
 
 <style>
     body {
-        overscroll-behavior: none; 
+        overscroll-behavior: none;
     }
-    .course_title{
+
+    .course_title {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
     }
 
+    .carousel-caption {
+        text-align: unset !important;
+        left: 6%;
+        vertical-align: middle;
+        padding-bottom: 26.75rem;
+        width: 43%;
+        height: 50%;
+    }
+
+    .banner-content h6 {
+        font-size: 20px !important;
+    }
+
+    @@media (max-width: 575px) {
         .carousel-caption {
-            text-align: unset !important;
-            left: 6%;
-            vertical-align: middle;
-            padding-bottom: 26.75rem;
-            width: 43%;
-            height: 50%;
+            padding-bottom: 1.25rem !important;
         }
 
-        .banner-content h6 {
-            font-size: 20px !important;
+        .banner-content .title {
+            margin-bottom: 10px;
         }
 
-        @@media (max-width: 575px) {
-            .carousel-caption {
-                padding-bottom: 1.25rem !important;
-            }
 
-            .banner-content .title {
-                margin-bottom: 10px;
-            }
-
-
-            .banner-content h2,
-            .banner-content ul li a {
-                font-size: 11px !important;
-            }
-
-            .banner-meta ul li.release-time > span {
-                font-size: 8px !important;
-            }
+        .banner-content h2,
+        .banner-content ul li a {
+            font-size: 11px !important;
         }
 
-        @@media screen and (min-width: 576px) and (max-width: 694px) {
-            .carousel-caption {
-                padding-bottom: 8.75rem !important;
-            }
+        .banner-meta ul li.release-time > span {
+            font-size: 8px !important;
+        }
+    }
 
-            .banner-content h2,
-            .banner-content ul li a {
-                font-size: 16px !important;
-            }
-
-            .banner-meta ul li.release-time > span {
-                font-size: 10px !important;
-            }
+    @@media screen and (min-width: 576px) and (max-width: 694px) {
+        .carousel-caption {
+            padding-bottom: 8.75rem !important;
         }
 
-        @@media screen and (min-width: 695px) and (max-width: 768px) {
-            .carousel-caption {
-                padding-bottom: 11.75rem !important;
-            }
-
-            .banner-content h2,
-            .banner-content ul li a {
-                font-size: 22px !important;
-            }
-
-            .banner-meta ul li.release-time > span {
-                font-size: 12px !important;
-            }
+        .banner-content h2,
+        .banner-content ul li a {
+            font-size: 16px !important;
         }
 
-        @@media screen and (min-width: 769px) and (max-width: 991px) {
-            .carousel-caption {
-                padding-bottom: 13.75rem !important;
-            }
+        .banner-meta ul li.release-time > span {
+            font-size: 10px !important;
+        }
+    }
 
-
-            .banner-content h2,
-            .banner-content ul li a {
-                font-size: 27px !important;
-            }
+    @@media screen and (min-width: 695px) and (max-width: 768px) {
+        .carousel-caption {
+            padding-bottom: 11.75rem !important;
         }
 
-        @@media screen and (min-width: 992px) and (max-width: 1199px) {
-            .carousel-caption {
-                padding-bottom: 18.75rem !important;
-            }
-
-            .banner-content h2,
-            .banner-content ul li a {
-                font-size: 36px !important;
-            }
+        .banner-content h2,
+        .banner-content ul li a {
+            font-size: 22px !important;
         }
 
-        @@media screen and (min-width: 1200px) and (max-width: 1359px) {
-            .carousel-caption {
-                padding-bottom: 23.75rem !important;
-            }
-
-            .banner-content h2,
-            .banner-content ul li a {
-                font-size: 40px !important;
-            }
+        .banner-meta ul li.release-time > span {
+            font-size: 12px !important;
         }
+    }
+
+    @@media screen and (min-width: 769px) and (max-width: 991px) {
+        .carousel-caption {
+            padding-bottom: 13.75rem !important;
+        }
+
+
+        .banner-content h2,
+        .banner-content ul li a {
+            font-size: 27px !important;
+        }
+    }
+
+    @@media screen and (min-width: 992px) and (max-width: 1199px) {
+        .carousel-caption {
+            padding-bottom: 18.75rem !important;
+        }
+
+        .banner-content h2,
+        .banner-content ul li a {
+            font-size: 36px !important;
+        }
+    }
+
+    @@media screen and (min-width: 1200px) and (max-width: 1359px) {
+        .carousel-caption {
+            padding-bottom: 23.75rem !important;
+        }
+
+        .banner-content h2,
+        .banner-content ul li a {
+            font-size: 40px !important;
+        }
+    }
 </style>
 
-    <main>
-        <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="0" class="active d-none" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="1" class="d-none" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="2" class="d-none" aria-label="Slide 3"></button>
+<main>
+    <div id="sliderCourse" class="carousel slide rounded-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="0" class="active d-none" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="1" class="d-none" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#sliderCourse" data-bs-slide-to="2" class="d-none" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner rounded-0">
+            <div class="carousel-item active">
+                <img src="~/Content/img/banner/layout_main_2.jpg" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 min</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="carousel-inner rounded-0">
-                <div class="carousel-item active">
-                    <img src="~/Content/img/banner/layout_main_2.jpg" class="d-block w-100" alt="..." loading="lazy">
-                    <div class="carousel-caption">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2024</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
+            <div class="carousel-item">
+                <img src="~/Content/img/banner/layout_main_3.jpg" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 min</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="~/Content/img/banner/layout_main_3.jpg" class="d-block w-100" alt="..." loading="lazy">
-                    <div class="carousel-caption">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2024</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="~/Content/img/banner/layout_main_4.jpg" class="d-block w-100" alt="..." loading="lazy">
-                    <div class="carousel-caption">
-                        <div class="banner-content">
-                            <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
-                            <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
-                            <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
-                                <ul>
-                                    <li class="release-time">
-                                        <span><i class="far fa-calendar-alt"></i> 2024</span>
-                                        <span><i class="far fa-clock"></i> 128 min</span>
-                                    </li>
-                                </ul>
-                            </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/img/banner/layout_main_4.jpg" class="d-block w-100" alt="..." loading="lazy">
+                <div class="carousel-caption">
+                    <div class="banner-content">
+                        <h6 class="sub-title wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.8s">AVG TEAM</h6>
+                        <h2 class="title wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.8s"><span>ReactJS course</span> from basic to advanced. from basic </h2>
+                        <div class="banner-meta wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.8s">
+                            <ul>
+                                <li class="release-time">
+                                    <span><i class="far fa-calendar-alt"></i> 2024</span>
+                                    <span><i class="far fa-clock"></i> 128 min</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
 
 <div class="container custom-container">

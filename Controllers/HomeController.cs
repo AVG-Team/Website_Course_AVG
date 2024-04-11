@@ -15,7 +15,7 @@ namespace Website_Course_AVG.Controllers
         private readonly MyDataDataContext _data = new MyDataDataContext();
         public ActionResult Index()
         {
-            var categories = _data.categories.ToList(); 
+            var categories = _data.categories.ToList();
 
             List<CategoryCourseViewModels> categoryViewModels = new List<CategoryCourseViewModels>();
 
@@ -26,6 +26,18 @@ namespace Website_Course_AVG.Controllers
                     Category = category,
                     Courses = _data.courses.Where(c => c.category_id == category.id).ToList()
                 };
+                var imageCodes = categoryViewModel.Courses.Select(c => c.image_code).Distinct().ToList();
+
+                var images = _data.images.Where(i => imageCodes.Contains(i.code) && i.category == false).ToList();
+
+                foreach (var course in categoryViewModel.Courses)
+                {
+                    var image = images.FirstOrDefault(i => i.code == course.image_code);
+                    if (image != null)
+                    {
+                        course.image_code = image.image1;
+                    }
+                }
 
                 categoryViewModels.Add(categoryViewModel);
             }
@@ -59,7 +71,7 @@ namespace Website_Course_AVG.Controllers
         [Website_Course_AVG.Attributes.AllowAnonymous]
         public ActionResult Report(ReportViewModel model)
         {
-            if(model.Phone.Length > 10)
+            if (model.Phone.Length > 10)
             {
                 Helpers.AddCookie("Error", "Phone Input Error, Length <= 10");
                 return RedirectToAction("Contact");
@@ -97,7 +109,8 @@ namespace Website_Course_AVG.Controllers
                     Helpers.AddCookie("Notify", "Thank you, Report has been sent");
                     return RedirectToAction("Index", "Home");
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Helpers.AddCookie("Error", "Error Unknown, Please Try Again!!!");
                 return RedirectToAction("Index", "Home");
