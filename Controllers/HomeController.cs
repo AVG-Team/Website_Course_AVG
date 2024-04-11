@@ -26,6 +26,18 @@ namespace Website_Course_AVG.Controllers
                     Category = category,
                     Courses = _data.courses.Where(c => c.category_id == category.id).ToList()
                 };
+                var imageCodes = categoryViewModel.Courses.Select(c => c.image_code).Distinct().ToList();
+
+                var images = _data.images.Where(i => imageCodes.Contains(i.code) && i.category == false).ToList();
+
+                foreach (var course in categoryViewModel.Courses)
+                {
+                    var image = images.FirstOrDefault(i => i.code == course.image_code);
+                    if (image != null)
+                    {
+                        course.image_code = image.image1;
+                    }
+                }
 
                 categoryViewModels.Add(categoryViewModel);
             }

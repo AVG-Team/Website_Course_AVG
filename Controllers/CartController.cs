@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
@@ -20,6 +21,18 @@ namespace Website_Course_AVG.Controllers
                 var selectedCourseIds = Helpers.GetItem(itemCookie.Value);
                 var coursesInCart = db.courses.Where(c => selectedCourseIds.Contains(c.id)).ToList();
                 ViewBag.TotalAmount = coursesInCart.Sum(c => c.price);
+                var imageCodes = coursesInCart.Select(c => c.image_code).Distinct().ToList();
+
+                var images = db.images.Where(i => imageCodes.Contains(i.code) && i.category == false).ToList();
+
+                foreach (var course in coursesInCart)
+                {
+                    var image = images.FirstOrDefault(i => i.code == course.image_code);
+                    if (image != null)
+                    {
+                        course.image_code = image.image1;
+                    }
+                }
                 return View(new CartViewModels
                 {
                     Courses = coursesInCart,
@@ -40,6 +53,18 @@ namespace Website_Course_AVG.Controllers
                 var coursesTmp = new List<course>(coursesInCart);
                 List<int> ids = new List<int>();
                 bool isRemove = false;
+                var imageCodes = coursesInCart.Select(c => c.image_code).Distinct().ToList();
+
+                var images = db.images.Where(i => imageCodes.Contains(i.code) && i.category == false).ToList();
+
+                foreach (var course in coursesInCart)
+                {
+                    var image = images.FirstOrDefault(i => i.code == course.image_code);
+                    if (image != null)
+                    {
+                        course.image_code = image.image1;
+                    }
+                }
 
                 foreach (var item in coursesInCart)
                 {
