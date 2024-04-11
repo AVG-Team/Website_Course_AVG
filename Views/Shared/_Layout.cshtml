@@ -246,31 +246,18 @@
                         <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="searchModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    @using (Html.BeginForm("AutoComplete", "Account", FormMethod.Get, new { @class = "search-form" }))
+                                    @using (Html.BeginForm("SearchCourses", "Home", FormMethod.Post, new { @class = "form" }))
                                     {
+                                       
                                         <input id="searchInput" type="text" value="" placeholder="Search here..." name="query" style="max-width:none !important" autocomplete="on" a>
-                                        <button onclick="search(controller);">
+                                        <button type="submit" id="searchBtn">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  style="width: 40px; height: 40px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                             </svg>
                                         </button>
                                         <div id="suggestions" class="autocomplete-suggestions list-group"></div>
-                                        <style>
-                                            .suggestion {
-                                                padding: 1px;
-                                                margin-bottom: 1px; /* Khoảng cách giữa các mục gợi ý */
-                                                cursor: pointer;
-                                            }
 
-                                            .autocomplete-suggestions {
-                                                width: 300px; /* Thiết lập chiều rộng tùy chỉnh */
-                                            }
-
-                                                .autocomplete-suggestions .suggestion:hover {
-                                                    background-color: #0D6EFD;
-                                                }
-                                        </style>
                                     }
 
                                 </div>
@@ -371,6 +358,22 @@
     @RenderSection("scripts", required: false)
     @{
         string currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+        <style>
+            .suggestion {
+                padding: 1px;
+                margin-bottom: 1px; /* Khoảng cách giữa các mục gợi ý */
+                cursor: pointer;
+                font-size: 25px;
+            }
+
+            .autocomplete-suggestions {
+                width: 550px; /* Thiết lập chiều rộng tùy chỉnh */
+            }
+
+                .autocomplete-suggestions .suggestion:hover {
+                    background-color: #0D6EFD;
+                }
+        </style>
     }
 
     <script>
@@ -517,23 +520,17 @@
                 }
             });
 
-            document.getElementById('searchInput').addEventListener('keydown', function (event) {
-                // Kiểm tra xem người dùng đã nhấn phím Tab chưa
-                if (event.keyCode === 9) { // 9 là mã phím Tab
-                    var suggestions = document.querySelectorAll('.suggestion'); // Lấy tất cả các gợi ý
-                    if (suggestions.length > 0) { // Kiểm tra xem có gợi ý nào không
-                        var suggestionText = suggestions[0].innerText; // Lấy dữ liệu của gợi ý đầu tiên
-                        document.getElementById('searchInput').value = suggestionText; // Điền dữ liệu vào ô tìm kiếm
-                    }
-                }
-            });
+            
+
+
 
             // Xử lý khi người dùng chọn một gợi ý từ danh sách
-            $(document).on('click', '.suggestion', function () {
-                var selectedSuggestion = $(this).text(); // Lấy giá trị của gợi ý được chọn
-                $('#keyword').val(selectedSuggestion); // Điền giá trị của gợi ý vào thanh tìm kiếm
-                $('#suggestions').empty(); // Xóa danh sách gợi ý
-            });
+           $(document).on('click', '.suggestion', function () {
+            var selectedSuggestion = $(this).text(); // Lấy giá trị của gợi ý được chọn
+            $('#searchInput').val(selectedSuggestion); // Điền giá trị của gợi ý vào thanh tìm kiếm
+            $('#suggestions').empty(); // Xóa danh sách gợi ý
+});
+
         });
 
 
