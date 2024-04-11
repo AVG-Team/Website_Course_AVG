@@ -8,6 +8,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using PagedList;
 using Website_Course_AVG.Areas.Admin.Data.ViewModels;
+using Website_Course_AVG.Attributes;
 using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
@@ -17,6 +18,9 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
     {
         public readonly MyDataDataContext _data = new MyDataDataContext();
         // GET: Admin/Lesson
+
+
+        [Admin]
         public ActionResult Index(int? page)
         {
             var lessons = _data.lessons.ToList();
@@ -39,6 +43,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(adminView);
         }
 
+
+        [Admin]
         public ActionResult Insert(course course)
         {
             var videos = _data.videos.ToList();
@@ -69,6 +75,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(adminView);
         }
 
+
+        [Admin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Insert(AdminViewModels models)
@@ -95,6 +103,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [Admin]
         public ActionResult Update(int? id)
         {
             var lesson = _data.lessons.FirstOrDefault(l => l.id == id);
@@ -113,6 +123,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(adminView);
         }
 
+
+        [Admin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Update(FormCollection form, int? id)
@@ -135,6 +147,9 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+        [Admin]
         [HttpPost]
         public ActionResult Delete(int? id)
         {
@@ -160,36 +175,5 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return index;
         }
 
-        private void UploadGG(string fileName)
-        {
-            string fileJson = Server.MapPath("~/ltweb-avg-b91359369629.json");
-            GoogleCredential google = GoogleCredential.FromFile(fileJson);
-
-            // Tạo client Google Cloud Storage
-            var storageClient = StorageClient.Create(google);
-
-            // Tạo bucket
-            string projectId = Helpers.GetValueFromAppSetting("ProjectIdGG");
-
-            var bucketName = "video-lesson";
-
-            try
-            {
-                var bucket = storageClient.GetBucket(bucketName);
-            }
-            catch (Exception ex)
-            {
-                var bucket = storageClient.CreateBucket(projectId, bucketName);
-            }
-
-            // Tải file video lên bucket
-            var filePath = Server.MapPath("~/Content/Upload/" + fileName);
-
-            using (var fileStream = new FileStream(filePath, FileMode.Open))
-            {
-                storageClient.UploadObject(bucketName, fileName, null, fileStream);
-            }
-
-        }
     }
 }

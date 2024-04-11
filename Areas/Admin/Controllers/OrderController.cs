@@ -19,6 +19,8 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             ViewBag.controller = "Order";
         }
         // GET: Admin/Order
+
+        [Admin]
         public ActionResult Index(int? page)
         {
             var order = data.orders.ToList();
@@ -36,6 +38,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [Admin]
         public ActionResult Update(int? id)
         {
             var order = data.orders.FirstOrDefault(o => o.id == id);
@@ -47,6 +50,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Admin]
         [ValidateAntiForgeryToken]
         public ActionResult Update(FormCollection form,int? id)
         {
@@ -65,11 +69,13 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [Admin]
         public ActionResult Approve()
         {
             return View("Index");
         }
         [HttpPost]
+        [Admin]
         public ActionResult Approve(int id)
         {
             var order = data.orders.FirstOrDefault(o => o.id == id);
@@ -89,6 +95,7 @@ namespace Website_Course_AVG.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Admin]
         public ActionResult Delete(int id)
         {
             var order = data.orders.FirstOrDefault(o => o.id == id && o.status == 0);

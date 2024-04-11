@@ -110,24 +110,35 @@
                                                         @foreach (var item in Model.UsersPagedList)
                                                         {
                                                             <tr class="srow" data-id="@item.id">
-                                                                <td class="item-row">@item.id</td>
-                                                                <td class="item-row">@item.fullname</td>
-                                                                <td class="item-row">
+                                                                <td class="item-row-user">@item.id</td>
+                                                                <td class="item-row-user">@item.fullname</td>
+                                                                <td class="item-row-user">
                                                                     <span class="d-inline-block text-truncate" style="max-width: 150px;">
                                                                         @item.email
                                                                     </span>
                                                                 </td>
-                                                                <td class="item-row">
+                                                                <td class="item-row-user">
                                                                     <span class="d-inline-block text-truncate" style="max-width:150px;">
                                                                         @item.birthday
                                                                     </span>
                                                                 </td>
-                                                                <td class="item-row">@item.gender</td>
-                                                                <td class="item-row">@item.account.username</td>
-                                                                <td class="item-row">@item.role</td>
-                                                                <td class="text-success item-row">@item.created_at</td>
-                                                                <td class="text-warning item-row">@item.updated_at</td>
-                                                                <td class="text-danger item-row">@item.deleted_at</td>
+                                                                @if (item.gender == true)
+                                                                {
+                                                                    <td class="item-row-user">Male</td>
+                                                                }
+                                                                @if (item.gender == false)
+                                                                {
+                                                                    <td class="item-row-user">Female</td>
+                                                                }
+                                                                @if (item.gender == null)
+                                                                {
+                                                                    <td class="item-row-user"></td>
+                                                                }
+                                                                <td class="item-row-user">@item.account.username</td>
+                                                                <td class="item-row-user">@item.role</td>
+                                                                <td class="text-success item-row-user">@item.created_at</td>
+                                                                <td class="text-warning item-row-user">@item.updated_at</td>
+                                                                <td class="text-danger item-row-user">@item.deleted_at</td>
                                                                 <td class="d-flex justify-content-center">
                                                                     <button class="btn btn-info btn-sm me-1 border rounded-3 btn-update" data-id="@item.id">
                                                                         <i class="bi bi-pencil"></i>
@@ -272,6 +283,12 @@
 {
     <script>
         $(document).ready(function () {
+
+            $('.btn-update').add('.item-row-user').click(function () {
+                var id = $(this).closest('.srow').data('id');
+                window.location.href = '/Admin/Account/Update?id=' + id;
+            });
+
             $('.btn-open-modal').click(function () {
                 $('#ConfirmModal').modal('show');
             });

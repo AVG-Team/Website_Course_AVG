@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Website_Course_AVG.Managers;
 using Website_Course_AVG.Models;
 
 namespace Website_Course_AVG.Controllers
@@ -34,20 +35,16 @@ namespace Website_Course_AVG.Controllers
             ViewBag.Categories = category;
             int pageNumber = (page ?? 1);
 
-            // Lấy danh sách mã code của ảnh từ các course
             var imageCodes = courses.Select(c => c.image_code).Distinct().ToList();
 
-            // Truy vấn ảnh từ bảng images dựa trên mã code
             var images = _data.images.Where(i => imageCodes.Contains(i.code) && i.category == false).ToList();
 
-            // Nạp thông tin ảnh vào mỗi đối tượng course
             foreach (var course in courses)
             {
                 var image = images.FirstOrDefault(i => i.code == course.image_code);
-                // Kiểm tra xem có ảnh tương ứng không trước khi gán
                 if (image != null)
                 {
-                    course.image_code = image.image1; // Giả sử image1 là cột chứa đường dẫn ảnh
+                    course.image_code = image.image1;
                 }
             }
             var list = courses.ToPagedList(pageNumber, 12);
@@ -185,5 +182,29 @@ namespace Website_Course_AVG.Controllers
             return courses;
         }
 
-    }
+        [Authorize]
+        [HttpGet]
+        public ActionResult GetCourseUser()
+        {
+            try
+            {
+                user currentUser = Helpers.GetUserFromToken();
+                if (currentUser != null)
+                {
+                    var userCourses = _data.detail_courses.Where(dc => dc.user_id == currentUser.id).Select(dc => new CourseUserViewModel()
+                    {
+                        course = dc.course,
+                        user = currentUser
+                    }).ToList();
+                    return View(userCourses);
+                }
+                return View();
+            }
+            catch(Exception ex)
+            {
+                Helpers.AddCookie("Error", "Error Unkown");
+                return RedirectToAction("Index", "Home");
+            }
+        }
+    } 
 }

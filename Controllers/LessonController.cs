@@ -21,7 +21,7 @@ namespace Website_Course_AVG.Controllers
 
             if (lessonsCourse.Count() < 1)
             {
-                Helpers.AddCookie("Error", "The course is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("The course is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you."));
                 return RedirectToAction("Index", "Home");
             }
 
@@ -30,7 +30,7 @@ namespace Website_Course_AVG.Controllers
             detail_course detailCourse = _data.detail_courses.Where(x => x.user_id == userId && x.course_id == courseId).FirstOrDefault();
             if (detailCourse == null)
             {
-                Helpers.AddCookie("Error", "It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you.");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("It seems you have not registered for the course, please try again. If this is an error, please report to the admin before leaving the site, thank you."));
                 return RedirectToAction("Index", "Home");
             }
 
@@ -51,7 +51,7 @@ namespace Website_Course_AVG.Controllers
 
             if (lesson == null)
             {
-                Helpers.AddCookie("Error", "The lesson is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you.");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("The lesson is not found, please try again later. If it still doesn't work, please don't leave and report to admin so we can handle it, thank you."));
                 return RedirectToAction("Index", "Home");
             }
 
@@ -70,7 +70,7 @@ namespace Website_Course_AVG.Controllers
 
             if (lessonLearnedId + 1 < lesson.id && user.role != 2)
             {
-                Helpers.AddCookie("Error", "You have not finished studying the previous lesson, please return to the previous lesson");
+                Helpers.AddCookie("Error", ResourceHelper.GetResource("You have not finished studying the previous lesson, please return to the previous lesson"));
                 return RedirectToAction("Detail", "Course");
             }
 
@@ -90,6 +90,7 @@ namespace Website_Course_AVG.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Website_Course_AVG.Attributes.Authorize]
         public JsonResult SetLessonLearnedId(int courseId, int lessonId)
         {
             try
@@ -99,7 +100,7 @@ namespace Website_Course_AVG.Controllers
                 detail_course detail_course = _data.detail_courses.Where(x => x.course_id == courseId && x.user_id == user.id).FirstOrDefault();
                 if (detail_course == null)
                 {
-                    string errorMessage = "No courses found, please try again";
+                    string errorMessage = ResourceHelper.GetResource("No courses found, please try again!");
                     return ResponseHelper.ErrorResponse(errorMessage);
                 }
 
@@ -107,14 +108,14 @@ namespace Website_Course_AVG.Controllers
                 {
                     detail_course.lesson_learned_id = lessonId;
                     _data.SubmitChanges();
-                    return ResponseHelper.SuccessResponse("Success");
+                    return ResponseHelper.SuccessResponse(ResourceHelper.GetResource("Success!"));
                 }
 
                 return ResponseHelper.SuccessResponse("");
             }
             catch (Exception ex)
             {
-                return ResponseHelper.ErrorResponse("Error Unknown");
+                return ResponseHelper.ErrorResponse(ResourceHelper.GetResource("Error Unknown"));
             }
         }
     }
